@@ -4,7 +4,7 @@ title: Dashboard
 parent: Longhorn
 ---
 
-## Scale Disk Space
+## Dashboard
 
 ### Description
 
