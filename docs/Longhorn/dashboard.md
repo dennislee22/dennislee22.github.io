@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Scale Disk Space
+title: Dashboard
 parent: Longhorn
 ---
 
