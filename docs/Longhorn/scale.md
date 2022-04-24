@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Scale Disk Space
-parent: Utilities
+parent: Longhorn
 ---
 
 # Color Utilities
