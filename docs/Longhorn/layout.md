@@ -1,127 +1,80 @@
 ---
 layout: default
-title: Layout
+title: Scale Disk Space
 parent: Longhorn
 ---
 
-# Layout Utilities
-{: .no_toc }
+## Scale Disk Space
 
-## Table of contents
-{: .no_toc .text-delta }
+### Description
 
-1. TOC
-{:toc}
+Just the Docs i
+
+### Local installation: Use the gem-based theme
+
+1. Install the Ruby Gem
+  ```bash
+  $ gem install just-the-docs
+  ```
+  ```yaml
+  # .. or add it to your your Jekyll site’s Gemfile
+  gem "just-the-docs"
+  ```
+
+2. Add Just the Docs to your Jekyll site’s `_config.yml`
+  ```yaml
+  theme: "just-the-docs"
+  ```
+
+3. _Optional:_ Initialize search data (creates `search-data.json`)
+  ```bash
+  $ bundle exec just-the-docs rake search:init
+  ```
+
+3. Run you local Jekyll server
+  ```bash
+  $ jekyll serve
+  ```
+  ```bash
+  # .. or if you're using a Gemfile (bundler)
+  $ bundle exec jekyll serve
+  ```
+
+4. Point your web browser to [http://localhost:4000](http://localhost:4000)
+
+If you're hosting your site on GitHub Pages, [set up GitHub Pages and Jekyll locally](https://help.github.com/en/articles/setting-up-your-github-pages-site-locally-with-jekyll) so that you can more easily work in your development environment.
+
+### Configure Just the Docs
+
+- [See configuration options]({{ site.baseurl }}{% link docs/configuration.md %})
 
 ---
 
-## Spacing
+## About the project
 
-These spacers are available to use for margins and padding with responsive utility classes. Combine these prefixes with a screen size and spacing scale to use them responsively.
+Just the Docs is &copy; 2017-{{ "now" | date: "%Y" }} by [Patrick Marsceill](http://patrickmarsceill.com).
 
-| Classname prefix | What it does                  |
-|:-----------------|:------------------------------|
-| `.m-`            | `margin`                      |
-| `.mx-`           | `margin-left`, `margin-right` |
-| `.my-`           | `margin top`, `margin bottom` |
-| `.mt-`           | `margin-top`                  |
-| `.mr-`           | `margin-right`                |
-| `.mb-`           | `margin-bottom`               |
-| `.ml-`           | `margin-left`                 |
+### License
 
-| Classname prefix | What it does                    |
-|:-----------------|:--------------------------------|
-| `.p-`            | `padding`                       |
-| `.px-`           | `padding-left`, `padding-right` |
-| `.py-`           | `padding top`, `padding bottom` |
-| `.pt-`           | `padding-top`                   |
-| `.pr-`           | `padding-right`                 |
-| `.pb-`           | `padding-bottom`                |
-| `.pl-`           | `padding-left`                  |
+Just the Docs is distributed by an [MIT license](https://github.com/just-the-docs/just-the-docs/tree/main/LICENSE.txt).
 
-Spacing values are based on a `1rem = 16px` spacing scale, broken down into these units:
+### Contributing
 
-| Spacer/suffix  | Size in rems  | Rem converted to px |
-|:---------------|:--------------|:--------------------|
-| `1`            | 0.25rem       | 4px                 |
-| `2`            | 0.5rem        | 8px                 |
-| `3`            | 0.75rem       | 12px                |
-| `4`            | 1rem          | 16px                |
-| `5`            | 1.5rem        | 24px                |
-| `6`            | 2rem          | 32px                |
-| `7`            | 2.5rem        | 40px                |
-| `8`            | 3rem          | 48px                |
-| `auto`         | auto          | auto                |
+When contributing to this repository, please first discuss the change you wish to make via issue,
+email, or any other method with the owners of this repository before making a change. Read more about becoming a contributor in [our GitHub repo](https://github.com/just-the-docs/just-the-docs#contributing).
 
-Use `mx-auto` to horizontally center elements.
+#### Thank you to the contributors of Just the Docs!
 
-#### Examples
-{: .no_toc }
+<ul class="list-style-none">
+{% for contributor in site.github.contributors %}
+  <li class="d-inline-block mr-1">
+     <a href="{{ contributor.html_url }}"><img src="{{ contributor.avatar_url }}" width="32" height="32" alt="{{ contributor.login }}"/></a>
+  </li>
+{% endfor %}
+</ul>
 
-In Markdown, use the `{: }` wrapper to apply custom classes:
+### Code of Conduct
 
-```markdown
-This paragraph will have a margin bottom of 1rem/16px at large screens.
-{: .mb-lg-4 }
+Just the Docs is committed to fostering a welcoming community.
 
-This paragraph will have 2rem/32px of padding on the right and left at all screen sizes.
-{: .px-6 }
-```
-
-## Horizontal Alignment
-
-| Classname               | What it does                     |
-|:------------------------|:---------------------------------|
-| `.float-left`           | `float: left`                    |
-| `.float-right`          | `float: right`                   |
-| `.flex-justify-start`   | `justify-content: flex-start`    |
-| `.flex-justify-end`     | `justify-content: flex-end`      |
-| `.flex-justify-between` | `justify-content: space-between` |
-| `.flex-justify-around`  | `justify-content: space-around`  |
-
-_Note: any of the `flex-` classes must be used on a parent element that has `d-flex` applied to it._
-
-## Vertical Alignment
-
-| Classname              | What it does                    |
-|:-----------------------|:--------------------------------|
-| `.v-align-baseline`    | `vertical-align: baseline`      |
-| `.v-align-bottom`      | `vertical-align: bottom`        |
-| `.v-align-middle`      | `vertical-align: middle`        |
-| `.v-align-text-bottom` | `vertical-align: text-bottom`   |
-| `.v-align-text-top`    | `vertical-align: text-top`      |
-| `.v-align-top`         | `vertical-align: top`           |
-
-## Display
-
-Display classes aid in adapting the layout of the elements on a page:
-
-| Class             |                         |
-|:------------------|:------------------------|
-| `.d-block`        | `display: block`        |
-| `.d-flex`         | `display: flex`         |
-| `.d-inline`       | `display: inline`       |
-| `.d-inline-block` | `display: inline-block` |
-| `.d-none`         | `display: none`         |
-
-Use these classes in conjunction with the responsive modifiers.
-
-#### Examples
-{: .no_toc }
-
-In Markdown, use the `{: }` wrapper to apply custom classes:
-
-```markdown
-This button will be hidden until medium screen sizes:
-
-[ A button ](#url)
-{: .d-none .d-md-inline-block }
-
-These headings will be `inline-block`:
-
-### heading 3
-{: .d-inline-block }
-
-### heading 3
-{: .d-inline-block }
-```
+[View our Code of Conduct](https://github.com/just-the-docs/just-the-docs/tree/main/CODE_OF_CONDUCT.md) on our GitHub repository.
