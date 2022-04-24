@@ -87,13 +87,6 @@ email, or any other method with the owners of this repository before making a ch
 
 #### Thank you to the contributors of Just the Docs!
 
-<ul class="list-style-none">
-{% longhorn %}
-  <li class="d-inline-block mr-1">
-     <a href="{{ longhorn.html_url }}"><img src=/images/longhorn-horizontal-color.png width="32" height="32"/></a>
-  </li>
-{% endfor %}
-</ul>
 
 ### Code of Conduct
 
