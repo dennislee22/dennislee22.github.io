@@ -1,7 +1,7 @@
 ---
 layout: default
-title: Layout
-parent: Utilities
+title: Cloudera Manager
+parent: cdp_pvc
 ---
 
 # Layout Utilities

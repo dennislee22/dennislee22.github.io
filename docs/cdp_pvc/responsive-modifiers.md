@@ -1,7 +1,7 @@
 ---
 layout: default
-title: Responsive Modifiers
-parent: Utilities
+title: CDP PvC Base
+parent: cdp_pvc
 ---
 
 # Responsive modifiers
