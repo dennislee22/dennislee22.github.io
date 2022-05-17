@@ -3,7 +3,7 @@ layout: default
 title: CDP Private Cloud
 nav_order: 4
 has_children: true
-permalink: docs/cdp_pvc
+permalink: docs/cdppvc
 ---
 
 # Introduction

@@ -1,7 +1,7 @@
 ---
 layout: default
 title: CDP PvC Base
-parent: cdp_pvc
+parent: cdppvc
 ---
 
 # Responsive modifiers

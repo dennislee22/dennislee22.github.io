@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Prerequisites
-parent: cdp_pvc
+parent: cdppvc
 ---
 
 # Color Utilities

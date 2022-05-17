@@ -1,7 +1,7 @@
 ---
 layout: default
 title: CDP PvC ECS
-parent: cdp_pvc
+parent: cdppvc
 ---
 
 # Typography Utilities
