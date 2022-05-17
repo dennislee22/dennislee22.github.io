@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Scale Disk Space
-parent: longhorn
+parent: docs/longhorn
 ---
 
 ## Scale Disk Space
