@@ -6,8 +6,14 @@ has_children: true
 permalink: docs/cdppvc
 ---
 
-# Introduction
+# CDP Private Cloud
 {: .no_toc }
 
-CSS utility classes come in handy when you to want to override default styles to create additional whitespace (margins/padding), correct unexpected shifts in font size or weight, add color, or hide (or show) something at a specific screen size.
-{: .fs-6 .fw-300 }
+This article explains the step-by-step procedure to deploy CDP Private Cloud solution based on the following software version.
+
+| Software       | Version         |
+|:-------------|:------------------|
+| CDP Base           | 7.1.7 | 
+| Cloudera Manager | 7.5.5   | 
+| CDP Data Services | 1.3.4      | 
+
