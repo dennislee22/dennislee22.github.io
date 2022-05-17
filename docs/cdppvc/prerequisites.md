@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Prerequisites
-parent: cdppvc
+parent: CDP Private Cloud
 ---
 
 # Color Utilities
