@@ -8,9 +8,9 @@ nav_order: 1
 ### Description
 
 CDP Private Cloud Platform needs to be integrated with the following 3rd party components:
-a. Relational Database (e.g. Postgres)
-b. DNS
-c. NTP
+- Relational Database (e.g. Postgres)
+- DNS
+- NTP
 
 ### Relational Database
 
