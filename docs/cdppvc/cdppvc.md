@@ -13,7 +13,7 @@ This article explains the step-by-step procedure to deploy CDP Private Cloud sol
 
 | Software       | Version         |
 |:-------------|:------------------|
-| CDP Base           | 7.1.7 | 
-| Cloudera Manager | 7.5.5   | 
-| CDP Data Services | 1.3.4      | 
+| CDP Base           | 7.1.7    | 
+| Cloudera Manager   | 7.5.5   | 
+| CDP Data Services  | 1.3.4      | 
 
