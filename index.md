@@ -35,7 +35,8 @@ remote_theme: just-the-docs/just-the-docs
 ### Local installation: Use the gem-based theme
 
 1. Install the Ruby Gem
-  ```kubectl get ns
+  ```yaml
+kubectl get ns
 NAME                                     STATUS   AGE
 cdp                                      Active   4d23h
 cdp-env-1-24a5fafc-monitoring-platform   Active   23h
