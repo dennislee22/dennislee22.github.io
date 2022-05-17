@@ -2,9 +2,10 @@
 layout: default
 title: Prerequisites
 parent: CDP Private Cloud
+nav_order: 1
 ---
 
-# Color Utilities
+# Prerequisites
 {: .no_toc }
 
 ## Table of contents

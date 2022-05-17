@@ -2,9 +2,10 @@
 layout: default
 title: Cloudera Manager
 parent: CDP Private Cloud
+nav_order: 2
 ---
 
-# Layout Utilities
+# Cloudera Manager
 {: .no_toc }
 
 ## Table of contents

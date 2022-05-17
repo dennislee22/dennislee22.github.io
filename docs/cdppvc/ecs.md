@@ -2,9 +2,10 @@
 layout: default
 title: CDP PvC ECS
 parent: CDP Private Cloud
+nav_order: 3
 ---
 
-# Typography Utilities
+# Embedded Container Service
 {: .no_toc }
 
 ## Table of contents
