@@ -7,11 +7,16 @@ nav_order: 1
 
 ### Description
 
-CDP Private Cloud solution requires the following 3rd party components:
+CDP Private Cloud Platform needs to be integrated with the following 3rd party components:
+a. Relational Database (e.g. Postgres)
+b. DNS
+c. NTP
 
-### Local installation: Use the gem-based theme
+### Relational Database
 
-1. Install the Ruby Gem
+1. The database requirements is described in the following [link](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/installation/topics/cdpdc-database-requirements.html).
+
+
   ```bash
   $ gem install just-the-docs
   ```
