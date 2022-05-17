@@ -35,8 +35,28 @@ remote_theme: just-the-docs/just-the-docs
 ### Local installation: Use the gem-based theme
 
 1. Install the Ruby Gem
-  ```bash
-  $ gem install just-the-docs
+  ```kubectl get ns
+NAME                                     STATUS   AGE
+cdp                                      Active   4d23h
+cdp-env-1-24a5fafc-monitoring-platform   Active   23h
+default                                  Active   4d23h
+default-1792ed26-monitoring-platform     Active   4d22h
+ecs-webhooks                             Active   4d23h
+impala-1652767519-7qdr                   Active   70m
+infra-prometheus                         Active   4d23h
+kube-node-lease                          Active   4d23h
+kube-public                              Active   4d23h
+kube-system                              Active   4d23h
+kubernetes-dashboard                     Active   4d23h
+local-path-storage                       Active   4d23h
+longhorn-system                          Active   4d23h
+shared-services                          Active   4d21h
+vault-system                             Active   4d23h
+warehouse-1652767471-swwc                Active   70m
+warehouse-1652767488-d6gd                Active   70m
+ws1                                      Active   22h
+ws1-user-1                               Active   22h
+yunikorn                                 Active   4d23h
   ```
   ```yaml
   # .. or add it to your your Jekyll site’s Gemfile
