@@ -1,7 +1,9 @@
 ---
 layout: default
 title: CDP Private Cloud
-parent: cdp_pvc
+nav_order: 4
+has_children: true
+permalink: docs/cdp_pvc
 ---
 
 # Introduction
