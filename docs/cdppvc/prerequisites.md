@@ -7,17 +7,36 @@ nav_order: 1
 
 # Prerequisites
 {: .no_toc }
-The following components are needed to be prepared prior to the installation of CDP Private Cloud Platform.
-
-
+The following components need to be prepared prior to the installation of CDP Private Cloud Platform.
 
 - TOC
 {:toc}
 
 ---
 
-## Relational Database
+## Cloudera Subscription
 
+TBA
+
+## Compute, Storage and Network
+
+TBA
+
+## DNS Server
+
+TBA
+
+## NTP Server
+
+TBA
+
+## Kerberos Server
+TBA
+
+## LDAP Server
+TBA
+
+## Relational Database
 1. The database requirements is described in this [link](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/installation/topics/cdpdc-database-requirements.html).
   ```yaml
   theme: "just-the-docs"
@@ -30,7 +49,3 @@ The following components are needed to be prepared prior to the installation of 
 
 
 3. Point your web browser to [link](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/installation/topics/cdpdc-database-requirements.html)
-
-
-
-## References
