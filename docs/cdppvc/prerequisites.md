@@ -19,13 +19,6 @@ The following prerequisites need to be prepared prior to install the CDP PvC Pla
 
 ---
 
-This article is prepared based on the following software versions. Other software version might not be applicable/valid.
-| Software       | Version         |
-|:-------------|:------------------|
-| CDP Base           | 7.1.7 `rel. May 2022`  | 
-| Cloudera Manager   | 7.5.5 `rel. May 2022`  | 
-| CDP Data Services  | 1.3.4 `rel. May 2022`  | 
-
 ## Cloudera Subscription
 
 1. Obtain a valid product subscription from Cloudera. Cloudera Manager requires a valid license to install accordingly. 
