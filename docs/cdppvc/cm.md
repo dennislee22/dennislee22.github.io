@@ -130,10 +130,10 @@ This article explains the necessary steps to install CM on Centos7.9 OS which is
 
     ```
     
-8. After successful installation, login the CM website.
+8. After successful installation, login to the CM website.
 
    https://cm.cdpkvm.cldr:7183
-
+   {: .label .label-green }
     
     ![](../../assets/images/cm_login.png)
     
