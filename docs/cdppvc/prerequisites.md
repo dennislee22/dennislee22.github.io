@@ -5,7 +5,7 @@ parent: CDP Private Cloud
 nav_order: 1
 ---
 
-# Prerequisites
+# Minimum Prerequisites
 {: .no_toc }
 The following components need to be prepared prior to the installation of CDP Private Cloud Platform.
 
@@ -16,11 +16,17 @@ The following components need to be prepared prior to the installation of CDP Pr
 
 ## Cloudera Subscription
 
-1. TBA
+1. Obtain a valid product subscription from Cloudera. Cloudera Manager requires a valid license to install accordingly. 
 
 ## Compute, Storage and Network
 
-1. TBA
+1. The hardware requirements are determined by the specific CDP services to be installed on both CDP Base and ECS.
+2. The required minimum CDP Base services and its dependencies to install CML, CDW and CDE is illustrated in the following table.
+
+![](../../assets/images/base_svc_table1.png)
+![](../../assets/images/base_svc_table2.png)
+
+3. Services such as HDFS, Zookeeper and [Ozone](https://docs.cloudera.com/cdp-private-cloud-upgrade/latest/release-guide/topics/cdpdc-ozone.html) have special storage requirements.
 
 ## DNS Server
 
