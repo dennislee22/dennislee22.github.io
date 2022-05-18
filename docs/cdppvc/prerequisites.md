@@ -26,8 +26,6 @@ This article is prepared based on the following software versions. Other softwar
 | Cloudera Manager   | 7.5.5 `rel. May 2022`  | 
 | CDP Data Services  | 1.3.4 `rel. May 2022`  | 
 
----
-
 ## Cloudera Subscription
 
 1. Obtain a valid product subscription from Cloudera. Cloudera Manager requires a valid license to install accordingly. 
