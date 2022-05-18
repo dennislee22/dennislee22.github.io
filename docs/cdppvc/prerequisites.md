@@ -20,41 +20,32 @@ The following components need to be prepared prior to the installation of CDP Pr
 
 ## Compute, Storage and Network
 
-1. The hardware requirements are determined by the specific CDP services to be installed on both CDP Base and ECS.
-2. The required minimum CDP Base services and its dependencies to install CML, CDW and CDE is illustrated in the following table.
+1. The hardware requirements are solely determined by the specific CDP services to be installed in both CDP Base and ECS.
+2. The required minimum CDP Base services and its dependencies to install CML, CDW and CDE are illustrated in the following tables.
 
-![](../../assets/images/base_svc_table1.png)
 ![](../../assets/images/base_svc_table2.png)
+![](../../assets/images/base_svc_table1.png)
 
 3. Services such as HDFS, Zookeeper and [Ozone](https://docs.cloudera.com/cdp-private-cloud-upgrade/latest/release-guide/topics/cdpdc-ozone.html) have special storage requirements.
 
 ## DNS Server
 
-1. TBA
+1. An external DNS server must be able to route inbound traffic to both CDP Base platform and ECS. It must contain forward and reverse zones.
 
 ## NTP Server
 
-1. TBA
+1. All CDP Base and ECS nodes must be installed with NTP client and be able to synchronize the time with the external NTP server.
 
 ## Kerberos Server
 
-1. TBA
+1. An external Kerberos server and the Kerberos key distribution center (KDC) (with a realm established) must be available provide authentication to CDP services, users and hosts.
+2. 
 
 ## LDAP Server
 
-1. TBA
+1. An external LDAP-compliant identity/directory server is required to enable the CDP solution to look up user accounts and groups in the directory.
 
 ## Relational Database
 
 1. The database requirements is described in this [link](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/installation/topics/cdpdc-database-requirements.html).
-  ```yaml
-  theme: "just-the-docs"
-  ```
-
-2. _Optional:_ Initialize search data (creates `search-data.json`)
-  ```bash
-  $ bundle exec just-the-docs rake search:init
-  ```
-
-
-3. Point your web browser to [link](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/installation/topics/cdpdc-database-requirements.html)
+2. This article uses PostgreSQL 12 database as the external database.
