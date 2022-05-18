@@ -12,7 +12,7 @@ The following components are needed to be prepared prior to the installation of 
 {: .no_toc .text-delta }
 
 - TOC
-{:toc.fw-300}
+{:toc}
 
 ---
 
