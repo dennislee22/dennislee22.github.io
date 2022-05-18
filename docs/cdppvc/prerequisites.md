@@ -5,12 +5,17 @@ parent: CDP Private Cloud
 nav_order: 1
 ---
 
-### Description
-
+# Description
+{: .no_toc }
 The following components are needed to be prepared prior to the installation of CDP Private Cloud Platform.
+
 {: .no_toc .text-delta }
 
+1. TOC
+{:toc}
+
 ---
+
 
 ## Relational Database
 
