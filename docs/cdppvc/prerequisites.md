@@ -12,17 +12,17 @@ CDP Private Cloud (CDP PvC) Platform and ECS (Embedded Compute Service) require 
 
 ![](../../assets/images/logical_arch.png)
 
-The following prerequisites (based on the following software version) need to be prepared prior to install the CDP PvC Platform with ECS. 
+The following prerequisites need to be prepared prior to install the CDP PvC Platform with ECS. 
 
+- TOC
+{:toc}
+
+This article is prepared based on the following software versions. Other software version might not be applicable/valid.
 | Software       | Version         |
 |:-------------|:------------------|
 | CDP Base           | 7.1.7 `rel. May 2022`  | 
 | Cloudera Manager   | 7.5.5 `rel. May 2022`  | 
 | CDP Data Services  | 1.3.4 `rel. May 2022`  | 
-
-
-- TOC
-{:toc}
 
 ---
 
