@@ -8,11 +8,14 @@ nav_order: 1
 ### Description
 
 CDP Private Cloud Platform needs to be integrated with the following 3rd party components:
-* Relational Database (e.g. Postgres)
-* DNS
-* NTP
+{: .no_toc .text-delta }
 
-### Relational Database
+1. TOC
+{:toc}
+
+---
+
+## Relational Database
 
 1. The database requirements is described in the following [link](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/installation/topics/cdpdc-database-requirements.html).
 
