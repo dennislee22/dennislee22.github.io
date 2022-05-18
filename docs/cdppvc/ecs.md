@@ -14,29 +14,6 @@ TBA
 
 ---
 
-## Cloudera Subscription
-
-1. TBA
-
-## Compute, Storage and Network
-
-1. TBA
-
-## DNS Server
-
-1. TBA
-
-## NTP Server
-
-1. TBA
-
-## Kerberos Server
-
-1. TBA
-
-## LDAP Server
-
-1. TBA
 
 ## Relational Database
 
