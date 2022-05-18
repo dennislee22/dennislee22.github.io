@@ -28,11 +28,11 @@ The following prerequisites need to be prepared prior to install CDP PvC with EC
 - The required minimum CDP Base services and its dependencies to install CML, CDW and CDE are illustrated in the following table. ![](../../assets/images/base_svc_table1.png)
 - Hardware requirements are determined by the specific CDP services to be installed in both CDP Base and ECS.
 - CDP Base services such as [HDFS](https://docs.cloudera.com/cdp-private-cloud-upgrade/latest/release-guide/topics/cdpdc-hdfs.html), [Zookeeper](https://docs.cloudera.com/cdp-private-cloud-upgrade/latest/release-guide/topics/cdpdc-zookeeper.html) and [Ozone](https://docs.cloudera.com/cdp-private-cloud-upgrade/latest/release-guide/topics/cdpdc-ozone.html) have dedicated storage requirements.
-- The supported OS is listed [here](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/installation/topics/cdpdc-os-requirements.html).
+- The supported OS and the filesystems are listed [here](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/installation/topics/cdpdc-os-requirements.html).
 - [JDK](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/installation/topics/cdpdc-java-requirements.html) must be installed in each host.
 - [Data at Rest](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/installation/topics/cdpdc-data-at-rest-encryption-requirements.html) is not mandatory and hence not covered in this article.
-- All ECS hosts need to be equipped with SSD/NVMe disk as the physical disk for [Longhorn storage](https://longhorn.io/docs/1.2.4/best-practices/#minimum-recommended-hardware).
 - CDW requires locally attached SCSI device (SSD/NVMe) on each ECS worker/agent node.
+- All ECS hosts need to be equipped with SSD/NVMe disk as the physical disk for [Longhorn storage](https://longhorn.io/docs/1.2.4/best-practices/#minimum-recommended-hardware). Longhorn could only use a single volume disk per node and thereby LVM is recommended to be used for exposing a single volume backed by one/many physical disk. 
 
 ## External NFS
 
