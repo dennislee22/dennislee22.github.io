@@ -6,7 +6,7 @@ description: "Just a piece of technical blog"
 permalink: /
 ---
 
-# Just a Technical Blog
+# Just Another Technical Blog
 {: .fs-9 }
 
 {: .fs-6 .fw-300 }
@@ -15,5 +15,5 @@ permalink: /
 
 ---
 
-## Getting started
+## Start!
 
