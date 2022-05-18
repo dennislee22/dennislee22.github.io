@@ -9,7 +9,7 @@ permalink: docs/cdppvc
 # CDP Private Cloud
 {: .no_toc }
 
-CDP Private Cloud delivers powerful analytic, transactional, and machine learning workloads in an on-premises environment. It comprises of 2 major components - CDP Private Cloud Base (CDP PvC Base) and CDP Private Cloud Data Services (CDP PvC DS). CDP PvC Base stores data store options including HDFS and Ozone that serve as the data lake. It has high degree of consistent security and governance with SDX to enable safe and compliant data lakes with policy-based data access for users. CDP PvC DS leverages Kubernetes for microservices cloud strategy by capitalizing on the benefits such as rapid deployment, portability, scalability and many others.
+CDP Private Cloud delivers powerful analytic, transactional, and machine learning workloads in an on-premises environment. It comprises of 2 major components - CDP Private Cloud Base (CDP PvC Base) and CDP Private Cloud Data Services (CDP PvC DS). CDP PvC Base stores data store options including HDFS and Ozone that serve as the data lake. It has high degree of consistent security and governance with SDX to enable safe and compliant data lakes with policy-based data access for users. CDP PvC Base also hosts many relevant Apache data analytics projects such as Yarn, Hive, Kudu, Hbase and many others. CDP PvC DS leverages Kubernetes for microservices cloud strategy by capitalizing on the benefits such as rapid deployment, portability and scalability.
 
 ![](../../assets/images/overall_arch.png)
 
