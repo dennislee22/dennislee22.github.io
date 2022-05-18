@@ -16,27 +16,30 @@ The following components need to be prepared prior to the installation of CDP Pr
 
 ## Cloudera Subscription
 
-TBA
+1. TBA
 
 ## Compute, Storage and Network
 
-TBA
+1. TBA
 
 ## DNS Server
 
-TBA
+1. TBA
 
 ## NTP Server
 
-TBA
+1. TBA
 
 ## Kerberos Server
-TBA
+
+1. TBA
 
 ## LDAP Server
-TBA
+
+1. TBA
 
 ## Relational Database
+
 1. The database requirements is described in this [link](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/installation/topics/cdpdc-database-requirements.html).
   ```yaml
   theme: "just-the-docs"
