@@ -25,10 +25,7 @@ The following prerequisites need to be prepared prior to install CDP PvC with EC
 
 ## Host
 
-1. The required minimum CDP Base services and its dependencies to install CML, CDW and CDE are illustrated in the following table.
-
-![](../../assets/images/base_svc_table1.png)
-
+1. The required minimum CDP Base services and its dependencies to install CML, CDW and CDE are illustrated in the following table. ![](../../assets/images/base_svc_table1.png)
 2. Hardware requirements are determined by the specific CDP services to be installed in both CDP Base and ECS.
 3. CDP Base services such as [HDFS](https://docs.cloudera.com/cdp-private-cloud-upgrade/latest/release-guide/topics/cdpdc-hdfs.html), [Zookeeper](https://docs.cloudera.com/cdp-private-cloud-upgrade/latest/release-guide/topics/cdpdc-zookeeper.html) and [Ozone](https://docs.cloudera.com/cdp-private-cloud-upgrade/latest/release-guide/topics/cdpdc-ozone.html) have dedicated storage requirements.
 4. The supported OS is listed [here](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/installation/topics/cdpdc-os-requirements.html).
