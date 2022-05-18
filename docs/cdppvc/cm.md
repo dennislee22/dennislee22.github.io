@@ -8,7 +8,7 @@ nav_order: 2
 # Cloudera Manager (CM)
 {: .no_toc }
 
-This article explains the steps to install the CM. Please ensure that the [prerequisites](({{ site.baseurl }}{% link docs/cdppvc/prerequisites.md %})) have already been prepared prior to running this procedure.
+This article explains the necessary steps to install CM on Centos7.9 OS which is one of the supported operating systems. Please ensure that the [prerequisites]({{ site.baseurl }}{% link docs/cdppvc/prerequisites.md %}) have already been prepared prior to running this procedure.
 
 - TOC
 {:toc}
@@ -63,10 +63,10 @@ Address: 10.15.4.150
 
 1. Download the Cloudera repo.
 
-```bash
-# cd /etc/yum.repos.d/
-# wget https://<userid>:<password>@archive.cloudera.com/p/cm7/7.5.5/redhat7/yum/cloudera-manager.repo
-```
+    ```bash
+    # cd /etc/yum.repos.d/
+    # wget https://<userid>:<password>@archive.cloudera.com/p/cm7/7.5.5/redhat7/yum/cloudera-manager.repo
+    ```
 
 2. Edit the Cloudera repo. Insert username and password parameters and its values.
 
@@ -81,6 +81,27 @@ gpgcheck=1
 enabled=1
 autorefresh=0
 type=rpm-md
+
+```
+
+3. Import the RPM-GPG-KEY
+
+```bash
+rpm --import  https://<userid>:<password>@archive.cloudera.com/p/cm7/7.5.5/redhat7/yum/RPM-GPG-KEY-cloudera
+
+```
+
+4. Install the CM packages
+
+```bash
+yum install -y cloudera-manager-daemons cloudera-manager-agent cloudera-manager-server
+
+```
+
+5. Install the CM packages
+
+```bash
+/opt/cloudera/cm/schema/scm_prepare_database.sh postgresql -h dlee-ipa.cdpkvm.cldr --scm-host cm.cdpkvm.cldr scm scm
 
 ```
 
