@@ -50,7 +50,7 @@ The following components are the minimum prerequisites to install the CDP Privat
 
 1. The database requirements is described in this [link](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/installation/topics/cdpdc-database-requirements.html).
 2. This article uses PostgreSQL 12 database as the external database.
-3. Create the following databases with users and its associated privileges. Note that simple passwords are being used here but the actual production environment should make use of complex passwords.
+3. Create the following databases in the external PostgreSQL database with users and its associated privileges. Note that simple passwords are being used here but the actual production environment should make use of complex passwords.
 
   ```yaml
 CREATE ROLE scm LOGIN PASSWORD 'scm';
