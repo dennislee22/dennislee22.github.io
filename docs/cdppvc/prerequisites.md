@@ -103,5 +103,5 @@ The following prerequisites need to be prepared prior to install CDP PvC with EC
 
 ## Internet
 
-- A stable connectivity to internet is required to ensure successful installation.
+- A stable connectivity to internet is required during installation.
 
