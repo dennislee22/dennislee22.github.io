@@ -21,7 +21,7 @@ The following components need to be prepared prior to the installation of CDP Pr
 ## Compute, Storage and Network
 
 1. The hardware requirements are solely determined by the specific CDP services to be installed in both CDP Base and ECS.
-2. The required minimum CDP Base services and its dependencies to install CML, CDW and CDE are illustrated in the following tables.
+2. The required minimum CDP Base services and its dependencies to install CML, CDW and CDE are illustrated in the following table.
 
 ![](../../assets/images/base_svc_table1.png)
 
