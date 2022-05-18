@@ -8,12 +8,12 @@ nav_order: 1
 # Prerequisites
 {: .no_toc }
 The following components are needed to be prepared prior to the installation of CDP Private Cloud Platform.
-
+{: .fs-4 .fw-300 }
 {: .no_toc .text-delta }
 
 - TOC
-{:toc}
-{: .fs-4 .fw-300 }
+{:toc.fw-300}
+
 ---
 
 ## Relational Database
