@@ -1,11 +1,11 @@
 ---
 layout: default
-title: Embedded Container Service
+title: CDP Base Platform
 parent: CDP Private Cloud
-nav_order: 4
+nav_order: 3
 ---
 
-# Embedded Container Service
+# CDP Base Platform
 {: .no_toc }
 TBA
 
