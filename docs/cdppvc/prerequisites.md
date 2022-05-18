@@ -7,11 +7,8 @@ nav_order: 1
 
 ### Description
 
-CDP Private Cloud Platform needs to be integrated with the following 3rd party components:
+The following components are needed to be prepared prior to the installation of CDP Private Cloud Platform.
 {: .no_toc .text-delta }
-
-1. TOC
-{:toc}
 
 ---
 
