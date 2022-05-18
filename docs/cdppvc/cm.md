@@ -41,9 +41,9 @@ This article explains the necessary steps to install CM on Centos7.9 OS which is
     150.4.15.10.in-addr.arpa	name = idm.cdpkvm.cldr.
     ```
 
-3. NTP client is synchronizing the time with the external NTP server.
+3. NTP client is synchronizing time with the external NTP server.
 
-4. Each host has already registered itself with the external Kerberos server.
+4. Each host has already been registered with the external Kerberos server.
 
     ```bash
     # ipa host-show bmaster1
