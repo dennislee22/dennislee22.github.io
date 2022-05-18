@@ -1,11 +1,11 @@
 ---
 layout: default
-title: Embedded Container Service
+title: ECS Installation
 parent: CDP Private Cloud
 nav_order: 4
 ---
 
-# Embedded Container Service
+# ECS Installation
 {: .no_toc }
 TBA
 
