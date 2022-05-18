@@ -8,54 +8,37 @@ nav_order: 2
 # Cloudera Manager (CM)
 {: .no_toc }
 
-This article explains the steps to install the CM.
+This article explains the steps to install the CM. Please ensure that the [prerequisites](({{ site.baseurl }}{% link docs/prerequisites.md %})) have already been prepared prior to running this procedure.
 
 - TOC
 {:toc}
 
 ---
 
-## Sanity Check
+## Run sanity check inside CM host.
 
 1. Ensure JDK has already been installed.
 
   ```bash
-  # rpm -qa | grep jdk
-    copy-jdk-configs-3.3-10.el7_5.noarch
-    java-11-openjdk-11.0.14.1.1-1.el7_9.x86_64
-    java-11-openjdk-headless-11.0.14.1.1-1.el7_9.x86_64
-    java-11-openjdk-devel-11.0.14.1.1-1.el7_9.x86_64
+# rpm -qa | grep jdk
+copy-jdk-configs-3.3-10.el7_5.noarch
+java-11-openjdk-11.0.14.1.1-1.el7_9.x86_64
+java-11-openjdk-headless-11.0.14.1.1-1.el7_9.x86_64
+java-11-openjdk-devel-11.0.14.1.1-1.el7_9.x86_64
   ```
 
-## Compute, Storage and Network
+2. Ensure that the external DNS server is able to resolve the hostname and perform reverse DNS lookup. Please this step for all the CDP PvC Base and ECS nodes.
 
-1. TBA
-
-## DNS Server
-
-1. TBA
-
-## NTP Server
-
-1. TBA
-
-## Kerberos Server
-
-1. TBA
-
-## LDAP Server
-
-1. TBA
-
-## Relational Database
-
-1. The database requirements is described in this [link](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/installation/topics/cdpdc-database-requirements.html).
-
-
-2. _Optional:_ Initialize search data (creates `search-data.json`)
   ```bash
-  $ bundle exec just-the-docs rake search:init
+# nslookup idm
+Server:		10.15.4.150
+Address:	10.15.4.150#53
+
+Name:	idm.cdpkvm.cldr
+Address: 10.15.4.150
+
+# nslookup 10.15.4.150
+150.4.15.10.in-addr.arpa	name = idm.cdpkvm.cldr.
   ```
 
-
-3. Point your web browser to [link](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/installation/topics/cdpdc-database-requirements.html)
+3. Ensure that the NTP client is schronizing the time with the external NTP server.
