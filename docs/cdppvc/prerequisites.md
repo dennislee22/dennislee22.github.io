@@ -34,8 +34,3 @@ The following components are needed to be prepared prior to the installation of 
 
 
 ## References
-
-- [CDP PvC Installation Guide]({{ site.baseurl }}{% link docs/configuration.md %})
-
----
-
