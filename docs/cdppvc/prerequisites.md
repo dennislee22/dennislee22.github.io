@@ -5,9 +5,14 @@ parent: CDP Private Cloud
 nav_order: 1
 ---
 
-# Minimum Prerequisites
+# Prerequisites
 {: .no_toc }
-The following components are the minimum prerequisites to install the CDP Private Cloud Platform.
+
+CDP Private Cloud (CDP PvC) Platform and ECS (Embedded Compute Service) needs to be integrated with some 3rd party/external components as represented by the purple coloured boxes depicted in the following logical architecture diagram.
+
+![](../../assets/images/logical_arch.png)
+
+The following components are the minimum prerequisites to install the CDP PvC Platform with ECS.
 
 - TOC
 {:toc}
@@ -36,11 +41,11 @@ The following components are the minimum prerequisites to install the CDP Privat
 
 ## NTP Server
 
-1. All CDP Base and ECS nodes must be installed with NTP client and be able to synchronize the time with the external NTP server.
+1. All CDP Base and ECS nodes must be installed with NTP client and able to synchronize the time with the external NTP server.
 
 ## Kerberos Server
 
-1. An external Kerberos server and the Kerberos key distribution center (KDC) (with a realm established) must be available provide authentication to CDP services, users and hosts.
+1. An external Kerberos server and the Kerberos key distribution center (KDC) (with a realm established) must be available to provide authentication to CDP services, users and hosts.
 
 ## LDAP Server
 
@@ -50,7 +55,7 @@ The following components are the minimum prerequisites to install the CDP Privat
 
 1. The database requirements is described in this [link](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/installation/topics/cdpdc-database-requirements.html).
 2. This article uses PostgreSQL 12 database as the external database.
-3. Create the following databases in the external PostgreSQL database with users and its associated privileges. Note that simple passwords are being used here but the actual production environment should make use of complex passwords.
+3. Create the following databases in the external PostgreSQL server with users and its associated privileges. Note that simple passwords are being used here but the actual production environment should make use of complex passwords. Not every database is being used here but as a placeholder for future use case expansion.
 
   ```yaml
 CREATE ROLE scm LOGIN PASSWORD 'scm';
@@ -91,3 +96,7 @@ CREATE DATABASE registry;
 CREATE USER registry WITH PASSWORD 'registry';
 GRANT ALL PRIVILEGES ON DATABASE "registry" to registry;
   ```
+  
+## Internet
+
+1. A stable connectivity to internet is required to ensure successful installation.
