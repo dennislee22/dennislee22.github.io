@@ -1,13 +1,13 @@
 ---
 layout: default
-title: Prerequisites
+title: Minimum Prerequisites
 parent: CDP Private Cloud
 nav_order: 1
 ---
 
 # Minimum Prerequisites
 {: .no_toc }
-The following components need to be prepared prior to the installation of CDP Private Cloud Platform.
+The following components are the minimum prerequisites to install the CDP Private Cloud Platform.
 
 - TOC
 {:toc}
@@ -38,7 +38,6 @@ The following components need to be prepared prior to the installation of CDP Pr
 ## Kerberos Server
 
 1. An external Kerberos server and the Kerberos key distribution center (KDC) (with a realm established) must be available provide authentication to CDP services, users and hosts.
-2. 
 
 ## LDAP Server
 
@@ -48,3 +47,44 @@ The following components need to be prepared prior to the installation of CDP Pr
 
 1. The database requirements is described in this [link](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/installation/topics/cdpdc-database-requirements.html).
 2. This article uses PostgreSQL 12 database as the external database.
+3. Create the following databases with users and its associated privileges. Note that simple passwords are being used here but the actual production environment should make use of complex passwords.
+
+  ```yaml
+  CREATE ROLE scm LOGIN PASSWORD 'scm';
+CREATE ROLE rman LOGIN PASSWORD 'rman';
+CREATE ROLE hue LOGIN PASSWORD 'hue';
+CREATE ROLE metastore LOGIN PASSWORD 'metastore';
+CREATE ROLE oozie LOGIN PASSWORD 'oozie';
+CREATE ROLE schemaregistry LOGIN PASSWORD 'schemaregistry';
+CREATE ROLE smm LOGIN PASSWORD 'smm';
+CREATE DATABASE scm OWNER scm ENCODING 'UTF8';
+CREATE DATABASE rman OWNER rman ENCODING 'UTF8';
+CREATE DATABASE hue OWNER hue ENCODING 'UTF8';
+CREATE DATABASE metastore OWNER metastore ENCODING 'UTF8';
+CREATE DATABASE oozie OWNER oozie ENCODING 'UTF8';
+CREATE DATABASE schemaregistry OWNER schemaregistry ENCODING 'UTF8';
+CREATE DATABASE smm OWNER smm ENCODING 'UTF8';
+ALTER DATABASE metastore SET standard_conforming_strings=off;
+ALTER DATABASE oozie SET standard_conforming_strings=off;
+CREATE DATABASE ranger ENCODING 'UTF8';
+CREATE USER rangeradmin WITH PASSWORD 'rangeradmin';
+GRANT ALL PRIVILEGES ON DATABASE ranger TO rangeradmin;
+CREATE DATABASE streamsmsgmgr;
+CREATE USER streamsmsgmgr WITH PASSWORD 'streamsmsgmgr';
+GRANT ALL PRIVILEGES ON DATABASE "streamsmsgmgr" to streamsmsgmgr;
+CREATE USER cdpadmin WITH PASSWORD 'cdpadmin';
+CREATE DATABASE dbenv OWNER cdpadmin ENCODING 'UTF8';
+CREATE DATABASE dbmlx OWNER cdpadmin ENCODING 'UTF8';
+CREATE DATABASE dbdwx OWNER cdpadmin ENCODING 'UTF8';
+CREATE DATABASE dbliftie OWNER cdpadmin ENCODING 'UTF8';
+CREATE DATABASE dbdex OWNER cdpadmin ENCODING 'UTF8';
+CREATE DATABASE dbresourcepoolmanager OWNER cdpadmin ENCODING 'UTF8';
+CREATE DATABASE dbclusteraccessmanager OWNER cdpadmin ENCODING 'UTF8';
+CREATE DATABASE dbalerts OWNER cdpadmin ENCODING 'UTF8';
+CREATE DATABASE dbums OWNER cdpadmin ENCODING 'UTF8';
+CREATE DATABASE cmregistration OWNER cdpadmin ENCODING 'UTF8';
+CREATE DATABASE clusterproxy OWNER cdpadmin ENCODING 'UTF8';
+CREATE DATABASE registry;
+CREATE USER registry WITH PASSWORD 'registry';
+GRANT ALL PRIVILEGES ON DATABASE "registry" to registry;
+  ```
