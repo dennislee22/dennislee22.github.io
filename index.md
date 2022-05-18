@@ -9,7 +9,6 @@ permalink: /
 # Just a Technical Blog
 {: .fs-9 }
 
-TBA
 {: .fs-6 .fw-300 }
 
 [Get started now](#getting-started){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 }
