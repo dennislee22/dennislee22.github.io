@@ -13,7 +13,7 @@ This article and its sub-articles explain the requirements and the step-by-step 
 
 | Software       | Version         |
 |:-------------|:------------------|
-| CDP Base           | 7.1.7 New {: .label .label-green }  | 
-| Cloudera Manager   | 7.5.5 New {: .label .label-green }  | 
-| CDP Data Services  | 1.3.4 New {: .label .label-green }  | 
+| CDP Base           | 7.1.7 `New {: .label .label-green }`  | 
+| Cloudera Manager   | 7.5.5 `New {: .label .label-green }`  | 
+| CDP Data Services  | 1.3.4 `New {: .label .label-green }`  | 
 
