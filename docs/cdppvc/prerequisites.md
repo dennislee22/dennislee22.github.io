@@ -2,7 +2,7 @@
 layout: default
 title: Prerequisites
 parent: CDP Private Cloud
-nav_order: 2
+nav_order: 1
 ---
 
 # Prerequisites
