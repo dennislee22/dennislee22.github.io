@@ -132,10 +132,8 @@ This article explains the necessary steps to install CM on Centos7.9 OS which is
     
 8. After successful installation, login the CM website.
 
-    ```yaml
-    https://cm.cdpkvm.cldr:7183
+   https://cm.cdpkvm.cldr:7183
 
-    ```
     
     ![](../../assets/images/cm_login.png)
     
