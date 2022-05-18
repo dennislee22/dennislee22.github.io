@@ -1,9 +1,9 @@
 ---
 layout: default
-title: CDP Private Cloud
+title: Installation
 nav_order: 4
 has_children: true
-permalink: docs/cdppvc/installation
+permalink: docs/cdppvc
 ---
 
 # CDP Private Cloud
