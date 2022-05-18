@@ -18,7 +18,7 @@ The following components are the minimum prerequisites to install the CDP Privat
 
 1. Obtain a valid product subscription from Cloudera. Cloudera Manager requires a valid license to install accordingly. 
 
-## Compute, Storage and Network
+## BareMetal Host
 
 1. The hardware requirements are solely determined by the specific CDP services to be installed in both CDP Base and ECS.
 2. The required minimum CDP Base services and its dependencies to install CML, CDW and CDE are illustrated in the following table.
@@ -26,6 +26,9 @@ The following components are the minimum prerequisites to install the CDP Privat
 ![](../../assets/images/base_svc_table1.png)
 
 3. Services such as HDFS, Zookeeper and [Ozone](https://docs.cloudera.com/cdp-private-cloud-upgrade/latest/release-guide/topics/cdpdc-ozone.html) have special storage requirements.
+4. The supported OS is listed [here](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/installation/topics/cdpdc-os-requirements.html).
+5. [JDK](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/installation/topics/cdpdc-java-requirements.html) must be installed in each host.
+6. [Data at Rest](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/installation/topics/cdpdc-data-at-rest-encryption-requirements.html) is not covered in this article.
 
 ## DNS Server
 
@@ -50,7 +53,7 @@ The following components are the minimum prerequisites to install the CDP Privat
 3. Create the following databases with users and its associated privileges. Note that simple passwords are being used here but the actual production environment should make use of complex passwords.
 
   ```yaml
-  CREATE ROLE scm LOGIN PASSWORD 'scm';
+CREATE ROLE scm LOGIN PASSWORD 'scm';
 CREATE ROLE rman LOGIN PASSWORD 'rman';
 CREATE ROLE hue LOGIN PASSWORD 'hue';
 CREATE ROLE metastore LOGIN PASSWORD 'metastore';
