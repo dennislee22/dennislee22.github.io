@@ -12,7 +12,7 @@ CDP Private Cloud (CDP PvC) Platform and ECS (Embedded Compute Service) require 
 
 ![](../../assets/images/logical_arch.png)
 
-The following prerequisites need to be prepared prior to install the CDP PvC Platform with ECS. 
+The following prerequisites need to be prepared prior to install CDP PvC with ECS solution. 
 
 - TOC
 {:toc}
@@ -25,12 +25,12 @@ The following prerequisites need to be prepared prior to install the CDP PvC Pla
 
 ## Host
 
-1. The hardware requirements are solely determined by the specific CDP services to be installed in both CDP Base and ECS.
-2. The required minimum CDP Base services and its dependencies to install CML, CDW and CDE are illustrated in the following table.
+1. The required minimum CDP Base services and its dependencies to install CML, CDW and CDE are illustrated in the following table.
 
 ![](../../assets/images/base_svc_table1.png)
 
-3. CDP Base services such as HDFS, Zookeeper and [Ozone](https://docs.cloudera.com/cdp-private-cloud-upgrade/latest/release-guide/topics/cdpdc-ozone.html) have special storage requirements.
+2. Hardware requirements are determined by the specific CDP services to be installed in both CDP Base and ECS.
+3. CDP Base services such as [HDFS](https://docs.cloudera.com/cdp-private-cloud-upgrade/latest/release-guide/topics/cdpdc-hdfs.html), [Zookeeper](https://docs.cloudera.com/cdp-private-cloud-upgrade/latest/release-guide/topics/cdpdc-zookeeper.html) and [Ozone](https://docs.cloudera.com/cdp-private-cloud-upgrade/latest/release-guide/topics/cdpdc-ozone.html) have dedicated storage requirements.
 4. The supported OS is listed [here](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/installation/topics/cdpdc-os-requirements.html).
 5. [JDK](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/installation/topics/cdpdc-java-requirements.html) must be installed in each host.
 6. [Data at Rest](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/installation/topics/cdpdc-data-at-rest-encryption-requirements.html) is not mandatory and hence not covered in this article.
@@ -39,7 +39,7 @@ The following prerequisites need to be prepared prior to install the CDP PvC Pla
 
 ## External NFS
 
-1. CML requires external [NFS server](https://docs.cloudera.com/machine-learning/1.3.4/private-cloud-requirements/topics/ml-pvc-external-nfs-server.html) to store the project files.
+1. CML requires external [NFS server](https://docs.cloudera.com/machine-learning/1.3.4/private-cloud-requirements/topics/ml-pvc-external-nfs-server.html) to store the project files. NFS version 4.1 must be supported.
 
 ## DNS Server
 
@@ -58,7 +58,7 @@ The following prerequisites need to be prepared prior to install the CDP PvC Pla
 
 1. The database requirements is described in this [link](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/installation/topics/cdpdc-database-requirements.html).
 2. This article uses PostgreSQL 12 database as the external database.
-3. Create the following databases in the external PostgreSQL server with users and its associated privileges. Note that simple passwords are being used here but the actual production environment should make use of complex passwords. Not every created database is being used here but as a placeholder for future use case expansion.
+3. Create the following databases in the external PostgreSQL server with its users and the associated privileges. Note that simple passwords are being created but the actual production environment should make use of complex passwords. Not every created database is being used here but serves as a placeholder for future use case.
 
   ```yaml
 CREATE ROLE scm LOGIN PASSWORD 'scm';
@@ -99,6 +99,10 @@ CREATE DATABASE registry;
 CREATE USER registry WITH PASSWORD 'registry';
 GRANT ALL PRIVILEGES ON DATABASE "registry" to registry;
   ```
+
+## Load Balancer
+
+1. An external load balancer is needed to route traffics towards redundant nodes of a particular service.
 
 ## Internet
 
