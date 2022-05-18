@@ -8,7 +8,7 @@ nav_order: 2
 # Cloudera Manager (CM)
 {: .no_toc }
 
-This article explains the steps to install the CM. Please ensure that the [prerequisites](({{ site.baseurl }}{% link docs/prerequisites.md %})) have already been prepared prior to running this procedure.
+This article explains the steps to install the CM. Please ensure that the [prerequisites](({{ site.baseurl }}{% link docs/cdppvc/prerequisites.md %})) have already been prepared prior to running this procedure.
 
 - TOC
 {:toc}
