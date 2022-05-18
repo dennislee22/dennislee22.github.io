@@ -29,17 +29,17 @@ This article explains the necessary steps to install CM on Centos7.9 OS which is
 
 2. The external DNS server is able to resolve the hostname and perform reverse DNS lookup. Please this step for all the CDP PvC Base and ECS nodes.
 
-  ```bash
-  # nslookup idm
-  Server:		10.15.4.150
-  Address:	10.15.4.150#53
+    ```bash
+    # nslookup idm
+    Server:		10.15.4.150
+    Address:	10.15.4.150#53
 
     Name:	idm.cdpkvm.cldr
     Address: 10.15.4.150
 
-  # nslookup 10.15.4.150
-  150.4.15.10.in-addr.arpa	name = idm.cdpkvm.cldr.
-  ```
+    # nslookup 10.15.4.150
+    150.4.15.10.in-addr.arpa	name = idm.cdpkvm.cldr.
+    ```
 
 3. NTP client is synchronizing the time with the external NTP server.
 
@@ -106,3 +106,38 @@ This article explains the necessary steps to install CM on Centos7.9 OS which is
 
     ```
 
+5. Enable and start the cloudera-scm-server service.
+
+    ```bash
+    # systemctl enable cloudera-scm-server
+    # systemctl start cloudera-scm-server
+
+    ```
+
+
+6. Monitor the cloudera-scm-server service log.
+
+    ```bash
+    # tail -f /var/log/cloudera-scm-server/cloudera-scm-server.log
+
+    ```
+
+7. Enable auto-TLS. The command creates self signed certificate as an example. User may also sign the CSR with CA.
+
+    ```bash
+    # export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-11.0.14.1.1-1.el7_9.x86_64
+    # /opt/cloudera/cm-agent/bin/certmanager --location /var/lib/cloudera-scm-server/certmanager setup --configure-services
+
+    ```
+    
+8. After successful installation, login the CM URL.
+
+    ```yaml
+    https://cm.cdpkvm.cldr:7183
+
+    ```
+    
+    ![](../../assets/images/cm_login.png)
+    
+    
+---    
