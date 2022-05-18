@@ -1,11 +1,11 @@
 ---
 layout: default
-title: CDP Base Platform
+title: CDP Base Installation
 parent: CDP Private Cloud
 nav_order: 3
 ---
 
-# CDP Base Platform
+# CDP Base Installation
 {: .no_toc }
 
 This article explains the necessary steps to install CM on Centos7.9 OS which is one of the supported operating systems. Please ensure that the [prerequisites]({{ site.baseurl }}{% link docs/cdppvc/prerequisites.md %}) have already been prepared prior to running this procedure.
