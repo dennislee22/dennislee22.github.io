@@ -1,6 +1,6 @@
 ---
 layout: default
-title: CDP PvC ECS
+title: Embedded Container Service
 parent: CDP Private Cloud
 nav_order: 3
 ---
