@@ -23,7 +23,7 @@ The following components need to be prepared prior to the installation of CDP Pr
 1. The hardware requirements are solely determined by the specific CDP services to be installed in both CDP Base and ECS.
 2. The required minimum CDP Base services and its dependencies to install CML, CDW and CDE are illustrated in the following tables.
 
-![](../../assets/images/base_svc_table2.png)
+![](../../assets/images/base_svc_table2.png width="50%" and height="50%")
 ![](../../assets/images/base_svc_table1.png)
 
 3. Services such as HDFS, Zookeeper and [Ozone](https://docs.cloudera.com/cdp-private-cloud-upgrade/latest/release-guide/topics/cdpdc-ozone.html) have special storage requirements.
