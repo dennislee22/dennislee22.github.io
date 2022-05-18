@@ -3,6 +3,9 @@ layout: default
 title: Prerequisites
 parent: CDP Private Cloud
 nav_order: 1
+parent: Installation
+grand_parent: CDP Private Cloud
+permalink: /docs/cdppvc/installation
 ---
 
 # Prerequisites
