@@ -8,14 +8,11 @@ permalink: /
 
 # Topics that might interest you:
 
-{: .fs-7 }
-
-
 [CDP Private Cloud]({{ site.baseurl }}{% link docs/cdppvc/cdppvc.md %}){: .btn .btn-green .fs-5 .mb-4 .mb-md-0 .mr-2 }
 
 [Longhorn]({{ site.baseurl }}{% link docs/longhorn/longhorn.md %}){: .btn .btn-purple .fs-5 .mb-4 .mb-md-0 .mr-2 }
 
----
+
 
 
 
