@@ -29,3 +29,11 @@ This article explains the necessary steps to install Cloudera Manager (CM) on Ce
     ```
 
 2. The external DNS server is able to resolve the hostname and perform reverse DNS lookup. Please this step for all the CDP PvC Base and ECS nodes.
+
+1. Install LVM2 package.
+
+    ```bash
+    # yum install lvm2 -y
+    ```
+    
+2. 
