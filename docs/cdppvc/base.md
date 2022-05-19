@@ -109,37 +109,40 @@ This article explains the necessary steps to install the minimum services on CDP
 
     ![](../../assets/images/cdpbase/addbase9.png)
     
-10. E 
+10. Select the node in the green boxes to host each service. Click `Continue`.
 
     ![](../../assets/images/cdpbase/addbase10.png)
     
-11. E 
+11. The outcome is similar to the following diagram. The placement is based on the recommended design architecture as depicted below.
 
     ![](../../assets/images/cdpbase/baseroles.png)
+    ![](../../assets/images/cdpbase/baseplacement.png)
     
-12. E 
+12. Fill the database parameters based on the created databases in PostgreSQL. Click `Test Connection`. After getting positive result, click `Continue`.
 
     ![](../../assets/images/cdpbase/addbase12.png)
     
-13. E 
+13. Enter the required parameters. Click `Continue`.
 
     ![](../../assets/images/cdpbase/addbase13.png)
     
-14. E 
+14. Review and amend the parameters accordingly. Note that the directory path for services such as HDFS, Ozone and Zookeeper might require dedicated storage disk that is expected to be formatted and mounted prior to this installation as explained in the [prerequisites]({{ site.baseurl }}{% link docs/cdppvc/prerequisites.md %}) subtopic. The directory must be configured here in accordance to the mounted disk folder name.
 
     ![](../../assets/images/cdpbase/addbase14-1.png)
+
+For Ozone with SCM HA instances, configure hostname of one of the SCM hosts in the `Ozone SCM Primordial Node ID` field.
     ![](../../assets/images/cdpbase/addbase14-2.png)
     
-15. E 
+15. Click `Continue`.
 
     ![](../../assets/images/cdpbase/addbase15.png)
     
-16. E 
+16. The system will start to install the CDP Base services accordingly. Click `Continue` after successful installation.
 
     ![](../../assets/images/cdpbase/addbase16.png)
 
 ## Post Installation Settings
 
-1. Navigate to `Clusters` > `Add Cluster`. 
+1. All services should be in green mode as depicted below. Resolve the warning configuration issues or compress the warning if necessary.
 
     ![](../../assets/images/cdpbase/basepost1.png)
