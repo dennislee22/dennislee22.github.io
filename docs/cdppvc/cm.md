@@ -123,7 +123,7 @@ This article explains the necessary steps to install Cloudera Manager (CM) on Ce
 
     ```
 
-7. Enable auto-TLS. The command creates self signed certificate as an example. User may also sign the CSR with CA.
+7. Enable [AutoTLS](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/installation/topics/cdpdc-recommended-enable-auto-tls.html). The command creates self signed certificate as an example. User may also sign the CSR with CA.
 
     ```bash
     # export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-11.0.14.1.1-1.el7_9.x86_64
