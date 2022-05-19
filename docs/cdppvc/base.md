@@ -9,7 +9,7 @@ nav_order: 3
 # CDP Base Installation
 {: .no_toc }
 
-This article explains the necessary steps to install CM on Centos7.9 OS which is one of the supported operating systems. Please ensure that the [prerequisites]({{ site.baseurl }}{% link docs/cdppvc/prerequisites.md %}) have already been prepared prior to running this procedure.
+This article explains the necessary steps to install the minimum services on CDP Base platform. Please ensure that the [prerequisites]({{ site.baseurl }}{% link docs/cdppvc/prerequisites.md %}) have already been prepared and [CM]({{ site.baseurl }}{% link docs/cdppvc/cm.md %}) has already been installed successfully prior to running this procedure.
 
 - TOC
 {:toc}
@@ -59,3 +59,11 @@ This article explains the necessary steps to install CM on Centos7.9 OS which is
     Keytab: True
     Managed by: bmaster1.cdpkvm.cldr
     ```
+
+## Install services on CDP Base via CM.
+
+1. In CM, navigate to  
+
+    ![](../../assets/images/cdpbase/select_host.png)
+
+
