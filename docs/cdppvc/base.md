@@ -62,15 +62,13 @@ This article explains the necessary steps to install the minimum services on CDP
 
 ## Install services on CDP Base via CM
 
-1. Navigate to `Clusters` > `Add Cluster`.
+1. Navigate to `Clusters` > `Add Cluster`.Select `Private Cloud Base Cluster` and click `Continue` button.
 
     ![](../../assets/images/cdpbase/addbase1.png)
 
-2. Select `Private Cloud Base Cluster` and click `Continue` button.
-
     ![](../../assets/images/cdpbase/addbase2.png)
 
-3. Enter the Cluster Name and click `Continue` button. 
+2. Enter the Cluster Name and click `Continue` button. 
 
     ![](../../assets/images/cdpbase/addbase3.png)
 
