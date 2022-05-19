@@ -1,8 +1,9 @@
 ---
 layout: default
 title: Installation
-nav_order: 4
+parent: CDP Private Cloud
 has_children: true
+nav_order: 4
 ---
 
 # CDP Private Cloud
