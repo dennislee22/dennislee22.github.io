@@ -16,7 +16,7 @@ This article explains the necessary steps to install the minimum services on CDP
 
 ---
 
-## Run sanity check in each host.
+## Run sanity check in each host
 
 1. JDK has already been installed.
 
@@ -60,10 +60,19 @@ This article explains the necessary steps to install the minimum services on CDP
     Managed by: bmaster1.cdpkvm.cldr
     ```
 
-## Install services on CDP Base via CM.
+## Install services on CDP Base via CM
 
-1. In CM, navigate to  
+1. Navigate to  
 
-    ![](../../assets/images/cdpbase/select_host.png)
+    ![](../../assets/images/cdpbase/addbase1.png)
+
+2. Navigate to  
+
+    ![](../../assets/images/cdpbase/addbase2.png)
+
+3. Navigate to   
+
+    ![](../../assets/images/cdpbase/addbase3.png)
+
 
 
