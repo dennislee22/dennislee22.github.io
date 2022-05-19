@@ -130,7 +130,7 @@ This article explains the necessary steps to install the minimum services on CDP
 
     ![](../../assets/images/cdpbase/addbase14-1.png)
 
-For Ozone with SCM HA instances, configure hostname of one of the SCM hosts in the `Ozone SCM Primordial Node ID` field.
+    For Ozone with SCM HA instances, configure hostname of one of the SCM hosts in the `Ozone SCM Primordial Node ID` field.
     ![](../../assets/images/cdpbase/addbase14-2.png)
     
 15. Click `Continue`.
