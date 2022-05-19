@@ -146,3 +146,5 @@ This article explains the necessary steps to install the minimum services on CDP
 1. All services should be in green mode as depicted below. Resolve the warning configuration issues or compress the warning if necessary.
 
     ![](../../assets/images/cdpbase/basepost1.png)
+
+2. Proceed to test the CDP Base cluster in the next [subtopic]({{ site.baseurl }}{% link docs/cdppvc/basetest.md %}).
