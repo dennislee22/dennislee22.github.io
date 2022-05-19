@@ -138,5 +138,10 @@ This article explains the necessary steps to install Cloudera Manager (CM) on Ce
     
     ![](../../assets/images/cm_login.png)
     
+9. Insert the Cloudera license as requested.
+
+    ![](../../assets/images/license.png)
     
+10.     
+        
 ---    
