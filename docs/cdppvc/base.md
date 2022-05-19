@@ -60,7 +60,7 @@ This article explains the necessary steps to install the minimum services on CDP
     Managed by: bmaster1.cdpkvm.cldr
     ```
 
-## Install services on CDP Base via CM
+## Install CDP services on CDP Base via CM
 
 1. Navigate to `Clusters` > `Add Cluster`. 
    Select `Private Cloud Base Cluster` and click `Continue` button.
