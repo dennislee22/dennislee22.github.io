@@ -170,6 +170,6 @@ This article explains the necessary steps to install Cloudera Manager (CM) on Ce
 
     ![](../../assets/images/kdc7.png) 
     
-17. Proceed to create the CDP Base cluster in the next subtopic.
+17. Proceed to create the CDP Base cluster in the next [subtopic]({{ site.baseurl }}{% link docs/cdppvc/base.md %}).
         
 ---    
