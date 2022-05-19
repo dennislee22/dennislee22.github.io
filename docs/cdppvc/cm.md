@@ -16,9 +16,9 @@ This article explains the necessary steps to install Cloudera Manager (CM) on Ce
 
 ---
 
-## Run sanity check in each host.
+## Sanity Check
 
-1. JDK has already been installed.
+1. Ensure that JDK has already been installed in each host.
 
     ```bash
     # rpm -qa | grep jdk
@@ -42,7 +42,7 @@ This article explains the necessary steps to install Cloudera Manager (CM) on Ce
     150.4.15.10.in-addr.arpa	name = idm.cdpkvm.cldr.
     ```
 
-3. NTP client is synchronizing time with the external NTP server.
+3. NTP client of each host is synchronizing time with the external NTP server.
 
 4. Each host has already been registered with the external Kerberos server.
 
