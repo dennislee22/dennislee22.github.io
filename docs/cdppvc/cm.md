@@ -138,10 +138,38 @@ This article explains the necessary steps to install Cloudera Manager (CM) on Ce
     
     ![](../../assets/images/cm_login.png)
     
-9. Insert the Cloudera license as requested.
+9. Select the Cloudera license txt file as requested.
 
     ![](../../assets/images/license.png)
     
-10.     
+10. Click `here to setup a KDC` link and click `Continue`.
+
+    ![](../../assets/images/kdc1.png)    
+    
+11. In this demo, Red Hat IPA is the KDC server. Apply the instructions based on the OS of the CM. Select `I have completed all the above steps.` and click `Continue`.
+
+    ![](../../assets/images/kdc2.png) 
+    
+12. Key in the parameters and click `Continue`.
+
+    ![](../../assets/images/kdc3.png) 
+    
+13. Select `Manage krb5.conf through Cloudera Manager` option and click `Continue`.
+
+    ![](../../assets/images/kdc4.png) 
+    
+14. Enter account credentials and click `Continue`.
+
+    ![](../../assets/images/kdc5.png) 
+    
+15. The following output shows you have successfully setup the KDC. Click `Finish`.
+
+    ![](../../assets/images/kdc6.png) 
+    
+16. Both AutoTLS and KDC have successfully been set up in CM. 
+
+    ![](../../assets/images/kdc7.png) 
+    
+17. Proceed to create the CDP Base cluster in the next subtopic.
         
 ---    
