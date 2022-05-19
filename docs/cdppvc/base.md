@@ -16,9 +16,9 @@ This article explains the necessary steps to install the minimum services on CDP
 
 ---
 
-## Run sanity check in each host
+## Sanity check
 
-1. JDK has already been installed.
+1. Ensure that JDK has already been installed in each host.
 
     ```bash
     # rpm -qa | grep jdk
@@ -42,7 +42,7 @@ This article explains the necessary steps to install the minimum services on CDP
     150.4.15.10.in-addr.arpa	name = idm.cdpkvm.cldr.
     ```
 
-3. NTP client is synchronizing time with the external NTP server.
+3. NTP client of each host is synchronizing time with the external NTP server.
 
 4. Each host has already been registered with the external Kerberos server.
 
@@ -60,7 +60,7 @@ This article explains the necessary steps to install the minimum services on CDP
     Managed by: bmaster1.cdpkvm.cldr
     ```
 
-## Configure higher session timeout value
+## Session Timeout
 
 1. Navigate to `Administration` > `Settings`. Search for `session timeout`. Key in `5 days`. This is a temporary setting to avoid session timeout during CDP Base installation (You may revert this setting after successful installation). Log out and log in CM portal.
 
@@ -141,7 +141,7 @@ This article explains the necessary steps to install the minimum services on CDP
 
     ![](../../assets/images/cdpbase/addbase16.png)
 
-## Post Installation Settings
+## Post CDP Base Installation Settings
 
 1. All services should be in green mode as depicted below. Resolve the warning configuration issues or compress the warning if necessary.
 
