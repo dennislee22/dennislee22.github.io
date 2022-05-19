@@ -62,7 +62,7 @@ This article explains the necessary steps to install the minimum services on CDP
 
 ## Configure higher session timeout value
 
-1. Navigate to `Administration` > `Settings`. Search for `session timeout`. Key in `2 days` to avoid session timeout during CDP Base installation. 
+1. Navigate to `Administration` > `Settings`. Search for `session timeout`. Key in `5 days`. This is a temporary setting to avoid session timeout during CDP Base installation (You may revert this setting after successful installation). Log out and log in CM portal.
 
     ![](../../assets/images/cdpbase/timeout.png)
 
@@ -95,16 +95,17 @@ This article explains the necessary steps to install the minimum services on CDP
 
     ![](../../assets/images/cdpbase/addbase6.png)
     
-7. CM is installing the agent in each CDP Base host in parallel and will subsequently install the parcels. After completion, click `Continue`. 
+7. CM is installing the agent in each CDP Base host in parallel and will subsequently install the parcels.
 
     ![](../../assets/images/cdpbase/addbase7-1.png)
     ![](../../assets/images/cdpbase/addbase7-2.png)
     
-8. E 
+8. Select `Inspect hosts`. Check the results if needed. Otherwise, click `Continue`. 
 
-    ![](../../assets/images/cdpbase/addbase8.png)
+    ![](../../assets/images/cdpbase/addbase8-1.png)
+    ![](../../assets/images/cdpbase/addbase8-2.png)
     
-9. E 
+9. Select `Custom Services`. Select `Atlas`, `HDFS`, `Hive`, `Ozone`, `Ranger`, `Yarn`, `Yarn Queue Manager` and `Zookeeper`. These are the minimum services needed on the CDP Base cluster to provision CDW, CML and CDE on ECS platform later.
 
     ![](../../assets/images/cdpbase/addbase9.png)
     
@@ -112,10 +113,33 @@ This article explains the necessary steps to install the minimum services on CDP
 
     ![](../../assets/images/cdpbase/addbase10.png)
     
-3. E 
+11. E 
 
-    ![](../../assets/images/cdpbase/addbase3.png)
+    ![](../../assets/images/cdpbase/addbase11.png)
     
+12. E 
 
+    ![](../../assets/images/cdpbase/addbase12.png)
     
+13. E 
 
+    ![](../../assets/images/cdpbase/addbase13.png)
+    
+14. E 
+
+    ![](../../assets/images/cdpbase/addbase14-1.png)
+    ![](../../assets/images/cdpbase/addbase14-2.png)
+    
+15. E 
+
+    ![](../../assets/images/cdpbase/addbase15.png)
+    
+16. E 
+
+    ![](../../assets/images/cdpbase/addbase16.png)
+
+## Post Installation Settings
+
+1. Navigate to `Clusters` > `Add Cluster`. 
+
+    ![](../../assets/images/cdpbase/basepost1.png)
