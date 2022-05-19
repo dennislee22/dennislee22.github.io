@@ -1,12 +1,12 @@
 ---
 layout: default
-title: CDP Base
+title: CDP Base Cluster
 parent: Installation
 grand_parent: CDP Private Cloud
 nav_order: 3
 ---
 
-# CDP Base Installation
+# CDP Base Cluster Deployment
 {: .no_toc }
 
 This article explains the necessary steps to install the minimum services on CDP Base platform. Please ensure that the [prerequisites]({{ site.baseurl }}{% link docs/cdppvc/prerequisites.md %}) have already been prepared and [CM]({{ site.baseurl }}{% link docs/cdppvc/cm.md %}) has already been installed successfully prior to running this procedure.
@@ -141,7 +141,7 @@ This article explains the necessary steps to install the minimum services on CDP
 
     ![](../../assets/images/cdpbase/addbase16.png)
 
-## Post CDP Base Installation Settings
+## Post CDP Base Cluster Installation Settings
 
 1. All services should be in green mode as depicted below. Resolve the warning configuration issues or compress the warning if necessary.
 
