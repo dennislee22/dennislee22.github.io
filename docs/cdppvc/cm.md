@@ -1,7 +1,8 @@
 ---
 layout: default
 title: CM Installation
-parent: CDP Private Cloud
+parent: Installation
+grand_parent: CDP Private Cloud
 nav_order: 2
 ---
 
