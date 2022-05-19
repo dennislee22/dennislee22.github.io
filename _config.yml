@@ -74,7 +74,7 @@ nav_sort: case_sensitive # Capital letters sorted before lowercase
 back_to_top: true
 back_to_top_text: "Back to top"
 
-footer_content: "Just Another Piece of Blog"
+footer_content: "All trademarks, logos, service marks and company names appeared here are the property of their respective owners."
 
 # Footer last edited timestamp
 last_edit_timestamp: true # show or hide edit time - page must have `last_modified_date` defined in the frontmatter
