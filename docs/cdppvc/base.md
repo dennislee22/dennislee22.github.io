@@ -1,6 +1,6 @@
 ---
 layout: default
-title: CDP Base Installation
+title: CDP Base
 parent: Installation
 grand_parent: CDP Private Cloud
 nav_order: 3
