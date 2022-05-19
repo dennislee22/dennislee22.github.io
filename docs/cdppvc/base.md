@@ -147,4 +147,4 @@ This article explains the necessary steps to install the minimum services on CDP
 
     ![](../../assets/images/cdpbase/basepost1.png)
 
-2. Proceed to test the CDP Base cluster in the next [subtopic]({{ site.baseurl }}{% link docs/cdppvc/basetest.md %}).
+2. Proceed to configure the necessary settings of CDP Base cluster in the next [subtopic]({{ site.baseurl }}{% link docs/cdppvc/basetest.md %}).
