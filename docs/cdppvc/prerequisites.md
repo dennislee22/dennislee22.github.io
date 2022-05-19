@@ -34,7 +34,14 @@ The following prerequisites need to be prepared prior to install CDP PvC with EC
 - [JDK](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/installation/topics/cdpdc-java-requirements.html) must be installed in each host.
 - [Data at Rest](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/installation/topics/cdpdc-data-at-rest-encryption-requirements.html) is not mandatory and hence not covered in this article.
 - CDW requires locally attached SCSI device (SSD/NVMe) on each ECS worker/agent node.
-- All ECS hosts need to be equipped with SSD/NVMe disk as the physical disk for [Longhorn storage](https://longhorn.io/docs/1.2.4/best-practices/#minimum-recommended-hardware). Longhorn could only use a single volume disk per node and thereby LVM is recommended to be used for exposing a single volume backed by one/many physical disk. 
+- All ECS hosts need to be equipped with SSD/NVMe disk as the physical disk for [Longhorn storage](https://longhorn.io/docs/1.2.4/best-practices/#minimum-recommended-hardware). Longhorn could only use a single volume disk per node and thereby LVM is recommended to be used for exposing a single volume backed by one/many physical disk.
+- For every ECS node that is equipped with Nvidia GPU card, ensure that the GPU hosts have nVidia Drivers and nvidia-container-runtime installed.
+- All ECS nodes must be installed with nfs-utils package.
+
+    ```bash
+    # yum install nfs-utils
+
+    ```
 
 ## External NFS
 
