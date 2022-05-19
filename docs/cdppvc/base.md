@@ -115,7 +115,7 @@ This article explains the necessary steps to install the minimum services on CDP
     
 11. E 
 
-    ![](../../assets/images/cdpbase/addbase11.png)
+    ![](../../assets/images/cdpbase/baseroles.png)
     
 12. E 
 
