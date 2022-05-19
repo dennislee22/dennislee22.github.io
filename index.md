@@ -6,12 +6,14 @@ description: "Just a piece of technical blog"
 permalink: /
 ---
 
-# Just Another Technical Blog
-{: .fs-9 }
+# Topics that might interest you:
+{: .fs-7 }
 
 {: .fs-6 .fw-300 }
 
 [CDP Private Cloud]({{ site.baseurl }}{% link docs/cdppvc/cdppvc.md %}){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 }
+
+[Longhorn]({{ site.baseurl }}{% link docs/longhorn/longhorn.md %}){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 }
 
 ---
 
