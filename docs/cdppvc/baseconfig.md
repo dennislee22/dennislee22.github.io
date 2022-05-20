@@ -20,24 +20,29 @@ Check and make necessary configurations to ensure that the CDP Base cluster has 
 
 1. After the CDP Base has successfully been installed, the dependencies should be reflected in the each service's configurations as shown below. If not, please amend the configurations accordingly.
 
-    ![](../../assets/images/cdpbase/baseconfig1.png)
+    ![](../../assets/images/cdpbase/hiveconfig.png)
     
-    ![](../../assets/images/cdpbase/baseconfig2.png)
+    ![](../../assets/images/cdpbase/atlasconfig.png)
     
-    ![](../../assets/images/cdpbase/baseconfig3.png)
+    ![](../../assets/images/cdpbase/solrconfig.png)
     
-    ![](../../assets/images/cdpbase/baseconfig4.png)
+    ![](../../assets/images/cdpbase/hdfsconfig.png)
     
-    ![](../../assets/images/cdpbase/baseconfig5.png)
+    ![](../../assets/images/cdpbase/yarnconfig.png)
     
-    ![](../../assets/images/cdpbase/baseconfig6.png)
+    ![](../../assets/images/cdpbase/kafkaconfig.png)
 
-    ![](../../assets/images/cdpbase/baseconfig7.png)
+    ![](../../assets/images/cdpbase/hbaseconfig.png)
 
-    ![](../../assets/images/cdpbase/baseconfig8.png)
+    ![](../../assets/images/cdpbase/yarnqueueconfig.png)
     
-    ![](../../assets/images/cdpbase/baseconfig9.png)
+    ![](../../assets/images/cdpbase/ozone.png)
     
-    ![](../../assets/images/cdpbase/baseconfig10.png)
-    
-    
+
+## Ranger Configuration
+
+1. After the CDP Base has successfully been installed, the dependencies should be reflected in the each service's configurations     
+
+## Ranger Configuration
+
+1. After the CDP Base has successfully been installed, the dependencies should be reflected in the each service's configurations  
