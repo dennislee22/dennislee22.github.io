@@ -37,11 +37,7 @@ Check and make necessary configurations to ensure that the CDP Base cluster has 
     ![](../../assets/images/cdpbase/yarnqueueconfig.png)
     
     ![](../../assets/images/cdpbase/ozone.png)
-    
-
-## Ranger Configuration
-
-1. After the CDP Base has successfully been installed, the dependencies should be reflected in the each service's configurations     
+     
 
 ## Ranger Configuration
 
@@ -82,9 +78,10 @@ Check and make necessary configurations to ensure that the CDP Base cluster has 
 4. The output should be successful as shown below.
 
     ![](../../assets/images/cdpbase/rangersetting4.png)    
-    
-    
----    
+        
+---  
+
    Next Step
    {: .label .label-blue }
+   
 - Proceed to install the ECS cluster in the next [subtopic]({{ site.baseurl }}{% link docs/cdppvc/ecs.md %}).
