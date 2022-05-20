@@ -85,5 +85,6 @@ Check and make necessary configurations to ensure that the CDP Base cluster has 
     
     
 ---    
-   Next
-   {: .label .label-blue } Proceed to install the ECS cluster in the next [subtopic]({{ site.baseurl }}{% link docs/cdppvc/ecs.md %}).
+   Next Step
+   {: .label .label-blue }
+   Proceed to install the ECS cluster in the next [subtopic]({{ site.baseurl }}{% link docs/cdppvc/ecs.md %}).
