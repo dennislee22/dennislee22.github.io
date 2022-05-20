@@ -169,6 +169,59 @@ This article explains the necessary steps to install Cloudera Manager (CM) on Ce
 
     ![](../../assets/images/kdc7.png) 
     
-17. Proceed to create the CDP Base cluster in the next [subtopic]({{ site.baseurl }}{% link docs/cdppvc/base.md %}).
-        
+## Connect CM with External LDAP
+
+1. Navigate to `Administration` > `Settings`. Search for `backend` and select the following options so that CM will first look up the user in the external LDAP server.
+
+    ![](../../assets/images/cmsetting1.png) 
+    
+2. Configure CM with the necessary external LDAP server settings as shown in the following example. Note that this demo is connected to Red Hat IPA.
+
+| Parameter       | Value         |
+|:----------------|:------------------|
+| External Authentication Type         | LDAP  | 
+| LDAP URL  | ldap://idm.cdpkvm.cldr  | 
+| LDAP Bind User Distinguished Name  |  uid=admin,cn=users,cn=accounts,dc=cdpkvm,dc=cldr | 
+| LDAP Bind Password |  `password` | 
+| LDAP User Search Filter | (uid={0})  | 
+| LDAP User Search Base | cn=users,cn=accounts,dc=cdpkvm,dc=cldr  | 
+| LDAP Group Search Filter | (member={0})  | 
+| LDAP Group Search Base  |  cn=groups,cn=accounts,dc=cdpkvm,dc=cldr | 
+
+3. Restart the cloudera-scm-server service.
+
+    ```bash
+    # systemctl restart cloudera-scm-server
+    ```
+    
+4. Configure a new user in the external LDAP server. Log in CM with this newly created user. Log implies that CM manages to contact LDAP server and allow successful login. However, this new user has no role configured in CM.
+
+    ![](../../assets/images/cmsetting2.png) 
+
+    ```bash
+    # tail -f /var/log/cloudera-scm-server/cloudera-scm-server.log
+    2022-05-20 18:55:43,353 INFO scm-web-155:com.cloudera.server.web.cmf.CmfLdapUserDetailsContextMapper: External user ldapuser1 logged in without any roles.
+2022-05-20 18:55:43,414 INFO scm-web-155:com.cloudera.server.web.cmf.AuthenticationSuccessEventListener: Authentication success for user: 'ldapuser1' from 10.96.83.175
+    ```
+
+5. Log out and log in with the database admin account. Navigate to `Administration` > `Users & Roles`.
+
+    ![](../../assets/images/cmsetting2.png) 
+    
+6. Assign `Full Administrator` role for this ldap user.
+
+    ![](../../assets/images/cmsetting3.png)    
+    
+    ![](../../assets/images/cmsetting4.png)  
+
+    ![](../../assets/images/cmsetting6.png)  
+    
+7. Log out and log in with the ldap user again. This time this ldap user has full access of the CM dashboard.
+
+    ![](../../assets/images/cmsetting7.png)   
+    
 ---    
+
+- Proceed to create the CDP Base cluster in the next [subtopic]({{ site.baseurl }}{% link docs/cdppvc/base.md %}).
+        
+
