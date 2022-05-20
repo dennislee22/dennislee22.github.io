@@ -214,11 +214,11 @@ This article explains the necessary steps to install Cloudera Manager (CM) on Ce
     
     ![](../../assets/images/cmsetting4.png)  
 
-    ![](../../assets/images/cmsetting6.png)  
+    ![](../../assets/images/cmsetting5.png)  
     
 7. Log out and log in with the ldap user again. This time this ldap user has full access of the CM dashboard.
 
-    ![](../../assets/images/cmsetting7.png)   
+    ![](../../assets/images/cmsetting6.png)   
     
 ---    
 
