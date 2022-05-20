@@ -45,4 +45,21 @@ Check and make necessary configurations to ensure that the CDP Base cluster has 
 
 ## Ranger Configuration
 
-1. After the CDP Base has successfully been installed, the dependencies should be reflected in the each service's configurations  
+1. The external LDAP server is the centralized user authentication database that stores the user credentials with the associated group. This demo is connected to Red Hat IPA. Configure Ranger with the necessary external LDAP server settings. Navigate to `base 1` > `Ranger` > `Configurations`.
+
+| Parameter       | Value         |
+|:----------------|:------------------|
+| Admin LDAP Auth URL          |   | 
+| Admin LDAP Auth Bind User   |   | 
+| Admin LDAP Auth Bind User Password  |   | 
+| Admin LDAP Auth User DN Pattern |   | 
+| Admin LDAP Auth User Search Filter |   | 
+| Admin LDAP Auth Group Search Base |   | 
+| Admin LDAP Auth Group Search Filter |   | 
+| Admin LDAP Auth Base DN  |   | 
+| Admin LDAP Auth Bind User Password  |   | 
+| Admin LDAP Auth Bind User Password  |   | 
+
+2. Configure the following settings in Ranger. Click `Save Changes`.
+
+    ![](../../assets/images/cdpbase/rangersetting1.png)
