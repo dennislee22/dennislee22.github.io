@@ -79,7 +79,7 @@ Check and make necessary configurations to ensure that the CDP Base cluster has 
 
     ![](../../assets/images/cdpbase/rangersetting3.png)
     
-4. Ensure the result is successful.
+4. The output should be successful as shown below.
 
     ![](../../assets/images/cdpbase/rangersetting4.png)    
     
@@ -87,4 +87,4 @@ Check and make necessary configurations to ensure that the CDP Base cluster has 
 ---    
    Next Step
    {: .label .label-blue }
-   Proceed to install the ECS cluster in the next [subtopic]({{ site.baseurl }}{% link docs/cdppvc/ecs.md %}).
+- Proceed to install the ECS cluster in the next [subtopic]({{ site.baseurl }}{% link docs/cdppvc/ecs.md %}).
