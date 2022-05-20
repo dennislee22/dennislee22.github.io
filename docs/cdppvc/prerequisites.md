@@ -121,5 +121,7 @@ The following prerequisites need to be prepared prior to install CDP PvC with EC
 - A stable connectivity to internet is required during installation.
 
 ---
-
-After preparing the abovementioned prerequisites, proceed to check out the steps to install Cloudera Manager in the subsequent [subtopic]({{ site.baseurl }}{% link docs/cdppvc/cm.md %}).
+   
+   Next Step
+   {: .label .label-blue }
+- After preparing the abovementioned prerequisites, proceed to check out the steps to install Cloudera Manager in the subsequent [subtopic]({{ site.baseurl }}{% link docs/cdppvc/cm.md %}).
