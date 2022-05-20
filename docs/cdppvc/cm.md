@@ -206,11 +206,9 @@ This article explains the necessary steps to install Cloudera Manager (CM) on Ce
 
 5. Log out and log in with the database admin account. Navigate to `Administration` > `Users & Roles`.
 
-    ![](../../assets/images/cmsetting2.png) 
+    ![](../../assets/images/cmsetting3.png) 
     
-6. Assign `Full Administrator` role for this ldap user.
-
-    ![](../../assets/images/cmsetting3.png)    
+6. Assign `Full Administrator` role for this ldap user.  
     
     ![](../../assets/images/cmsetting4.png)  
 
@@ -222,7 +220,6 @@ This article explains the necessary steps to install Cloudera Manager (CM) on Ce
     
 ---    
    Next
-   {: .label .label-blue }
-   Proceed to create the CDP Base cluster in the next [subtopic]({{ site.baseurl }}{% link docs/cdppvc/base.md %}).
+   {: .label .label-blue } Proceed to create the CDP Base cluster in the next [subtopic]({{ site.baseurl }}{% link docs/cdppvc/base.md %}).
         
 
