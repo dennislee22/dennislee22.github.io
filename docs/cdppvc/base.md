@@ -142,9 +142,7 @@ This article explains the necessary steps to install the minimum services on CDP
 
     ![](../../assets/images/cdpbase/addbase16.png)
 
-## Post CDP Base Cluster Installation Settings
-
-1. All services should be in green mode as depicted below. Resolve the warning configuration issues or compress the warning if necessary.
+17. All services should be in green mode as depicted below. Resolve the warning configuration issues or compress the warning if necessary.
 
     ![](../../assets/images/cdpbase/basepost1.png)
 
@@ -152,4 +150,4 @@ This article explains the necessary steps to install the minimum services on CDP
 ---    
    Next Step
    {: .label .label-blue }
-   Proceed to configure the necessary settings of CDP Base cluster in the next [subtopic]({{ site.baseurl }}{% link docs/cdppvc/baseconfig.md %}).
+- Proceed to configure the necessary settings of CDP Base cluster in the next [subtopic]({{ site.baseurl }}{% link docs/cdppvc/baseconfig.md %}).
