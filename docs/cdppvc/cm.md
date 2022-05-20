@@ -84,14 +84,14 @@ This article explains the necessary steps to install Cloudera Manager (CM) on Ce
     type=rpm-md
     ```
 
-3. Import the RPM-GPG-KEY
+3. Import the RPM-GPG-KEY.
 
     ```bash
     # rpm --import  https://<userid>:<password>@archive.cloudera.com/p/cm7/7.5.5/redhat7/yum/RPM-GPG-KEY-cloudera
 
     ```
 
-4. Install the CM packages
+4. Install the CM packages.
 
     ```bash
     # yum install -y cloudera-manager-daemons cloudera-manager-agent cloudera-manager-server
@@ -130,10 +130,7 @@ This article explains the necessary steps to install Cloudera Manager (CM) on Ce
 
     ```
     
-8. After successful installation, login to the CM website.
-
-   https://cm.cdpkvm.cldr:7183
-   {: .label .label-green }
+8. After successful installation, login to the CM website. `https://cm.cdpkvm.cldr:7183`
     
     ![](../../assets/images/cm_login.png)
     
@@ -221,6 +218,6 @@ This article explains the necessary steps to install Cloudera Manager (CM) on Ce
 ---    
    Next Step
    {: .label .label-blue } 
-   Proceed to create the CDP Base cluster in the next [subtopic]({{ site.baseurl }}{% link docs/cdppvc/base.md %}).
+- Proceed to create the CDP Base cluster in the next [subtopic]({{ site.baseurl }}{% link docs/cdppvc/base.md %}).
         
 
