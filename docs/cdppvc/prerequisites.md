@@ -119,4 +119,4 @@ The following prerequisites need to be prepared prior to install CDP PvC with EC
 
 ---
 
-After preparing the abovementioned prerequisites, proceed to install Cloudera Manager in the subsequent [subtopic]({{ site.baseurl }}{% link docs/cdppvc/cm.md %}).
+After preparing the abovementioned prerequisites, proceed to check out the steps to install Cloudera Manager in the subsequent [subtopic]({{ site.baseurl }}{% link docs/cdppvc/cm.md %}).
