@@ -115,7 +115,6 @@ This article explains the necessary steps to install Cloudera Manager (CM) on Ce
 
     ```
 
-
 6. Monitor the cloudera-scm-server service log.
 
     ```bash
