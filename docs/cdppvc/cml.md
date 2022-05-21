@@ -3,7 +3,7 @@ layout: default
 title: Cloudera Machine Learning
 parent: CDP Private Cloud
 has_children: true
-nav_order: 4
+nav_order: 2
 ---
 
 # Cloudera Machine Learning
