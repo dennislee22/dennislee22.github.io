@@ -71,34 +71,34 @@ This article
 
 2. Enter the Cluster Name and click `Continue`. 
 
-    ![](../../assets/images/cdpbase/addecs3.png)
+    ![](../../assets/images/ecs/addecs3.png)
 
-    ![](../../assets/images/cdpbase/addecs4.png)
+    ![](../../assets/images/ecs/addecs4.png)
     
-    ![](../../assets/images/cdpbase/addecs5.png)
+    ![](../../assets/images/ecs/addecs5.png)
     
-    ![](../../assets/images/cdpbase/addecs6.png)
+    ![](../../assets/images/ecs/addecs6.png)
     
-    ![](../../assets/images/cdpbase/addecs7.png)
+    ![](../../assets/images/ecs/addecs7.png)
     
-    ![](../../assets/images/cdpbase/addecs8.png)
+    ![](../../assets/images/ecs/addecs8.png)
     
-    ![](../../assets/images/cdpbase/addecs9.png)
+    ![](../../assets/images/ecs/addecs9.png)
     
-    ![](../../assets/images/cdpbase/addecs10.png)
+    ![](../../assets/images/ecs/addecs10.png)
     
-    ![](../../assets/images/cdpbase/addecs11.png)
+    ![](../../assets/images/ecs/addecs11.png)
     
-    ![](../../assets/images/cdpbase/addecs12.png)
+    ![](../../assets/images/ecs/addecs12.png)
     
-    ![](../../assets/images/cdpbase/addecs13.png)
+    ![](../../assets/images/ecs/addecs13.png)
     
-    ![](../../assets/images/cdpbase/addecs14.png)    
+    ![](../../assets/images/ecs/addecs14.png)    
     
-    ![](../../assets/images/cdpbase/addecs15.png)  
+    ![](../../assets/images/ecs/addecs15.png)  
     
-    ![](../../assets/images/cdpbase/addecs16.png)  
+    ![](../../assets/images/ecs/addecs16.png)  
     
-    ![](../../assets/images/cdpbase/addecs17.png)  
+    ![](../../assets/images/ecs/addecs17.png)  
     
     ![](../../assets/images/cdpbase/addecs18.png)      
