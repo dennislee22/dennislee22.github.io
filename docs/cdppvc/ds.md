@@ -6,7 +6,7 @@ has_children: true
 nav_order: 2
 ---
 
-# Cloudera Machine Learning
+# Data Services
 
 1. This article and its sub-articles explain the requirements as well as the step-by-step procedure to deploy the following data services. 
 
