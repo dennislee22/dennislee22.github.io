@@ -59,6 +59,13 @@ This article explains the necessary steps to install Cloudera Manager (CM) on Ce
     Keytab: True
     Managed by: bmaster1.cdpkvm.cldr
     ```
+5. Ensure that `includedir` lines have been commented in CM host.
+
+    ```bash
+    # cat /etc/krb5.conf | grep includedir
+      #includedir /etc/krb5.conf.d/
+      #includedir /var/lib/sss/pubconf/krb5.include.d/
+    ```
 
 ## CM Installation
 
