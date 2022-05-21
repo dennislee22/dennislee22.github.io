@@ -88,14 +88,7 @@ Check and make necessary configurations to ensure that the CDP Base cluster has 
     ![](../../assets/images/cdpbase/ranger2.png)
     
     ![](../../assets/images/cdpbase/ranger3.png)
-    
-    ![](../../assets/images/cdpbase/ranger4.png)
-    
-    ![](../../assets/images/cdpbase/ranger5.png)
-    
-    ![](../../assets/images/cdpbase/ranger6.png)
-    
-    ![](../../assets/images/cdpbase/ranger7.png)    
+      
     
 ## Atlas
 
