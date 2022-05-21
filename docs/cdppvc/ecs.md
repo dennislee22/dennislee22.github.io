@@ -60,6 +60,17 @@ This article
     Managed by: bmaster1.cdpkvm.cldr
     ```
 
+5. Ensure that ECS master node is able to resolve `console-cdp.apps.ecs1.cdpkvm.cldr` to its IP address.
+
+    ```bash
+    # nslookup console-cdp.apps.ecs1.cdpkvm.cldr
+    Server:		10.15.4.150
+    Address:	10.15.4.150#53
+
+    Name:	console-cdp.apps.ecs1.cdpkvm.cldr
+    Address: 10.15.4.166
+    ```
+    
 ## Install ECS on CDP PvC Platform
 
 1. Navigate to `Clusters` > `Add Cluster`. 
