@@ -90,7 +90,7 @@ Check and make necessary configurations to ensure that the CDP Base cluster has 
     ![](../../assets/images/cdpbase/ranger3.png)
       
     
-## Atlas
+## Atlas Check
 
 1. After successful Ranger usersync set up with the the external LDAP server, log in Atlas dashboard using the LDAP user.
 
