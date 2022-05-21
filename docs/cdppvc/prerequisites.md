@@ -69,7 +69,7 @@ The following prerequisites need to be prepared prior to install CDP PvC with EC
 ## Relational Database
 
 - The database requirements is described in this [link](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/installation/topics/cdpdc-database-requirements.html). 
-- SSL must be enabled in the database.
+- [SSL](https://docs.cloudera.com/cdp-private-cloud-data-services/1.3.4/installation/topics/cdppvc-installation-external-db-setup.html) must be enabled in the database.
 - This article uses PostgreSQL 12 database as the external database.
 - Create the following databases in the external PostgreSQL server with its users and the associated privileges. Note that simple passwords are being created but the actual production environment should make use of complex passwords. Not every created database is being used here but serves as a placeholder for future use case.
 
