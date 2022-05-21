@@ -79,6 +79,12 @@ Check and make necessary configurations to ensure that the CDP Base cluster has 
 
     ![](../../assets/images/cdpbase/rangersetting4.png)    
         
+## LDAP User in Ranger
+
+1. After successful Ranger usersync set up with the the external LDAP server, log in Ranger dashboard as admin user to ensure that the ldap user(s) in LDAP server has successfully been synced with Ranger. 
+
+    ![](../../assets/images/cdpbase/ranger1.png)
+
 ---  
 
    Next Step
