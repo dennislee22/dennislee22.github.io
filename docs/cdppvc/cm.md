@@ -215,6 +215,26 @@ This article explains the necessary steps to install Cloudera Manager (CM) on Ce
 
     ![](../../assets/images/cmsetting6.png)   
     
+
+## External Database SSL Certificate Import
+
+1. Retrive the keystore password from one of the CDP Base master hosts.
+
+    ```bash
+    # cat /etc/hadoop/conf/ssl-client.xml | grep ssl.client.truststore.password -A1
+    <name>ssl.client.truststore.password</name>
+    <value>nws59gzoRHLsQBqJ2nuB2cE8EoZ3vq2DFchyxGJrQdL</value>
+    ```
+2. Copy the SSL `server.crt` from the external database to CM host. 
+
+3. In CM host, import the SSL enabled relational database certificate into the CM's truststore.
+
+    ```bash
+    # keytool -import -alias postgres -file /root/server.crt -storetype JKS -keystore /var/lib/cloudera-scm-agent/agent-cert/cm-auto-global_truststore.jks
+    Enter keystore password: 
+    ```
+ 
+
 ---    
    Next Step
    {: .label .label-blue } 
