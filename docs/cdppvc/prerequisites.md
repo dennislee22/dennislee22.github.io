@@ -68,7 +68,7 @@ The following prerequisites need to be prepared prior to install CDP PvC with EC
 
 ## Relational Database
 
-- The database requirements is described in this [link](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/installation/topics/cdpdc-database-requirements.html).
+- The database requirements is described in this [link](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/installation/topics/cdpdc-database-requirements.html). SSL must be enabled in the database.
 - This article uses PostgreSQL 12 database as the external database.
 - Create the following databases in the external PostgreSQL server with its users and the associated privileges. Note that simple passwords are being created but the actual production environment should make use of complex passwords. Not every created database is being used here but serves as a placeholder for future use case.
 
@@ -95,6 +95,9 @@ The following prerequisites need to be prepared prior to install CDP PvC with EC
   CREATE DATABASE streamsmsgmgr;
   CREATE USER streamsmsgmgr WITH PASSWORD 'streamsmsgmgr';
   GRANT ALL PRIVILEGES ON DATABASE "streamsmsgmgr" to streamsmsgmgr;
+  CREATE DATABASE registry;
+  CREATE USER registry WITH PASSWORD 'registry';
+  GRANT ALL PRIVILEGES ON DATABASE "registry" to registry;
   CREATE USER cdpadmin WITH PASSWORD 'cdpadmin';
   CREATE DATABASE dbenv OWNER cdpadmin ENCODING 'UTF8';
   CREATE DATABASE dbmlx OWNER cdpadmin ENCODING 'UTF8';
@@ -107,9 +110,6 @@ The following prerequisites need to be prepared prior to install CDP PvC with EC
   CREATE DATABASE dbums OWNER cdpadmin ENCODING 'UTF8';
   CREATE DATABASE cmregistration OWNER cdpadmin ENCODING 'UTF8';
   CREATE DATABASE clusterproxy OWNER cdpadmin ENCODING 'UTF8';
-  CREATE DATABASE registry;
-  CREATE USER registry WITH PASSWORD 'registry';
-  GRANT ALL PRIVILEGES ON DATABASE "registry" to registry;
   ```
 
 ## Load Balancer
