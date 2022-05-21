@@ -16,7 +16,7 @@ Check and make necessary configurations to ensure that the CDP Base cluster has 
 
 ---
 
-## Check Dependencies
+## Dependencies Check
 
 1. After the CDP Base has successfully been installed, the dependencies should be reflected in the each service's configurations as shown below. If not, please amend the configurations accordingly.
 
