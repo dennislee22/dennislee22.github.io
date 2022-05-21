@@ -18,7 +18,7 @@ This article
 
 ## Sanity Check
 
-1. Ensure that JDK has already been installed in each host.
+1. Ensure that JDK has already been installed in each ECS node.
 
     ```bash
     # rpm -qa | grep jdk
@@ -28,7 +28,7 @@ This article
     java-11-openjdk-devel-11.0.14.1.1-1.el7_9.x86_64
     ```
 
-2. The external DNS server is able to resolve the hostname and perform reverse DNS lookup. Please this step for all the CDP PvC Base and ECS nodes.
+2. The external DNS server is able to resolve the hostname and perform reverse DNS lookup. Please this step for all ECS nodes.
 
     ```bash
     # nslookup idm
@@ -42,9 +42,9 @@ This article
     150.4.15.10.in-addr.arpa	name = idm.cdpkvm.cldr.
     ```
 
-3. NTP client of each host is synchronizing time with the external NTP server.
+3. NTP client of each ECS node is synchronizing time with the external NTP server.
 
-4. Each host has already been registered with the external Kerberos server.
+4. Each ECS node has already been registered with the external Kerberos server.
 
     ```bash
     # ipa host-show bmaster1
@@ -59,3 +59,46 @@ This article
     Keytab: True
     Managed by: bmaster1.cdpkvm.cldr
     ```
+
+## Install ECS on CDP PvC Platform
+
+1. Navigate to `Clusters` > `Add Cluster`. 
+   Select `Private Cloud Base Cluster` and click `Continue`.
+
+    ![](../../assets/images/ecs/addecs1.png)
+
+    ![](../../assets/images/ecs/addecs2.png)
+
+2. Enter the Cluster Name and click `Continue`. 
+
+    ![](../../assets/images/cdpbase/addecs3.png)
+
+    ![](../../assets/images/cdpbase/addecs4.png)
+    
+    ![](../../assets/images/cdpbase/addecs5.png)
+    
+    ![](../../assets/images/cdpbase/addecs6.png)
+    
+    ![](../../assets/images/cdpbase/addecs7.png)
+    
+    ![](../../assets/images/cdpbase/addecs8.png)
+    
+    ![](../../assets/images/cdpbase/addecs9.png)
+    
+    ![](../../assets/images/cdpbase/addecs10.png)
+    
+    ![](../../assets/images/cdpbase/addecs11.png)
+    
+    ![](../../assets/images/cdpbase/addecs12.png)
+    
+    ![](../../assets/images/cdpbase/addecs13.png)
+    
+    ![](../../assets/images/cdpbase/addecs14.png)    
+    
+    ![](../../assets/images/cdpbase/addecs15.png)  
+    
+    ![](../../assets/images/cdpbase/addecs16.png)  
+    
+    ![](../../assets/images/cdpbase/addecs17.png)  
+    
+    ![](../../assets/images/cdpbase/addecs18.png)      
