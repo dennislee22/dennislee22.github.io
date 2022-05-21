@@ -2,6 +2,7 @@
 layout: default
 title: Day-2 Admin Manual
 parent: CDP Private Cloud
+has_children: true
 nav_order: 3
 ---
 
