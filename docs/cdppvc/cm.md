@@ -60,7 +60,7 @@ This article explains the necessary steps to install Cloudera Manager (CM) on Ce
     Managed by: bmaster1.cdpkvm.cldr
     ```
 
-## Install CM
+## CM Installation
 
 1. Download the Cloudera repo.
 
