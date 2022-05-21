@@ -101,4 +101,4 @@ This article
     
     ![](../../assets/images/ecs/addecs17.png)  
     
-    ![](../../assets/images/cdpbase/addecs18.png)      
+     
