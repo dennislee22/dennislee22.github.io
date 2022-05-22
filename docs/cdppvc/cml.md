@@ -16,7 +16,57 @@ This article explains the steps to deploy the CML service on ECS platform after 
 
 ---
 
+## CML Deployment
 
+1. In CM, navigate to `Data Services`. Click `Open CDP Private Cloud Data Services`. 
+
+    ![](../../assets/images/dsconsole/cmds.png)
+    
+2. The system will redirect the browser to the following page. Click `Machine Learning`.   
+
+    ![](../../assets/images/dsconsole/dsmenu.png)
+
+3. Navigate to `ML Workspaces`. Click `Provision Workspace`
+
+    ![](../../assets/images/cml/cmlprov1.png)
+
+4. Fill up the fields as shown below.
+
+    ![](../../assets/images/cml/cmlprov2.png)
+
+5. The output of the workspace creation should be successful as shown below. Click `workspace1`. 
+
+    ![](../../assets/images/cml/cmlready.png)
+    
+    ![](../../assets/images/cml/cmluser1.png)     
+
+## AMP Project Creation
+
+1. Navigate to `AMP`. You may select one of the Applied ML Prototypes. In this demo, click `Deep Learning for Image Analysis`.
+
+    ![](../../assets/images/cml/cmluser2.png)  
+
+2. Click `Configure Project`.
+
+    ![](../../assets/images/cml/cmluser3.png)  
+    
+    ![](../../assets/images/cml/cmluser4.png)  
+    
+3. Select the parameters. Click `Launch Project`.
+
+    ![](../../assets/images/cml/cmluser5.png)  
+    
+    ![](../../assets/images/cml/cmluser6.png)  
+
+    ![](../../assets/images/cml/cmluser7.png)  
+    
+4. Click `Open` to browse the application as shown in the following animated gif. Click on the image below and the system will analyze the library and subsequently display the list of similar image's type.
+
+
+    ![](../../assets/images/cml/cmlphotoanalysis.png)  
+
+
+## CML Artifacts inside ECS Platform
 
 
 
@@ -95,45 +145,8 @@ This article explains the steps to deploy the CML service on ECS platform after 
     pvc-fd0b773a-e785-4b5c-afc1-fcd98afcc56b   1Ti        RWO            Delete           Bound    workspace1/livelog-data-livelog-0                                                                                       longhorn                39s
     ```
 
-    ```bash
-# kubectl -n workspace1 get pods
-NAME                                             READY   STATUS      RESTARTS   AGE
-api-659964c875-4mmx8                             1/1     Running     2          91s
-cron-6c49d46f96-r722z                            2/2     Running     0          93s
-db-0                                             2/2     Running     0          93s
-db-migrate-2.0.28-b66-7plvc                      0/1     Completed   0          93s
-ds-cdh-client-6cf857bf5-vgtb8                    3/3     Running     0          92s
-ds-operator-548fc76c87-874sl                     2/2     Running     0          91s
-ds-reconciler-796b447c88-2shht                   2/2     Running     0          93s
-ds-vfs-5d465b8df-x527k                           2/2     Running     0          92s
-feature-flags-85b7884c59-j9ms7                   2/2     Running     0          93s
-fluentd-forwarder-649dc8f55d-bsmmq               1/1     Running     0          93s
-livelog-0                                        2/2     Running     0          93s
-livelog-publisher-cnmkg                          2/2     Running     0          93s
-livelog-publisher-l9q68                          2/2     Running     0          93s
-mlx-workspace1-pod-evaluator-5b87db5cf6-rgct7    1/1     Running     0          93s
-model-metrics-5f8fc48755-qnz26                   0/1     Running     4          93s
-model-metrics-db-0                               1/1     Running     0          93s
-model-proxy-59fbd8d695-q5zdv                     2/2     Running     0          91s
-prometheus-postgres-exporter-69589689db-skjbl    1/1     Running     0          93s
-runtime-addon-trigger-2.0.28-b66-5s55m           1/1     Running     0          93s
-runtime-initial-repo-inserter-2.0.28-b66-s255d   1/1     Running     0          93s
-runtime-manager-5cccc9cc5c-2dsgg                 2/2     Running     0          92s
-s2i-builder-5b87d869d7-cf89p                     2/2     Running     0          91s
-s2i-builder-5b87d869d7-mmfpm                     2/2     Running     0          91s
-s2i-builder-5b87d869d7-ph49k                     2/2     Running     0          91s
-s2i-client-869f5999dc-tktw5                      1/2     Running     0          92s
-s2i-git-server-0                                 2/2     Running     0          93s
-s2i-queue-0                                      2/2     Running     0          93s
-s2i-server-86ccf5f57-7rx2f                       1/2     Running     0          92s
-secret-generator-0                               2/2     Running     0          93s
-tcp-ingress-controller-d9d4977bd-9sz48           1/2     Running     0          93s
-usage-reporter-55f8cfdc97-hsqmp                  2/2     Running     0          93s
-web-856f5d687c-flc4j                             1/2     Running     0          93s
-web-856f5d687c-jtn2j                             1/2     Running     0          93s
-web-856f5d687c-jxgxf                             1/2     Running     0          93s
-    ```
 
+    ```bash
 # kubectl -n workspace1 get pods
 NAME                                             READY   STATUS      RESTARTS   AGE
 api-6945bd58bc-m64kv                             1/1     Running     3          21m
@@ -175,16 +188,10 @@ usage-reporter-7449585bf5-lgc2c                  2/2     Running     0          
 web-5cb768ddc4-9qs4k                             2/2     Running     1          21m
 web-5cb768ddc4-dzbbv                             2/2     Running     1          21m
 web-5cb768ddc4-qdhg2                             2/2     Running     1          21m
+    ```
 
 
-
-http://ml-2531d8cb-f2b.apps.ecs1.cdpkvm.cldr
-
-
-
-# AMP
-
-
+    ```bash
 # kubectl get ns
 NAME                                     STATUS   AGE
 cdp                                      Active   10h
@@ -204,19 +211,24 @@ vault-system                             Active   10h
 workspace1                               Active   24m
 workspace1-user-1                        Active   2m15s
 yunikorn                                 Active   10h
-
+    ```
+    
+    ```bash
 # kubectl -n workspace1-user-1 get pods
 NAME               READY   STATUS    RESTARTS   AGE
 nv8ou6d2xskx8boy   4/4     Running   0          2m38s
-
+    ```
+    
+    ```bash
 # kubectl -n workspace1-user-1 get pvc
 NAME       STATUS   VOLUME     CAPACITY   ACCESS MODES   STORAGECLASS                 AGE
 28f3a063   Bound    3eda7502   20Gi       RWX            cdsw-storageclass-whiteout   2m50s
 5bdf02aa   Bound    b07df1d0   20Gi       RWX            cdsw-storageclass-whiteout   2m50s
 8ed58984   Bound    bdc25cd8   20Gi       RWX            cdsw-storageclass-whiteout   2m50s
 abe060d7   Bound    338b9a4c   20Gi       RWX            cdsw-storageclass-whiteout   2m50s
+    ```
 
-
+    ```bash
 # ll /var/nfsshare/
 total 0
 drwxr-xr-x 8 8536 8536 204 May 22 10:54 addons
@@ -224,7 +236,7 @@ drwxr-xr-x 5 8536 8536  78 May 22 11:07 cdn
 drwxr-xr-x 2 8536 8536   6 May 22 10:43 output
 drwxr-xr-x 3 8536 8536  15 May 22 11:01 projects
 drwxr-xr-x 2 8536 8536   6 May 22 10:43 scratch
+    ```
 
 
-http://imageanalysis-2mxt43.ml-2531d8cb-f2b.apps.ecs1.cdpkvm.cldr
 
