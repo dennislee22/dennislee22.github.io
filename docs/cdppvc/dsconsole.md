@@ -9,7 +9,7 @@ nav_order: 1
 # Data Services Management Console
 {: .no_toc }
 
-This article explains the steps to deploy and configure the CDP Data Services environment after the successful installation of [ECS]({{ site.baseurl }}{% link docs/cdppvc/ecs.md %}) platform. This sets the stage for hosting CML, CDE and CDW services in the subsequent subtopics.
+This article explains the steps to deploy and configure the CDP Data Services environment after successful installation of the [ECS]({{ site.baseurl }}{% link docs/cdppvc/ecs.md %}) platform. This sets the stage for hosting CML, CDE and CDW services in the subsequent subtopics.
 
 - TOC
 {:toc}
@@ -30,7 +30,7 @@ This article explains the steps to deploy and configure the CDP Data Services en
 
     ![](../../assets/images/dsconsole/dslogin.png)
     
-4. Navigate to `Administration` > `Authentication`. The external LDAP server is the centralized user authentication database that stores the user credentials with the associated group. This demo is connected to Red Hat IPA. Fill up the necessary external LDAP server fields as shown in the following example. Click `Test Connection` and check that the connection is successful. Click `Save`.
+4. Navigate to `Administration` > `Authentication`. The external LDAP server is the centralized user authentication database that stores the user credentials with the associated group. This demo is connected to the Red Hat IPA. Fill in the necessary external LDAP server fields as shown in the following example. Click `Test Connection` and check that the connection is successful. Click `Save`.
 
     ![](../../assets/images/dsconsole/dsldapconfig.png)
     
@@ -75,8 +75,9 @@ This article explains the steps to deploy and configure the CDP Data Services en
     krbTicketFlags: 128
     krbLoginFailedCount: 0
     krbPasswordExpiration: 20220818105515Z
-
+    ```
     
+    ```bash
     #  ldapsearch  -H ldap://idm.cdpkvm.cldr:389 -D "uid=admin,cn=users,cn=accounts,dc=cdpkvm,dc=cldr" -w 'rootroot' -b "cn=groups,cn=accounts,dc=cdpkvm,dc=cldr" '(&(member=uid=ldapuser1,cn=users,cn=accounts,dc=cdpkvm,dc=cldr))' | grep -v "#"
 
     dn: cn=ipausers,cn=groups,cn=accounts,dc=cdpkvm,dc=cldr
@@ -91,7 +92,7 @@ This article explains the steps to deploy and configure the CDP Data Services en
     member: uid=cmadmin-97fd6767,cn=users,cn=accounts,dc=cdpkvm,dc=cldr
     member: uid=ldapuser1,cn=users,cn=accounts,dc=cdpkvm,dc=cldr
     member: uid=test,cn=users,cn=accounts,dc=cdpkvm,dc=cldr
-
+    ```
     
 5. Log out and log in using the LDAP user credential.    
 
@@ -111,12 +112,12 @@ This article explains the steps to deploy and configure the CDP Data Services en
     ![](../../assets/images/dsconsole/cdpselectrole.png)
     
 
-9. Log out and log in as the LDAP user to get full access rights.
+9. Log out and log in as the LDAP user. This time, the LDAP user will get full access rights.
 
 
 # CDP Data Lake Environment
 
-1. Log in as the LDAP user. Navigate to `Environments`. There is only one environment which is the default environment. Click `Register Environment`. Fill up the fields to create data lake environment for the CDP Data Services to use.
+1. Log in as the LDAP user. Navigate to `Environments`. There is only one environment which is the default environment created by the system upon successful installation of the ECS platform. Click `Register Environment`. Fill in the fields to create a data lake environment for the CDP Data Services to use.
     
     ![](../../assets/images/dsconsole/dsregistration.png)
         
@@ -126,7 +127,7 @@ This article explains the steps to deploy and configure the CDP Data Services en
     ![](../../assets/images/dsconsole/dsenv.png)
     
 
-3. Select the CDL, CDE and CML roles for this LDAP user in this newly created environment accordingly. Click `Update Roles`.
+3. Select the DL*, DE* and ML* roles for this LDAP user in this newly created environment accordingly. Click `Update Roles`.
 
     ![](../../assets/images/dsconsole/dsroles.png)
     
