@@ -134,3 +134,97 @@ web-856f5d687c-jtn2j                             1/2     Running     0          
 web-856f5d687c-jxgxf                             1/2     Running     0          93s
     ```
 
+# kubectl -n workspace1 get pods
+NAME                                             READY   STATUS      RESTARTS   AGE
+api-6945bd58bc-m64kv                             1/1     Running     3          21m
+cron-657dbd8b65-csfjv                            2/2     Running     0          21m
+db-0                                             2/2     Running     0          21m
+db-migrate-2.0.28-b66-5j2pk                      0/1     Completed   0          21m
+ds-cdh-client-575bcc8799-54s8h                   3/3     Running     0          21m
+ds-operator-94fb98c6b-rkqjq                      2/2     Running     1          21m
+ds-reconciler-f7486fbd7-nll5t                    2/2     Running     6          21m
+ds-vfs-7478cffd6-mctqk                           2/2     Running     0          21m
+feature-flags-5857fc68d-nk8lg                    2/2     Running     0          21m
+fluentd-forwarder-5848c4b87d-zq9ln               1/1     Running     0          21m
+hadoop-cli-7.2.10-hf1-t94d-qgjxr                 0/1     Completed   0          8m48s
+hadoop-cli-7.2.11-hf4-vfc03-mxpxr                0/1     Completed   0          8m48s
+hadoop-cli-7.2.8-hf1-5auu1d-4fngq                0/1     Completed   0          8m48s
+livelog-0                                        2/2     Running     0          21m
+livelog-publisher-ccq7k                          2/2     Running     0          21m
+livelog-publisher-r66pm                          2/2     Running     0          21m
+mlx-workspace1-pod-evaluator-765985c848-mvn54    1/1     Running     0          21m
+model-metrics-6f74997bf7-bzkkn                   1/1     Running     4          21m
+model-metrics-db-0                               1/1     Running     0          21m
+model-proxy-7fb9bfcb6d-x7z5p                     2/2     Running     0          21m
+prometheus-postgres-exporter-5c7b57bf66-8nd7v    1/1     Running     0          21m
+runtime-addon-trigger-2.0.28-b66-nhqcf           0/1     Completed   6          21m
+runtime-initial-repo-inserter-2.0.28-b66-w9jgn   0/1     Completed   0          21m
+runtime-manager-c5844d5f9-rcspl                  2/2     Running     0          21m
+s2i-builder-5fd4c7bc59-25q5p                     2/2     Running     0          21m
+s2i-builder-5fd4c7bc59-74l99                     2/2     Running     0          21m
+s2i-builder-5fd4c7bc59-94lhz                     2/2     Running     0          21m
+s2i-client-57c7d8564-nhstd                       2/2     Running     0          21m
+s2i-git-server-0                                 2/2     Running     0          21m
+s2i-queue-0                                      2/2     Running     0          21m
+s2i-server-d79fdb6f8-m8t2s                       2/2     Running     0          21m
+secret-generator-0                               2/2     Running     0          21m
+spark247-13-hf2-5uhfhd-t5v7k                     0/1     Completed   0          8m48s
+spark311-13-hf2-mx7m2j-57xbh                     0/1     Completed   0          8m48s
+tcp-ingress-controller-59849bb8d5-zslzd          2/2     Running     8          21m
+usage-reporter-7449585bf5-lgc2c                  2/2     Running     0          21m
+web-5cb768ddc4-9qs4k                             2/2     Running     1          21m
+web-5cb768ddc4-dzbbv                             2/2     Running     1          21m
+web-5cb768ddc4-qdhg2                             2/2     Running     1          21m
+
+
+
+http://ml-2531d8cb-f2b.apps.ecs1.cdpkvm.cldr
+
+
+
+# AMP
+
+
+# kubectl get ns
+NAME                                     STATUS   AGE
+cdp                                      Active   10h
+cdp-env-1-85b71ddc-monitoring-platform   Active   3h17m
+default                                  Active   11h
+default-470e0dec-monitoring-platform     Active   10h
+ecs-webhooks                             Active   11h
+infra-prometheus                         Active   10h
+kube-node-lease                          Active   11h
+kube-public                              Active   11h
+kube-system                              Active   11h
+kubernetes-dashboard                     Active   10h
+local-path-storage                       Active   10h
+longhorn-system                          Active   10h
+shared-services                          Active   3h16m
+vault-system                             Active   10h
+workspace1                               Active   24m
+workspace1-user-1                        Active   2m15s
+yunikorn                                 Active   10h
+
+# kubectl -n workspace1-user-1 get pods
+NAME               READY   STATUS    RESTARTS   AGE
+nv8ou6d2xskx8boy   4/4     Running   0          2m38s
+
+# kubectl -n workspace1-user-1 get pvc
+NAME       STATUS   VOLUME     CAPACITY   ACCESS MODES   STORAGECLASS                 AGE
+28f3a063   Bound    3eda7502   20Gi       RWX            cdsw-storageclass-whiteout   2m50s
+5bdf02aa   Bound    b07df1d0   20Gi       RWX            cdsw-storageclass-whiteout   2m50s
+8ed58984   Bound    bdc25cd8   20Gi       RWX            cdsw-storageclass-whiteout   2m50s
+abe060d7   Bound    338b9a4c   20Gi       RWX            cdsw-storageclass-whiteout   2m50s
+
+
+# ll /var/nfsshare/
+total 0
+drwxr-xr-x 8 8536 8536 204 May 22 10:54 addons
+drwxr-xr-x 5 8536 8536  78 May 22 11:07 cdn
+drwxr-xr-x 2 8536 8536   6 May 22 10:43 output
+drwxr-xr-x 3 8536 8536  15 May 22 11:01 projects
+drwxr-xr-x 2 8536 8536   6 May 22 10:43 scratch
+
+
+http://imageanalysis-2mxt43.ml-2531d8cb-f2b.apps.ecs1.cdpkvm.cldr
+
