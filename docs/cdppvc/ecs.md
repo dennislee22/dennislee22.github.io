@@ -85,27 +85,23 @@ This article explains the necessary steps to install the ECS platform upon succe
     
     ![](../../assets/images/ecs/addecs7.png)
     
-8. Click `Continue`.
-    
     ![](../../assets/images/ecs/addecs8.png)
     
-9. Review and amend the parameters accordingly. Directory path for Longhorn storage and local SSD/NVMe (for CDW cache) in each node must be configured here in accordance to the mounted disk folder name. Dedicated storage disk that is expected to be formatted and mounted prior to this installation as explained in the [prerequisites]({{ site.baseurl }}{% link docs/cdppvc/prerequisites.md %}) subtopic. The value for `Application Domain` field will determine the subdomain of wildcard DNS.
+8. Click `Continue`.
     
     ![](../../assets/images/ecs/addecs9.png)
     
-10. Fill the database parameters based on the created databases in PostgreSQL. Click `Test Connection`. After getting successful result, click `Continue`.
+9. Review and amend the parameters accordingly. Directory path for Longhorn storage and local SSD/NVMe (for CDW cache) in each node must be configured here in accordance to the mounted disk folder name. Dedicated storage disk that is expected to be formatted and mounted prior to this installation as explained in the [prerequisites]({{ site.baseurl }}{% link docs/cdppvc/prerequisites.md %}) subtopic. The value for `Application Domain` field will determine the subdomain of wildcard DNS.
     
     ![](../../assets/images/ecs/addecs10.png)
     
-11. CM is installing the parcels in each ECS host in parallel.
+10. Fill the database parameters based on the created databases in PostgreSQL. Click `Test Connection`. After getting successful result, click `Continue`.
     
     ![](../../assets/images/ecs/addecs11.png)
     
-
-    
     ![](../../assets/images/ecs/addecs12.png)
 
-
+12. CM is installing the parcels in each ECS host in parallel.
 
     ![](../../assets/images/ecs/addecs13.png)
     
@@ -117,7 +113,7 @@ This article explains the necessary steps to install the ECS platform upon succe
     
     ![](../../assets/images/ecs/addecs15.png)  
     
-16. Navigate to `Clusters` > `ECS 1`. Status of all components are supposed to be in green mode.
+16. Navigate to `Clusters` > `ECS 1`. Status of all components are supposed to be in green mode as depicted below.
 
     ![](../../assets/images/ecs/addecs16.png)  
     
