@@ -16,7 +16,7 @@ This article explains the necessary steps to install the minimum services on CDP
 
 ---
 
-## Sanity check
+## Sanity Check
 
 1. Ensure that JDK has already been installed in each CDP PvC Base host.
 
