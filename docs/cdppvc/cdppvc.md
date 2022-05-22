@@ -9,7 +9,7 @@ permalink: docs/cdppvc
 # CDP Private Cloud
 {: .no_toc }
 
-![](../../assets/images/overall_arch.png)
+    ![](../../assets/images/overall_arch.png)
 
 - CDP Private Cloud delivers powerful analytic, transactional, and machine learning workloads in an on-premise environment. 
 - It consists of 2 major components - CDP Private Cloud Base (CDP PvC Base) and CDP Private Cloud Data Services (CDP PvC DS). 
@@ -22,7 +22,7 @@ permalink: docs/cdppvc
 ## Demo Architecture
 - This article is articulated based on the demo architecture diagram as depicted below.
 
-![](../../assets/images/logicalarch.png)
+      ![](../../assets/images/logicalarch.png)
 
 - The minimum CDP PvC Base services are installed on the CDP PvC Base hosts. These are the prerequisites to install the CDP PvC Data Services on the ECS platform.
 - Only 1 ECS master/server node is being used here but the latest CDP software version supports 3 ECS master/server nodes.
