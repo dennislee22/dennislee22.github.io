@@ -9,7 +9,7 @@ nav_order: 1
 # CDP Data Services Management Console
 {: .no_toc }
 
-This article explains the steps to deploy and configure the CDP Data Services environment after successful installation of the [ECS]({{ site.baseurl }}{% link docs/cdppvc/ecs.md %}) platform. This sets the stage for hosting CML, CDE and CDW services that will be explained in the subsequent subtopics.
+This article explains the steps to deploy and configure the CDP Data Services environment after successful installation of the [ECS]({{ site.baseurl }}{% link docs/cdppvc/ecs.md %}) platform. This sets the stage for hosting CML, CDE and CDW services which will be explained in the subsequent subtopics.
 
 - TOC
 {:toc}
