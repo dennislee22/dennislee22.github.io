@@ -9,7 +9,7 @@ nav_order: 4
 # Cloudera Data Engineering (CDE)
 {: .no_toc }
 
-This article explains the steps to deploy the CDE service on ECS platform after the successful configuration of [Data Services Management Console]({{ site.baseurl }}{% link docs/cdppvc/dsconsole.md %}) platform.
+This article explains the steps to deploy the CDE service on the ECS platform after successful configuration of [Data Services Management Console]({{ site.baseurl }}{% link docs/cdppvc/dsconsole.md %}).
 
 - TOC
 {:toc}
@@ -19,6 +19,26 @@ This article explains the steps to deploy the CDE service on ECS platform after 
 
 ## CDE Deployment
 
+1. In CM, navigate to `Data Services`. Click `Open CDP Private Cloud Data Services`. 
+
+    ![](../../assets/images/dsconsole/cmds.png)
+    
+2. The system will redirect the browser to the following page. Click `Data Engineering`.   
+
+    ![](../../assets/images/dsconsole/dsmenu.png)
+    
+    
+    ![](../../assets/images/cde/cde1.png)
+    
+    ![](../../assets/images/cde/cde2.png)
+    
+    ![](../../assets/images/cde/cde3.png)
+    
+    ![](../../assets/images/cde/cde4.png)
+    
+    ![](../../assets/images/cde/cde5.png)
+    
+    ![](../../assets/images/cde/ozoneaftercde.png)    
 
 ## CDE Artifacts inside ECS Platform
 
