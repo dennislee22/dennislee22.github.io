@@ -16,6 +16,12 @@ This article explains the steps to deploy the CDE service on ECS platform after 
 
 ---
 
+
+## CDE Deployment
+
+
+## CDE Artifacts inside ECS Platform
+
    ```bash
    # kubectl -n dex-base-nl7jsswf get pods
    NAME                                            READY   STATUS    RESTARTS   AGE
