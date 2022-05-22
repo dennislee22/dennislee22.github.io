@@ -34,7 +34,7 @@ This article explains the steps to deploy and configure the CDP Data Services en
 
     ![](../../assets/images/dsconsole/dsldapconfig.png)
     
-5. Log out and log in using the Ldap user credential.    
+5. Log out and log in using the LDAP user credential.    
 
     ![](../../assets/images/dsconsole/cdpldaplogin.png)
     
@@ -42,22 +42,22 @@ This article explains the steps to deploy and configure the CDP Data Services en
     
     ![](../../assets/images/dsconsole/cdpldapnorole.png)
 
-7. Log out and log in as the Local Administrator. Navigate to `User Management`. Click `Update Roles` next to the Ldap user. 
+7. Log out and log in as the Local Administrator. Navigate to `User Management`. Click `Update Roles` next to the LDAP user. 
 
     ![](../../assets/images/dsconsole/cdpldapupdaterole.png)
     
 
-8. Select the roles for this Ldap user accordingly. Click `Update Roles`.
+8. Select the roles for this LDAP user accordingly. Click `Update Roles`.
 
     ![](../../assets/images/dsconsole/cdpselectrole.png)
     
 
-9. Log out and log in as the Ldap user to get full access rights.
+9. Log out and log in as the LDAP user to get full access rights.
 
 
 # CDP Data Lake Environment
 
-1. Log in as the Ldap user. Navigate to `Environments`. There is only one environment which is the default environment. Click `Register Environment`. Fill up the fields to create data lake environment for the CDP Data Services to use.
+1. Log in as the LDAP user. Navigate to `Environments`. There is only one environment which is the default environment. Click `Register Environment`. Fill up the fields to create data lake environment for the CDP Data Services to use.
     
     ![](../../assets/images/dsconsole/dsregistration.png)
         
@@ -67,7 +67,7 @@ This article explains the steps to deploy and configure the CDP Data Services en
     ![](../../assets/images/dsconsole/dsenv.png)
     
 
-3. Select the CDL, CDE and CML roles for this Ldap user in this newly created environment accordingly. Click `Update Roles`.
+3. Select the CDL, CDE and CML roles for this LDAP user in this newly created environment accordingly. Click `Update Roles`.
 
     ![](../../assets/images/dsconsole/dsroles.png)
     
@@ -76,9 +76,9 @@ This article explains the steps to deploy and configure the CDP Data Services en
    Next Step
    {: .label .label-blue } 
    
-- Proceed to create the CML service in this [subtopic]({{ site.baseurl }}{% link docs/cdppvc/cml.md %}).
-- Proceed to create the CDW service in this [subtopic]({{ site.baseurl }}{% link docs/cdppvc/cdw.md %}).
-- Proceed to create the CDE service in this [subtopic]({{ site.baseurl }}{% link docs/cdppvc/cde.md %}).
+- Create the CML service in this [subtopic]({{ site.baseurl }}{% link docs/cdppvc/cml.md %}).
+- Create the CDW service in this [subtopic]({{ site.baseurl }}{% link docs/cdppvc/cdw.md %}).
+- Create the CDE service in this [subtopic]({{ site.baseurl }}{% link docs/cdppvc/cde.md %}).
     
 
     
