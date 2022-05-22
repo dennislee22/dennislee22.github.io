@@ -173,13 +173,13 @@ This article explains the necessary steps to install Cloudera Manager (CM) on Ce
 
     ![](../../assets/images/kdc7.png) 
     
-## Connect CM with External LDAP
+## CM Integration with External LDAP
 
 1. Navigate to `Administration` > `Settings`. Search for `backend` and select the following options so that CM will first look up the user in the external LDAP server.
 
     ![](../../assets/images/cmsetting1.png) 
     
-2. Configure CM with the necessary external LDAP server settings as shown in the following example. Note that this demo is connected to Red Hat IPA.
+2. Configure CM with the necessary external LDAP server settings as shown in the following example. Note that this demo is connected to the Red Hat IPA.
 
 | Parameter       | Value         |
 |:----------------|:------------------|
@@ -225,7 +225,7 @@ This article explains the necessary steps to install Cloudera Manager (CM) on Ce
 
 ## External Database SSL Certificate Import
 
-The following steps are the mandatory to run prior to creating the ECS platform. This allows CDW to establish SSL connection with the external database using the database's certificate to be stored inside the CM's truststore.
+The following steps are the mandatory to run prior to creating the ECS platform. This allows CDW to establish SSL connection with the external database using the database's certificate inside the CM's truststore.
 
 1. Retrieve the keystore password from one of the CDP Base master hosts.
 
