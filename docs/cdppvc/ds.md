@@ -8,13 +8,13 @@ nav_order: 2
 
 # Data Services
 
-1. This article and its sub-articles explain the requirements as well as the step-by-step procedure to deploy the following data services. 
+1. This article and its sub-articles explain the requirements as well as the step-by-step procedure to deploy the following CDP Data Services. 
 
     - Cloudera Machine Learning (CML)
     - Cloudera Data Warehouse (CDW)
     - Cloudera Data Engineering (CDE)
 
-2. Deployment uses the software versions as stated below.
+2. The deployment uses the following software versions.
 
 | Software       | Version         |
 |:-------------|:------------------|
