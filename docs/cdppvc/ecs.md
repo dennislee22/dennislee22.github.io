@@ -9,7 +9,7 @@ nav_order: 5
 # Embedded Container Service (ECS) Installation
 {: .no_toc }
 
-This article
+This article explains the necessary steps to install the ECS platform upon successful [deployment and configuration of CDP Base cluster]({{ site.baseurl }}{% link docs/cdppvc/base.md %}). Please ensure that all the [prerequisites]({{ site.baseurl }}{% link docs/cdppvc/prerequisites.md %}) have already been prepared.
 
 - TOC
 {:toc}
@@ -44,23 +44,7 @@ This article
 
 3. NTP client of each ECS node is synchronizing time with the external NTP server.
 
-4. Each ECS node has already been registered with the external Kerberos server.
-
-    ```bash
-    # ipa host-show bmaster1
-    Host name: bmaster1.cdpkvm.cldr
-    Principal name: host/bmaster1.cdpkvm.cldr@CDPKVM.CLDR
-    Principal alias: host/bmaster1.cdpkvm.cldr@CDPKVM.CLDR
-    SSH public key fingerprint: SHA256:dyShLpzkqlRHc2LHiqXDbhM8ynT7v4yjZP4CZ212tqU root@bmaster1.cdpkvm.cldr (ssh-rsa),
-                              SHA256:C+BAHEBbVAXfhUIpdFxoL2MOkF5pUGATuKnFQXCgJnc root@bmaster1.cdpkvm.cldr (ssh-rsa),
-                              SHA256:/COofNFRyGmwAGR6sfonAcXtc/Knjs5/an1+SMX/8GA (ecdsa-sha2-nistp256), SHA256:OL8ZeU7+2E4yl7rsvKftXYTM7Bvr8fEVuxQaQBouwwo
-                              (ssh-ed25519)
-    Password: False
-    Keytab: True
-    Managed by: bmaster1.cdpkvm.cldr
-    ```
-
-5. Ensure that ECS master node is able to resolve `console-cdp.apps.ecs1.cdpkvm.cldr` to its IP address.
+4. Ensure that ECS master node is able to resolve `console-cdp.apps.ecs1.cdpkvm.cldr` to its IP address.
 
     ```bash
     # nslookup console-cdp.apps.ecs1.cdpkvm.cldr
@@ -73,43 +57,72 @@ This article
     
 ## Install ECS on CDP PvC Platform
 
-1. Navigate to `Clusters` > `Add Cluster`. 
-   Select `Private Cloud Base Cluster` and click `Continue`.
+1. Navigate to `Clusters` > `Add Cluster`. Select `Private Cloud Base Cluster` and click `Continue`.
 
     ![](../../assets/images/ecs/addecs1.png)
+    
+2. Select `Internet` and click `Continue`. 
 
     ![](../../assets/images/ecs/addecs2.png)
 
-2. Enter the Cluster Name and click `Continue`. 
+3. Enter the FQDN of each ECS host and click `Search`. Upon successful scan, the hostname alongside each host's IP address will appear. Check the details before clicking `Continue`.
 
     ![](../../assets/images/ecs/addecs3.png)
+    
+4. Ensure that JDK has already been installed in each ECS host. Select `Manually manage JDK` and click `Continue`.
 
     ![](../../assets/images/ecs/addecs4.png)
-    
+
+5. Enter the login credentials. Click `Continue`. 
+
     ![](../../assets/images/ecs/addecs5.png)
+    
+6. CM is installing the agent in each ECS host in parallel and will subsequently install the parcels.
     
     ![](../../assets/images/ecs/addecs6.png)
     
+7. Select all ECS nodes in the `Docker Server` field. Select the ECS master node in the `Ecs Server` field and select the ECS worker nodes in the `Ecs Agent` field. Click `View By Host` to confirm your choices. Click `Close` and `Continue`.   
+    
     ![](../../assets/images/ecs/addecs7.png)
+    
+8. Click `Continue`.
     
     ![](../../assets/images/ecs/addecs8.png)
     
+9. Review and amend the parameters accordingly. Directory path for Longhorn storage and local SSD/NVMe (for CDW cache) in each node must be configured here in accordance to the mounted disk folder name. Dedicated storage disk that is expected to be formatted and mounted prior to this installation as explained in the [prerequisites]({{ site.baseurl }}{% link docs/cdppvc/prerequisites.md %}) subtopic. The value for `Application Domain` field will determine the subdomain of wildcard DNS.
+    
     ![](../../assets/images/ecs/addecs9.png)
+    
+10. Fill the database parameters based on the created databases in PostgreSQL. Click `Test Connection`. After getting successful result, click `Continue`.
     
     ![](../../assets/images/ecs/addecs10.png)
     
+11. CM is installing the parcels in each ECS host in parallel.
+    
     ![](../../assets/images/ecs/addecs11.png)
     
-    ![](../../assets/images/ecs/addecs12.png)
+
     
+    ![](../../assets/images/ecs/addecs12.png)
+
+
+
     ![](../../assets/images/ecs/addecs13.png)
     
-    ![](../../assets/images/ecs/addecs14.png)    
+14. Select `Inspect hosts`. Check the results if needed. Otherwise, click `Continue`. 
+    
+    ![](../../assets/images/ecs/addecs14.png) 
+    
+15. CM will proceed to install the ECS platform. This process will take some time to complete. After successful installation, click `Continue`. 
     
     ![](../../assets/images/ecs/addecs15.png)  
     
+16. Navigate to `Clusters` > `ECS 1`. Status of all components are supposed to be in green mode.
+
     ![](../../assets/images/ecs/addecs16.png)  
     
+17. Click `ECS`. You may explore other dashboards such as `Storage UI` and `ECS Web UI`.  
+
     ![](../../assets/images/ecs/addecs17.png)  
     
      
