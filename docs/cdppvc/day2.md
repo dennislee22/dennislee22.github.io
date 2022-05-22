@@ -6,10 +6,8 @@ has_children: true
 nav_order: 3
 ---
 
-# Day-2 Tasks
+# How to ...
 {: .no_toc }
-
-This article 
 
 - TOC
 {:toc}
