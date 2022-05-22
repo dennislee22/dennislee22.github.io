@@ -63,7 +63,7 @@ This article explains the steps to deploy the CML service on ECS platform after 
 4. Click `Open` to browse the application as shown in the following animated gif. Click on the image below and the system will analyze the library and subsequently display the list of similar image's type.
 
 
-    ![](../../assets/images/cml/cmlphotoanalysis.png)  
+    ![](../../assets/images/cml/cmlnalysis.gif)  
 
 
 ## CML Artifacts inside ECS Platform
