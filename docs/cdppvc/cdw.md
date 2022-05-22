@@ -9,7 +9,7 @@ nav_order: 3
 # Cloudera Data Warehouse (CDW)
 {: .no_toc }
 
-This article explains the steps to deploy the CDW service on ECS platform after the successful configuration of [Data Services Management Console]({{ site.baseurl }}{% link docs/cdppvc/dsconsole.md %}) platform.
+This article explains the steps to deploy the CDW service on the ECS platform after successful configuration of [Data Services Management Console]({{ site.baseurl }}{% link docs/cdppvc/dsconsole.md %}).
 
 - TOC
 {:toc}
@@ -19,7 +19,7 @@ This article explains the steps to deploy the CDW service on ECS platform after 
 
 ## Hive Impersonation (doas)
 
-1. This is a mandatory step to allow other user to impersonate `hive` user to access Hive tables. This is the Hive default and Ranger is the only supported and recommended security model. Ensure that Hive Impersonation is enabled as shown below.
+1. This is a mandatory step to allow other user to impersonate `hive` user to access Hive tables. This is the Hive default setting and Ranger is the only supported and recommended security model. Ensure that Hive Impersonation is enabled as shown below.
 
     ![](../../assets/images/cdw/hiveimpersonation.png)  
 
@@ -62,13 +62,11 @@ This article explains the steps to deploy the CDW service on ECS platform after 
 
     ![](../../assets/images/cdw/cdwranger3.png)   
     
-10. The output should be similar as follows.   
+10. The outcome should be similar as follows.   
     
     ![](../../assets/images/cdw/cdwranger4.png)      
     
-11. In Hue dashboard, rerun the same SELECT request on the default database will no longer trigger "AuthorizationException" error.
-
-    ![](../../assets/images/cdw/cdwranger5.png)      
+11. In Hue dashboard, rerun the same SELECT request on the default database will no longer trigger the "AuthorizationException" error.  
     
 
 ## CDW Artifacts inside ECS Platform
@@ -171,12 +169,12 @@ Node:         ecsworker2.cdpkvm.cldr/10.15.4.171
 - In ecsworker2 node, check the contents in the localpath directory.
 
    ```bash
-# tree /localpath
-/localpath
-`-- local-storage
+   # tree /localpath
+   /localpath
+   `-- local-storage
     `-- pvc-f13cc78e-4422-4688-914e-4ae273f631b0_impala-1653181201-5gqh_scratch-cache-volume-coordinator-0
         |-- impala-cache-file-07482f078a6de140:f90999799fab14bf
         `-- impala-scratch
 
-3 directories, 1 file
+    3 directories, 1 file
    ```
