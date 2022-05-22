@@ -1,15 +1,15 @@
 ---
 layout: default
-title: CDP Base Cluster
+title: CDP PvC Base Cluster
 parent: Installation
 grand_parent: CDP Private Cloud
 nav_order: 3
 ---
 
-# CDP Base Cluster Deployment
+# CDP PvC Base Cluster Deployment
 {: .no_toc }
 
-This article explains the necessary steps to install the minimum services on CDP Base platform. Please ensure that all the [prerequisites]({{ site.baseurl }}{% link docs/cdppvc/prerequisites.md %}) have already been prepared and [CM]({{ site.baseurl }}{% link docs/cdppvc/cm.md %}) has already been installed successfully prior to running this procedure.
+This article explains the necessary steps to install the minimum services on CDP PvC Base platform prior to installing the ECS platform. Please ensure that all the [prerequisites]({{ site.baseurl }}{% link docs/cdppvc/prerequisites.md %}) have already been prepared and [CM]({{ site.baseurl }}{% link docs/cdppvc/cm.md %}) has already been installed successfully before running this procedure.
 
 - TOC
 {:toc}
@@ -18,7 +18,7 @@ This article explains the necessary steps to install the minimum services on CDP
 
 ## Sanity check
 
-1. Ensure that JDK has already been installed in each host.
+1. Ensure that JDK has already been installed in each CDP PvC Base host.
 
     ```bash
     # rpm -qa | grep jdk
@@ -28,7 +28,7 @@ This article explains the necessary steps to install the minimum services on CDP
     java-11-openjdk-devel-11.0.14.1.1-1.el7_9.x86_64
     ```
 
-2. The external DNS server is able to resolve the hostname and perform reverse DNS lookup. Repeat this step for all the CDP PvC Base and ECS nodes.
+2. The external DNS server is able to resolve the hostname and perform reverse DNS lookup. Repeat this step for every CDP PvC Base host.
 
     ```bash
     # nslookup idm
@@ -62,11 +62,11 @@ This article explains the necessary steps to install the minimum services on CDP
 
 ## Session Timeout
 
-1. Navigate to `Administration` > `Settings`. Search for `session timeout`. Key in `5 days`. This is a temporary setting to avoid session timeout during CDP Base installation (You may revert this setting after successful installation). Log out and log in CM portal.
+1. Navigate to `Administration` > `Settings`. Search for `session timeout`. Key in `5 days`. This is a temporary setting to avoid session timeout during CDP PvC Base installation (You may revert this setting after successful installation). Log out and log in CM portal.
 
     ![](../../assets/images/cdpbase/timeout.png)
 
-## Install CDP services on CDP Base via CM
+## CDP services Installation on CDP PvC Base Cluster
 
 1. Navigate to `Clusters` > `Add Cluster`. 
    Select `Private Cloud Base Cluster` and click `Continue`.
@@ -79,7 +79,7 @@ This article explains the necessary steps to install the minimum services on CDP
 
     ![](../../assets/images/cdpbase/addbase2.png)
 
-3. Enter the FQDN of each CDP Base host and click `Search`. Upon successful scan, the hostname alongside each host's IP address will appear. Check the details before clicking `Continue`.
+3. Enter the FQDN of each CDP PvC Base host and click `Search`. Upon successful scan, the hostname alongside each host's IP address will appear. Check the details before clicking `Continue`.
 
     ![](../../assets/images/cdpbase/addbase3.png)
     
@@ -87,7 +87,7 @@ This article explains the necessary steps to install the minimum services on CDP
 
     ![](../../assets/images/cdpbase/addbase4.png)
     
-5. Ensure that JDK has already been installed in each CDP Base host. Select `Manually manage JDK` and click `Continue`.
+5. Ensure that JDK has already been installed in each CDP PvC Base host. Select `Manually manage JDK` and click `Continue`.
 
     ![](../../assets/images/cdpbase/addbase5.png)
     
@@ -95,7 +95,7 @@ This article explains the necessary steps to install the minimum services on CDP
 
     ![](../../assets/images/cdpbase/addbase6.png)
     
-7. CM is installing the agent in each CDP Base host in parallel and will subsequently install the parcels.
+7. CM is installing the agent in each CDP PvC Base host in parallel and will subsequently install the parcels.
 
     ![](../../assets/images/cdpbase/addbase7-1.png)
     ![](../../assets/images/cdpbase/addbase7-2.png)
@@ -105,7 +105,7 @@ This article explains the necessary steps to install the minimum services on CDP
     ![](../../assets/images/cdpbase/addbase8-1.png)
     ![](../../assets/images/cdpbase/addbase8-2.png)
     
-9. Select `Custom Services`. Select `Atlas`, `HDFS`, `Hive`, `Ozone`, `Ranger`, `Yarn`, `Yarn Queue Manager` and `Zookeeper`. These are the minimum services needed on the CDP Base cluster to provision CDW, CML and CDE on ECS platform later.
+9. Select `Custom Services`. Select `Atlas`, `HDFS`, `Hive`, `Ozone`, `Ranger`, `Yarn`, `Yarn Queue Manager` and `Zookeeper`. These are the minimum services needed on the CDP PvC Base cluster as the prerequisites to provision CDW, CML and CDE on ECS platform later.
 
     ![](../../assets/images/cdpbase/addbase9.png)
     
@@ -113,9 +113,12 @@ This article explains the necessary steps to install the minimum services on CDP
 
     ![](../../assets/images/cdpbase/addbase10.png)
     
-11. The outcome is similar to the following diagram. The placement is based on the recommended design architecture as depicted below.
+11. The outcome is similar to the following diagram. 
 
     ![](../../assets/images/cdpbase/baseroles.png)
+    
+    The placement is based on the recommended design architecture as depicted below.
+    
     ![](../../assets/images/cdpbase/baseplacement.png)
     
 12. Fill the database parameters based on the created databases in PostgreSQL. Click `Test Connection`. After getting successful result, click `Continue`.
@@ -150,4 +153,5 @@ This article explains the necessary steps to install the minimum services on CDP
 ---    
    Next Step
    {: .label .label-blue }
-- Proceed to configure the necessary settings of CDP Base cluster in the next [subtopic]({{ site.baseurl }}{% link docs/cdppvc/baseconfig.md %}).
+   
+- Proceed to configure the necessary settings of CDP PvCBase cluster in the next [subtopic]({{ site.baseurl }}{% link docs/cdppvc/baseconfig.md %}).
