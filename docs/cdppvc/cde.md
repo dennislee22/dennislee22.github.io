@@ -6,16 +6,15 @@ grand_parent: CDP Private Cloud
 nav_order: 4
 ---
 
-# Cloudera Data Engineering
+# Cloudera Data Engineering (CDE)
 {: .no_toc }
 
-Blah
+This article explains the steps to deploy the CDE service on ECS platform after the successful configuration of [Data Services Management Console]({{ site.baseurl }}{% link docs/cdppvc/dsconsole.md %}) platform.
 
 - TOC
 {:toc}
 
 ---
-
 
    ```bash
    # kubectl -n dex-base-nl7jsswf get pods
