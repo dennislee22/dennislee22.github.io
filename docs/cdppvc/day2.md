@@ -1,12 +1,12 @@
 ---
 layout: default
-title: FAQ: Day-2 Tasks
+title: Day-2 Tasks
 parent: CDP Private Cloud
 has_children: true
 nav_order: 3
 ---
 
-# Day-2 Admin Manual
+# Day-2 Tasks
 {: .no_toc }
 
 This article 
