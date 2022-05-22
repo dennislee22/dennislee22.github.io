@@ -43,27 +43,27 @@ Check and make necessary configurations to ensure that the CDP Base cluster has 
 
 1. The external LDAP server is the centralized user authentication database that stores the user credentials with the associated group. This demo is connected to Red Hat IPA. Navigate to `base 1` > `Ranger` > `Configurations`. Configure Ranger with the necessary external LDAP server settings as shown in the following example. Click `Save Changes`.
 
-| Parameter       | Value         |
-|:----------------|:------------------|
-| Source for Syncing User and Groups | org.apache.ranger.unixusersync.process.UnixUserGroupBuilder  | 
-| Ranger Usersync Unix Backend  | nss  | 
-| Usersync LDAP/AD URL | ldap://idm.cdpkvm.cldr  | 
-| Usersync Bind User | uid=admin,cn=users,cn=accounts,dc=cdpkvm,dc=cldr  | 
-| Usersync Bind User Password | `password`  | 
-| Usersync User Search Base | cn=users,cn=accounts,dc=cdpkvm,dc=cldr  | 
-| Usersync User Search Scope |  sub | 
-| Usersync User Object Class  | person  | 
-| Usersync User Search Filter | uid=*  | 
-| Usersync User Name Attribute |  uid | 
-| Usersync Referral | follow | 
-| Usersync Username Case Conversion | none | 
-| Usersync Groupname Case Conversion | none | 
-| Usersync Enable User Search | Ranger Usersync Default Group | 
-| Usersync Group Search Base | cn=groups,cn=accounts,dc=cdpkvm,dc=cldr | 
-| Usersync Group Search Scope | sub | 
-| Usersync Group Object Class | ipausergroup | 
-| Usersync Group Name Attribute | cn | 
-| Usersync Group Member Attribute | member | 
+    | Parameter       | Value         |
+    |:----------------|:------------------|
+    | Source for Syncing User and Groups | org.apache.ranger.unixusersync.process.UnixUserGroupBuilder  | 
+    | Ranger Usersync Unix Backend  | nss  | 
+    | Usersync LDAP/AD URL | ldap://idm.cdpkvm.cldr  | 
+    | Usersync Bind User | uid=admin,cn=users,cn=accounts,dc=cdpkvm,dc=cldr  | 
+    | Usersync Bind User Password | `password`  | 
+    | Usersync User Search Base | cn=users,cn=accounts,dc=cdpkvm,dc=cldr  | 
+    | Usersync User Search Scope |  sub | 
+    | Usersync User Object Class  | person  | 
+    | Usersync User Search Filter | uid=*  | 
+    | Usersync User Name Attribute |  uid | 
+    | Usersync Referral | follow | 
+    | Usersync Username Case Conversion | none | 
+    | Usersync Groupname Case Conversion | none | 
+    | Usersync Enable User Search | Ranger Usersync Default Group | 
+    | Usersync Group Search Base | cn=groups,cn=accounts,dc=cdpkvm,dc=cldr | 
+    | Usersync Group Search Scope | sub | 
+    | Usersync Group Object Class | ipausergroup | 
+    | Usersync Group Name Attribute | cn | 
+    | Usersync Group Member Attribute | member | 
 
 2. Click the orange button. Click `Restart Stale Services`.
 
@@ -81,7 +81,7 @@ Check and make necessary configurations to ensure that the CDP Base cluster has 
         
 ## LDAP User in Ranger
 
-1. After successful Ranger usersync set up with the the external LDAP server, log in Ranger dashboard as admin user to ensure that the ldap user(s) in LDAP server has successfully been synced with Ranger. 
+1. After successful Ranger usersync's integration with the external LDAP server, log in Ranger dashboard as admin user and check that the ldap user(s) in LDAP server has successfully been synced and updated in Ranger. 
 
     ![](../../assets/images/cdpbase/ranger1.png)
     
@@ -92,7 +92,7 @@ Check and make necessary configurations to ensure that the CDP Base cluster has 
     
 ## Atlas Check
 
-1. After successful Ranger usersync set up with the the external LDAP server, log in Atlas dashboard using the LDAP user.
+1. After successful Ranger usersync's integration with the external LDAP server, log in Atlas dashboard using the LDAP user.
 
     ![](../../assets/images/cdpbase/atlas1.png)
     
