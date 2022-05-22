@@ -9,7 +9,7 @@ nav_order: 3
 # CDP PvC Base Cluster Deployment
 {: .no_toc }
 
-This article explains the necessary steps to install the minimum services on CDP PvC Base platform prior to installing the ECS platform. Please ensure that all the [prerequisites]({{ site.baseurl }}{% link docs/cdppvc/prerequisites.md %}) have already been prepared and [CM]({{ site.baseurl }}{% link docs/cdppvc/cm.md %}) has already been installed successfully before running this procedure.
+This article explains the necessary steps to install the minimum services on CDP PvC Base platform prior to installing the CDP Data Services on the ECS platform. Please ensure that all the [prerequisites]({{ site.baseurl }}{% link docs/cdppvc/prerequisites.md %}) have already been prepared and [CM]({{ site.baseurl }}{% link docs/cdppvc/cm.md %}) has already been installed successfully before running this procedure.
 
 - TOC
 {:toc}
