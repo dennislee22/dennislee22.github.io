@@ -34,6 +34,65 @@ This article explains the steps to deploy and configure the CDP Data Services en
 
     ![](../../assets/images/dsconsole/dsldapconfig.png)
     
+    
+    Cross check with the output of the LDAP command as shown in the example below.
+
+    ```bash
+    #  ldapsearch  -H ldap://idm.cdpkvm.cldr:389 -D "uid=admin,cn=users,cn=accounts,dc=cdpkvm,dc=cldr" -w 'rootroot' -b "cn=users,cn=accounts,dc=cdpkvm,dc=cldr" '(&(uid=ldapuser1))' | grep -v "#"
+
+    dn: uid=ldapuser1,cn=users,cn=accounts,dc=cdpkvm,dc=cldr
+    displayName: ldapuser1 ldapuser1
+    uid: ldapuser1
+    krbCanonicalName: ldapuser1@CDPKVM.CLDR
+    objectClass: top
+    objectClass: person
+    objectClass: organizationalperson
+    objectClass: inetorgperson
+    objectClass: inetuser
+    objectClass: posixaccount
+    objectClass: krbprincipalaux
+    objectClass: krbticketpolicyaux
+    objectClass: ipaobject
+    objectClass: ipasshuser
+    objectClass: ipaSshGroupOfPubKeys
+    objectClass: mepOriginEntry
+    loginShell: /bin/sh
+    initials: ll
+    gecos: ldapuser1 ldapuser1
+    sn: ldapuser1
+    homeDirectory: /home/ldapuser1
+    mail: ldapuser1@cdpkvm.cldr
+    krbPrincipalName: ldapuser1@CDPKVM.CLDR
+    givenName: ldapuser1
+    cn: ldapuser1 ldapuser1
+    ipaUniqueID: 4a377c9c-d82b-11ec-995e-525400b4be20
+    uidNumber: 371000021
+    gidNumber: 371000021
+    krbLastPwdChange: 20220520105515Z
+    krbExtraData:: AAKTc4dia2FkbWluZEBDRFBLVk0uQ0xEUgA=
+    mepManagedEntry: cn=ldapuser1,cn=groups,cn=accounts,dc=cdpkvm,dc=cldr
+    memberOf: cn=ipausers,cn=groups,cn=accounts,dc=cdpkvm,dc=cldr
+    krbTicketFlags: 128
+    krbLoginFailedCount: 0
+    krbPasswordExpiration: 20220818105515Z
+
+    
+    #  ldapsearch  -H ldap://idm.cdpkvm.cldr:389 -D "uid=admin,cn=users,cn=accounts,dc=cdpkvm,dc=cldr" -w 'rootroot' -b "cn=groups,cn=accounts,dc=cdpkvm,dc=cldr" '(&(member=uid=ldapuser1,cn=users,cn=accounts,dc=cdpkvm,dc=cldr))' | grep -v "#"
+
+    dn: cn=ipausers,cn=groups,cn=accounts,dc=cdpkvm,dc=cldr
+    objectClass: top
+    objectClass: groupofnames
+    objectClass: nestedgroup
+    objectClass: ipausergroup
+    objectClass: ipaobject
+    description: Default group for all users
+    cn: ipausers
+    ipaUniqueID: 894cae12-bcd2-11ec-9ceb-525400b4be20
+    member: uid=cmadmin-97fd6767,cn=users,cn=accounts,dc=cdpkvm,dc=cldr
+    member: uid=ldapuser1,cn=users,cn=accounts,dc=cdpkvm,dc=cldr
+    member: uid=test,cn=users,cn=accounts,dc=cdpkvm,dc=cldr
+
+    
 5. Log out and log in using the LDAP user credential.    
 
     ![](../../assets/images/dsconsole/cdpldaplogin.png)
