@@ -9,7 +9,7 @@ nav_order: 2
 # Cloudera Machine Learning (CML)
 {: .no_toc }
 
-This article explains the steps to deploy the CML service on ECS platform after the successful configuration of [Data Services Management Console]({{ site.baseurl }}{% link docs/cdppvc/dsconsole.md %}) platform.
+This article explains the steps to deploy the CML service on the ECS platform after successful configuration of the [Data Services Management Console]({{ site.baseurl }}{% link docs/cdppvc/dsconsole.md %}).
 
 - TOC
 {:toc}
@@ -26,18 +26,20 @@ This article explains the steps to deploy the CML service on ECS platform after 
 
     ![](../../assets/images/dsconsole/dsmenu.png)
 
-3. Navigate to `ML Workspaces`. Click `Provision Workspace`
+3. Navigate to `ML Workspaces`. Click `Provision Workspace`.
 
     ![](../../assets/images/cml/cmlprov1.png)
 
-4. Fill up the fields as shown below.
+4. Fill in the fields as shown in the following example.
 
     ![](../../assets/images/cml/cmlprov2.png)
 
-5. The output of the workspace creation should be successful as shown below. Click `workspace1`. 
+5. The outcome of the workspace creation should be successful as shown below. Click `workspace1`. 
 
     ![](../../assets/images/cml/cmlready.png)
     
+6. The system will redirect the browser to the CML dashboard.
+   
     ![](../../assets/images/cml/cmluser1.png)     
 
 ## AMP Project Creation
@@ -70,15 +72,15 @@ This article explains the steps to deploy the CML service on ECS platform after 
 
 
 
-    ```bash
+```bash
     # kubectl get pv | head -1 ; kubectl get pv | grep cdp-env-1
     NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM                                                                                                                   STORAGECLASS   REASON   AGE
     pvc-7022f231-463b-4622-8a21-15f7a729b7d1   2Gi        RWO            Delete           Bound    cdp-env-1-d668dab9-monitoring-platform/storage-volume-monitoring-prometheus-alertmanager-0                              longhorn                66s
     pvc-946e99e2-0ef1-4ba5-8504-246f02c3142f   60Gi       RWO            Delete           Bound    cdp-env-1-d668dab9-monitoring-platform/monitoring-prometheus-server                                                     longhorn                68s
     pvc-c96965bb-b564-4cb5-b373-0fbcc7ead110   2Gi        RWO            Delete           Bound    cdp-env-1-d668dab9-monitoring-platform/storage-volume-monitoring-prometheus-alertmanager-1                              longhorn                11s
-    ```
+```
 
-    ```bash
+```bash
     # kubectl get ns
     NAME                                     STATUS   AGE
     cdp                                      Active   8h
@@ -96,9 +98,9 @@ This article explains the steps to deploy the CML service on ECS platform after 
     shared-services                          Active   3h50m
     vault-system                             Active   8h
     yunikorn                                 Active   8h
-    ```
+```
 
-    ```bash
+```bash
     # kubectl -n cdp-env-1-d668dab9-monitoring-platform get pods
     NAME                                                        READY   STATUS    RESTARTS   AGE
     monitoring-cm-health-exporter-59dc48c4d-twhnj               3/3     Running   0          2m56s
@@ -111,17 +113,17 @@ This article explains the steps to deploy the CML service on ECS platform after 
     monitoring-prometheus-pushgateway-64b5765874-9n8c4          2/2     Running   0          2m56s
     monitoring-prometheus-server-c4b8b4456-8lcz9                3/3     Running   0          2m56s
     snmp-notifier-86c7564b69-bkdwm                              2/2     Running   0          52s
-    ```
+```
 
-    ```bash
+```bash
     # kubectl -n cdp-env-1-d668dab9-monitoring-platform get pvc
     NAME                                                  STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   AGE
     monitoring-prometheus-server                          Bound    pvc-946e99e2-0ef1-4ba5-8504-246f02c3142f   60Gi       RWO            longhorn       3m13s
     storage-volume-monitoring-prometheus-alertmanager-0   Bound    pvc-7022f231-463b-4622-8a21-15f7a729b7d1   2Gi        RWO            longhorn       3m13s
     storage-volume-monitoring-prometheus-alertmanager-1   Bound    pvc-c96965bb-b564-4cb5-b373-0fbcc7ead110   2Gi        RWO            longhorn       2m16s
-    ```
+```
 
-    ```bash
+```bash
     # kubectl -n workspace1 get pvc
     NAME                                    STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   AGE
     livelog-data-livelog-0                  Bound    pvc-fd0b773a-e785-4b5c-afc1-fcd98afcc56b   1Ti        RWO            longhorn       16s
@@ -131,9 +133,9 @@ This article explains the steps to deploy the CML service on ECS platform after 
     projects-pvc                            Bound    projects-share-workspace1                  1Ti        RWX                           16s
     s2i-git-server-repos-s2i-git-server-0   Bound    pvc-cb5c9ac7-0201-44be-aeb5-dec057db5870   1Ti        RWO            longhorn       16s
     s2i-queue-pvc                           Bound    pvc-2394a6d2-eecf-452e-b17f-4ab477bb1310   2Gi        RWO            longhorn       16s
-    ```
+```
 
-    ```bash
+```bash
     # kubectl get pv | head -1 ; kubectl get pv | grep workspace1
     NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM                                                                                                                   STORAGECLASS   REASON   AGE
     projects-share-workspace1                  1Ti        RWX            Retain           Bound    workspace1/projects-pvc                                                                                                                         49s
@@ -143,10 +145,10 @@ This article explains the steps to deploy the CML service on ECS platform after 
     pvc-a16af508-e380-4243-944c-1473d2a6b711   10Mi       RWO            Delete           Bound    workspace1/persist-dir-secret-generator-0                                                                               longhorn                39s
     pvc-cb5c9ac7-0201-44be-aeb5-dec057db5870   1Ti        RWO            Delete           Bound    workspace1/s2i-git-server-repos-s2i-git-server-0                                                                        longhorn                37s
     pvc-fd0b773a-e785-4b5c-afc1-fcd98afcc56b   1Ti        RWO            Delete           Bound    workspace1/livelog-data-livelog-0                                                                                       longhorn                39s
-    ```
+```
 
 
-    ```bash
+```bash
 # kubectl -n workspace1 get pods
 NAME                                             READY   STATUS      RESTARTS   AGE
 api-6945bd58bc-m64kv                             1/1     Running     3          21m
@@ -188,10 +190,10 @@ usage-reporter-7449585bf5-lgc2c                  2/2     Running     0          
 web-5cb768ddc4-9qs4k                             2/2     Running     1          21m
 web-5cb768ddc4-dzbbv                             2/2     Running     1          21m
 web-5cb768ddc4-qdhg2                             2/2     Running     1          21m
-    ```
+```
 
 
-    ```bash
+```bash
 # kubectl get ns
 NAME                                     STATUS   AGE
 cdp                                      Active   10h
@@ -211,24 +213,24 @@ vault-system                             Active   10h
 workspace1                               Active   24m
 workspace1-user-1                        Active   2m15s
 yunikorn                                 Active   10h
-    ```
+```
     
-    ```bash
+```bash
 # kubectl -n workspace1-user-1 get pods
 NAME               READY   STATUS    RESTARTS   AGE
 nv8ou6d2xskx8boy   4/4     Running   0          2m38s
-    ```
+```
     
-    ```bash
+```bash
 # kubectl -n workspace1-user-1 get pvc
 NAME       STATUS   VOLUME     CAPACITY   ACCESS MODES   STORAGECLASS                 AGE
 28f3a063   Bound    3eda7502   20Gi       RWX            cdsw-storageclass-whiteout   2m50s
 5bdf02aa   Bound    b07df1d0   20Gi       RWX            cdsw-storageclass-whiteout   2m50s
 8ed58984   Bound    bdc25cd8   20Gi       RWX            cdsw-storageclass-whiteout   2m50s
 abe060d7   Bound    338b9a4c   20Gi       RWX            cdsw-storageclass-whiteout   2m50s
-    ```
+```
 
-    ```bash
+```bash
 # ll /var/nfsshare/
 total 0
 drwxr-xr-x 8 8536 8536 204 May 22 10:54 addons
@@ -236,7 +238,7 @@ drwxr-xr-x 5 8536 8536  78 May 22 11:07 cdn
 drwxr-xr-x 2 8536 8536   6 May 22 10:43 output
 drwxr-xr-x 3 8536 8536  15 May 22 11:01 projects
 drwxr-xr-x 2 8536 8536   6 May 22 10:43 scratch
-    ```
+```
 
 
 
