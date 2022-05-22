@@ -20,6 +20,7 @@ permalink: docs/cdppvc
 
 
 ## Demo Architecture
-- The demo architecture diagram is shown below. The CDP Base components are hosted on dedicated "Base" hosts. Only 1 ECS master/server node is being used here but the current software version supports 3 ECS master/server node.
+- The demo architecture diagram is as follows. 
+- The CDP Base components are hosted on dedicated "Base" hosts. Only 1 ECS master/server node is being used here but the current software version supports 3 ECS master/server nodes.
 
-![](../../assets/images/overall_arch.png)
+![](../../assets/images/logicalarch.png)
