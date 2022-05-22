@@ -121,4 +121,8 @@ This article explains the necessary steps to install the ECS platform upon succe
 
     ![](../../assets/images/ecs/addecs17.png)  
     
-     
+---    
+   Next Step
+   {: .label .label-blue } 
+- Proceed to configure CDP Data Services Management Console in the next [subtopic]({{ site.baseurl }}{% link docs/cdppvc/dsconsole.md %}).
+        
