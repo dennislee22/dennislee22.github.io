@@ -243,7 +243,8 @@ The following steps are the mandatory to run prior to creating the ECS platform.
     Enter keystore password: 
     ```
  
-
+    ![](../../assets/images/cmlanalysis.gif)
+    
 ---    
    Next Step
    {: .label .label-blue } 
