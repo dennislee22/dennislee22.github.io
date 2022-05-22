@@ -29,3 +29,8 @@ This article
     ecsworker1.cdpkvm.cldr   Ready      <none>                      117m   v1.21.8+rke2r2
     ecsworker2.cdpkvm.cldr   Ready      <none>                      117m   v1.21.8+rke2r2
     ```
+
+## Add New ECS Node 
+
+1. Blah
+
