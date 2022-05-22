@@ -9,7 +9,7 @@ nav_order: 3
 # Cloudera Data Warehouse (CDW)
 {: .no_toc }
 
-This article explains the steps to deploy the CDW service on the ECS platform after successful configuration of [Data Services Management Console]({{ site.baseurl }}{% link docs/cdppvc/dsconsole.md %}).
+This article explains the steps to deploy the CDW service on the ECS platform after successful configuration of the [Data Services Management Console]({{ site.baseurl }}{% link docs/cdppvc/dsconsole.md %}).
 
 - TOC
 {:toc}
