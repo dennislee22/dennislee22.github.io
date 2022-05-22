@@ -9,7 +9,7 @@ nav_order: 5
 # Embedded Container Service (ECS) Installation
 {: .no_toc }
 
-This article explains the necessary steps to install the ECS platform upon successful [deployment and configuration of CDP Base cluster]({{ site.baseurl }}{% link docs/cdppvc/base.md %}). Please ensure that all the [prerequisites]({{ site.baseurl }}{% link docs/cdppvc/prerequisites.md %}) have already been prepared.
+This article explains the necessary steps to install the ECS platform upon successful [deployment and configuration of CDP Base cluster]({{ site.baseurl }}{% link docs/cdppvc/base.md %}). Please ensure that all the [Prerequisites]({{ site.baseurl }}{% link docs/cdppvc/prerequisites.md %}) have already been prepared.
 
 - TOC
 {:toc}
@@ -28,7 +28,7 @@ This article explains the necessary steps to install the ECS platform upon succe
     java-11-openjdk-devel-11.0.14.1.1-1.el7_9.x86_64
     ```
 
-2. The external DNS server is able to resolve the hostname and perform reverse DNS lookup. Please this step for all ECS nodes.
+2. The external DNS server is able to resolve the hostname and perform reverse DNS lookup. Repeat this step for all ECS nodes.
 
     ```bash
     # nslookup idm
@@ -44,7 +44,7 @@ This article explains the necessary steps to install the ECS platform upon succe
 
 3. NTP client of each ECS node is synchronizing time with the external NTP server.
 
-4. Ensure that ECS master node is able to resolve `console-cdp.apps.ecs1.cdpkvm.cldr` to its IP address.
+4. Ensure that ECS master node is able to resolve `console-cdp.apps.ecs1.cdpkvm.cldr` to the IP address of ECS master/server node.
 
     ```bash
     # nslookup console-cdp.apps.ecs1.cdpkvm.cldr
@@ -91,7 +91,7 @@ This article explains the necessary steps to install the ECS platform upon succe
     
     ![](../../assets/images/ecs/addecs9.png)
     
-9. Review and amend the parameters accordingly. Directory path for Longhorn storage and local SSD/NVMe (for CDW cache) in each node must be configured here in accordance to the mounted disk folder name. Dedicated storage disk that is expected to be formatted and mounted prior to this installation as explained in the [prerequisites]({{ site.baseurl }}{% link docs/cdppvc/prerequisites.md %}) subtopic. The value for `Application Domain` field will determine the subdomain of wildcard DNS.
+9. Review and amend the parameters accordingly. Directory path for Longhorn storage and local SSD/NVMe (for CDW cache) in each node must be configured here in accordance to the mounted disk folder name. Dedicated storage disk that is expected to be formatted and mounted prior to this installation as explained in the [Prerequisites]({{ site.baseurl }}{% link docs/cdppvc/prerequisites.md %}) subtopic. The value for `Application Domain` field will determine the subdomain of wildcard DNS.
     
     ![](../../assets/images/ecs/addecs10.png)
     
