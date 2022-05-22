@@ -22,7 +22,7 @@ This article explains the steps to deploy and configure the CDP Data Services en
 
     ![](../../assets/images/dsconsole/cmds.png)
     
-2. The system will redirect to the following page.  
+2. The system will redirect the browser to the following page. Click `Management Console`.   
 
     ![](../../assets/images/dsconsole/dsmenu.png)
 
@@ -32,40 +32,44 @@ This article explains the steps to deploy and configure the CDP Data Services en
     
 4. Navigate to `Administration` > `Authentication`. The external LDAP server is the centralized user authentication database that stores the user credentials with the associated group. This demo is connected to Red Hat IPA. Fill up the necessary external LDAP server fields as shown in the following example. Click `Test Connection` and check that the connection is successful. Click `Save`.
 
-
-    ![](../../assets/images/dsconsole/cdpauthentication.png)
+    ![](../../assets/images/dsconsole/dsldapconfig.png)
     
-5. Log out and log in using the ldap user credential.    
+5. Log out and log in using the Ldap user credential.    
 
     ![](../../assets/images/dsconsole/cdpldaplogin.png)
     
-6. The system prompts "You don't have the access rights".    
+6. The system is expected to prompt "You don't have the access rights".    
     
     ![](../../assets/images/dsconsole/cdpldapnorole.png)
 
-7. Log out and log in as the Local Administrator. Navigate to `User Management`. Click `Update Roles` next to the ldap user. 
+7. Log out and log in as the Local Administrator. Navigate to `User Management`. Click `Update Roles` next to the Ldap user. 
 
     ![](../../assets/images/dsconsole/cdpldapupdaterole.png)
     
 
-8. Select the roles for this ldap user accordingly. Click `Update Roles`.
+8. Select the roles for this Ldap user accordingly. Click `Update Roles`.
 
     ![](../../assets/images/dsconsole/cdpselectrole.png)
     
 
-9. Log out and log in as the ldap user to get full access rights as the local administrator.
+9. Log out and log in as the Ldap user to get full access rights.
 
 
 # CDP Data Lake Environment
 
-1. Navigate to `Environments`. There is only one environment which is the default environment. Click `Register Environment`. Fill up the fields to create data lake environment for the CDP Data Services to use.
+1. Log in as the Ldap user. Navigate to `Environments`. There is only one environment which is the default environment. Click `Register Environment`. Fill up the fields to create data lake environment for the CDP Data Services to use.
     
     ![](../../assets/images/dsconsole/dsregistration.png)
         
-        
+
+2. Click `Manage Access` of this newly created environment.
+
     ![](../../assets/images/dsconsole/dsenv.png)
     
-    ![](../../assets/images/dsconsole/dsldapconfig.png)
+
+3. Select the CDL, CDE and CML roles for this Ldap user in this newly created environment accordingly. Click `Update Roles`.
+
+    ![](../../assets/images/dsconsole/dsroles.png)
     
 
 ---    
@@ -82,4 +86,3 @@ This article explains the steps to deploy and configure the CDP Data Services en
 
     
     
-    ![](../../assets/images/dsconsole/dsroles.png)
