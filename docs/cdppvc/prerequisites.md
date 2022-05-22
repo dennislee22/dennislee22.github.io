@@ -14,7 +14,7 @@ CDP Private Cloud (CDP PvC) Platform and ECS (Embedded Compute Service) require 
 
 ![](../../assets/images/logical_arch.png)
 
-The following prerequisites need to be prepared prior to install CDP PvC with ECS solution. 
+The following prerequisites need to be prepared prior to installing CDP PvC with ECS solution. 
 
 - TOC
 {:toc}
