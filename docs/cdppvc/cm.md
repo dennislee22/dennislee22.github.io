@@ -32,7 +32,7 @@ This article explains the necessary steps to install Cloudera Manager (CM) on Ce
 
     ```bash
     # nslookup idm
-    Server:		10.15.4.150
+    Server:	10.15.4.150
     Address:	10.15.4.150#53
 
     Name:	idm.cdpkvm.cldr
@@ -59,7 +59,7 @@ This article explains the necessary steps to install Cloudera Manager (CM) on Ce
     Keytab: True
     Managed by: bmaster1.cdpkvm.cldr
     ```
-5. Ensure that `includedir` lines have been commented in CM host.
+5. Ensure that `includedir` lines in `/etc/krb5.conf` file have been commented in the CM host.
 
     ```bash
     # cat /etc/krb5.conf | grep includedir
@@ -76,7 +76,7 @@ This article explains the necessary steps to install Cloudera Manager (CM) on Ce
     # wget https://<userid>:<password>@archive.cloudera.com/p/cm7/7.5.5/redhat7/yum/cloudera-manager.repo
     ```
 
-2. Edit the Cloudera repo. Insert username and password parameters and its values.
+2. Edit the Cloudera repo. Insert the username and password parameters.
 
     ```yaml
     [cloudera-manager]
@@ -105,9 +105,7 @@ This article explains the necessary steps to install Cloudera Manager (CM) on Ce
 
     ```
 
-5. Run the scm_prepare_database.sh script. 
-   cm.cdpkvm.cldr is CM hostname.
-   db.cdpkvm.cldr is the external PostgreSQL hostname.
+5. Run the scm_prepare_database.sh script. In this demo, `cm.cdpkvm.cldr` is the CM hostname. `db.cdpkvm.cldr` is the external PostgreSQL hostname.
 
     ```bash
     # /opt/cloudera/cm/schema/scm_prepare_database.sh postgresql -h db.cdpkvm.cldr--scm-host cm.cdpkvm.cldr scm scm
@@ -129,7 +127,7 @@ This article explains the necessary steps to install Cloudera Manager (CM) on Ce
 
     ```
 
-7. Enable [AutoTLS](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/installation/topics/cdpdc-recommended-enable-auto-tls.html). The command creates self signed certificate as an example. User may also sign the CSR with CA.
+7. Enable [AutoTLS](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/installation/topics/cdpdc-recommended-enable-auto-tls.html). This command creates self signed certificate as an example. User may also sign the CSR with the preferred CA certificate.
 
     ```bash
     # export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-11.0.14.1.1-1.el7_9.x86_64
