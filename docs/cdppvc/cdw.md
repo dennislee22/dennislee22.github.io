@@ -21,7 +21,7 @@ This article explains the steps to deploy the CDW service on ECS platform after 
 
 1. This is a mandatory step to allow other user to impersonate `hive` user to access Hive tables. This is the Hive default and Ranger is the only supported and recommended security model. Ensure that Hive Impersonation is enabled as shown below.
 
-    ![](../../assets/cdw/hiveimpersonation.png)  
+    ![](../../assets/images/cdw/hiveimpersonation.png)  
 
 
 ## CDW Deployment
@@ -30,11 +30,11 @@ This article explains the steps to deploy the CDW service on ECS platform after 
 
     ![](../../assets/images/dsconsole/cmds.png)
     
-2. The system will redirect the browser to the following page. Click `Cloudera Data Warehouse`.   
+2. The system will redirect the browser to the following page. Click `Data Warehouse`.   
 
     ![](../../assets/images/dsconsole/dsmenu.png)
 
-3. Click the thunder icon of the newly created data lake environment. Fill in the parameters using LDAP user credential. Note that the databases must be pre-created as highlighted in the [Prerequisites]({{ site.baseurl }}{% link docs/cdppvc/prerequisites.md %}) topic. 
+3. Click the thunder icon of the newly created data lake environment. Fill in the parameters using LDAP user credentials. Note that the databases must be pre-created as highlighted in the [Prerequisites]({{ site.baseurl }}{% link docs/cdppvc/prerequisites.md %}) topic. 
 
     ![](../../assets/images/cdw/cdw1.png)
 
@@ -42,14 +42,13 @@ This article explains the steps to deploy the CDW service on ECS platform after 
 
     ![](../../assets/images/cdw/cdw2.png)
     
-    
 5. Create a new virtual warehouse as shown in the following example.
 
     ![](../../assets/images/cdw/cdw3.png)    
     
     ![](../../assets/images/cdw/cdw4.png)   
     
-6. Click `HUE` to access the Hue dashboard.
+6. Click `HUE` on the newly created virtual warehouse to access the Hue dashboard.
 
 7. In Hue dashboard, run the SELECT request on the default database will trigger "AuthorizationException" error. This is because the authorization for this user has not been configured in Ranger.
 
