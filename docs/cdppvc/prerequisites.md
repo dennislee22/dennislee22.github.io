@@ -10,7 +10,7 @@ nav_order: 1
 # Prerequisites
 {: .no_toc }
 
-CDP Private Cloud (CDP PvC) Platform and ECS (Embedded Compute Service) require direct integration with some 3rd party/external components as represented by the purple coloured boxes depicted in the following logical architecture diagram. ECS platform hosts Cloudera Data Warehouse (CDW), Cloudera Machine Learning (CML) and Cloudera Data Engineering (CDE) data services.
+CDP Private Cloud (CDP PvC) Platform and ECS (Embedded Compute Service) require direct integration with some 3rd party/external components as represented by the purple-coloured boxes depicted in the following logical architecture diagram. ECS platform hosts Cloudera Data Warehouse (CDW), Cloudera Machine Learning (CML) and Cloudera Data Engineering (CDE) data services.
 
 ![](../../assets/images/logical_arch.png)
 
@@ -31,19 +31,17 @@ The following prerequisites need to be prepared prior to install CDP PvC with EC
 
     ![](../../assets/images/base_svc_table1.png)
     
-- Hardware requirements are determined by the specific CDP services to be installed in both CDP Base and ECS.
-- CDP Base services such as [HDFS](https://docs.cloudera.com/cdp-private-cloud-upgrade/latest/release-guide/topics/cdpdc-hdfs.html), [Zookeeper](https://docs.cloudera.com/cdp-private-cloud-upgrade/latest/release-guide/topics/cdpdc-zookeeper.html) and [Ozone](https://docs.cloudera.com/cdp-private-cloud-upgrade/latest/release-guide/topics/cdpdc-ozone.html) have dedicated storage requirements.
+- Hardware requirements are determined by specific CDP services to be installed in both CDP PvC Base cluster and ECS platform. For instance, CDP PvC Base services such as [HDFS](https://docs.cloudera.com/cdp-private-cloud-upgrade/latest/release-guide/topics/cdpdc-hdfs.html), [Zookeeper](https://docs.cloudera.com/cdp-private-cloud-upgrade/latest/release-guide/topics/cdpdc-zookeeper.html) and [Ozone](https://docs.cloudera.com/cdp-private-cloud-upgrade/latest/release-guide/topics/cdpdc-ozone.html) have dedicated storage requirements.
 - The supported OS and the filesystems are listed [here](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/installation/topics/cdpdc-os-requirements.html).
 - [JDK](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/installation/topics/cdpdc-java-requirements.html) must be installed in each host.
-- [Data at Rest](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/installation/topics/cdpdc-data-at-rest-encryption-requirements.html) is not mandatory and hence not covered in this article.
+- [Data at Rest](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/installation/topics/cdpdc-data-at-rest-encryption-requirements.html) is not mandatory and not covered in this article.
 - CDW requires locally attached SCSI device (SSD/NVMe) on each ECS worker/agent node.
 - All ECS hosts need to be equipped with SSD/NVMe disk as the physical disk for [Longhorn storage](https://longhorn.io/docs/1.2.4/best-practices/#minimum-recommended-hardware). Longhorn could only use a single volume disk per node and thereby LVM is recommended to be used for exposing a single volume backed by one/many physical disk.
-- For every ECS node that is equipped with Nvidia GPU card, ensure that the GPU hosts have nVidia Drivers and nvidia-container-runtime installed.
+- For every ECS node that is equipped with Nvidia GPU card, ensure that the GPU hosts have Nvidia Drivers and Nvidia-container-runtime installed.
 - All ECS nodes must be installed with nfs-utils package.
 
     ```bash
     # yum install nfs-utils
-
     ```
 
 ## External NFS
@@ -53,13 +51,13 @@ The following prerequisites need to be prepared prior to install CDP PvC with EC
 ## DNS Server
 
 - An external DNS server must be able to route inbound traffic to both CDP Base platform and ECS. It must contain forward and reverse zones.
-- Wildcard DNS entry must be configured; e.g. `*.apps.ecs1.cdpkvm.cldr` to reduce Day-2 operational tasks to set separate DNS entry for each newly provisioned external-facing application/service.
+- Wildcard DNS entry must be configured; e.g. `*.apps.ecs1.cdpkvm.cldr`. This helps to reduce Day-2 operational task to set separate DNS entry for each newly provisioned external-facing application/service.
 
 ![](../../assets/images/wildcarddns.png)
 
 ## NTP Server
 
-- All CDP Base and ECS nodes must be installed with NTP client and able to synchronize the time with the external NTP server.
+- Every CDP PvC Base and ECS node must be installed with NTP client and able to synchronize the time with the external NTP server.
 
 ## Kerberos + LDAP Server
 
@@ -70,7 +68,7 @@ The following prerequisites need to be prepared prior to install CDP PvC with EC
 
 - The database requirements is described in this [link](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/installation/topics/cdpdc-database-requirements.html). 
 - [SSL](https://docs.cloudera.com/cdp-private-cloud-data-services/1.3.4/installation/topics/cdppvc-installation-external-db-setup.html) must be enabled in the database.
-- This article uses PostgreSQL 12 database as the external database.
+- This demo uses PostgreSQL 12 database as the external database.
 - Create the following databases in the external PostgreSQL server with its users and the associated privileges. Note that simple passwords are being created but the actual production environment should make use of complex passwords. Not every created database is being used here but serves as a placeholder for future use case.
 
   ```yaml
@@ -111,6 +109,9 @@ The following prerequisites need to be prepared prior to install CDP PvC with EC
   CREATE DATABASE dbums OWNER cdpadmin ENCODING 'UTF8';
   CREATE DATABASE cmregistration OWNER cdpadmin ENCODING 'UTF8';
   CREATE DATABASE clusterproxy OWNER cdpadmin ENCODING 'UTF8';
+  CREATE DATABASE metastoredb1 OWNER cdpadmin ENCODING 'UTF8';
+  CREATE DATABASE dasdb1 OWNER cdpadmin ENCODING 'UTF8';
+  CREATE DATABASE huedb1 OWNER cdpadmin ENCODING 'UTF8';
   ```
 
 ## Load Balancer
@@ -125,4 +126,5 @@ The following prerequisites need to be prepared prior to install CDP PvC with EC
    
    Next Step
    {: .label .label-blue }
+   
 - After preparing the abovementioned prerequisites, proceed to check out the steps to install Cloudera Manager in the subsequent [subtopic]({{ site.baseurl }}{% link docs/cdppvc/cm.md %}).
