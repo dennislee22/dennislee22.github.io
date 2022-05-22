@@ -55,7 +55,7 @@ This article explains the necessary steps to install the ECS platform upon succe
     Address: 10.15.4.166
     ```
     
-## Install ECS on CDP PvC Platform
+## ECS Platform Installation
 
 1. Navigate to `Clusters` > `Add Cluster`. Select `Private Cloud Base Cluster` and click `Continue`.
 
