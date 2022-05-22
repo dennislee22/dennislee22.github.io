@@ -225,7 +225,7 @@ This article explains the necessary steps to install Cloudera Manager (CM) on Ce
 
 ## External Database SSL Certificate Import
 
-The following steps are the mandatory to run prior to creating the ECS platform. This allows CDW to establish SSL connection with the external database using the database's certificate to be stored in CM's truststore.
+The following steps are the mandatory to run prior to creating the ECS platform. This allows CDW to establish SSL connection with the external database using the database's certificate to be stored inside the CM's truststore.
 
 1. Retrieve the keystore password from one of the CDP Base master hosts.
 
@@ -242,8 +242,6 @@ The following steps are the mandatory to run prior to creating the ECS platform.
     # keytool -import -alias postgres -file /root/server.crt -storetype JKS -keystore /var/lib/cloudera-scm-agent/agent-cert/cm-auto-global_truststore.jks
     Enter keystore password: 
     ```
- 
-    ![](../../assets/images/cmlanalysis.gif)
     
 ---    
    Next Step
