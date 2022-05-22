@@ -6,10 +6,10 @@ grand_parent: CDP Private Cloud
 nav_order: 1
 ---
 
-# Cloudera Machine Learning
+# Cloudera Machine Learning (CML)
 {: .no_toc }
 
-Blah
+This article explains the steps to deploy the CML service on ECS platform after the successful installation of [ECS]({{ site.baseurl }}{% link docs/cdppvc/ecs.md %}) platform.
 
 - TOC
 {:toc}
