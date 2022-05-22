@@ -1,15 +1,15 @@
 ---
 layout: default
-title: CDP Base Configuration
+title: CDP PvC Base Configuration
 parent: Installation
 grand_parent: CDP Private Cloud
 nav_order: 4
 ---
 
-# CDP Base Configuration
+# CDP PvC Base Configuration
 {: .no_toc }
 
-Check and make necessary configurations to ensure that the CDP Base cluster has been set up correctly prior to installing the ECS platform. 
+Check and make necessary configurations to ensure that the CDP PvC Base cluster has been set up correctly prior to installing the ECS platform. 
 
 - TOC
 {:toc}
@@ -18,7 +18,7 @@ Check and make necessary configurations to ensure that the CDP Base cluster has 
 
 ## Dependencies Check
 
-1. After the CDP Base has successfully been installed, the dependencies should be reflected in the each service's configurations as shown below. If not, please amend the configurations accordingly.
+1. After the CDP PvC Base cluster has successfully been installed, the dependencies should be reflected in the each service's configurations as shown below. Otherwise, please amend the configurations accordingly.
 
     ![](../../assets/images/cdpbase/hiveconfig.png)
     
@@ -36,12 +36,12 @@ Check and make necessary configurations to ensure that the CDP Base cluster has 
 
     ![](../../assets/images/cdpbase/yarnqueueconfig.png)
     
-    ![](../../assets/images/cdpbase/ozone.png)
+    ![](../../assets/images/cdpbase/ozoneconfig.png)
      
 
 ## Ranger Configuration
 
-1. The external LDAP server is the centralized user authentication database that stores the user credentials with the associated group. This demo is connected to Red Hat IPA. Navigate to `base 1` > `Ranger` > `Configurations`. Configure Ranger with the necessary external LDAP server settings as shown in the following example. Click `Save Changes`.
+1. The external LDAP server is the centralized user authentication database that stores the user credentials with the associated group. This demo is connected to the Red Hat IPA. Navigate to `base 1` > `Ranger` > `Configurations`. Configure Ranger with the necessary external LDAP server settings as shown in the following example. Click `Save Changes`.
 
     | Parameter       | Value         |
     |:----------------|:------------------|
@@ -65,7 +65,7 @@ Check and make necessary configurations to ensure that the CDP Base cluster has 
     | Usersync Group Name Attribute | cn | 
     | Usersync Group Member Attribute | member | 
 
-2. Click the orange button. Click `Restart Stale Services`.
+2. Click the orange button. Click `Restart Stale Services` to take the changes into effect.
 
     ![](../../assets/images/cdpbase/rangersetting1.png)
     
@@ -75,7 +75,7 @@ Check and make necessary configurations to ensure that the CDP Base cluster has 
 
     ![](../../assets/images/cdpbase/rangersetting3.png)
     
-4. The output should be successful as shown below.
+4. The outcome should be successful as shown below.
 
     ![](../../assets/images/cdpbase/rangersetting4.png)    
         
