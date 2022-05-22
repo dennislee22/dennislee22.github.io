@@ -62,7 +62,7 @@ This article explains the steps to deploy the CML service on the ECS platform af
 
     ![](../../assets/images/cml/cmluser7.png)  
     
-4. Click `Open` to browse the application as shown in the following animated gif. Click on the image below and the system will analyze the library and subsequently display a list of similar image's type.
+4. Click `Open` to browse the application as shown in the following animated gif. The application user may click on any image at the lower section and then the application will analyze the library and subsequently display a list of similar image's type that was clicked by the user.
 
 
     ![](../../assets/images/cml/cmlanalysis.gif)  
