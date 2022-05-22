@@ -117,10 +117,6 @@ This article explains the necessary steps to install the minimum services on CDP
 
     ![](../../assets/images/cdpbase/baseroles.png)
     
-    The placement is based on the recommended design architecture as depicted below.
-    
-    ![](../../assets/images/cdpbase/baseplacement.png)
-    
 12. Fill the database parameters based on the created databases in PostgreSQL. Click `Test Connection`. After getting successful result, click `Continue`.
 
     ![](../../assets/images/cdpbase/addbase12.png)
