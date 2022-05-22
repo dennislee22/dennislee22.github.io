@@ -9,7 +9,7 @@ nav_order: 5
 # Embedded Container Service (ECS) Installation
 {: .no_toc }
 
-This article explains the necessary steps to install the ECS platform upon successful [deployment and configuration of CDP Base cluster]({{ site.baseurl }}{% link docs/cdppvc/base.md %}). Please ensure that all the [Prerequisites]({{ site.baseurl }}{% link docs/cdppvc/prerequisites.md %}) have already been prepared.
+This article explains the necessary steps to install the ECS platform upon successful [deployment and configuration of CDP PvC Base cluster]({{ site.baseurl }}{% link docs/cdppvc/base.md %}). Please ensure that all the [prerequisites]({{ site.baseurl }}{% link docs/cdppvc/prerequisites.md %}) have already been prepared accordingly.
 
 - TOC
 {:toc}
@@ -28,7 +28,7 @@ This article explains the necessary steps to install the ECS platform upon succe
     java-11-openjdk-devel-11.0.14.1.1-1.el7_9.x86_64
     ```
 
-2. The external DNS server is able to resolve the hostname and perform reverse DNS lookup. Repeat this step for all ECS nodes.
+2. The external DNS server is able to resolve the hostname and perform reverse DNS lookup. Repeat this step for every ECS node.
 
     ```bash
     # nslookup idm
@@ -48,7 +48,7 @@ This article explains the necessary steps to install the ECS platform upon succe
 
     ```bash
     # nslookup console-cdp.apps.ecs1.cdpkvm.cldr
-    Server:		10.15.4.150
+    Server: 10.15.4.150
     Address:	10.15.4.150#53
 
     Name:	console-cdp.apps.ecs1.cdpkvm.cldr
@@ -81,9 +81,11 @@ This article explains the necessary steps to install the ECS platform upon succe
     
     ![](../../assets/images/ecs/addecs6.png)
     
-7. Select all ECS nodes in the `Docker Server` field. Select the ECS master node in the `Ecs Server` field and select the ECS worker nodes in the `Ecs Agent` field. Click `View By Host` to confirm your choices. Click `Close` and `Continue`.   
+7. Select all ECS nodes in the `Docker Server` field. Select the ECS master node in the `Ecs Server` field and select the ECS worker nodes in the `Ecs Agent` field. Click `View By Host` to confirm your choices.   
     
     ![](../../assets/images/ecs/addecs7.png)
+    
+    Click `Close` and `Continue`.
     
     ![](../../assets/images/ecs/addecs8.png)
     
@@ -91,11 +93,11 @@ This article explains the necessary steps to install the ECS platform upon succe
     
     ![](../../assets/images/ecs/addecs9.png)
     
-9. Review and amend the parameters accordingly. Directory path for Longhorn storage and local SSD/NVMe (for CDW cache) in each node must be configured here in accordance to the mounted disk folder name. Dedicated storage disk that is expected to be formatted and mounted prior to this installation as explained in the [Prerequisites]({{ site.baseurl }}{% link docs/cdppvc/prerequisites.md %}) subtopic. The value for `Application Domain` field will determine the subdomain of wildcard DNS.
+9. Review and amend the parameters accordingly. Directory path for Longhorn storage and local SSD/NVMe (for CDW cache) in each node must be configured here in accordance to the mounted disk folder name. Dedicated storage disk that is expected to be formatted and mounted prior to this installation as explained in the [Prerequisites]({{ site.baseurl }}{% link docs/cdppvc/prerequisites.md %}) subtopic. The `Application Domain` field determines the subdomain of the wildcard DNS. In this case, the wildcard DNS will be `*.apps.ecs1.cdpkvm.cldr`.
     
     ![](../../assets/images/ecs/addecs10.png)
     
-10. Fill the database parameters based on the created databases in PostgreSQL. Click `Test Connection`. After getting successful result, click `Continue`.
+10. Fill in the database parameters based on the created databases in PostgreSQL. Click `Test Connection`. After getting successful result, click `Continue`.
     
     ![](../../assets/images/ecs/addecs11.png)
     
@@ -117,12 +119,13 @@ This article explains the necessary steps to install the ECS platform upon succe
 
     ![](../../assets/images/ecs/addecs16.png)  
     
-17. Click `ECS`. You may explore other dashboards such as `Storage UI` and `ECS Web UI`.  
+17. Click `ECS`. You may explore other ECS related dashboards such as `Storage UI` and `ECS Web UI`.  
 
     ![](../../assets/images/ecs/addecs17.png)  
     
 ---    
    Next Step
    {: .label .label-blue } 
+   
 - Proceed to configure CDP Data Services Management Console in the next [subtopic]({{ site.baseurl }}{% link docs/cdppvc/dsconsole.md %}).
         
