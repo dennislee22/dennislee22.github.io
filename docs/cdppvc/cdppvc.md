@@ -19,4 +19,7 @@ permalink: docs/cdppvc
 - Cloudera Manager (CM) installs, manages, configures, and monitors the entire CDP Private Cloud solution.
 
 
+## Demo Architecture
+- The demo architecture diagram is shown below. The CDP Base components are hosted on dedicated "Base" hosts. Only 1 ECS master/server node is being used here but the current software version supports 3 ECS master/server node.
 
+![](../../assets/images/overall_arch.png)
