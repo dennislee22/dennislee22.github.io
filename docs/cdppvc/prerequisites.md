@@ -27,7 +27,7 @@ The following prerequisites need to be prepared prior to install CDP PvC with EC
 
 ## Host
 
-- The minimum CDP Base services and its dependencies to install CML, CDW and CDE are illustrated in the following table.
+- The minimum CDP PvC Base services and its dependencies to install CML, CDW and CDE are illustrated in the following table.
 
     ![](../../assets/images/base_svc_table1.png)
     
