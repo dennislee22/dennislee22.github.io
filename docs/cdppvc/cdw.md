@@ -133,13 +133,13 @@ scratch-cache-volume-coordinator-0           Bound    pvc-f13cc78e-4422-4688-914
 scratch-cache-volume-impala-executor-000-0   Bound    pvc-71bc8ec2-93d9-4006-afe5-3bb0bfbb0df1   100Gi      RWO            local-path     44m
    ```
 
-   ```
+   ```bash
 # kubectl get pv | grep impala
 pvc-71bc8ec2-93d9-4006-afe5-3bb0bfbb0df1   100Gi      RWO            Delete           Bound    impala-1653181201-5gqh/scratch-cache-volume-impala-executor-000-0                                                       local-path              46m
 pvc-f13cc78e-4422-4688-914e-4ae273f631b0   100Gi      RWO            Delete           Bound    impala-1653181201-5gqh/scratch-cache-volume-coordinator-0                                                               local-path              46m
    ```
 
-   ```
+   ```bash
 # kubectl describe pv pvc-f13cc78e-4422-4688-914e-4ae273f631b0
 Name:              pvc-f13cc78e-4422-4688-914e-4ae273f631b0
 Labels:            <none>
@@ -161,15 +161,16 @@ Source:
     Path:          /localpath/local-storage/pvc-f13cc78e-4422-4688-914e-4ae273f631b0_impala-1653181201-5gqh_scratch-cache-volume-coordinator-0
     HostPathType:  DirectoryOrCreate
 Events:            <none>
-   ```bash
+   ```
 
    ```bash
 # kubectl -n impala-1653181201-5gqh describe pod coordinator-0  | grep -i Node:
 Node:         ecsworker2.cdpkvm.cldr/10.15.4.171
+   ```
 
+- In ecsworker2 node, check the contents in the localpath directory.
 
-In ecsworker2 node, check the contents of the localpath directory.
-
+   ```bash
 # tree /localpath
 /localpath
 `-- local-storage
