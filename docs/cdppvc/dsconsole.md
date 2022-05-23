@@ -127,7 +127,7 @@ This article explains the steps to deploy and configure the CDP Data Services en
     ![](../../assets/images/dsconsole/dsenv.png)
     
 
-3. Select the DL*, DE* and ML* roles for this LDAP user in this newly created environment accordingly. Click `Update Roles`.
+3. Select the `DL*`, `DE*` and `ML*` roles for this LDAP user in this newly created environment accordingly. Click `Update Roles`.
 
     ![](../../assets/images/dsconsole/dsroles.png)
     
