@@ -93,7 +93,7 @@ This article explains the necessary steps to install the ECS platform upon succe
     
     ![](../../assets/images/ecs/addecs9.png)
     
-9. Review and amend the parameters accordingly. Directory path for Longhorn storage and local SSD/NVMe (for CDW cache) in each node must be configured here in accordance to the mounted disk folder name. Dedicated storage disk that is expected to be formatted and mounted prior to this installation as explained in the [Prerequisites]({{ site.baseurl }}{% link docs/cdppvc/prerequisites.md %}) subtopic. The `Application Domain` field determines the subdomain of the wildcard DNS. In this case, the wildcard DNS will be `*.apps.ecs1.cdpkvm.cldr`.
+9. Review and amend the parameters accordingly. Directory path for Longhorn storage and local SSD/NVMe (for CDW cache) in each node must be configured here in accordance to the mounted disk folder name. Dedicated storage disk that is expected to be formatted and mounted prior to this installation as explained in the [Prerequisites]({{ site.baseurl }}{% link docs/cdppvc/prerequisites.md %}) subtopic. The `Application Domain` field determines the subdomain of the wildcard DNS. In this case, the wildcard DNS to be set at the external DNS server is `*.apps.ecs1.cdpkvm.cldr`.
     
     ![](../../assets/images/ecs/addecs10.png)
     
