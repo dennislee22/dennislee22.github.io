@@ -66,7 +66,7 @@ This article explains the necessary steps to install the minimum services on CDP
 
     ![](../../assets/images/cdpbase/timeout.png)
 
-## CDP services Installation on CDP PvC Base Cluster
+## CDP PvC Base Cluster Installation
 
 1. Navigate to `Clusters` > `Add Cluster`. 
    Select `Private Cloud Base Cluster` and click `Continue`.
