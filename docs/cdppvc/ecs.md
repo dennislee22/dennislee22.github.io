@@ -28,7 +28,7 @@ This article explains the necessary steps to install the ECS platform upon succe
     java-11-openjdk-devel-11.0.14.1.1-1.el7_9.x86_64
     ```
 
-2. The external DNS server is able to resolve the hostname and perform reverse DNS lookup. Repeat this step for every ECS node.
+2. The external DNS server is able to resolve the hostname of CM, Kerberos, LDAP server, external database, NFS server, CDP PvC Base hosts and perform reverse DNS lookup. Repeat this step for every ECS node.
 
     ```bash
     # nslookup idm
