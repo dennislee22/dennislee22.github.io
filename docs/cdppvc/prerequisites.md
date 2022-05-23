@@ -54,7 +54,7 @@ The following prerequisites need to be prepared prior to installing CM, CDP PvC 
 
 ## DNS Server
 
-- An external DNS server must be able to route inbound traffic to both CDP Base platform and ECS. It must contain forward and reverse zones.
+- An external DNS server must contain the forward and reverse zones of the company domain name. CM and every CDP PvC Base and ECS nodes' hostname must be registered in the DNS server. 
 - Wildcard DNS entry must be configured; e.g. `*.apps.ecs1.cdpkvm.cldr`. This helps to reduce Day-2 operational task to set separate DNS entry for each newly provisioned external-facing application/service.
 
 ![](../../assets/images/wildcarddns.png)
