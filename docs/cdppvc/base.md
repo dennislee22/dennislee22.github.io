@@ -28,7 +28,7 @@ This article explains the necessary steps to install the minimum services on CDP
     java-11-openjdk-devel-11.0.14.1.1-1.el7_9.x86_64
     ```
 
-2. The external DNS server is able to resolve the hostname and perform reverse DNS lookup. Repeat this step for every CDP PvC Base host.
+2. The external DNS server must contain the forward and reverse zones of the company domain name. The external DNS server must be able to resolve the hostname of all CDP hosts, ECS nodes and the 3rd party components (includes Kerberos, LDAP server, external database, NFS server) and perform reverse DNS lookup. Repeat this step for every CDP PvC Base host.
 
     ```bash
     # nslookup idm
