@@ -17,8 +17,8 @@ This article and its sub-articles explain the requirements as well as the step-b
 | CDP Data Services  | 1.3.4 `rel. May 2022`  | 
 
 ---    
-   Next Step
-   
+   Next Step 
    {: .label .label-blue } 
+   
 - Explore the technical prerequisites to install the CDP Private Cloud solution in the next [subtopic]({{ site.baseurl }}{% link docs/cdppvc/prerequisites.md %}).
         
