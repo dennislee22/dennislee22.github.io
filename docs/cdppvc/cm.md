@@ -173,7 +173,7 @@ This article explains the necessary steps to install Cloudera Manager (CM) on Ce
     
 ## CM Integration with External LDAP
 
-1. Navigate to `Administration` > `Settings`. Search for `backend` and select the following options so that CM will first look up the user in the external LDAP server.
+1. Navigate to `Administration` > `Settings`. Search for `backend` and select the following options so that CM will also look up the user in the external LDAP server.
 
     ![](../../assets/images/cmsetting1.png) 
     
