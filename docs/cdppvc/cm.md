@@ -28,7 +28,7 @@ This article explains the necessary steps to install Cloudera Manager (CM) on Ce
     java-11-openjdk-devel-11.0.14.1.1-1.el7_9.x86_64
     ```
 
-2. The external DNS server is able to resolve the hostname and perform reverse DNS lookup. Repeat this step for every CDP PvC Base host.
+2. The external DNS server is able to resolve the hostname of CM, LDAP server, external database and perform reverse DNS lookup.
 
     ```bash
     # nslookup idm
