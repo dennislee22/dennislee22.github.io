@@ -8,7 +8,7 @@ nav_order: 1
 
 
 ## Demo Architecture
-- The following end-to-end installation procedures is articulated based on the following demo architecture diagram.
+- The next subtopics will describe the end-to-end installation procedure which is articulated based on the following demo architecture diagram.
 
     ![](../../assets/images/logicalarch.png)
 
