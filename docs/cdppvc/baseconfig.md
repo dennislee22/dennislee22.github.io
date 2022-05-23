@@ -81,7 +81,7 @@ Check and make necessary configurations to ensure that the CDP PvC Base cluster 
         
 ## LDAP User in Ranger
 
-1. After successful Ranger usersync's integration with the external LDAP server, log in Ranger dashboard as admin user and check that the ldap user(s) in LDAP server has successfully been synced and updated in Ranger. 
+1. After successful Ranger usersync's integration with the external LDAP server, log in Ranger dashboard as admin user and check that the LDAP user(s) in LDAP server has successfully been synced and updated in Ranger. 
 
     ![](../../assets/images/cdpbase/ranger1.png)
     
@@ -92,7 +92,7 @@ Check and make necessary configurations to ensure that the CDP PvC Base cluster 
     
 ## Atlas Check
 
-1. After successful Ranger usersync's integration with the external LDAP server, log in Atlas dashboard using the LDAP user.
+1. After successful Ranger usersync's integration with the external LDAP server, log in Atlas dashboard using the LDAP user credentials.
 
     ![](../../assets/images/cdpbase/atlas1.png)
     
