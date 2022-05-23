@@ -3,7 +3,7 @@ layout: default
 title: Data Services
 parent: CDP Private Cloud
 has_children: true
-nav_order: 2
+nav_order: 3
 ---
 
 # Data Services
