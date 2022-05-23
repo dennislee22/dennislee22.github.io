@@ -32,7 +32,7 @@ This article explains the necessary steps to install the ECS platform upon succe
 
     ```bash
     # nslookup idm
-    Server:		10.15.4.150
+    Server:	10.15.4.150
     Address:	10.15.4.150#53
 
     Name:	idm.cdpkvm.cldr
@@ -44,7 +44,7 @@ This article explains the necessary steps to install the ECS platform upon succe
 
 3. NTP client of each ECS node is synchronizing time with the external NTP server.
 
-4. Ensure that ECS master node is able to resolve `console-cdp.apps.ecs1.cdpkvm.cldr` to the IP address of ECS master/server node.
+4. Ensure that ECS master node is able to resolve `console-cdp.apps.ecs1.cdpkvm.cldr` to the IP address of ECS master/server node or the Load Balancer (if being used).
 
     ```bash
     # nslookup console-cdp.apps.ecs1.cdpkvm.cldr
