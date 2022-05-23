@@ -18,3 +18,9 @@ nav_order: 1
 - Only 1 ECS master/server node is being in this demo but the latest CDP software version supports 3 ECS master/server nodes.
 
 
+---    
+   Next Step
+   {: .label .label-blue } 
+   
+- Explore the end-to-end CDP Private Cloud installation procedure in the next [subtopic]({{ site.baseurl }}{% link docs/cdppvc/installation.md %}).
+        
