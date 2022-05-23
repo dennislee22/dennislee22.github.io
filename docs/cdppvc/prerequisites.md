@@ -124,7 +124,7 @@ The following prerequisites need to be prepared prior to installing CM, CDP PvC 
 
 ## Internet
 
-- A stable connectivity to internet is required during installation.
+- A stable connectivity to internet is required during installation to download the software parcels from the public Cloudera repository.
 
 ---
    
