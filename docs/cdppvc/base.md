@@ -32,7 +32,7 @@ This article explains the necessary steps to install the minimum services on CDP
 
     ```bash
     # nslookup idm
-    Server:		10.15.4.150
+    Server:	10.15.4.150
     Address:	10.15.4.150#53
 
     Name:	idm.cdpkvm.cldr
