@@ -10,7 +10,10 @@ nav_order: 1
 # Prerequisites
 {: .no_toc }
 
-CDP Private Cloud (CDP PvC) Platform and ECS (Embedded Compute Service) require direct integration with some 3rd party/external components as represented by the purple-coloured boxes depicted in the following logical architecture diagram. ECS platform hosts Cloudera Data Warehouse (CDW), Cloudera Machine Learning (CML) and Cloudera Data Engineering (CDE) data services.
+CDP Private Cloud solution require direct integration with some 3rd party/external components as represented by the purple-coloured boxes depicted in the following logical architecture diagram. As of time of writing, ECS platform can host the following CDP PvC Data Services.
+    - Cloudera Data Warehouse (CDW)
+    - Cloudera Machine Learning (CML)
+    - Cloudera Data Engineering (CDE)
 
 ![](../../assets/images/logical_arch.png)
 
