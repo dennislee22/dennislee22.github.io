@@ -19,11 +19,3 @@ permalink: docs/cdppvc
 - As of time of writing, CDP PvC DS platform can host Cloudera Data Warehouse (CDW), Cloudera Machine Learning (CML) and Cloudera Data Engineering (CDE) data services in which they are provisioned on the Kubernetes platform. Similar to CDP PvC Base services, these data services utilize Apache data analytics projects such as Impala, Hive and Spark. Apache Yunikorn is the latest addition as an universal resource scheduler for running big data/Machine Learning workloads on the Kubernetes platform.
 
 
-## Demo Architecture
-- This article is articulated based on the demo architecture diagram as depicted below.
-
-    ![](../../assets/images/logicalarch.png)
-
-- The minimum CDP PvC Base services are installed on the CDP PvC Base hosts. These are the prerequisites to install the CDP PvC Data Services on the ECS platform.
-- Only 1 ECS master/server node is being used here but the latest CDP software version supports 3 ECS master/server nodes.
-
