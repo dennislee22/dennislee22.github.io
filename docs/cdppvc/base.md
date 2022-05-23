@@ -42,9 +42,9 @@ This article explains the necessary steps to install the minimum services on CDP
     150.4.15.10.in-addr.arpa	name = idm.cdpkvm.cldr.
     ```
 
-3. NTP client of each host is synchronizing time with the external NTP server.
+3. NTP client of each CDP PvC Base host is synchronizing time with the external NTP server.
 
-4. Each host has already been registered with the external Kerberos server.
+4. Each CDP PvC Base host has already been registered with the external Kerberos server.
 
     ```bash
     # ipa host-show bmaster1
