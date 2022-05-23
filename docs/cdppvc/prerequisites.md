@@ -10,14 +10,11 @@ nav_order: 1
 # Prerequisites
 {: .no_toc }
 
-CDP Private Cloud solution require direct integration with some 3rd party/external components as represented by the purple-coloured boxes depicted in the following logical architecture diagram. As of time of writing, ECS platform can host the following CDP PvC Data Services.
-    - Cloudera Data Warehouse (CDW)
-    - Cloudera Machine Learning (CML)
-    - Cloudera Data Engineering (CDE)
+CDP Private Cloud solution require direct integration with some 3rd party/external components as represented by the purple-coloured boxes depicted in the following logical architecture diagram. As of time of writing, ECS platform can host the following CDP PvC Data Services - Cloudera Data Warehouse (CDW), Cloudera Machine Learning (CML) and Cloudera Data Engineering (CDE).
 
 ![](../../assets/images/logical_arch.png)
 
-The following prerequisites need to be prepared prior to installing CDP PvC with ECS solution. 
+The following prerequisites need to be prepared prior to installing CM, CDP PvC Base cluster and ECS platform. 
 
 - TOC
 {:toc}
@@ -35,7 +32,7 @@ The following prerequisites need to be prepared prior to installing CDP PvC with
     ![](../../assets/images/base_svc_table1.png)
     
 - Hardware requirements are determined by specific CDP services to be installed in both CDP PvC Base cluster and ECS platform. For instance, CDP PvC Base services such as [HDFS](https://docs.cloudera.com/cdp-private-cloud-upgrade/latest/release-guide/topics/cdpdc-hdfs.html), [Zookeeper](https://docs.cloudera.com/cdp-private-cloud-upgrade/latest/release-guide/topics/cdpdc-zookeeper.html) and [Ozone](https://docs.cloudera.com/cdp-private-cloud-upgrade/latest/release-guide/topics/cdpdc-ozone.html) have dedicated storage requirements. 
-- All ECS hosts need to be equipped with SSD/NVMe disk as the physical disk for [Longhorn storage](https://longhorn.io/docs/1.2.4/best-practices/#minimum-recommended-hardware). Longhorn could only use a single volume disk per node and thereby LVM is recommended to be used for exposing a single volume backed by one/many physical disk.
+- Each ECS node needs to be equipped with the direct-attached SSD/NVMe disk for the [Longhorn storage](https://longhorn.io/docs/1.2.4/best-practices/#minimum-recommended-hardware). Longhorn could only use a single volume disk per node and thereby LVM is recommended to be used for exposing a single volume backed by one/many physical disk.
 - CDW requires locally attached SCSI device (SSD/NVMe) on each ECS worker/agent node.
 
 
@@ -53,7 +50,7 @@ The following prerequisites need to be prepared prior to installing CDP PvC with
 
 ## External NFS
 
-- CML requires external [NFS server](https://docs.cloudera.com/machine-learning/1.3.4/private-cloud-requirements/topics/ml-pvc-external-nfs-server.html) to store the project files. NFS version 4.1 must be supported.
+- CML requires external [NFS server](https://docs.cloudera.com/machine-learning/1.3.4/private-cloud-requirements/topics/ml-pvc-external-nfs-server.html) to store the project files and directories. NFS version 4.1 must be supported.
 
 ## DNS Server
 
@@ -69,7 +66,7 @@ The following prerequisites need to be prepared prior to installing CDP PvC with
 ## Kerberos + LDAP Server
 
 - An external Kerberos server and the Kerberos key distribution center (KDC) (with a realm established) must be available to provide authentication to CDP services, users and hosts.
-- An external LDAP-compliant identity/directory server is required to enable the CDP solution to look up user accounts and groups in the directory.
+- An external LDAP-compliant identity/directory server is required to enable the CDP Private Cloud solution to look up for the user accounts and groups in the directory.
 
 ## Relational Database
 
