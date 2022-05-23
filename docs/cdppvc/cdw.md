@@ -66,7 +66,7 @@ This article explains the steps to deploy the CDW service on the ECS platform af
     
     ![](../../assets/images/cdw/cdwranger4.png)      
     
-11. In Hue dashboard, rerun the same SELECT request on the default database will no longer trigger the "AuthorizationException" error.  
+11. In Hue dashboard, rerun the same SELECT request on the default database. The result should no longer prompt the same "AuthorizationException" error.  
     
 
 ## CDW Artifacts inside ECS Platform
