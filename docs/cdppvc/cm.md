@@ -73,7 +73,7 @@ This article explains the necessary steps to install Cloudera Manager (CM) on Ce
 
     ```bash
     # cd /etc/yum.repos.d/
-    # wget https://<userid>:<password>@archive.cloudera.com/p/cm7/7.5.5/redhat7/yum/cloudera-manager.repo
+    # wget https://<username>:<password>@archive.cloudera.com/p/cm7/7.5.5/redhat7/yum/cloudera-manager.repo
     ```
 
 2. Edit the Cloudera repo. Insert the username and password parameters.
