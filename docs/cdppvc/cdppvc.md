@@ -11,7 +11,7 @@ permalink: docs/cdppvc
 
 ![](../../assets/images/overall_arch.png)
 
-- CDP Private Cloud delivers powerful analytic, transactional, and machine learning workloads in an on-premise environment. 
+- CDP Private Cloud solution delivers powerful analytic, transactional, and machine learning workloads in an on-premise environment. 
 - It consists of 2 main components - CDP Private Cloud Base (CDP PvC Base) and CDP Private Cloud Data Services (CDP PvC DS). 
 - Cloudera Manager (CM) acts as the single pane of management system that installs, manages, configures, and monitors the entire CDP Private Cloud solution.
 - CDP PvC Base cluster stores data store options including HDFS and Ozone that serve as the data lake. It has high degree of consistent security and governance with SDX (Shared Data Experience) to enable safe and compliant data lakes with policy-based data access for users. 
