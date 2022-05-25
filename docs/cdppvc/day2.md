@@ -14,7 +14,7 @@ nav_order: 4
 
 ---
 
-## Set ECS Environment
+## Setup ECS Environment
 
 1. Set up ECS environment in the ECS master/server node.
 
@@ -30,5 +30,5 @@ nav_order: 4
 
 ## Add New ECS Node 
 
-1. Blah
+TBA
 
