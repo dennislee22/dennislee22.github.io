@@ -23,7 +23,7 @@ This article explains the steps to deploy the CDE service on the ECS platform af
 
     ![](../../assets/images/dsconsole/cmds.png)
     
-2. The system will redirect the browser to the following page. Click `Data Engineering`.   
+2. The browser will redirect to the following page. Click `Data Engineering`.   
 
     ![](../../assets/images/dsconsole/dsmenu.png)
     
