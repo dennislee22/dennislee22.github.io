@@ -27,18 +27,26 @@ This article explains the steps to deploy the CDE service on the ECS platform af
 
     ![](../../assets/images/dsconsole/dsmenu.png)
     
-    
+3. At the CDE main portal, you may enable the CDE service. Click `Enable CDE Service`.      
+
     ![](../../assets/images/cde/cde1.png)
-    
+
+4. Fill in the fields below and click `Enable`.
+
     ![](../../assets/images/cde/cde2.png)
+    
+5. Next, you may create a new virtual cluster. Click `Create DE Cluster`.        
     
     ![](../../assets/images/cde/cde3.png)
     
+6. Fill in the fields below and click `Create`.    
+    
     ![](../../assets/images/cde/cde4.png)
     
-    ![](../../assets/images/cde/cde5.png)
+7. The virtual CDE cluster is ready to run the Spark/Airflow job. Proceed to create the job accordingly. 
     
-    ![](../../assets/images/cde/ozoneaftercde.png)    
+    ![](../../assets/images/cde/cde5.png)
+  
 
 ## CDE Artifacts inside ECS Platform
 
