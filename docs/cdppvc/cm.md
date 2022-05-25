@@ -121,7 +121,7 @@ This article explains the necessary steps to install Cloudera Manager (CM) on Ce
 
     ```
     
-8. After successful installation, login to the CM website. `https://cm.cdpkvm.cldr:7183`
+8. After successful installation, log in to the CM website. `https://cm.cdpkvm.cldr:7183`
     
     ![](../../assets/images/cm_login.png)
     
