@@ -9,7 +9,7 @@ nav_order: 2
 # Add ECS Node
 {: .no_toc }
 
-This article explains the steps to add new ECS node in the existing CDP PvC ECS cluster. Please note that this activity will restart the ECS cluster.
+This article explains the steps to add a new ECS node into the existing CDP PvC ECS cluster. Please note that this activity will need to restart the entire ECS cluster including the ECS master/server node. Service disruption is expected.
 
 
 1. In CM, navigate to `Clusters` > `ECS` > `Storage UI` to launch the Longhorn dashboard.
@@ -32,63 +32,63 @@ This article explains the steps to add new ECS node in the existing CDP PvC ECS 
 
     ![](../../assets/images/ecs/expandecs5.png)
     
-6. Ensure that JDK has already been installed in each ECS host. Select `Manually manage JDK` and click `Continue`.
+6. Click `Continue`. 
 
     ![](../../assets/images/ecs/expandecs6.png)
     
-7. Enter the login credentials. Click `Continue`. 
+7. Ensure that JDK has already been installed in each ECS host. Select `Manually manage JDK` and click `Continue`.
 
     ![](../../assets/images/ecs/expandecs7.png)
     
-8. CM is installing the agent in each ECS node in parallel and will subsequently install the parcels.
+8. Enter the login credentials. Click `Continue`. 
 
     ![](../../assets/images/ecs/expandecs8.png)
     
-9. Check the results if needed. Otherwise, click `Continue`.  
+9. CM is installing the agent in each ECS node in parallel and will subsequently install the parcels.
 
     ![](../../assets/images/ecs/expandecs9.png)
     
-10. Click `Create...`.
+10. Check the results if needed. Otherwise, click `Continue`.  
 
     ![](../../assets/images/ecs/expandecs10.png)
     
-11. Fill in the `Template Name` and select the role groups for this ECS worker/agent node.
+11. Click `Create...`.
 
     ![](../../assets/images/ecs/expandecs11.png)    
     
-12. Verify the details and click `Continue`.  
+12. Fill in the `Template Name` and select the role groups for this ECS worker/agent node.
 
     ![](../../assets/images/ecs/expandecs12.png)  
     
-13. Upon successful deployment, click `Continue`.   
+13. Verify the details and click `Continue`.     
 
     ![](../../assets/images/ecs/expandecs13.png)  
     
-14. Click `Finish`.  
+14. Upon successful deployment, click `Continue`.
 
     ![](../../assets/images/ecs/expandecs14.png)  
     
-15. Note that the new ECS worker/agent node has successfully been added.
+15. Click `Finish`.  
 
     ![](../../assets/images/ecs/expandecs15.png)  
     
-16. Navigate to `Clusters` > `ECS 1`. Click the orange button to restart the ECS cluster.
+16. Note that the new ECS worker/agent node has successfully been added.
 
     ![](../../assets/images/ecs/expandecs16.png)  
     
-17. Click `Restart Stale Services`.
+17. Navigate to `Clusters` > `ECS 1`. Click the orange button to restart the ECS cluster.
 
     ![](../../assets/images/ecs/expandecs17.png)  
     
-18. Select `Re-deploy client configuration` and subsequently click `Restart Now`.
+18. Click `Restart Stale Services`.
 
     ![](../../assets/images/ecs/expandecs18.png)  
     
-19. Upon successful restart, click `Continue`.   
+19. Select `Re-deploy client configuration` and subsequently click `Restart Now`.
 
     ![](../../assets/images/ecs/expandecs19.png)  
     
-20. In 
+20. Upon successful restart, click `Continue`.   
 
     ![](../../assets/images/ecs/expandecs20.png)      
     
