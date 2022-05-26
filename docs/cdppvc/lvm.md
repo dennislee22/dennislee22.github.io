@@ -15,7 +15,7 @@ This article describes the steps to deploy LVM with the dedicated Longhorn disk 
 1. Install the LVM2 package. In this example, the underlying OS is Centos7.9.
 
     ```bash
-    yum install lvm2 -y
+    # yum install lvm2 -y
     ```
 
 2. Check the status of the direct attached disks.
