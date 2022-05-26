@@ -1,12 +1,12 @@
 ---
 layout: default
-title: LVM Deployment
+title: Deploy LVM in Longhorn Node
 parent: CDP PvC How To ...
 grand_parent: CDP Private Cloud
 nav_order: 1
 ---
 
-# LVM Deployment
+# Deploy LVM in Longhorn Node
 {: .no_toc }
 
 This article explains the steps to deploy LVM involving the Longhorn disk prior to installing the CDP PvC ECS system.
