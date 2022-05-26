@@ -3,7 +3,7 @@ layout: default
 title: Deploy LVM Disk
 parent: CDP PvC How To ...
 grand_parent: CDP Private Cloud
-nav_order: 1
+nav_order: 2
 ---
 
 # Deploy LVM Disk
