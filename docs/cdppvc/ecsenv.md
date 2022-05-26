@@ -6,7 +6,12 @@ grand_parent: CDP Private Cloud
 nav_order: 1
 ---
 
-## Setup ECS Environment
+# Setup ECS Environment
+{: .no_toc }
+
+This article explains the step to setup the ECS enviroment after the successful installation of the CDP PvC ECS cluster.
+
+---
 
 1. Set up ECS environment in the ECS master/server node.
 
