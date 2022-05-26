@@ -120,7 +120,7 @@ The following prerequisites need to be prepared prior to installing CM, CDP PvC 
 
   ```yaml
   CREATE DATABASE dasenv OWNER cdpadmin ENCODING 'UTF8';
-  CREATE DATABASE huedb1 OWNER cdpadmin ENCODING 'UTF8';
+  CREATE DATABASE hueenv OWNER cdpadmin ENCODING 'UTF8';
   CREATE DATABASE metastoredb1 OWNER cdpadmin ENCODING 'UTF8';
   CREATE DATABASE dasdb1 OWNER cdpadmin ENCODING 'UTF8';
   CREATE DATABASE huedb1 OWNER cdpadmin ENCODING 'UTF8';
