@@ -9,7 +9,7 @@ nav_order: 2
 # Add ECS Node
 {: .no_toc }
 
-This article explains the steps to add new ECS node in the existing CDP PvC ECS cluster.
+This article explains the steps to add new ECS node in the existing CDP PvC ECS cluster. Please note that this activity will restart the ECS cluster.
 
 
 1. In CM, navigate to `Clusters` > `ECS` > `Storage UI` to launch the Longhorn dashboard.
