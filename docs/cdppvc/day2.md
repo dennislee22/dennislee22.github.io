@@ -1,6 +1,6 @@
 ---
 layout: default
-title: How To ...
+title: CDP PvC: How To ...
 parent: CDP Private Cloud
 has_children: true
 nav_order: 4
