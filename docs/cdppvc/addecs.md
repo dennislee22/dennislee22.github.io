@@ -188,7 +188,7 @@ This article explains the steps to add a new ECS node into the existing CDP PvC 
                     `-- volume.meta
     ```
 
-26. Create a new Impala database in CDW console. Note that, the system might choose this new node to provision the CDW pods and its persistent volume. If so, the local disk with localpath mountpoint will be provisioned as shown below. `localpath` directory was configured during the initial ECS cluster installation.
+26. Create a new Impala database in CDW console. Note that, the system might choose this new node to provision the CDW pods and its persistent volume. If so, the direct attached local disk with localpath mountpoint will be provisioned as shown below. `localpath` directory was configured during the initial ECS cluster installation.
 
 
     ```bash
