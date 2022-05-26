@@ -6,20 +6,19 @@ grand_parent: CDP Private Cloud
 nav_order: 1
 ---
 
-# Deploy LVM in Longhorn Node
+# Deploy LVM Disk
 {: .no_toc }
 
-This article explains the steps to deploy LVM with the dedicated Longhorn disk prior to installing the CDP PvC ECS system.
+This article describes the steps to deploy LVM with the dedicated Longhorn disk prior to installing the CDP PvC ECS system.
 
 
-1. 
-
+1. Install the LVM2 package. In this example, the underlying OS is Centos7.9.
 
     ```bash
     yum install lvm2 -y
     ```
 
-2. 
+2. Check the status of the direct attached disks.
 
     ```bash
     # lsblk
@@ -32,19 +31,18 @@ This article explains the steps to deploy LVM with the dedicated Longhorn disk p
     vdd    253:48   0  400G  0 disk 
     ```
 
+3. Create a physical volume.
+
     ```bash
     # pvcreate /dev/vdb
     Physical volume "/dev/vdb" successfully created.
     ```
-
-
 
     ```bash
     # pvscan
     PV /dev/vdb                      lvm2 [500.00 GiB]
     Total: 1 [500.00 GiB] / in use: 0 [0   ] / in no VG: 1 [500.00 GiB]
     ```
-
 
     ```bash
     # pvdisplay /dev/vdb
@@ -60,7 +58,9 @@ This article explains the steps to deploy LVM with the dedicated Longhorn disk p
     Allocated PE          0
     PV UUID               AE3Zoh-pgdd-1vKK-euUl-oELk-v6yF-jnV4X3
     ```  
-  
+
+4. Create a volume group using the identified disk.
+
     ```bash  
     # vgcreate vg1 /dev/vdb
     Volume group "vg1" successfully created
@@ -89,7 +89,9 @@ This article explains the steps to deploy LVM with the dedicated Longhorn disk p
     Free  PE / Size       127999 / <500.00 GiB
     VG UUID               hlI7n7-tjky-Tdsp-N8RQ-Zej8-Ao6u-kqmqA2
     ```
-    
+ 
+ 5. Create a logical volume and use the entire disk capacity.
+ 
     ```bash
     # lvcreate -n lv1 -l 100%FREE vg1
     Logical volume "lv1" created.   
@@ -118,13 +120,16 @@ This article explains the steps to deploy LVM with the dedicated Longhorn disk p
     Block device           252:0
     ```  
 
+ 6. Format the logical volume.
 
     ```bash
     # mkfs.xfs /dev/vg1/lv1
     ```
-    
+
+ 7. Create the specified directory and mount the logical volume.
+ 
     ```bash          
-    # mkdir /mnt/longhorn
+    # mkdir /longhorn
     ```    
     
     ```bash
