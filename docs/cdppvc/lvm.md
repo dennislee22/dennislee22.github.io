@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Deploy LVM in Longhorn Node
+title: Deploy LVM
 parent: CDP PvC How To ...
 grand_parent: CDP Private Cloud
 nav_order: 1
@@ -18,7 +18,7 @@ This article describes the steps to deploy LVM with the dedicated Longhorn disk 
     # yum install lvm2 -y
     ```
 
-2. Check the status of the direct attached disks.
+2. Check the status of the direct attached disks in this host.
 
     ```bash
     # lsblk
@@ -142,6 +142,8 @@ This article describes the steps to deploy LVM with the dedicated Longhorn disk 
     /dev/mapper/vg1-lv1  500G   33M  500G   1% /longhorn
     ```
     
+ 8. The mountpoint is now ready to be used.
+ 
     ```bash
     # ls -l /longhorn
     total 0
