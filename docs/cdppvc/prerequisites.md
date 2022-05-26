@@ -114,6 +114,13 @@ The following prerequisites need to be prepared prior to installing CM, CDP PvC 
   CREATE DATABASE dbums OWNER cdpadmin ENCODING 'UTF8';
   CREATE DATABASE cmregistration OWNER cdpadmin ENCODING 'UTF8';
   CREATE DATABASE clusterproxy OWNER cdpadmin ENCODING 'UTF8';
+  ```  
+  
+- Create the following databases for CDW in the external PostgreSQL server
+
+  ```yaml
+  CREATE DATABASE dasenv OWNER cdpadmin ENCODING 'UTF8';
+  CREATE DATABASE huedb1 OWNER cdpadmin ENCODING 'UTF8';
   CREATE DATABASE metastoredb1 OWNER cdpadmin ENCODING 'UTF8';
   CREATE DATABASE dasdb1 OWNER cdpadmin ENCODING 'UTF8';
   CREATE DATABASE huedb1 OWNER cdpadmin ENCODING 'UTF8';
