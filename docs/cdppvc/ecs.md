@@ -65,11 +65,11 @@ This article explains the necessary steps to install the ECS platform upon succe
 
     ![](../../assets/images/ecs/addecs2.png)
 
-3. Enter the FQDN of each ECS host and click `Search`. Upon successful scan, the hostname alongside each host's IP address will appear. Check the details before clicking `Continue`.
+3. Enter the FQDN of each ECS node and click `Search`. Upon successful scan, the hostname alongside each host's IP address will appear. Check the details before clicking `Continue`.
 
     ![](../../assets/images/ecs/addecs3.png)
     
-4. Ensure that JDK has already been installed in each ECS host. Select `Manually manage JDK` and click `Continue`.
+4. Ensure that JDK has already been installed in each ECS node. Select `Manually manage JDK` and click `Continue`.
 
     ![](../../assets/images/ecs/addecs4.png)
 
@@ -77,7 +77,7 @@ This article explains the necessary steps to install the ECS platform upon succe
 
     ![](../../assets/images/ecs/addecs5.png)
     
-6. CM is installing the agent in each ECS host in parallel and will subsequently install the parcels.
+6. CM is installing the agent in each ECS node in parallel and will subsequently install the parcels.
     
     ![](../../assets/images/ecs/addecs6.png)
     
@@ -103,7 +103,7 @@ This article explains the necessary steps to install the ECS platform upon succe
     
     ![](../../assets/images/ecs/addecs12.png)
 
-12. CM is installing the parcels in each ECS host in parallel.
+12. CM is installing the parcels in each ECS node in parallel.
 
     ![](../../assets/images/ecs/addecs13.png)
     
