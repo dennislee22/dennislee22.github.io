@@ -3,7 +3,7 @@ layout: default
 title: Add ECS Node
 parent: CDP PvC How To ...
 grand_parent: CDP Private Cloud
-nav_order: 2
+nav_order: 3
 ---
 
 # Add ECS Node
