@@ -11,6 +11,7 @@ nav_order: 2
 
 This article explains the steps to add a new ECS node into the existing CDP PvC ECS cluster. Please note that this activity will need to restart the entire ECS cluster including the ECS master/server node. Service disruption is expected.
 
+---
 
 1. In CM, navigate to `Clusters` > `ECS` > `Storage UI` to launch the Longhorn dashboard.
 
@@ -186,7 +187,7 @@ This article explains the steps to add a new ECS node into the existing CDP PvC 
                     `-- volume.meta
     ```
 
-26. Create a new Impala database at the CDW console. The system might choose this new node to provision the CDW pods and its persistent volume. If so, the direct attached local disk with the `localpath` mountpoint will be provisioned with the impala cache file as shown below. `localpath` directory was configured during the initial ECS cluster installation.
+26. Create a new Impala database at the CDW console. The system might choose to provision the CDW pods and its persistent volume in this new node. If so, the direct attached local disk with the `localpath` mountpoint will be provisioned with the impala cache file as shown below. The `localpath` directory was configured during the initial ECS cluster installation.
 
 
     ```bash
