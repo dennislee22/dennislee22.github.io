@@ -16,7 +16,7 @@ This article explains the steps to add a new ECS node into the existing CDP PvC 
 
     ![](../../assets/images/ecs/expandecs1.png)
     
-2. In Longhorn dashboard, take note that there is currently only 3 Longhorn nodes.
+2. In Longhorn dashboard, take note that there is only 3 Longhorn nodes currently.
 
     ![](../../assets/images/ecs/expandecs2.png)    
     
@@ -82,11 +82,11 @@ This article explains the steps to add a new ECS node into the existing CDP PvC 
 
     ![](../../assets/images/ecs/expandecs15.png)  
     
-16. Note that the new ECS worker/agent node has successfully been added.
+16. Note that the new ECS worker/agent node has been added successfully.
 
     ![](../../assets/images/ecs/expandecs16.png)  
     
-    The ECS cluster has 4 nodes currently.
+    The ECS cluster is now updated with the new node.
     
     ```bash
     # kubectl get nodes
@@ -109,7 +109,7 @@ This article explains the steps to add a new ECS node into the existing CDP PvC 
 
     ![](../../assets/images/ecs/expandecs19.png)  
     
-    This will restart the entire ECS cluster. The nodes will be reflected as `NotReady`.
+    This will restart the entire ECS cluster. During this process, the nodes will be reflected as `NotReady`.
     
     ```bash
     # kubectl get nodes
@@ -124,7 +124,7 @@ This article explains the steps to add a new ECS node into the existing CDP PvC 
 
     ![](../../assets/images/ecs/expandecs20.png)      
     
-21. The Longhorn dashboard now displays a total of 4 Longhorn nodes. This implies that the new ECS node has successfully been added into the Longhorn cluster.
+21. The Longhorn dashboard now displays a total of 4 Longhorn nodes. This implies that the new ECS node has been added into the Longhorn cluster successfully.
 
     ![](../../assets/images/ecs/expandecs21.png)    
     
@@ -146,9 +146,7 @@ This article explains the steps to add a new ECS node into the existing CDP PvC 
 
     ![](../../assets/images/ecs/expandecs23.png)        
     
-24. Create a new environment in the [CDP Data Services Management Console]({{ site.baseurl }}{% link docs/cdppvc/dsconsole.md %}).
-
-25. Note that the longhorn dashboard shows some space has been provisioned in this newly added node as shown below.
+24. Create a new environment in the [CDP Data Services Management Console]({{ site.baseurl }}{% link docs/cdppvc/dsconsole.md %}). After successful creation of the environment, the system might choose this new node to provision the storage. If so, the longhorn dashboard will show that some space has been provisioned in this newly added node.
 
     ![](../../assets/images/ecs/expandecs24.png)        
 
@@ -188,7 +186,7 @@ This article explains the steps to add a new ECS node into the existing CDP PvC 
                     `-- volume.meta
     ```
 
-26. Create a new Impala database in CDW console. Note that, the system might choose this new node to provision the CDW pods and its persistent volume. If so, the direct attached local disk with localpath mountpoint will be provisioned as shown below. `localpath` directory was configured during the initial ECS cluster installation.
+26. Create a new Impala database at the CDW console. The system might choose this new node to provision the CDW pods and its persistent volume. If so, the direct attached local disk with the `localpath` mountpoint will be provisioned with the impala cache file as shown below. `localpath` directory was configured during the initial ECS cluster installation.
 
 
     ```bash
