@@ -1,7 +1,7 @@
 ---
 layout: default
 title: LVM Deployment
-parent: CDP PvC: How To ...
+parent: CDP PvC How To ...
 grand_parent: CDP Private Cloud
 nav_order: 1
 ---
