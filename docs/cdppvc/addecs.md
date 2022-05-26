@@ -19,6 +19,16 @@ This article explains the steps to add a new ECS node into the existing CDP PvC 
 2. In Longhorn dashboard, take note that there is currently only 3 Longhorn nodes.
 
     ![](../../assets/images/ecs/expandecs2.png)    
+    
+    Check that the ECS cluster has 3 nodes currently.
+    
+    ```bash
+    # kubectl get nodes
+    NAME                     STATUS   ROLES                       AGE     VERSION
+    ecsmaster1.cdpkvm.cldr   Ready    control-plane,etcd,master   4d13h   v1.21.8+rke2r2
+    ecsworker1.cdpkvm.cldr   Ready    <none>                      4d13h   v1.21.8+rke2r2
+    ecsworker2.cdpkvm.cldr   Ready    <none>                      4d13h   v1.21.8+rke2r2
+    ```
 
 3. In CM, navigate to `Clusters` > `ECS 1`. Click `3 Hosts` to view the following page. Click `Add Hosts`.
 
@@ -76,6 +86,17 @@ This article explains the steps to add a new ECS node into the existing CDP PvC 
 
     ![](../../assets/images/ecs/expandecs16.png)  
     
+    The ECS cluster has 4 nodes currently.
+    
+    ```bash
+    # kubectl get nodes
+    NAME                     STATUS   ROLES                       AGE     VERSION
+    ecsmaster1.cdpkvm.cldr   Ready    control-plane,etcd,master   4d13h   v1.21.8+rke2r2
+    ecsworker1.cdpkvm.cldr   Ready    <none>                      4d13h   v1.21.8+rke2r2
+    ecsworker2.cdpkvm.cldr   Ready    <none>                      4d13h   v1.21.8+rke2r2
+    ecsworker3.cdpkvm.cldr   Ready    <none>                      111s    v1.21.8+rke2r2
+    ```    
+    
 17. Navigate to `Clusters` > `ECS 1`. Click the orange button to restart the ECS cluster.
 
     ![](../../assets/images/ecs/expandecs17.png)  
@@ -88,102 +109,95 @@ This article explains the steps to add a new ECS node into the existing CDP PvC 
 
     ![](../../assets/images/ecs/expandecs19.png)  
     
+    This will restart the entire ECS cluster. The nodes will be reflected as `NotReady`.
+    
+    ```bash
+    # kubectl get nodes
+    NAME                     STATUS     ROLES                       AGE     VERSION
+    ecsmaster1.cdpkvm.cldr   NotReady   control-plane,etcd,master   4d13h   v1.21.8+rke2r2
+    ecsworker1.cdpkvm.cldr   NotReady   <none>                      4d13h   v1.21.8+rke2r2
+    ecsworker2.cdpkvm.cldr   NotReady   <none>                      4d13h   v1.21.8+rke2r2
+    ecsworker3.cdpkvm.cldr   NotReady   <none>                      11m     v1.21.8+rke2r2
+    ```
+    
 20. Upon successful restart, click `Continue`.   
 
     ![](../../assets/images/ecs/expandecs20.png)      
     
-21. In 
+21. The Longhorn dashboard now displays a total of 4 Longhorn nodes. This implies that the new ECS node has successfully been added into the Longhorn cluster.
 
     ![](../../assets/images/ecs/expandecs21.png)    
     
-22. In 
+    All ECS nodes should be in `Ready` mode.
+    
+    ```bash
+    # kubectl get nodes
+    NAME                     STATUS   ROLES                       AGE     VERSION
+    ecsmaster1.cdpkvm.cldr   Ready    control-plane,etcd,master   4d14h   v1.21.8+rke2r2
+    ecsworker1.cdpkvm.cldr   Ready    <none>                      4d13h   v1.21.8+rke2r2
+    ecsworker2.cdpkvm.cldr   Ready    <none>                      4d13h   v1.21.8+rke2r2
+    ecsworker3.cdpkvm.cldr   Ready    <none>                      14m     v1.21.8+rke2r2
+    ```
+22. The storage is now currently empty for this newly added node.
 
     ![](../../assets/images/ecs/expandecs22.png)    
     
-23. In 
+23. In CM, ensure that new node is in green mode with the correct roles provisioned.
 
     ![](../../assets/images/ecs/expandecs23.png)        
     
-24. In 
+24. Create a new environment in the [CDP Data Services Management Console]({{ site.baseurl }}{% link docs/cdppvc/dsconsole.md %}).
+
+25. Note that the longhorn dashboard shows some space has been provisioned in this newly added node as shown below.
 
     ![](../../assets/images/ecs/expandecs24.png)        
 
-```bash
-]# kubectl get nodes
-NAME                     STATUS   ROLES                       AGE     VERSION
-ecsmaster1.cdpkvm.cldr   Ready    control-plane,etcd,master   4d13h   v1.21.8+rke2r2
-ecsworker1.cdpkvm.cldr   Ready    <none>                      4d13h   v1.21.8+rke2r2
-ecsworker2.cdpkvm.cldr   Ready    <none>                      4d13h   v1.21.8+rke2r2
-```
+    Verify that the system has provisioned some volumes at this new node in the `/longhorn`directory which was specified during the initial ECS cluster installation.
 
-```bash
-# kubectl get nodes
-NAME                     STATUS   ROLES                       AGE     VERSION
-ecsmaster1.cdpkvm.cldr   Ready    control-plane,etcd,master   4d13h   v1.21.8+rke2r2
-ecsworker1.cdpkvm.cldr   Ready    <none>                      4d13h   v1.21.8+rke2r2
-ecsworker2.cdpkvm.cldr   Ready    <none>                      4d13h   v1.21.8+rke2r2
-ecsworker3.cdpkvm.cldr   Ready    <none>                      111s    v1.21.8+rke2r2
-    ```
-
-```bash
-# kubectl get nodes
-NAME                     STATUS     ROLES                       AGE     VERSION
-ecsmaster1.cdpkvm.cldr   NotReady   control-plane,etcd,master   4d13h   v1.21.8+rke2r2
-ecsworker1.cdpkvm.cldr   NotReady   <none>                      4d13h   v1.21.8+rke2r2
-ecsworker2.cdpkvm.cldr   NotReady   <none>                      4d13h   v1.21.8+rke2r2
-ecsworker3.cdpkvm.cldr   NotReady   <none>                      11m     v1.21.8+rke2r2
-    ```
-    
     ```bash
-# kubectl get nodes
-NAME                     STATUS   ROLES                       AGE     VERSION
-ecsmaster1.cdpkvm.cldr   Ready    control-plane,etcd,master   4d14h   v1.21.8+rke2r2
-ecsworker1.cdpkvm.cldr   Ready    <none>                      4d13h   v1.21.8+rke2r2
-ecsworker2.cdpkvm.cldr   Ready    <none>                      4d13h   v1.21.8+rke2r2
-ecsworker3.cdpkvm.cldr   Ready    <none>                      14m     v1.21.8+rke2r2
+    # tree /longhorn
+    /longhorn
+    `-- ecs
+        `-- longhorn-storage
+            |-- longhorn-disk.cfg
+            `-- replicas
+                |-- pvc-40338fdb-c0dd-4e0d-a634-d3e8263a46e6-bbcad0e4
+                |   |-- revision.counter
+                |   |-- volume-head-000.img
+                |   |-- volume-head-000.img.meta
+                |   `-- volume.meta
+                |-- pvc-6709bacb-db5e-4129-8f9e-c645e07ad921-16dcd615
+                |   |-- revision.counter
+                |   |-- volume-head-000.img
+                |   |-- volume-head-000.img.meta
+                |   `-- volume.meta
+                |-- pvc-bc1e2346-d9d8-4ff6-be00-4105a6b8f433-ae9b50e3
+                |   |-- revision.counter
+                |   |-- volume-head-000.img
+                |   |-- volume-head-000.img.meta
+                |   `-- volume.meta
+                |-- pvc-cd6d226b-075a-475c-b5b3-9b79961bc338-8224c2de
+                |   |-- revision.counter
+                |   |-- volume-head-000.img
+                |   |-- volume-head-000.img.meta
+                |   `-- volume.meta
+                `-- pvc-d37b564f-8d77-4cc0-b634-b85c0d1bca91-cf49bf98
+                    |-- revision.counter
+                    |-- volume-head-000.img
+                    |-- volume-head-000.img.meta
+                    `-- volume.meta
     ```
-    
+
+26. Create a new Impala database in CDW console. Note that, the system might choose this new node to provision the CDW pods and its persistent volume. If so, the local disk with localpath mountpoint will be provisioned as shown below. `localpath` directory was configured during the initial ECS cluster installation.
+
+
     ```bash
-# tree /longhorn
-/longhorn
-`-- ecs
-    `-- longhorn-storage
-        |-- longhorn-disk.cfg
-        `-- replicas
-            |-- pvc-40338fdb-c0dd-4e0d-a634-d3e8263a46e6-bbcad0e4
-            |   |-- revision.counter
-            |   |-- volume-head-000.img
-            |   |-- volume-head-000.img.meta
-            |   `-- volume.meta
-            |-- pvc-6709bacb-db5e-4129-8f9e-c645e07ad921-16dcd615
-            |   |-- revision.counter
-            |   |-- volume-head-000.img
-            |   |-- volume-head-000.img.meta
-            |   `-- volume.meta
-            |-- pvc-bc1e2346-d9d8-4ff6-be00-4105a6b8f433-ae9b50e3
-            |   |-- revision.counter
-            |   |-- volume-head-000.img
-            |   |-- volume-head-000.img.meta
-            |   `-- volume.meta
-            |-- pvc-cd6d226b-075a-475c-b5b3-9b79961bc338-8224c2de
-            |   |-- revision.counter
-            |   |-- volume-head-000.img
-            |   |-- volume-head-000.img.meta
-            |   `-- volume.meta
-            `-- pvc-d37b564f-8d77-4cc0-b634-b85c0d1bca91-cf49bf98
-                |-- revision.counter
-                |-- volume-head-000.img
-                |-- volume-head-000.img.meta
-                `-- volume.meta
-```
+    # tree /localpath/
+    /localpath/
+    `-- local-storage
+        `-- pvc-a8c1086a-e7e3-4cf2-af02-da0a17ab146b_impala-1653548482-kwb7_scratch-cache-volume-impala-executor-000-0
+            |-- impala-cache-file-b94f4c649f4d8adc:5ac6c6fd6c847ba3
+            `-- impala-scratch
 
-```bash
-# tree /localpath/
-/localpath/
-`-- local-storage
-    `-- pvc-a8c1086a-e7e3-4cf2-af02-da0a17ab146b_impala-1653548482-kwb7_scratch-cache-volume-impala-executor-000-0
-        |-- impala-cache-file-b94f4c649f4d8adc:5ac6c6fd6c847ba3
-        `-- impala-scratch
-
-3 directories, 1 file
-```
+    3 directories, 1 file
+    ```
