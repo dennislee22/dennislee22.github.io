@@ -11,6 +11,7 @@ nav_order: 1
 
 This article describes the steps to deploy LVM with the dedicated Longhorn disk prior to installing the CDP PvC ECS system.
 
+---
 
 1. Install the LVM2 package. In this example, the underlying OS is Centos7.9.
 
