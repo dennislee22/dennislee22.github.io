@@ -42,10 +42,11 @@ The following prerequisites need to be prepared prior to installing CM, CDP PvC 
 - [JDK](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/installation/topics/cdpdc-java-requirements.html) must be installed in each host.
 - [Data at Rest](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/installation/topics/cdpdc-data-at-rest-encryption-requirements.html) is not mandatory and not covered in this article.
 - For every ECS node that is equipped with Nvidia GPU card, ensure that the GPU hosts have Nvidia Drivers and Nvidia-container-runtime installed.
-- All ECS nodes must be installed with nfs-utils package.
+- All ECS nodes must be installed with nfs-utils and iscsi-initiator-utils packages.
 
     ```bash
     # yum install nfs-utils
+    # yum install iscsi-initiator-utils
     ```
 
 ## External NFS
