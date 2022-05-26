@@ -9,7 +9,7 @@ nav_order: 1
 # Deploy LVM in Longhorn Node
 {: .no_toc }
 
-This article explains the steps to deploy LVM involving the Longhorn disk prior to installing the CDP PvC ECS system.
+This article explains the steps to deploy LVM with the dedicated Longhorn disk prior to installing the CDP PvC ECS system.
 
 
 1. 
