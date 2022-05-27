@@ -109,7 +109,7 @@ Run status group 0 (all jobs):
 
 ## Some Storage Facts
 
-![](../../assets/longhorn/bench2.png) 
+![](../../assets/images/longhorn/bench2.png) 
 
 - Bandwidth and latency increase when the block size is higher. IOPS declines.
 
@@ -117,6 +117,6 @@ Run status group 0 (all jobs):
 
 The following graph illustrates the performance benchmarking between Longhorn volume with replica size 2 and replica size 3.
 
-![](../../assets/longhorn/bench1.png) 
+![](../../assets/images/longhorn/bench1.png) 
 
 The result seemingly implies that there is no significant difference between replica size 2 and size 3 in a small cluster.
