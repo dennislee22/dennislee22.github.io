@@ -107,10 +107,16 @@ Run status group 0 (all jobs):
   WRITE: bw=252MiB/s (264MB/s), 252MiB/s-252MiB/s (264MB/s-264MB/s), io=10.9GiB (11.7GB), run=44238-44238msec
 ```
 
+## Some Storage Facts
+
+![](../../assets/longhorn/bench2.png) 
+
+- Bandwidth and latency increase when the block size is higher. IOPS declines.
+
 ## Longhorn replica size 2 vs size 3 
 
 The following graph illustrates the performance benchmarking between Longhorn volume with replica size 2 and replica size 3.
 
 ![](../../assets/longhorn/bench1.png) 
 
-The result seemingly implies that there's no significant 
+The result seemingly implies that there is no significant difference between replica size 2 and size 3 in a small cluster.
