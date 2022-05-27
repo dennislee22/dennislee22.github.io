@@ -109,14 +109,14 @@ This article describes the steps to scale the Longhorn storage capacity in one o
     ![](../../assets/images/ecs/scaledisk2.png)
     
     
-9. At the ecsworker3.cdpkvm.cldr node, check the LVM disk of the `/longhorn` directory mountpoint. In this case, the LVM disk is /dev/vg1/lv1.
+9. At the ecsworker3.cdpkvm.cldr node, check the LVM disk of the `/longhorn` directory mountpoint. In this case, the LVM disk is `/dev/vg1/lv1`.
 
     ```bash
     # lsblk | grep longhorn
     `-vg1-lv1 252:0    0   500G  0 lvm  /longhorn
     ```
     
-10. Check the disk that formed the physical volume of `/dev/vdb`.  
+10. Check the information of the disk that formed the physical volume of `/dev/vdb`.  
  
     ```bash
     # pvdisplay /dev/vdb
@@ -148,7 +148,7 @@ This article describes the steps to scale the Longhorn storage capacity in one o
     ```
 
     ```bash
-    # pvdisplay /dev/vdb
+    # pvdisplay /dev/vdc
     "/dev/vdc" is a new physical volume of "500.00 GiB"
     --- NEW Physical volume ---
     PV Name               /dev/vdc
@@ -192,22 +192,8 @@ This article describes the steps to scale the Longhorn storage capacity in one o
     vg1   2   1   0 wz--n- 999.99g <500.00g
     ```    
     
-16. Check the status of the volume group `vg1`. The current storage capacity is 500G.
-
-    ```bash
-    # vgs
-    VG  #PV #LV #SN Attr   VSize    VFree
-    vg1   1   1   0 wz--n- <500.00g    0 
-    ```    
-    
-17. Check the status of the volume group `vg1`. The current storage capacity is 500G.
-
-    ```bash
-    # vgs
-    VG  #PV #LV #SN Attr   VSize    VFree
-    vg1   1   1   0 wz--n- <500.00g    0 
     ```        
-18. Extend the size of the logical volume `lv1` from the `vg` volume group.
+16. Extend the size of the logical volume `lv1` from the `vg1` volume group.
 
 
     ```bash
@@ -216,14 +202,14 @@ This article describes the steps to scale the Longhorn storage capacity in one o
     Logical volume vg1/lv1 successfully resized.
     ```   
 
-19. Check the status of the logical volume `lv1`. The current storage capacity is now approximately 1000G.
+17. Check the status of the logical volume `lv1`. The current storage capacity is now approximately 1000G.
 
     ```bash
     # lvs
     LV   VG  Attr       LSize   Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert
     lv1  vg1 -wi-ao---- 999.99g 
     ```   
-20. Run the following command to inform the ECS system to resume scheduling new pods onto the ecsworker3.cdpkvm.cldr node.
+18. Run the following command to inform the ECS system to resume scheduling new pods onto the ecsworker3.cdpkvm.cldr node.
 
     ```bash
     # kubectl uncordon ecsworker3.cdpkvm.cldr 
@@ -249,7 +235,7 @@ This article describes the steps to scale the Longhorn storage capacity in one o
     ![](../../assets/images/ecs/scaledisk4.png)
     
 
-23. At the ecsworker3.cdpkvm.cldr node, check the status of the `/longhorn` directory to verify the outcome in the previous step.
+23. At the ecsworker3.cdpkvm.cldr node, check the status of the `/longhorn` directory to verify the outcome of the previous step.
 
     ```bash
     # tree /longhorn
