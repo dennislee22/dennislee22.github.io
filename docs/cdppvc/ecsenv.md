@@ -9,11 +9,11 @@ nav_order: 1
 # Setup ECS Environment
 {: .no_toc }
 
-This article explains the step to setup the ECS enviroment after the successful installation of the CDP PvC ECS cluster.
+This article explains the step to setup the ECS environment so that user can administer the CDP PvC ECS cluster after successful installation.
 
 ---
 
-1. Set up ECS environment in the ECS master/server node.
+1. Set up the ECS environment in the ECS master/server node.
 
     ```bash
     # cp /etc/rancher/rke2/rke2.yaml .kube/config
@@ -24,3 +24,5 @@ This article explains the step to setup the ECS enviroment after the successful 
     ecsworker1.cdpkvm.cldr   Ready      <none>                      117m   v1.21.8+rke2r2
     ecsworker2.cdpkvm.cldr   Ready      <none>                      117m   v1.21.8+rke2r2
     ```
+    
+2. Amend the ~/.bash_profile login shell to include `export PATH=$PATH:/var/lib/rancher/rke2/bin` parameter to persist the environment.   
