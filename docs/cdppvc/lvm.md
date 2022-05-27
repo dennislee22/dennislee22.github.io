@@ -9,7 +9,7 @@ nav_order: 2
 # Deploy LVM Disk
 {: .no_toc }
 
-This article describes the steps to deploy LVM with the dedicated Longhorn disk prior to installing the CDP PvC ECS system.
+This article describes the steps to deploy LVM (Logical Volume Manager) with the dedicated Longhorn disk prior to installing the CDP PvC ECS system.
 
 ---
 
@@ -96,6 +96,7 @@ This article describes the steps to deploy LVM with the dedicated Longhorn disk 
     ```bash
     # lvcreate -n lv1 -l 100%FREE vg1
     Logical volume "lv1" created.   
+    
     ```bash  
     # lvscan
     ACTIVE            '/dev/vg1/lv1' [<500.00 GiB] inherit
