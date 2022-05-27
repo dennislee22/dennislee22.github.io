@@ -113,7 +113,13 @@ Run status group 0 (all jobs):
 
 ![](../../assets/images/longhorn/bench2.png) 
 
+## Longhorn vs Local Attached Storage
 
+- T
+
+![](../../assets/images/longhorn/bench3.png) 
+
+- T
 
 ## Longhorn replica size 2 vs size 3 
 
