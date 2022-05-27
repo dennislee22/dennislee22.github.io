@@ -4,7 +4,7 @@ title: Performance Benchmarking
 parent: Longhorn
 ---
 
-# Objective
+# Longhorn Performance Benchmarking
 {: .no_toc }
 
 Longhorn is the cloud native distributed block storage in the Kubernetes ecosystem. It is a software defined storage that synchronously replicates the volumes across multiple Kubernetes nodes to achieve high availability and high degree of resiliency. Longhorn volume is used as the persistent volume for the stateful pods in Kubernetes. Longhorn volume replicas should be hosted on separate nodes to prevent single point of failure.
