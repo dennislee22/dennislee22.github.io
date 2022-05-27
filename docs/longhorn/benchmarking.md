@@ -28,7 +28,7 @@ The datasheet for `NVMe P4610` disk can be obtained [here](https://ark.intel.com
 
 ## Architecture
 
-The tests were carried out in a Kubernetes cluster with 3 physical nodes connected to each other on the same network subnet.
+The tests were carried out in a Kubernetes cluster with 3 physical nodes connected to each other on the same subnet.
 
 ## Storage Performance Tool
 
