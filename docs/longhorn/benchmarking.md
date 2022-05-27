@@ -109,9 +109,11 @@ Run status group 0 (all jobs):
 
 ## Some Storage Facts
 
+- Bandwidth and latency increase when the block size is higher. IOPS declines.
+
 ![](../../assets/images/longhorn/bench2.png) 
 
-- Bandwidth and latency increase when the block size is higher. IOPS declines.
+
 
 ## Longhorn replica size 2 vs size 3 
 
