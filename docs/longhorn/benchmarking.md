@@ -18,21 +18,21 @@ This article describes the performance output as the result of using `fio` tool 
 
 ## Hardware
 
-The performance benchmarking tests were carried out using the following hardware specification.
+- The performance benchmarking tests were carried out using the following hardware specification.
 
 | CPU          | Intel(R) Xeon(R) Gold 5220R CPU @ 2.20GHz | 
 | Memory  | DIMM DDR4 Synchronous Registered (Buffered) 2933 MHz (0.3 ns) | 
 | Disk | NVMe P4610 1.6TB SFF    | 
 
-The datasheet for `NVMe P4610` disk can be obtained [here](https://ark.intel.com/content/www/us/en/ark/products/140103/intel-ssd-dc-p4610-series-1-6tb-2-5in-pcie-3-1-x4-3d2-tlc.html). The performance specifications mentioned in this datasheet can be used to benchmark against the result of the tests.
+- The datasheet for `NVMe P4610` disk can be obtained [here](https://ark.intel.com/content/www/us/en/ark/products/140103/intel-ssd-dc-p4610-series-1-6tb-2-5in-pcie-3-1-x4-3d2-tlc.html). The performance specifications mentioned in this datasheet can be used to benchmark against the result of the tests.
 
 ## Architecture
 
-The tests were carried out in a Kubernetes cluster with 3 physical nodes connected to each other on the same subnet.
+- The tests were carried out in a Kubernetes cluster with 3 physical nodes connected to each other on the same subnet.
 
 ## Storage Performance Tool
 
-The tests were carried out by running the `fio` tool using different block size and IOdepth as illustrated in the following table. Part of the tests were performed based on random Read/Write and the rest were based on 100% Read/Write operation.
+- The tests were carried out by running the `fio` tool using different block size and IOdepth as illustrated in the following table. Part of the tests were performed based on random Read/Write and the rest were based on 100% Read/Write operation.
 
 | Block Size       | IOdepth         |
 |:-------------|:------------------|
@@ -42,19 +42,19 @@ The tests were carried out by running the `fio` tool using different block size 
 | 1024k     | 8          | 
 
 
-The full `fio` command with random 50% read and 50% write operation is shown as follows.
+- The full `fio` command with random 50% read and 50% write operation is shown as follows.
 
 ```yaml
 fio --name=fiotest --filename=test --size=10Gb --numjobs=8 --ioengine=libaio --group_reporting --runtime=60 --startdelay=60 --bs=8k --iodepth=32 --rw=randrw --direct=1 --rwmixread=50
 ```
 
-The full `fio` command for write only is shown as follows.
+- The full `fio` command for write only is shown as follows.
 
 ```yaml
 fio --name=fiotest --filename=test --size=10Gb --direct=1 --numjobs=8 --ioengine=libaio --group_reporting --runtime=60 --startdelay=60 --bs=8k --iodepth=32 --rw=write
 ```
 
-The abovementioned commands were run inside the Kubernetes pod as illustrated in the following example.
+- When testing the Longhorn performance, the abovementioned commands were run inside the Kubernetes pod as illustrated in the following example.
 
 ```bash
 # kubectl exec -ti fio-0 -n test -- /bin/bash
@@ -117,8 +117,9 @@ Run status group 0 (all jobs):
 
 ## Longhorn replica size 2 vs size 3 
 
-The following graph illustrates the performance result when using Longhorn volume with replica size 2 and replica size 3.
+- The following graph illustrates the performance result when using Longhorn volume with replica size 2 and replica size 3.
 
 ![](../../assets/images/longhorn/bench1.png) 
 
-The result seemingly implies that there is no significant difference between replica size 2 and size 3 in a small cluster.
+- The result seemingly implies that there is no significant difference between replica size 2 and size 3 in a small cluster.
+
