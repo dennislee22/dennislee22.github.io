@@ -8,5 +8,4 @@ permalink: docs/longhorn
 
 ![](../../assets/images/longhorn/longhorn-horizontal-color.png)
 
-# Do You Know?
 {: .no_toc }
