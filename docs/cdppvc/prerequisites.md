@@ -116,7 +116,7 @@ The following prerequisites need to be prepared prior to installing CM, CDP PvC 
   CREATE DATABASE clusterproxy OWNER cdpadmin ENCODING 'UTF8';
   ```  
   
-- Create the following databases for CDW in the external PostgreSQL server.
+- Create the following CDW databases in the external PostgreSQL server. These databases need to be pre-created prior to deploying CDW on the CDP PvC ECS platform.
 
   ```yaml
   CREATE DATABASE dasenv OWNER cdpadmin ENCODING 'UTF8';
