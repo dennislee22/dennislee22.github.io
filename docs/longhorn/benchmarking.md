@@ -12,13 +12,13 @@ Longhorn is the cloud native distributed block storage in the Kubernetes ecosyst
 This article describes the performance output as the result of using `fio` tool with the following benchmarking agenda. The objective is to gauge the performance output in terms of IOPS, latency, bandwidth and CPU usage when using Longhorn storage with specific hardware model.
 
 - Longhorn storage vs local attached storage
-- Longhorn replica size 2 vs Longhorn replica size 3 
+- Longhorn replica size 2 vs replica size 3 
 
 ---
 
 ## Hardware
 
-The performance benchmarking tests had been carried out using the following hardware specification.
+The performance benchmarking tests were carried out using the following hardware specification.
 
 | CPU          | Intel(R) Xeon(R) Gold 5220R CPU @ 2.20GHz | 
 | Memory  | DIMM DDR4 Synchronous Registered (Buffered) 2933 MHz (0.3 ns) | 
