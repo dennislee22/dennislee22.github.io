@@ -25,4 +25,4 @@ This article explains the step to setup the ECS environment so that user can adm
     ecsworker2.cdpkvm.cldr   Ready      <none>                      117m   v1.21.8+rke2r2
     ```
     
-2. Amend the ~/.bash_profile login shell to include `export PATH=$PATH:/var/lib/rancher/rke2/bin` parameter to persist the environment.   
+2. Amend the ~/.bash_profile login shell to include `export PATH=$PATH:/var/lib/rancher/rke2/bin` parameter to persist the environment setting.   
