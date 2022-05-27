@@ -10,6 +10,7 @@ nav_order: 2
 {: .no_toc }
 
 This article describes the steps to deploy LVM (Logical Volume Manager) with the dedicated Longhorn disk prior to installing the CDP PvC ECS system.
+This is only applicable to CDP Private Cloud solution installed with ECS system.
 
 ---
 
