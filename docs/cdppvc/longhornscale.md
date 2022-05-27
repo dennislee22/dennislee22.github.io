@@ -11,6 +11,7 @@ nav_order: 4
 {: .no_toc }
 
 This article describes the steps to scale the Longhorn storage capacity in one of the ECS nodes (ecsworker3.cdpkvm.cldr) by adding a new disk into the existing Longhorn volume disk that had initially been deployed with LVM (Logical Volume Manager).
+This is only applicable to CDP Private Cloud solution installed with ECS system.
 
 ---
 
