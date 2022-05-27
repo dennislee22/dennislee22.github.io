@@ -9,7 +9,7 @@ nav_order: 2
 # Cloudera Manager Installation
 {: .no_toc }
 
-This article explains the necessary steps to install Cloudera Manager (CM) on Centos7.9 OS which is [one of the supported operating systems](https://supportmatrix.cloudera.com/). Please ensure that the [prerequisites]({{ site.baseurl }}{% link docs/cdppvc/prerequisites.md %}) have already been prepared prior to running this procedure.
+This article explains the necessary steps to install Cloudera Manager (CM) on CentOS7.9. CentOS7.9 is [one of the supported operating systems](https://supportmatrix.cloudera.com/) in CDP Private Cloud solution. Please ensure that all [prerequisites]({{ site.baseurl }}{% link docs/cdppvc/prerequisites.md %}) have already been prepared prior to running this procedure.
 
 - TOC
 {:toc}
