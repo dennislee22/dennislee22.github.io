@@ -10,6 +10,7 @@ nav_order: 3
 {: .no_toc }
 
 This article explains the steps to add a new ECS node into the existing CDP PvC ECS cluster. Please note that this activity will need to restart the entire ECS cluster including the ECS master/server node. Service disruption is expected.
+This is only applicable to CDP Private Cloud solution installed with ECS system.
 
 ---
 
