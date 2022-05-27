@@ -117,7 +117,7 @@ Run status group 0 (all jobs):
 
 ## Longhorn replica size 2 vs size 3 
 
-The following graph illustrates the performance benchmarking between Longhorn volume with replica size 2 and replica size 3.
+The following graph illustrates the performance result when using Longhorn volume with replica size 2 and replica size 3.
 
 ![](../../assets/images/longhorn/bench1.png) 
 
