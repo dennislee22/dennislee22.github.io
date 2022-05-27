@@ -44,15 +44,15 @@ The tests were carried out by running the `fio` tool using different block size 
 
 The full `fio` command with random 50% read and 50% write operation is shown as follows.
 
-    ```yaml
-    fio --name=fiotest --filename=test --size=10Gb --numjobs=8 --ioengine=libaio --group_reporting --runtime=60 --startdelay=60 --bs=8k --iodepth=32 --rw=randrw --direct=1 --rwmixread=50
-    ```
+```yaml
+fio --name=fiotest --filename=test --size=10Gb --numjobs=8 --ioengine=libaio --group_reporting --runtime=60 --startdelay=60 --bs=8k --iodepth=32 --rw=randrw --direct=1 --rwmixread=50
+```
 
 The full `fio` command for write only is shown as follows.
 
-    ```yaml
-    fio --name=fiotest --filename=test --size=10Gb --direct=1 --numjobs=8 --ioengine=libaio --group_reporting --runtime=60 --startdelay=60 --bs=8k --iodepth=32 --rw=write
-    ```
+```yaml
+fio --name=fiotest --filename=test --size=10Gb --direct=1 --numjobs=8 --ioengine=libaio --group_reporting --runtime=60 --startdelay=60 --bs=8k --iodepth=32 --rw=write
+```
 
 The abovementioned commands were run inside the Kubernetes pod as illustrated in the following example.
 
