@@ -32,7 +32,7 @@ The following prerequisites need to be prepared prior to installing CM, CDP PvC 
     ![](../../assets/images/base_svc_table1.png)
     
 - Hardware requirements are determined by specific CDP services to be installed in both CDP PvC Base cluster and ECS platform. For instance, CDP PvC Base services such as [HDFS](https://docs.cloudera.com/cdp-private-cloud-upgrade/latest/release-guide/topics/cdpdc-hdfs.html), [Zookeeper](https://docs.cloudera.com/cdp-private-cloud-upgrade/latest/release-guide/topics/cdpdc-zookeeper.html) and [Ozone](https://docs.cloudera.com/cdp-private-cloud-upgrade/latest/release-guide/topics/cdpdc-ozone.html) have dedicated storage requirements. 
-- Longhorn serves as the distributed block storage subsystem to persist data for the containers in the ECS platform. Each ECS node needs to be equipped with the direct-attached SSD/NVMe disk for the [Longhorn storage](https://longhorn.io/docs/1.2.4/best-practices/#minimum-recommended-hardware). Longhorn could only use a single volume disk per node and thereby LVM is recommended to be used for exposing a single volume backed by one/many physical disk.
+- Longhorn serves as the distributed block storage subsystem to persist data for the containers in the ECS platform. Each ECS node needs to be equipped with the direct-attached SSD/NVMe disk for the [Longhorn storage](https://longhorn.io/docs/1.2.4/best-practices/#minimum-recommended-hardware). Longhorn could only use a single volume disk per node and thereby [LVM]({{ site.baseurl }}{% link docs/cdppvc/lvm.md %}) is recommended to be used for exposing a single volume backed by one/many physical disk.
 - CDW requires locally attached SCSI device (SSD/NVMe) in each ECS worker/agent node.
 
 
@@ -55,7 +55,7 @@ The following prerequisites need to be prepared prior to installing CM, CDP PvC 
 
 ## DNS Server
 
-- An external DNS server must contain the forward and reverse zones of the company domain name. The external DNS server must be able to resolve the hostname of all CDP hosts, ECS nodes and the 3rd party components (includes Kerberos, LDAP server, external database, NFS server) and perform reverse DNS lookup. 
+- An external DNS server must contain the forward and reverse zones of the company domain name. The external DNS server must be able to resolve the hostname of all CDP PvC Base hosts, ECS nodes and the 3rd party components (includes Kerberos, LDAP server, external database, NFS server) and perform reverse DNS lookup. 
 - Wildcard DNS entry must be configured; e.g. `*.apps.ecs1.cdpkvm.cldr`. This helps to reduce Day-2 operational task to set separate DNS entry for each newly provisioned external-facing application/service.
 
 ![](../../assets/images/wildcarddns.png)
