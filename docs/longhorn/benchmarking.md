@@ -7,7 +7,7 @@ parent: Longhorn
 # Longhorn Performance Benchmarking
 {: .no_toc }
 
-Longhorn is the cloud native distributed block storage in the Kubernetes ecosystem. It is a software defined storage that synchronously replicates the volumes across multiple Kubernetes nodes to achieve high availability and high degree of resiliency. Longhorn volume is used as the persistent volume for the stateful pods in Kubernetes. Longhorn volume replicas should be hosted on separate nodes to prevent single point of failure.
+Longhorn is the cloud native distributed block storage in the Kubernetes ecosystem. It is a software defined storage that synchronously replicates the volumes across multiple Kubernetes nodes to achieve high availability and high degree of resiliency. Longhorn volume replicas are hosted on separate nodes to prevent single point of failure. In a nutshell, Longhorn volume is used as the persistent volume for the stateful pods in Kubernetes. 
 
 This article describes the performance output as the result of using `fio` tool with the following benchmarking agenda. The objective is to gauge the performance output in terms of IOPS, latency, bandwidth and CPU usage when using Longhorn storage with specific hardware model.
 
@@ -58,7 +58,6 @@ fio --name=fiotest --filename=test --size=10Gb --direct=1 --numjobs=8 --ioengine
 
 ```bash
 # kubectl exec -ti fio-0 -n test -- /bin/bash
-kubectl exec [POD] [COMMAND] is DEPRECATED and will be removed in a future version. Use kubectl exec [POD] -- [COMMAND] instead.
 [root@fio-0 /]# fio --name=fiotest --filename=test --size=10Gb --rw=randrw --direct=1 --rwmixread=50 --numjobs=8 --ioengine=libaio --group_reporting --runtime=60 --startdelay=60 --bs=1M --iodepth=8
 fiotest: (g=0): rw=randrw, bs=(R) 1024KiB-1024KiB, (W) 1024KiB-1024KiB, (T) 1024KiB-1024KiB, ioengine=libaio, iodepth=8
 ...
@@ -109,7 +108,12 @@ Run status group 0 (all jobs):
 
 ## Some Storage Facts
 
-- Bandwidth and latency increase when the block size is higher. IOPS declines.
+- IOPS, bandwidth and latency are the common performance indicators from storage perspective. 
+- IOPS (Input/output Operations Per Second) represents the number of requests being sent to the storage disk per one second. IOPS could be measured in read or write operation - random or sequential.
+- Bandwidth or throughput is a metric measuring the amount of data that the application sends to the disks in a specified interval.
+- Latency measures the time taken to send and receive the data bits to the storage disk.
+- The graph below shows that both bandwidth and latency increase when the block size is higher with IOPS decreases.
+- Generally, the block size for data warehouse is typically higher than OLTP (Online Transaction Processing) systems. This is because data warehouse tends to require high bandwidth whereas OLTP system requires high IOPS. Higher IOPS can be obtained at the expense of low bandwidth and hence, block size configuration depends heavily on the characteristics of the workloads.
 
 ![](../../assets/images/longhorn/bench2.png) 
 
@@ -123,9 +127,11 @@ Run status group 0 (all jobs):
 
 ## Longhorn replica size 2 vs size 3 
 
-- The following graph illustrates the performance result when using Longhorn volume with replica size 2 and replica size 3.
+- The following graph illustrates the performance output as a result when using Longhorn volume with replica size 2 and replica size 3.
 
 ![](../../assets/images/longhorn/bench1.png) 
 
 - The result seemingly implies that there is no significant difference between replica size 2 and size 3 in a small cluster.
+- Read operation yields higher IOPS than write.
+- Block size with 64k and 1024k have significantly reduce the IOPS output. 
 
