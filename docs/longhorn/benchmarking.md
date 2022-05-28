@@ -36,9 +36,9 @@ This article describes the performance result of using `fio` tool with the follo
 
 ## Storage Performance Tool
 
-- The tests were carried out by running the `fio` tool using different block size and IOdepth as illustrated in the following table. Part of the tests were performed based on random read/write and the rest were based on 100% read/write operation.
+- The tests were carried out by running the `fio` tool using different block size (bs) and IOdepth as illustrated in the following table. Part of the tests were performed based on random read/write and the rest were based on 100% read/write operation.
 
-| Block Size       | IOdepth         |
+| Block Size (bs)      | IOdepth         |
 |:-------------|:------------------|
 | 4k          | 32        | 
 | 8k        | 32         | 
@@ -121,18 +121,18 @@ Run status group 0 (all jobs):
 
 ![](../../assets/images/longhorn/bench2.png) 
 
-- Sequential 100% read or 100% write produces higher IOPS significantly compared to random 50% read and 50% write as shown below.
+- Sequential data with either 100% read or 100% write produces higher IOPS significantly in comparison to operation with random 50% read and 50% write (files scattered around the disk) as shown below. 
 
 ![](../../assets/images/longhorn/bench3.png) 
 
 ## Longhorn vs Local Attached Storage
 
-- Any software defined storage is expected to perform lower than local attached storage. This is because typical software defined storage like Longhorn offers high availability through replication and self-healing capability. The question is to what extent the performance penalty is at stake. 
-- The following graph shows the performance difference between both storage variants as a result of a series of tests using `fio` tool.
+- Any software defined storage is expected to perform lower than local attached storage. This is because a typical software defined storage like Longhorn replicates the data synchronously to achieve high availability. The question is, to what extent the performance penalty is at stake. 
+- The following graph shows the performance difference between both storage variants as the result of a series of tests using different block size, IOdepth and read/write operation.
 
 ![](../../assets/images/longhorn/bench4.png) 
 
-- T
+- Note that the above result is generated using SSD the storage disk. Spinning disk could produce much lower performance.
 
 ## Longhorn replica size 2 vs size 3 
 
