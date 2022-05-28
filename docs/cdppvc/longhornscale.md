@@ -117,7 +117,7 @@ This is only applicable to CDP Private Cloud solution installed with ECS system.
     `-vg1-lv1 252:0    0   500G  0 lvm  /longhorn
     ```
     
-10. Check the information of the disk that formed the physical volume of `/dev/vdb`.  
+10. Check the information of the first disk that formed the physical volume of `/dev/vdb`.  
  
     ```bash
     # pvdisplay /dev/vdb
@@ -134,7 +134,7 @@ This is only applicable to CDP Private Cloud solution installed with ECS system.
     PV UUID               AE3Zoh-pgdd-1vKK-euUl-oELk-v6yF-jnV4X3
     ```  
 
-11. Create a new physical volume of the new disk which has been identified to be added into the existing logical volume. In this case, the new disk is `/dev/vdc`.
+11. Create a new physical volume of the new disk to add it into the existing logical volume. In this case, the block ID of the new disk is `/dev/vdc`.
 
     ```bash
     # pvcreate /dev/vdc
@@ -226,17 +226,17 @@ This is only applicable to CDP Private Cloud solution installed with ECS system.
     ecsworker3.cdpkvm.cldr   Ready    <none>                      25h     v1.21.8+rke2r2
     ```   
     
-21. The Longhorn dashboard should now reflect that the ecsworker3.cdpkvm.cldr node is `Schedulable`.
+19. The Longhorn dashboard should now reflect that the ecsworker3.cdpkvm.cldr node is `Schedulable`.
 
     ![](../../assets/images/ecs/scaledisk3.png)
     
     
-22. Provision a new CML workspace and the system might select ecsworker3.cdpkvm.cldr node to store the Longhorn volume replicas. In this case, 5 volume have successfully been created in ecsworker3.cdpkvm.cldr node.
+20. Provision a new CML workspace and the system might select ecsworker3.cdpkvm.cldr node to store the Longhorn volume replicas. In this case, 5 volumes have successfully been created in ecsworker3.cdpkvm.cldr node.
 
     ![](../../assets/images/ecs/scaledisk4.png)
     
 
-23. At the ecsworker3.cdpkvm.cldr node, check the status of the `/longhorn` directory to verify the outcome of the previous step.
+21. At the ecsworker3.cdpkvm.cldr node, check the status of the `/longhorn` directory to verify the outcome of the previous step.
 
     ```bash
     # tree /longhorn
