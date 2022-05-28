@@ -6,7 +6,7 @@ description: "Just a piece of technical blog"
 permalink: /
 ---
 
-# Topics that might interest you:
+# Topic that might interest you:
 
 ---
 
