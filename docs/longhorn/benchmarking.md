@@ -7,14 +7,18 @@ parent: Longhorn
 # Longhorn Performance Benchmarking
 {: .no_toc }
 
-Longhorn is the cloud native distributed block storage in the Kubernetes ecosystem. It is a software defined storage that synchronously replicates the volumes across multiple Kubernetes nodes to achieve high availability and high degree of resiliency. Longhorn volume replicas are hosted on separate nodes to prevent single point of failure. In a nutshell, Longhorn volume is used as the persistent volume for the stateful pods in Kubernetes. 
+Longhorn is the cloud native distributed block storage in the Kubernetes ecosystem. It is an open source software defined storage that synchronously replicates the volumes across multiple Kubernetes nodes to achieve high availability and high degree of resiliency. Longhorn volume replicas are hosted on separate nodes to prevent single point of failure. In a nutshell, Longhorn volume is used as the fault-tolerant persistent volume for the stateful pods in Kubernetes. 
 
-This article describes the performance output as the result of using `fio` tool with the following benchmarking agenda. The objective is to gauge the performance output in terms of IOPS, latency, bandwidth and CPU usage when using Longhorn storage with specific hardware model.
+This article describes the performance result of using `fio` tool with the following benchmarking agenda. The objective is to gauge the performance output in terms of IOPS, latency, bandwidth and CPU usage when using Longhorn storage with specific hardware model.
 
 - Longhorn storage vs local attached storage
 - Longhorn replica size 2 vs replica size 3 
 
+- TOC
+{:toc}
+
 ---
+
 
 ## Hardware
 
@@ -32,7 +36,7 @@ This article describes the performance output as the result of using `fio` tool 
 
 ## Storage Performance Tool
 
-- The tests were carried out by running the `fio` tool using different block size and IOdepth as illustrated in the following table. Part of the tests were performed based on random Read/Write and the rest were based on 100% Read/Write operation.
+- The tests were carried out by running the `fio` tool using different block size and IOdepth as illustrated in the following table. Part of the tests were performed based on random read/write and the rest were based on 100% read/write operation.
 
 | Block Size       | IOdepth         |
 |:-------------|:------------------|
@@ -108,24 +112,25 @@ Run status group 0 (all jobs):
 
 ## Some Storage Facts
 
-- IOPS, bandwidth and latency are the common performance indicators from storage perspective. 
+- IOPS, bandwidth and latency are the common performance indicators from the storage perspective. 
 - IOPS (Input/output Operations Per Second) represents the number of requests being sent to the storage disk per one second. IOPS could be measured in read or write operation - random or sequential.
 - Bandwidth or throughput is a metric measuring the amount of data that the application sends to the disks in a specified interval.
 - Latency measures the time taken to send and receive the data bits to the storage disk.
 - The graph below shows that both bandwidth and latency increase when the block size is higher with IOPS decreases.
-- Generally, the block size for data warehouse is typically higher than OLTP (Online Transaction Processing) systems. This is because data warehouse tends to require high bandwidth whereas OLTP system requires high IOPS. Higher IOPS can be obtained at the expense of low bandwidth and hence, block size configuration depends heavily on the characteristics of the workloads.
+- Generally, the block size for data warehouse is typically higher than OLTP (Online Transaction Processing) systems. This is because data warehouse tends to require high bandwidth whereas OLTP system requires high IOPS. Higher IOPS can be achieved at the expense of low bandwidth. In short, block size should be configured appropriately based on the characteristics of the workloads.
 
 ![](../../assets/images/longhorn/bench2.png) 
 
 - Sequential 100% read or 100% write produces higher IOPS significantly compared to random 50% read and 50% write as shown below.
 
-
+![](../../assets/images/longhorn/bench3.png) 
 
 ## Longhorn vs Local Attached Storage
 
-- T
+- Any software defined storage is expected to perform lower than local attached storage. This is because typical software defined storage like Longhorn offers high availability through replication and self-healing capability. The question is to what extent the performance penalty is at stake. 
+- The following graph shows the performance difference between both storage variants as a result of a series of tests using `fio` tool.
 
-![](../../assets/images/longhorn/bench3.png) 
+![](../../assets/images/longhorn/bench4.png) 
 
 - T
 
@@ -135,7 +140,7 @@ Run status group 0 (all jobs):
 
 ![](../../assets/images/longhorn/bench1.png) 
 
-- The result seemingly implies that there is no significant difference between replica size 2 and size 3 in a small cluster.
-- Read operation yields higher IOPS than write.
-- Block size with 64k and 1024k have significantly reduce the IOPS output. 
+- The result seemingly implies that there is no significant performance difference between replica size 2 and size 3 in a small cluster. Replica size 3 ensures higher redundancy but at the expense of higher cost by involving more node to store the data. Replica size 2, on the other hand, reduces hardware cost but at the expense of lower redundancy.
+- Read operation yields higher IOPS compared to write.
+- Block size with 64k and 1024k reduce IOPS significantly. 
 
