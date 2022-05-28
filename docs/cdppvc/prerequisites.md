@@ -14,7 +14,7 @@ CDP Private Cloud solution require direct integration with some 3rd party/extern
 
 ![](../../assets/images/3partydiagram.png)
 
-The following prerequisites need to be prepared prior to installing the CDP Private Cloud solution with ECS platform.
+The following prerequisites need to be prepared prior to installing the CDP Private Cloud solution with ECS platform. The CDP Private Cloud solution with Openshift platform has a slightly different requirements which will not be covered in this article.
 
 - TOC
 {:toc}
