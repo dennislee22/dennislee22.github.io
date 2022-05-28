@@ -23,5 +23,5 @@ nav_order: 1
    Next Step
    {: .label .label-blue } 
    
-- Explore the end-to-end CDP Private Cloud with ECS platform installation procedure in the next [subtopic]({{ site.baseurl }}{% link docs/cdppvc/installation.md %}).
+- Explore the end-to-end installation procedure for CDP Private Cloud with ECS platform in the next [subtopic]({{ site.baseurl }}{% link docs/cdppvc/installation.md %}).
         
