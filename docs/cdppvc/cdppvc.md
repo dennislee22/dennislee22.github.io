@@ -16,7 +16,7 @@ permalink: docs/cdppvc
 - Cloudera Manager (CM) acts as the single pane of management system that installs, manages, configures, and monitors the entire CDP Private Cloud solution.
 - CDP PvC Base cluster stores data store options including HDFS and Ozone that serve as the data lake. It has high degree of consistent security and governance with SDX (Shared Data Experience) to enable safe and compliant data lakes with policy-based data access for users. 
 - CDP PvC Base cluster also hosts other powerful big data services such as Hive, Kudu, Kafka, Solr, Hbase and many others. CDP PvC DS leverages Kubernetes technology for microservices cloud strategy by capitalizing on the benefits such as rapid deployment, portability and scalability. 
-- As of time of writing, ECDP PvC DS platform can host the following CDP PvC Data Services in which they are provisioned on the Kubernetes platform. 
+- As of time of writing, CDP PvC DS platform can host the following CDP PvC Data Services in which they are provisioned on the Kubernetes platform. 
     - Cloudera Data Warehouse (CDW)
     - Cloudera Machine Learning (CML)
     - Cloudera Data Engineering (CDE)
