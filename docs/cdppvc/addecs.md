@@ -9,7 +9,7 @@ nav_order: 3
 # Add ECS Node
 {: .no_toc }
 
-This article explains the steps to add a new ECS node into the existing CDP PvC ECS cluster. Please note that this activity will need to restart the entire ECS cluster including the ECS master/server node. Service disruption is expected.
+This article explains the steps to add a new ECS node (ecsworker3.cdpkvm.cldr) into the existing CDP PvC ECS cluster. Please note that this activity will need to restart the entire ECS cluster including the ECS master/server node. Service disruption is expected.
 This is only applicable to CDP Private Cloud solution installed with ECS system.
 
 ---
@@ -48,7 +48,7 @@ This is only applicable to CDP Private Cloud solution installed with ECS system.
 
     ![](../../assets/images/ecs/expandecs6.png)
     
-7. Ensure that JDK has already been installed in each ECS host. Select `Manually manage JDK` and click `Continue`.
+7. Ensure that JDK has already been installed in the ECS host. Select `Manually manage JDK` and click `Continue`.
 
     ![](../../assets/images/ecs/expandecs7.png)
     
@@ -56,7 +56,7 @@ This is only applicable to CDP Private Cloud solution installed with ECS system.
 
     ![](../../assets/images/ecs/expandecs8.png)
     
-9. CM is installing the agent in each ECS node in parallel and will subsequently install the parcels.
+9. CM is installing the agent in the ECS node and will subsequently install the parcels.
 
     ![](../../assets/images/ecs/expandecs9.png)
     
