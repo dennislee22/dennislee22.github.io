@@ -9,7 +9,7 @@ parent: Longhorn
 
 Longhorn is the cloud native distributed block storage in the Kubernetes ecosystem. It is an open source software defined storage that synchronously replicates the volumes across multiple Kubernetes nodes to achieve high availability and high degree of resiliency. Longhorn volume replicas are hosted on separate nodes to prevent single point of failure. In a nutshell, Longhorn volume is used as the fault-tolerant persistent volume for the stateful pods in Kubernetes. 
 
-The objective of running these performance benchmarking tests is to gauge the output in terms of IOPS, latency, bandwidth and CPU usage when the stateful pods use the Longhorn storage on a specific hardware model in the Kubernetes cluster.
+The objective of running these performance benchmarking tests is to gauge the output in terms of IOPS, latency, bandwidth and CPU usage when the stateful pods use the Longhorn storage on a particular hardware specification in the Kubernetes cluster.
 
 - TOC
 {:toc}
@@ -58,7 +58,7 @@ fio --name=fiotest --filename=test --size=10Gb --numjobs=8 --ioengine=libaio --g
 fio --name=fiotest --filename=test --size=10Gb --direct=1 --numjobs=8 --ioengine=libaio --group_reporting --runtime=60 --startdelay=60 --bs=8k --iodepth=32 --rw=write
 ```
 
-- When testing the Longhorn performance, the abovementioned commands were run inside the Kubernetes pod as illustrated in the following example.
+- When testing the Longhorn performance, the abovementioned commands were executed inside the Kubernetes pod as illustrated in the following example.
 
 ```bash
 # kubectl exec -ti fio-0 -n test -- /bin/bash
@@ -117,7 +117,7 @@ Run status group 0 (all jobs):
 - IOPS (Input/output Operations Per Second) represents the number of requests being sent to the storage disk per one second. IOPS could be measured in read or write operation - random or sequential.
 - Bandwidth or throughput is a metric measuring the amount of data that the application sends to the disk in a specified interval.
 - Latency measures the time taken to send and receive the data bits to and from the storage disk respectively.
-- The graph below shows that both bandwidth and latency increase when the block size is higher with IOPS decreases.
+- The graph below shows that both bandwidth and latency increase whereas IOPS and CPU usage decrease when the block size is higher.
 - Generally, the block size for data warehouse is typically higher than OLTP (Online Transaction Processing) systems. This is because data warehouse tends to require high bandwidth whereas OLTP system requires high IOPS. High IOPS can be achieved at the expense of low bandwidth. In short, block size should be configured appropriately based on the characteristics of the workloads.
 
 ![](../../assets/images/longhorn/bench2.png) 
@@ -133,7 +133,7 @@ Run status group 0 (all jobs):
 
 ![](../../assets/images/longhorn/bench4.png) 
 
-- Note that the above result is generated using SSD as the storage disk. Spinning disk could produce much lower performance in comparison to SSD.
+- Note that the above result is generated using SSD as the storage disk. Spinning disk could produce much lower performance in comparison to the SSD.
 
 ## Longhorn replica size 2 vs size 3 
 
