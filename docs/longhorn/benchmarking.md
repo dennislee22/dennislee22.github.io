@@ -135,7 +135,7 @@ Run status group 0 (all jobs):
 
 - Note that the above result is generated using SSD as the storage disk. Spinning disk could produce much lower performance in comparison to the SSD.
 
-## Longhorn replica size 2 vs size 3 
+## Longhorn Replica Size 2 vs Size 3 
 
 - The following graph illustrates the performance output as a result of using Longhorn volume with replica size 2 and replica size 3.
 
