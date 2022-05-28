@@ -58,7 +58,9 @@ fio --name=fiotest --filename=test --size=10Gb --numjobs=8 --ioengine=libaio --g
 fio --name=fiotest --filename=test --size=10Gb --direct=1 --numjobs=8 --ioengine=libaio --group_reporting --runtime=60 --startdelay=60 --bs=8k --iodepth=32 --rw=write
 ```
 
-- When testing the Longhorn performance, the abovementioned commands were run inside the Kubernetes pod as illustrated in the following example.
+- When testing the Longhorn performance, the abovementioned commands were run inside the Kubernetes pod as illustrated in the following diagram and command.
+
+![](../../assets/images/longhorn/bench5.png) 
 
 ```bash
 # kubectl exec -ti fio-0 -n test -- /bin/bash
@@ -109,6 +111,7 @@ Run status group 0 (all jobs):
    READ: bw=246MiB/s (258MB/s), 246MiB/s-246MiB/s (258MB/s-258MB/s), io=10.6GiB (11.4GB), run=44238-44238msec
   WRITE: bw=252MiB/s (264MB/s), 252MiB/s-252MiB/s (264MB/s-264MB/s), io=10.9GiB (11.7GB), run=44238-44238msec
 ```
+
 
 ## Some Storage Facts
 
