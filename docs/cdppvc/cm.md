@@ -18,7 +18,7 @@ This article explains the necessary steps to install Cloudera Manager (CM) on Ce
 
 ## Sanity Check
 
-1. Ensure that JDK has already been installed in each host.
+1. Ensure that JDK has already been installed in the host.
 
     ```bash
     # rpm -qa | grep jdk
@@ -28,7 +28,7 @@ This article explains the necessary steps to install Cloudera Manager (CM) on Ce
     java-11-openjdk-devel-11.0.14.1.1-1.el7_9.x86_64
     ```
 
-2. The external DNS server must contain the forward and reverse zones of the company domain name. The external DNS server must be able to resolve the hostname of all CDP hosts, ECS nodes and the 3rd party components (includes Kerberos, LDAP server, external database, NFS server) and perform reverse DNS lookup. 
+2. The external DNS server must contain the forward and reverse zones of the company domain name. The external DNS server must be able to resolve the hostname of CM host and the 3rd party components (includes Kerberos, LDAP server, external database, NFS server) and perform reverse DNS lookup. 
 
     ```bash
     # nslookup idm
@@ -42,7 +42,7 @@ This article explains the necessary steps to install Cloudera Manager (CM) on Ce
     150.4.15.10.in-addr.arpa	name = idm.cdpkvm.cldr.
     ```
 
-3. NTP client of CM host is synchronizing time with the external NTP server.
+3. NTP client of the CM host is synchronizing time with the external NTP server.
 
 
 4. Ensure that `includedir` lines in `/etc/krb5.conf` file have been commented in the CM host.
@@ -55,7 +55,7 @@ This article explains the necessary steps to install Cloudera Manager (CM) on Ce
 
 ## CM Installation
 
-1. Download the Cloudera repo.
+1. Download the Cloudera repo with the user credentials.
 
     ```bash
     # cd /etc/yum.repos.d/
@@ -137,7 +137,7 @@ This article explains the necessary steps to install Cloudera Manager (CM) on Ce
 
     ![](../../assets/images/kdc2.png) 
     
-12. Key in the parameters and click `Continue`.
+12. Fill in the fields and click `Continue`.
 
     ![](../../assets/images/kdc3.png) 
     
