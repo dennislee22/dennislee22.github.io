@@ -117,6 +117,10 @@ Run status group 0 (all jobs):
 
 ![](../../assets/images/longhorn/bench2.png) 
 
+- Sequential 100% read or 100% write produces higher IOPS significantly compared to random 50% read and 50% write as shown below.
+
+
+
 ## Longhorn vs Local Attached Storage
 
 - T
