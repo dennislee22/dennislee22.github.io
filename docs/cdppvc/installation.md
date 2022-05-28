@@ -8,7 +8,7 @@ nav_order: 2
 
 # CDP Private Cloud Installation
 
-This article and its sub-articles explain the requirements as well as the step-by-step procedure to deploy CDP Private Cloud solution based on the following software versions.
+This article and its sub-articles explain the requirements as well as the step-by-step procedure to deploy CDP Private Cloud solution with ECS platform based on the following software versions.
 
 | Software       | Version         |
 |:-------------|:------------------|
@@ -20,5 +20,5 @@ This article and its sub-articles explain the requirements as well as the step-b
    Next Step 
    {: .label .label-blue } 
    
-- Explore the technical prerequisites to install the CDP Private Cloud solution in the next [subtopic]({{ site.baseurl }}{% link docs/cdppvc/prerequisites.md %}).
+- Explore the technical prerequisites to install the CDP Private Cloud with ECS platform solution in the next [subtopic]({{ site.baseurl }}{% link docs/cdppvc/prerequisites.md %}).
         
