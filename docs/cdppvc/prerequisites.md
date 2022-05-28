@@ -14,7 +14,7 @@ CDP Private Cloud solution require direct integration with some 3rd party/extern
 
 ![](../../assets/images/3partydiagram.png)
 
-The following prerequisites need to be prepared prior to installing CM, CDP PvC Base cluster and ECS platform. 
+The following prerequisites need to be prepared prior to installing the CDP Private Cloud solution with ECS platform.
 
 - TOC
 {:toc}
