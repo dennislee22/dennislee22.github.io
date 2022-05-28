@@ -32,13 +32,14 @@ This article describes the performance result of using `fio` tool with the follo
 
 ## Architecture
 
-- The tests were carried out in a Kubernetes cluster with 3 physical nodes connected to each other on the same subnet.
+- The Longhorn performance test was carried out in a Kubernetes cluster with 3 physical nodes connected to each other on the same subnet. Each test ran inside the stateful pod that was attached to the storage class backed by the Longhorn persistent volume with replica size 2 and 3.
+- The local attached storage performance test was carried out directly on the operating system of the server.
 
 ![](../../assets/images/longhorn/bench5.png) 
 
 ## Storage Performance Tool
 
-- The tests were carried out by running the `fio` tool using different block size (bs) and IOdepth as illustrated in the following table. Part of the tests were performed based on random read/write and the rest were based on 100% read/write operation.
+- `fio` tool using different block size (bs) and IOdepth as illustrated in the following table. Part of the tests were performed based on random read/write and the rest were based on 100% read/write operation.
 
 | Block Size (bs)      | IOdepth         |
 |:-------------|:------------------|
@@ -135,11 +136,11 @@ Run status group 0 (all jobs):
 
 ![](../../assets/images/longhorn/bench4.png) 
 
-- Note that the above result is generated using SSD the storage disk. Spinning disk could produce much lower performance.
+- Note that the above result is generated using SSD as the storage disk. Spinning disk could produce much lower performance in comparison to SSD.
 
 ## Longhorn replica size 2 vs size 3 
 
-- The following graph illustrates the performance output as a result when using Longhorn volume with replica size 2 and replica size 3.
+- The following graph illustrates the performance output as a result of using Longhorn volume with replica size 2 and replica size 3.
 
 ![](../../assets/images/longhorn/bench1.png) 
 
