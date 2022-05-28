@@ -34,6 +34,8 @@ This article describes the performance result of using `fio` tool with the follo
 
 - The tests were carried out in a Kubernetes cluster with 3 physical nodes connected to each other on the same subnet.
 
+![](../../assets/images/longhorn/bench5.png) 
+
 ## Storage Performance Tool
 
 - The tests were carried out by running the `fio` tool using different block size (bs) and IOdepth as illustrated in the following table. Part of the tests were performed based on random read/write and the rest were based on 100% read/write operation.
@@ -58,9 +60,7 @@ fio --name=fiotest --filename=test --size=10Gb --numjobs=8 --ioengine=libaio --g
 fio --name=fiotest --filename=test --size=10Gb --direct=1 --numjobs=8 --ioengine=libaio --group_reporting --runtime=60 --startdelay=60 --bs=8k --iodepth=32 --rw=write
 ```
 
-- When testing the Longhorn performance, the abovementioned commands were run inside the Kubernetes pod as illustrated in the following diagram and command.
-
-![](../../assets/images/longhorn/bench5.png) 
+- When testing the Longhorn performance, the abovementioned commands were run inside the Kubernetes pod as illustrated in the following example.
 
 ```bash
 # kubectl exec -ti fio-0 -n test -- /bin/bash
