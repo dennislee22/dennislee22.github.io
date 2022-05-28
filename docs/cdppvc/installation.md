@@ -20,5 +20,5 @@ This article and its sub-articles explain the requirements as well as the step-b
    Next Step 
    {: .label .label-blue } 
    
-- Explore the technical prerequisites to install the CDP Private Cloud with ECS platform solution in the next [subtopic]({{ site.baseurl }}{% link docs/cdppvc/prerequisites.md %}).
+- Explore the technical prerequisites to install the CDP Private Cloud with ECS platform in the next [subtopic]({{ site.baseurl }}{% link docs/cdppvc/prerequisites.md %}).
         
