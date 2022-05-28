@@ -34,7 +34,7 @@ This article explains the steps to deploy the CDW service on the ECS platform af
 
     ![](../../assets/images/dsconsole/dsmenu.png)
 
-3. Click the thunder icon of the newly created data lake environment. Fill in the parameters using LDAP user credentials. Note that the databases must be pre-created as highlighted in the [Prerequisites]({{ site.baseurl }}{% link docs/cdppvc/prerequisites.md %}) topic. 
+3. Click the thunder icon of the newly created data lake environment. Fill in the parameters using LDAP user credentials. Note that the databases must be pre-created as highlighted in the [prerequisites]({{ site.baseurl }}{% link docs/cdppvc/prerequisites.md %}) topic. 
 
     ![](../../assets/images/cdw/cdw1.png)
 
