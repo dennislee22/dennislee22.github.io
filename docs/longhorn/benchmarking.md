@@ -23,9 +23,9 @@ The objective of running these performance benchmarking tests is to gauge the ou
 
 | CPU          | Intel(R) Xeon(R) Gold 5220R CPU @ 2.20GHz | 
 | Memory  | DIMM DDR4 Synchronous Registered (Buffered) 2933 MHz (0.3 ns) | 
-| Disk | NVMe P4610 1.6TB SFF    | 
+| Disk | SSD P4610 1.6TB SFF    | 
 
-- The datasheet for the storage disk `NVMe P4610` can be obtained [here](https://ark.intel.com/content/www/us/en/ark/products/140103/intel-ssd-dc-p4610-series-1-6tb-2-5in-pcie-3-1-x4-3d2-tlc.html). The performance specifications stated in this datasheet can be used to benchmark against the result of the tests.
+- The datasheet for the storage disk `SSD P4610` can be obtained [here](https://ark.intel.com/content/www/us/en/ark/products/140103/intel-ssd-dc-p4610-series-1-6tb-2-5in-pcie-3-1-x4-3d2-tlc.html). The performance specifications stated in this datasheet can be used to benchmark against the result of the tests.
 
 ## Architecture
 
@@ -129,7 +129,7 @@ Run status group 0 (all jobs):
 ## Longhorn vs Local Attached Storage
 
 - Any software defined storage is expected to perform lower than the local attached storage. This is because a typical software defined storage like Longhorn replicates the data synchronously to achieve high availability. The question is, to what extent the performance penalty is at stake. 
-- The following graph shows the performance difference between both storage variants as the result of a series of tests using different block size, IOdepth and read/write operation.
+- The following graph shows the performance difference between these two storage variants as the result of a series of tests using different block size, IOdepth and read/write operation.
 
 ![](../../assets/images/longhorn/bench4.png) 
 
