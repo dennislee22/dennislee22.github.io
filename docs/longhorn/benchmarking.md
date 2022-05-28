@@ -19,7 +19,7 @@ The objective of running these performance benchmarking tests is to gauge the ou
 
 ## Hardware
 
-- The performance benchmarking tests were carried out using the following hardware specification.
+- The performance benchmarking tests are carried out using the following hardware specification.
 
 | CPU          | Intel(R) Xeon(R) Gold 5220R CPU @ 2.20GHz | 
 | Memory  | DIMM DDR4 Synchronous Registered (Buffered) 2933 MHz (0.3 ns) | 
@@ -29,14 +29,14 @@ The objective of running these performance benchmarking tests is to gauge the ou
 
 ## Architecture
 
-- The Longhorn performance test was carried out in a Kubernetes cluster with 3 physical nodes connected to each other on the same subnet. Each test ran inside the stateful pod that was attached to the storage class backed by the Longhorn persistent volume with replica size 2 and 3.
-- The local attached storage performance test was carried out directly on the operating system of the physical server.
+- The Longhorn performance tests are carried out in a Kubernetes cluster with 3 physical nodes connected to each other on the same subnet. Each test run inside the stateful pod that is attached to the storage class backed by the Longhorn persistent volume with replica size 2 and 3.
+- The local attached storage performance test is carried out directly on the operating system of the physical server.
 
 ![](../../assets/images/longhorn/bench5.png) 
 
 ## Storage Performance Tool
 
-- `fio` is used as the storage performance tool using different block size (bs) and IOdepth as illustrated in the following table. Part of the tests were performed based on random 50% read and 50% write (files scattered around the disk). The rest were based on sequential 100% read and 100% write operations.
+- `fio` is used as the storage performance tool using different block size (bs) and IOdepth as illustrated in the following table. Part of the tests are performed based on random 50% read and 50% write (files scattered around the disk). The rest is based on sequential 100% read and 100% write operations.
 
 | Block Size (bs)      | IOdepth         |
 |:-------------|:------------------|
@@ -58,7 +58,7 @@ fio --name=fiotest --filename=test --size=10Gb --numjobs=8 --ioengine=libaio --g
 fio --name=fiotest --filename=test --size=10Gb --direct=1 --numjobs=8 --ioengine=libaio --group_reporting --runtime=60 --startdelay=60 --bs=8k --iodepth=32 --rw=write
 ```
 
-- When testing the Longhorn performance, the abovementioned commands were executed inside the Kubernetes pod as illustrated in the following example.
+- When testing the Longhorn performance, the abovementioned commands are executed inside the Kubernetes pod as illustrated in the following example.
 
 ```bash
 # kubectl exec -ti fio-0 -n test -- /bin/bash
