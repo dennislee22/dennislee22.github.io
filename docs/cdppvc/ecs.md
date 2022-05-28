@@ -28,7 +28,7 @@ This article explains the necessary steps to install the ECS platform upon succe
     java-11-openjdk-devel-11.0.14.1.1-1.el7_9.x86_64
     ```
 
-2. The external DNS server must contain the forward and reverse zones of the company domain name. The external DNS server must be able to resolve the hostname of all CDP hosts, ECS nodes and the 3rd party components (includes Kerberos, LDAP server, external database, NFS server) and perform reverse DNS lookup. Repeat this step for every ECS node.
+2. The external DNS server must contain the forward and reverse zones of the company domain name. The external DNS server must be able to resolve the hostname of all ECS nodes and the 3rd party components (includes Kerberos, LDAP server, external database, NFS server) and perform reverse DNS lookup. Repeat this step for every ECS node.
 
     ```bash
     # nslookup idm
@@ -93,7 +93,7 @@ This article explains the necessary steps to install the ECS platform upon succe
     
     ![](../../assets/images/ecs/addecs9.png)
     
-9. Review and amend the parameters accordingly. Directory path for Longhorn storage and local SSD/NVMe (for CDW cache) in each node must be configured here in accordance to the mounted disk folder name. Dedicated storage disk that is expected to be formatted and mounted prior to this installation as explained in the [Prerequisites]({{ site.baseurl }}{% link docs/cdppvc/prerequisites.md %}) subtopic. The `Application Domain` field determines the subdomain of the wildcard DNS. In this case, the wildcard DNS to be set at the external DNS server is `*.apps.ecs1.cdpkvm.cldr`.
+9. Review and amend the parameters accordingly. Directory path for Longhorn storage and local SSD/NVMe (for CDW cache) in each node must be configured here in accordance to the mounted disk folder name. Dedicated storage disk that is expected to be formatted and mounted prior to this installation as explained in the [prerequisites]({{ site.baseurl }}{% link docs/cdppvc/prerequisites.md %}) subtopic. The `Application Domain` field determines the subdomain of the wildcard DNS. In this case, the wildcard DNS to be set at the external DNS server is `*.apps.ecs1.cdpkvm.cldr`.
     
     ![](../../assets/images/ecs/addecs10.png)
     
