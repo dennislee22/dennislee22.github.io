@@ -225,45 +225,45 @@ This is only applicable to CDP Private Cloud solution installed with ECS system.
     # mkdir -p /longhorn/ecs/longhorn-storage
     ```   
 
-22. At Longhorn dashboard, select ecsworker3.cdpkvm.cldr and click `Edit node and disks`.
+20. At Longhorn dashboard, select ecsworker3.cdpkvm.cldr and click `Edit node and disks`.
 
     ![](../../assets/images/ecs/scaledisk3.png)
     
-23. Remove the disk and click `Save`.
+21. Remove the initial disk and click `Save`.
 
     ![](../../assets/images/ecs/scaledisk4.png)  
     
-24. Subsequently, select ecsworker3.cdpkvm.cldr again and click `Edit node and disks`.
+22. Subsequently, select ecsworker3.cdpkvm.cldr again and click `Edit node and disks`.
 
     ![](../../assets/images/ecs/scaledisk5.png)        
     
     
-25. Click `Add Disk` and key in the following details.
+23. Click `Add Disk` and key in the following details.
 
     ![](../../assets/images/ecs/scaledisk6.png)   
     
-26. The Longhorn dashboard should now reflect the latest size of the LVM volume disk.
+24. The Longhorn dashboard should now reflect the latest size of the LVM volume disk.
 
     ![](../../assets/images/ecs/scaledisk7.png)      
 
-27. Run the following command to inform the ECS system to resume scheduling new pods onto the ecsworker3.cdpkvm.cldr node.
+25. Run the following command to inform the ECS system to resume scheduling new pods onto the ecsworker3.cdpkvm.cldr node.
 
     ```bash
     # kubectl uncordon ecsworker3.cdpkvm.cldr 
     node/ecsworker3.cdpkvm.cldr uncordoned
     ```   
     
-28. The Longhorn dashboard should now indicate that the ecsworker3.cdpkvm.cldr node is `Schedulable`.
+26. The Longhorn dashboard should now indicate that the ecsworker3.cdpkvm.cldr node is `Schedulable`.
 
     ![](../../assets/images/ecs/scaledisk8.png)
     
     
-29. Provision a new CML workspace and the system might select ecsworker3.cdpkvm.cldr node to store the Longhorn volume replicas. In this case, 5 volumes have successfully been created in ecsworker3.cdpkvm.cldr node.
+27. Provision a new CML workspace and the system might select ecsworker3.cdpkvm.cldr node to store the Longhorn volume replicas. In this case, 4 volumes have successfully been created in ecsworker3.cdpkvm.cldr node.
 
     ![](../../assets/images/ecs/scaledisk9.png)
     
 
-30. At the ecsworker3.cdpkvm.cldr node, check the status of the `/longhorn` directory to verify the outcome of the previous step.
+28. At the ecsworker3.cdpkvm.cldr node, check the status of the `/longhorn` directory to verify the outcome of the previous step.
 
     ```bash
     # tree /longhorn
@@ -283,11 +283,6 @@ This is only applicable to CDP Private Cloud solution installed with ECS system.
                 |   |-- volume-head-000.img.meta
                 |   `-- volume.meta
                 |-- pvc-391ee046-ae71-459c-b033-2db6014d1e3c-b8bdbf18
-                |   |-- revision.counter
-                |   |-- volume-head-000.img
-                |   |-- volume-head-000.img.meta
-                |   `-- volume.meta
-                |-- pvc-be8bf914-c04b-4a8b-a6fb-d3075447f3da-84a923fb
                 |   |-- revision.counter
                 |   |-- volume-head-000.img
                 |   |-- volume-head-000.img.meta
