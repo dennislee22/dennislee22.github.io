@@ -66,7 +66,7 @@ The following prerequisites need to be prepared prior to installing the CDP Priv
 
 ## Kerberos + LDAP Server
 
-- An external Kerberos server and the Kerberos key distribution center (KDC) (with a realm established) must be available to provide authentication to CDP services, users and hosts.
+- An [external Kerberos server](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/security-kerberos-authentication/topics/cm-security-kerberos-enabling-intro.html) and the Kerberos key distribution center (KDC) (with a realm established) must be available to provide authentication to CDP services, users and hosts.
 - An external LDAP-compliant identity/directory server is required to enable the CDP Private Cloud solution to look up for the user accounts and groups in the directory.
 
 ## Relational Database
