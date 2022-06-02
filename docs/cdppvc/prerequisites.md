@@ -64,10 +64,11 @@ The following prerequisites need to be prepared prior to installing the CDP Priv
 
 - Every CDP PvC Base and ECS node must be installed with NTP client and able to synchronize the time with the external NTP server.
 
-## Kerberos + LDAP Server
+## Kerberos + LDAP Server + Certificate
 
 - An [external Kerberos server](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/security-kerberos-authentication/topics/cm-security-kerberos-enabling-intro.html) and the Kerberos key distribution center (KDC) (with a realm established) must be available to provide authentication to CDP services, users and hosts.
 - An external LDAP-compliant identity/directory server is required to enable the CDP Private Cloud solution to look up for the user accounts and groups in the directory.
+- [Auto-TLS](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/security-encrypting-data-in-transit/topics/cm-security-auto-tls.html) should be enabled using certificates created and managed by a Cloudera Manager certificate authority (CA), or certificates signed by a trusted public CA or your own internal CA. Prepare the certificate of your choice.
 
 ## Relational Database
 
