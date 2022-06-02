@@ -45,7 +45,7 @@ This article explains the necessary steps to install Cloudera Manager (CM) on Ce
 3. NTP client of the CM host is synchronizing time with the external NTP server.
 
 
-4. [Auto-TLS](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/security-encrypting-data-in-transit/topics/cm-security-auto-tls.html) should be enabled using certificates created and managed by a Cloudera Manager certificate authority (CA), or certificates signed by a trusted public CA or your own internal CA. The `/etc/krb5.conf` file in the CM host should be similar to the following example. Host `idm.cdpkvm.cldr` is the Kerberos server.
+4. Join the CM host to the Kerberos domain. In this demo, the CM host joins the Red Hat IDM as the Kerberos server by running the ipa-client-install script. As a result, the `/etc/krb5.conf` file in the CM host should be similar to the following example. Host `idm.cdpkvm.cldr` is the Red Hat IDM server.
     
     ```bash    
     [libdefaults]
@@ -66,14 +66,14 @@ This article explains the necessary steps to install Cloudera Manager (CM) on Ce
     admin_server = idm.cdpkvm.cldr
     }
     ```
-    Test the above settings by using `kinit` and `klist` command with the provisioned user in the CM host as shown in the following example. 
+    Test the above Kerberos settings by running `kinit` and `klist` commands with the provisioned user in the CM host as shown in the following example. 
 
     ```bash
     # kinit ldapuser1
     Password for ldapuser1@CDPKVM.CLDR: <password>
     ```
     
-    Ensure that the output of the `klist` command must include `renew until` to ensure successful CDW provisioning on ECS platform.
+    Ensure that the output of the `klist` command must include `renew until`. This is a prerequisite to ensure successful CDW provisioning on the ECS platform. The `/etc/krb5.conf` file in the CM host will be used in the Hive-associated pods on ECS system.
     
     ```bash   
     # klist
