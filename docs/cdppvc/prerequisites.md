@@ -40,7 +40,7 @@ The following prerequisites need to be prepared prior to installing the CDP Priv
 
 - The supported OS and the filesystems are listed [here](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/installation/topics/cdpdc-os-requirements.html).
 - [JDK](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/installation/topics/cdpdc-java-requirements.html) must be installed in each host.
-- Each host must be installed with Kerberos client and library to join the Kerberos domain.
+- Each host must be installed with the Kerberos client and library to join the Kerberos domain.
 
     ```bash
     # yum install krb5-workstation krb5-libs
