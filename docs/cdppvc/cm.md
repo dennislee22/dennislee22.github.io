@@ -45,14 +45,46 @@ This article explains the necessary steps to install Cloudera Manager (CM) on Ce
 3. NTP client of the CM host is synchronizing time with the external NTP server.
 
 
-4. Ensure that `includedir` lines in `/etc/krb5.conf` file have been commented in the CM host.
+4. [Auto-TLS](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/security-encrypting-data-in-transit/topics/cm-security-auto-tls.html) should be enabled using certificates created and managed by a Cloudera Manager certificate authority (CA), or certificates signed by a trusted public CA or your own internal CA. The `/etc/krb5.conf` file in the CM host should be similar to the following example. Host `idm.cdpkvm.cldr` is the Kerberos server.
+    
+    ```bash    
+    [libdefaults]
+    default_realm = CDPKVM.CLDR
+    dns_lookup_kdc = false
+    dns_lookup_realm = false
+    ticket_lifetime = 86400
+    renew_lifetime = 604800
+    forwardable = true
+    default_tgs_enctypes = aes256-cts
+    default_tkt_enctypes = aes256-cts
+    permitted_enctypes = aes256-cts
+    udp_preference_limit = 1
+    kdc_timeout = 3000
+    [realms]
+    CDPKVM.CLDR = {
+    kdc = idm.cdpkvm.cldr
+    admin_server = idm.cdpkvm.cldr
+    }
+    ```
+    Test the above settings by using `kinit` and `klist` command with the provisioned user in the CM host as shown in the following example. 
 
     ```bash
-    # cat /etc/krb5.conf | grep includedir
-      #includedir /etc/krb5.conf.d/
-      #includedir /var/lib/sss/pubconf/krb5.include.d/
+    # kinit ldapuser1
+    Password for ldapuser1@CDPKVM.CLDR: <password>
     ```
+    
+    Ensure that the output of the `klist` command must include `renew until` to ensure successful CDW provisioning on ECS platform.
+    
+    ```bash   
+    # klist
+    Ticket cache: FILE:/tmp/krb5cc_0
+    Default principal: ldapuser1@CDPKVM.CLDR
 
+    Valid starting     Expires            Service principal
+    06/02/22 16:49:03  06/03/22 16:49:01  krbtgt/CDPKVM.CLDR@CDPKVM.CLDR
+	renew until 06/09/22 16:49:01
+    ```
+    
 ## CM Installation
 
 1. Download the Cloudera repo with the user credentials.
