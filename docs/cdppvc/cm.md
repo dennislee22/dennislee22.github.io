@@ -73,7 +73,7 @@ This article explains the necessary steps to install Cloudera Manager (CM) on Ce
     Password for ldapuser1@CDPKVM.CLDR: <password>
     ```
     
-    Ensure that the output of the `klist` command must include `renew until`. This is a prerequisite to ensure successful CDW provisioning on the ECS platform. The `/etc/krb5.conf` file in the CM host will be used in the Hive-associated pods on ECS system.
+    Ensure that the output of the `klist` command must include `renew until`. This is a prerequisite to ensure successful CDW provisioning on the ECS platform. The `/etc/krb5.conf` file in the CM host will be used in the Hive-associated pods on the ECS system.
     
     ```bash   
     # klist
