@@ -25,11 +25,13 @@ The following prerequisites need to be prepared prior to installing the CDP Priv
 
 - Obtain a valid product subscription from Cloudera. Cloudera Manager requires a valid license to install accordingly. 
 
-## Hardware
+## Cloudera Services
 
 - The minimum CDP PvC Base services and its dependencies to install CML, CDW and CDE are illustrated in the following table.
 
     ![](../../assets/images/base_svc_table1.png)
+    
+## Hardware
     
 - Hardware requirements are determined by specific CDP services to be installed in both CDP PvC Base cluster and ECS platform. For instance, CDP PvC Base services such as [HDFS](https://docs.cloudera.com/cdp-private-cloud-upgrade/latest/release-guide/topics/cdpdc-hdfs.html), [Zookeeper](https://docs.cloudera.com/cdp-private-cloud-upgrade/latest/release-guide/topics/cdpdc-zookeeper.html) and [Ozone](https://docs.cloudera.com/cdp-private-cloud-upgrade/latest/release-guide/topics/cdpdc-ozone.html) have dedicated storage requirements. 
 - Longhorn serves as the distributed block storage subsystem to persist data for the containers in the ECS platform. Each ECS node needs to be equipped with the direct-attached SSD/NVMe disk for the [Longhorn storage](https://longhorn.io/docs/1.2.4/best-practices/#minimum-recommended-hardware). Longhorn could only use a single volume disk per node and thereby [LVM]({{ site.baseurl }}{% link docs/cdppvc/lvm.md %}) is recommended to be used for exposing a single volume backed by one/many physical disk.
