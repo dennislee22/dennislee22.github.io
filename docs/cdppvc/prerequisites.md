@@ -142,7 +142,7 @@ The following prerequisites need to be prepared prior to installing the CDP Priv
 
 - A stable connectivity to internet is required during installation to download the software parcels from the public Cloudera repository.
 
-## External Firewall
+## External Firewall (if applicable)
 
 - Refer [here](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/installation/topics/cdpdc-ports.html) to configure the necessary network ports in the external firewall to allow access to the CDP Private Cloud cluster.
 
