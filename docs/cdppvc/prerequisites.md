@@ -40,6 +40,10 @@ The following prerequisites need to be prepared prior to installing the CDP Priv
 
 - The supported OS and the filesystems are listed [here](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/installation/topics/cdpdc-os-requirements.html).
 - [JDK](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/installation/topics/cdpdc-java-requirements.html) must be installed in each host.
+- Configure the hosts with [IPv4](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/installation/topics/cdpdc-configure-network-names.html) only. Set the hostname with unique FQDN (Fully Qualified Domain Name). Ensure /etc/hosts with the IP address and of each host in the cluster.
+- Disable [firewall](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/installation/topics/cdpdc-disabling-firewall.html) within each host.
+- Set the [SELinux](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/installation/topics/cdpdc-setting-selinux-mode.html) mode accordingly.
+- Every host must be installed with NTP client and able to synchronize the time with the external NTP server.
 - Each host must be installed with the Kerberos client and library in order to join the Kerberos domain.
 
     ```bash
@@ -55,10 +59,6 @@ The following prerequisites need to be prepared prior to installing the CDP Priv
     # yum install iscsi-initiator-utils
     ```
 
-## External NFS
-
-- CML requires external [NFS server](https://docs.cloudera.com/machine-learning/1.3.4/private-cloud-requirements/topics/ml-pvc-external-nfs-server.html) to store the project files and directories. NFS version 4.1 must be supported.
-
 ## DNS Server
 
 - An external DNS server must contain the forward and reverse zones of the company domain name. The external DNS server must be able to resolve the hostname of all CDP PvC Base hosts, ECS nodes and the 3rd party components (includes Kerberos, LDAP server, external database, NFS server) and perform reverse DNS lookup. 
@@ -66,19 +66,20 @@ The following prerequisites need to be prepared prior to installing the CDP Priv
 
 ![](../../assets/images/wildcarddns.png)
 
-## NTP Server
-
-- Every CDP PvC Base and ECS node must be installed with NTP client and able to synchronize the time with the external NTP server.
-
 ## Kerberos + LDAP Server + Certificate
 
 - An [external Kerberos server](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/security-kerberos-authentication/topics/cm-security-kerberos-enabling-intro.html) and the Kerberos key distribution center (KDC) (with a realm established) must be available to provide authentication to CDP services, users and hosts.
 - An external LDAP-compliant identity/directory server is required to enable the CDP Private Cloud solution to look up for the user accounts and groups in the directory.
 - [Auto-TLS](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/security-encrypting-data-in-transit/topics/cm-security-auto-tls.html) should be enabled using certificates created and managed by a Cloudera Manager certificate authority (CA), or certificates signed by a trusted public CA or your own internal CA. Prepare the certificate of your choice.
 
+## External NFS
+
+- CML requires external [NFS server](https://docs.cloudera.com/machine-learning/1.3.4/private-cloud-requirements/topics/ml-pvc-external-nfs-server.html) to store the project files and directories. NFS version 4.1 must be supported.
+
 ## Relational Database
 
 - The database requirements is described in this [link](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/installation/topics/cdpdc-database-requirements.html). 
+- The reference settings of PostgreSQL database can be obtained [here](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/installation/topics/cdpdc-configuring-starting-postgresql-server.html).
 - [SSL](https://docs.cloudera.com/cdp-private-cloud-data-services/1.3.4/installation/topics/cdppvc-installation-external-db-setup.html) must be enabled in the database.
 - This demo uses [PostgreSQL 12](https://docs.cloudera.com/data-warehouse/1.3.4/private-cloud-getting-started/topics/dw-private-cloud-base-cluster-database-requirements.html) database as the external database.
 - Create the following databases in the external PostgreSQL server with its users and the associated privileges. Note that simple passwords are being created but the actual production environment should make use of complex passwords. Not every created database is being used here but serves as a placeholder for future use case.
@@ -140,6 +141,10 @@ The following prerequisites need to be prepared prior to installing the CDP Priv
 ## Internet
 
 - A stable connectivity to internet is required during installation to download the software parcels from the public Cloudera repository.
+
+## External Firewall
+
+- Refer [here](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/installation/topics/cdpdc-ports.html) to configure the necessary network ports in the external firewall to allow access to the CDP Private Cloud cluster.
 
 ---
    
