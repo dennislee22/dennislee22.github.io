@@ -134,10 +134,6 @@ The following prerequisites need to be prepared prior to installing the CDP Priv
   CREATE DATABASE huedb1 OWNER cdpadmin ENCODING 'UTF8';
   ```
 
-## Load Balancer
-
-- An external load balancer is needed to route traffics towards redundant nodes of a particular service.
-
 ## Internet
 
 - A stable connectivity to internet is required during installation to download the software parcels from the public Cloudera repository.
@@ -145,6 +141,11 @@ The following prerequisites need to be prepared prior to installing the CDP Priv
 ## External Firewall (if applicable)
 
 - Refer [here](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/installation/topics/cdpdc-ports.html) to configure the necessary network ports in the external firewall to allow access to the CDP Private Cloud cluster.
+
+## Load Balancer (if applicable)
+
+- An external load balancer is needed to route traffics towards redundant nodes of a particular service.
+
 
 ---
    
