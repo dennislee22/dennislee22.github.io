@@ -1,0 +1,383 @@
+wget -P /etc/yum.repos.d/ https://repo.sonatype.com/repository/community-hosted/rpm/sonatype-community.repo
+
+yum install docker wget -y
+
+yum install nexus-repository-manager
+
+systemctl start nexus-repository-manager 
+
+https://help.sonatype.com/repomanager3/nexus-repository-administration/configuring-ssl
+
+
+keytool -genkeypair -keystore keystore.jks -storepass password -alias jetty -keyalg RSA -keysize 2048 -validity 5000 -keypass password -dname 'CN=nexus.cdpkvm.cldr, OU=Sonatype, O=Sonatype, L=Unspecified, ST=Unspecified, C=SG' -ext 'SAN=DNS:nexus.cdpkvm.cldr' -ext "BC=ca:true"
+
+keytool -exportcert -keystore keystore.jks -alias jetty -rfc > nexus.crt
+
+keytool -importkeystore -srckeystore keystore.jks -destkeystore nexus.p12 -deststoretype PKCS12
+
+openssl pkcs12 -nokeys -in nexus.p12 -out nexus.pem
+
+openssl pkcs12 -nocerts -nodes -in nexus.p12 -out nexus.key
+
+cp keystore.jks /opt/sonatype/sonatype-work/nexus3/etc/ssl/
+
+# more /opt/sonatype/nexus3/etc/jetty/jetty-https.xml
+  <New id="sslContextFactory" class="org.eclipse.jetty.util.ssl.SslContextFactory$Server">
+    <Set name="certAlias">jetty</Set>
+    <Set name="KeyStorePath"><Property name="ssl.etc"/>/keystore.jks</Set>
+    <Set name="KeyStorePassword">password</Set>
+    <Set name="KeyManagerPassword">password</Set>
+    <Set name="TrustStorePath"><Property name="ssl.etc"/>/keystore.jks</Set>
+    <Set name="TrustStorePassword">password</Set>
+    <Set name="EndpointIdentificationAlgorithm"></Set>
+    <Set name="NeedClientAuth"><Property name="jetty.ssl.needClientAuth" default="false"/></Set>
+    <Set name="WantClientAuth"><Property name="jetty.ssl.wantClientAuth" default="false"/></Set>
+    <Set name="IncludeProtocols">
+      <Array type="java.lang.String">
+        <Item>TLSv1.2</Item>
+      </Array>
+    </Set>
+  </New>
+
+[root@nexus ~]# more /opt/sonatype/sonatype-work/nexus3/etc/nexus.properties
+# Jetty section
+# application-port=8081
+# application-host=0.0.0.0
+# nexus-args=${jetty.etc}/jetty.xml,${jetty.etc}/jetty-http.xml,${jetty.etc}/jetty-requestlog.xml
+nexus-args=${jetty.etc}/jetty.xml,${jetty.etc}/jetty-http.xml,${jetty.etc}/jetty-https.xml,${jetty.etc}/jetty-requestlog.xml
+# nexus-context-path=/
+
+# Nexus section
+# nexus-edition=nexus-pro-edition
+# nexus-features=\
+#  nexus-pro-feature
+
+# nexus.hazelcast.discovery.isEnabled=true
+application-port-ssl=8443
+ssl.etc=${karaf.data}/etc/ssl
+
+systemctl restart nexus-repository-manager
+
+
+[root@nexus ~]# netstat -an | grep 999
+tcp        0      0 0.0.0.0:9998            0.0.0.0:*               LISTEN     
+tcp        0      0 0.0.0.0:9999            0.0.0.0:*               LISTEN  
+
+
+
+[root@nexus ~]# openssl x509 -noout -text -in nexus.crt | grep -A1 X509v3
+        X509v3 extensions:
+            X509v3 Basic Constraints: 
+                CA:TRUE
+            X509v3 Subject Alternative Name: 
+                DNS:nexus.cdpkvm.cldr
+            X509v3 Subject Key Identifier: 
+                08:BF:E3:9F:53:50:0A:57:B5:BB:1E:E4:5A:D2:4E:0F:E1:10:5D:11
+                
+
+
+# curl -v -u admin:admin "https://nexus.cdpkvm.cldr:9999/v2/_catalog"
+* About to connect() to nexus.cdpkvm.cldr port 9999 (#0)
+*   Trying 10.15.4.177...
+* Connected to nexus.cdpkvm.cldr (10.15.4.177) port 9999 (#0)
+* Initializing NSS with certpath: sql:/etc/pki/nssdb
+*   CAfile: /etc/pki/tls/certs/ca-bundle.crt
+  CApath: none
+* Server certificate:
+* 	subject: CN=nexus.cdpkvm.cldr,OU=Sonatype,O=Sonatype,L=Unspecified,ST=Unspecified,C=SG
+* 	start date: Jun 25 12:33:15 2022 GMT
+* 	expire date: Mar 03 12:33:15 2036 GMT
+* 	common name: nexus.cdpkvm.cldr
+* 	issuer: CN=nexus.cdpkvm.cldr,OU=Sonatype,O=Sonatype,L=Unspecified,ST=Unspecified,C=SG
+* NSS error -8172 (SEC_ERROR_UNTRUSTED_ISSUER)
+* Peer's certificate issuer has been marked as not trusted by the user.
+* Closing connection 0
+curl: (60) Peer's certificate issuer has been marked as not trusted by the user.
+More details here: http://curl.haxx.se/docs/sslcerts.html
+
+curl performs SSL certificate verification by default, using a "bundle"
+ of Certificate Authority (CA) public keys (CA certs). If the default
+ bundle file isn't adequate, you can specify an alternate file
+ using the --cacert option.
+If this HTTPS server uses a certificate signed by a CA represented in
+ the bundle, the certificate verification probably failed due to a
+ problem with the certificate (it might be expired, or the name might
+ not match the domain name in the URL).
+If you'd like to turn off curl's verification of the certificate, use
+ the -k (or --insecure) option.
+ 
+ 
+# cp nexus.crt /etc/pki/ca-trust/source/anchors/
+# update-ca-trust extract
+
+[root@vaultnode ~]# openssl crl2pkcs7 -nocrl -certfile /etc/pki/tls/certs/ca-bundle.crt | openssl pkcs7 -print_certs | grep subject | wc -l
+129
+
+[root@vaultnode ~]# openssl crl2pkcs7 -nocrl -certfile /etc/pki/tls/certs/ca-bundle.crt | openssl pkcs7 -print_certs | grep subject | grep nexus
+subject=/C=SG/ST=Unspecified/L=Unspecified/O=Sonatype/OU=Sonatype/CN=nexus.cdpkvm.cldr
+
+
+
+[root@vaultnode ~]# curl -u admin:admin "https://nexus.cdpkvm.cldr:9999/v2/_catalog" | jq
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  9711  100  9711    0     0  69165      0 --:--:-- --:--:-- --:--:-- 69364
+{
+  "repositories": [
+    "cdppvc/cloudera/1.1.9-b31/cdw/cluster-autoscaler",
+    "cdppvc/cloudera/1.1.9-b31/cdw/compute-operator",
+    "cdppvc/cloudera/1.1.9-b31/cdw/compute-usage-monitor",
+    "cdppvc/cloudera/1.1.9-b31/cdw/configuration-sidecar",
+    "cdppvc/cloudera/1.1.9-b31/cdw/das",
+    "cdppvc/cloudera/1.1.9-b31/cdw/diagnostic-data-generator",
+    "cdppvc/cloudera/1.1.9-b31/cdw/diagnostic-tools",
+    "cdppvc/cloudera/1.1.9-b31/cdw/dwx",
+    "cdppvc/cloudera/1.1.9-b31/cdw/fluentd",
+    "cdppvc/cloudera/1.1.9-b31/cdw/hive",
+    "cdppvc/cloudera/1.1.9-b31/cdw/impala-autoscaler",
+    "cdppvc/cloudera/1.1.9-b31/cdw/leader-elector",
+    "cdppvc/cloudera/1.1.9-b31/cdw/service-proxy",
+    "cdppvc/cloudera/catalogd",
+    "cdppvc/cloudera/cdp-gateway",
+    "cdppvc/cloudera/cdpcli",
+    "cdppvc/cloudera/cdsw/api",
+    "cdppvc/cloudera/cdsw/cdh-client",
+    "cdppvc/cloudera/cdsw/cdsw-ubi-minimal",
+    "cdppvc/cloudera/cdsw/cron",
+    "cdppvc/cloudera/cdsw/dex-spark-runtime-2.4.7",
+    "cdppvc/cloudera/cdsw/engine",
+    "cdppvc/cloudera/cdsw/engine-deps",
+    "cdppvc/cloudera/cdsw/eventlog-reader",
+    "cdppvc/cloudera/cdsw/feature-flags",
+    "cdppvc/cloudera/cdsw/hadoop-cli-addon",
+    "cdppvc/cloudera/cdsw/kinit",
+    "cdppvc/cloudera/cdsw/livelog",
+    "cdppvc/cloudera/cdsw/livelog-cleaner",
+    "cdppvc/cloudera/cdsw/livelog-publisher",
+    "cdppvc/cloudera/cdsw/ml-runtime-jupyterlab-python3.7-cuda",
+    "cdppvc/cloudera/cdsw/ml-runtime-jupyterlab-python3.7-rapids",
+    "cdppvc/cloudera/cdsw/ml-runtime-jupyterlab-python3.7-standard",
+    "cdppvc/cloudera/cdsw/ml-runtime-jupyterlab-python3.8-cuda",
+    "cdppvc/cloudera/cdsw/ml-runtime-jupyterlab-python3.8-rapids",
+    "cdppvc/cloudera/cdsw/ml-runtime-jupyterlab-python3.8-standard",
+    "cdppvc/cloudera/cdsw/ml-runtime-jupyterlab-python3.9-cuda",
+    "cdppvc/cloudera/cdsw/ml-runtime-jupyterlab-python3.9-standard",
+    "cdppvc/cloudera/cdsw/ml-runtime-workbench-python3.7-cuda",
+    "cdppvc/cloudera/cdsw/ml-runtime-workbench-python3.7-rapids",
+    "cdppvc/cloudera/cdsw/ml-runtime-workbench-python3.7-standard",
+    "cdppvc/cloudera/cdsw/ml-runtime-workbench-python3.8-cuda",
+    "cdppvc/cloudera/cdsw/ml-runtime-workbench-python3.8-rapids",
+    "cdppvc/cloudera/cdsw/ml-runtime-workbench-python3.8-standard",
+    "cdppvc/cloudera/cdsw/ml-runtime-workbench-python3.9-cuda",
+    "cdppvc/cloudera/cdsw/ml-runtime-workbench-python3.9-standard",
+    "cdppvc/cloudera/cdsw/ml-runtime-workbench-r3.6-standard",
+    "cdppvc/cloudera/cdsw/ml-runtime-workbench-r4.0-standard",
+    "cdppvc/cloudera/cdsw/ml-runtime-workbench-r4.1-standard",
+    "cdppvc/cloudera/cdsw/ml-runtime-workbench-scala2.11-standard",
+    "cdppvc/cloudera/cdsw/model-metrics",
+    "cdppvc/cloudera/cdsw/modelproxy",
+    "cdppvc/cloudera/cdsw/operator",
+    "cdppvc/cloudera/cdsw/postgres",
+    "cdppvc/cloudera/cdsw/postgres-exporter",
+    "cdppvc/cloudera/cdsw/reconciler",
+    "cdppvc/cloudera/cdsw/runtime-addon-loader",
+    "cdppvc/cloudera/cdsw/runtime-manager",
+    "cdppvc/cloudera/cdsw/s2i-builder",
+    "cdppvc/cloudera/cdsw/s2i-client",
+    "cdppvc/cloudera/cdsw/s2i-git-server",
+    "cdppvc/cloudera/cdsw/s2i-queue",
+    "cdppvc/cloudera/cdsw/s2i-registry",
+    "cdppvc/cloudera/cdsw/s2i-registry-auth",
+    "cdppvc/cloudera/cdsw/s2i-server",
+    "cdppvc/cloudera/cdsw/sdx-templates",
+    "cdppvc/cloudera/cdsw/secret-generator",
+    "cdppvc/cloudera/cdsw/ssh",
+    "cdppvc/cloudera/cdsw/tcp-ingress-controller",
+    "cdppvc/cloudera/cdsw/third-party/pod-evaluator/webhook",
+    "cdppvc/cloudera/cdsw/upgrade-db",
+    "cdppvc/cloudera/cdsw/usage-reporter",
+    "cdppvc/cloudera/cdsw/vfs",
+    "cdppvc/cloudera/cdsw/web",
+    "cdppvc/cloudera/cdv/runtimedataviz",
+    "cdppvc/cloudera/cloud/cluster-proxy-private",
+    "cdppvc/cloudera/cloud/dp-cluster-service-private",
+    "cdppvc/cloudera/cloud/dp-migrate-private",
+    "cdppvc/cloudera/cloud/dp-web-private",
+    "cdppvc/cloudera/cloudera-scheduler",
+    "cdppvc/cloudera/cloudera-scheduler-admission-controller",
+    "cdppvc/cloudera/cluster-access-manager",
+    "cdppvc/cloudera/cm-health-exporter",
+    "cdppvc/cloudera/dex/dex-admission-controller",
+    "cdppvc/cloudera/dex/dex-airflow-7.1.7.74",
+    "cdppvc/cloudera/dex/dex-airflow-7.2.14.0",
+    "cdppvc/cloudera/dex/dex-airflow-api-server-7.1.7.74",
+    "cdppvc/cloudera/dex/dex-airflow-api-server-7.2.14.0",
+    "cdppvc/cloudera/dex/dex-airflow-connections-7.1.7.74",
+    "cdppvc/cloudera/dex/dex-airflow-connections-7.2.14.0",
+    "cdppvc/cloudera/dex/dex-configs-manager",
+    "cdppvc/cloudera/dex/dex-configs-templates-init",
+    "cdppvc/cloudera/dex/dex-configs-templates-init-pvc",
+    "cdppvc/cloudera/dex/dex-cp",
+    "cdppvc/cloudera/dex/dex-diagnostics",
+    "cdppvc/cloudera/dex/dex-downloads",
+    "cdppvc/cloudera/dex/dex-efs-init",
+    "cdppvc/cloudera/dex/dex-eventlog-reader",
+    "cdppvc/cloudera/dex/dex-grafana",
+    "cdppvc/cloudera/dex/dex-k8s-events-logger",
+    "cdppvc/cloudera/dex/dex-knox",
+    "cdppvc/cloudera/dex/dex-livy-runtime-2.4.7-7.1.7.74",
+    "cdppvc/cloudera/dex/dex-livy-runtime-2.4.8-7.2.14.0",
+    "cdppvc/cloudera/dex/dex-livy-server-2.4.7-7.1.7.74",
+    "cdppvc/cloudera/dex/dex-livy-server-2.4.8-7.2.14.0",
+    "cdppvc/cloudera/dex/dex-livy-server-3.2.0-7.1.7.74",
+    "cdppvc/cloudera/dex/dex-livy-server-3.2.0-7.2.14.0",
+    "cdppvc/cloudera/dex/dex-pipelines-api-server",
+    "cdppvc/cloudera/dex/dex-rss",
+    "cdppvc/cloudera/dex/dex-runtime-api-kinit",
+    "cdppvc/cloudera/dex/dex-runtime-api-server",
+    "cdppvc/cloudera/dex/dex-runtime-db-hook",
+    "cdppvc/cloudera/dex/dex-runtime-management-authz",
+    "cdppvc/cloudera/dex/dex-runtime-management-metadata-proxy",
+    "cdppvc/cloudera/dex/dex-runtime-management-metadata-proxy-templates-init",
+    "cdppvc/cloudera/dex/dex-runtime-management-server",
+    "cdppvc/cloudera/dex/dex-runtime-python-builder",
+    "cdppvc/cloudera/dex/dex-safari-7.1.7.74",
+    "cdppvc/cloudera/dex/dex-safari-7.2.14.0",
+    "cdppvc/cloudera/dex/dex-shs-init",
+    "cdppvc/cloudera/dex/dex-spark-history-server-2.4.8",
+    "cdppvc/cloudera/dex/dex-spark-history-server-3.2.0",
+    "cdppvc/cloudera/dex/dex-spark-runtime-2.4.7-7.1.7.74",
+    "cdppvc/cloudera/dex/dex-spark-runtime-2.4.8-7.2.14.0",
+    "cdppvc/cloudera/dex/dex-spark-runtime-3.1.1",
+    "cdppvc/cloudera/dex/dex-spark-runtime-3.2.0-7.1.7.74",
+    "cdppvc/cloudera/dex/dex-spark-runtime-3.2.0-7.2.14.0",
+    "cdppvc/cloudera/dex/dex-tgtgen-reconciler",
+    "cdppvc/cloudera/dex/dex-tgtgen-templates-init",
+    "cdppvc/cloudera/dmx-app",
+    "cdppvc/cloudera/dmx-web",
+    "cdppvc/cloudera/hue",
+    "cdppvc/cloudera/huelb",
+    "cdppvc/cloudera/impalad_coordinator",
+    "cdppvc/cloudera/impalad_executor",
+    "cdppvc/cloudera/liftie",
+    "cdppvc/cloudera/logger-alert-receiver",
+    "cdppvc/cloudera/metrics-server-exporter",
+    "cdppvc/cloudera/mlx-control-plane-app",
+    "cdppvc/cloudera/mlx-control-plane-app-cadence-worker",
+    "cdppvc/cloudera/mlx-control-plane-app-health-poller",
+    "cdppvc/cloudera/monitoring-app",
+    "cdppvc/cloudera/multilog-init",
+    "cdppvc/cloudera/platform-agent-proxy",
+    "cdppvc/cloudera/resource-pool-manager",
+    "cdppvc/cloudera/statestored",
+    "cdppvc/cloudera/thunderhead-cdp-private-authentication-console",
+    "cdppvc/cloudera/thunderhead-cdp-private-commonconsole",
+    "cdppvc/cloudera/thunderhead-cdp-private-environments-console",
+    "cdppvc/cloudera/thunderhead-compute-api",
+    "cdppvc/cloudera/thunderhead-configmap-autoupdater",
+    "cdppvc/cloudera/thunderhead-configtemplate",
+    "cdppvc/cloudera/thunderhead-consoleauthenticationcdp",
+    "cdppvc/cloudera/thunderhead-de-api",
+    "cdppvc/cloudera/thunderhead-diagnostics-api",
+    "cdppvc/cloudera/thunderhead-dw-api",
+    "cdppvc/cloudera/thunderhead-environment",
+    "cdppvc/cloudera/thunderhead-environments2-api",
+    "cdppvc/cloudera/thunderhead-iam-api",
+    "cdppvc/cloudera/thunderhead-iam-console",
+    "cdppvc/cloudera/thunderhead-kerberosmgmt-api",
+    "cdppvc/cloudera/thunderhead-metering-heartbeat-application",
+    "cdppvc/cloudera/thunderhead-ml-api",
+    "cdppvc/cloudera/thunderhead-mlopsgovernance",
+    "cdppvc/cloudera/thunderhead-resource-management-console",
+    "cdppvc/cloudera/thunderhead-sdx2-api",
+    "cdppvc/cloudera/thunderhead-servicediscoverysimple",
+    "cdppvc/cloudera/thunderhead-tgtgenerator",
+    "cdppvc/cloudera/thunderhead-tgtloader",
+    "cdppvc/cloudera/thunderhead-usermanagement-private",
+    "cdppvc/cloudera/yunikorn-admission",
+    "cdppvc/cloudera/yunikorn-scheduler",
+    "cdppvc/cloudera/yunikorn-web",
+    "cdppvc/cloudera_base/ubi8/ubi-minimal",
+    "cdppvc/cloudera_thirdparty/amazon/aws-node-termination-handler",
+    "cdppvc/cloudera_thirdparty/autoscaling/cluster-autoscaler",
+    "cdppvc/cloudera_thirdparty/busybox",
+    "cdppvc/cloudera_thirdparty/calico/cni",
+    "cdppvc/cloudera_thirdparty/calico/kube-controllers",
+    "cdppvc/cloudera_thirdparty/calico/node",
+    "cdppvc/cloudera_thirdparty/calico/pod2daemon-flexvol",
+    "cdppvc/cloudera_thirdparty/calico/typha",
+    "cdppvc/cloudera_thirdparty/external_storage/efs-provisioner",
+    "cdppvc/cloudera_thirdparty/fluent-bit",
+    "cdppvc/cloudera_thirdparty/fluent/fluentd",
+    "cdppvc/cloudera_thirdparty/fluentd",
+    "cdppvc/cloudera_thirdparty/heapster-amd64",
+    "cdppvc/cloudera_thirdparty/heapster-influxdb-amd64",
+    "cdppvc/cloudera_thirdparty/ingress-nginx/controller",
+    "cdppvc/cloudera_thirdparty/istio/operator",
+    "cdppvc/cloudera_thirdparty/istio/pilot",
+    "cdppvc/cloudera_thirdparty/istio/proxyv2",
+    "cdppvc/cloudera_thirdparty/jimmidyson/configmap-reload",
+    "cdppvc/cloudera_thirdparty/kube-fluentd-operator",
+    "cdppvc/cloudera_thirdparty/kubernetesui/dashboard",
+    "cdppvc/cloudera_thirdparty/kubernetesui/metrics-scraper",
+    "cdppvc/cloudera_thirdparty/postgres",
+    "cdppvc/cloudera_thirdparty/prom/node-exporter",
+    "cdppvc/cloudera_thirdparty/prom/pushgateway",
+    "cdppvc/cloudera_thirdparty/quay.io/coreos/kube-state-metrics",
+    "cdppvc/cloudera_thirdparty/rhel8/mysql-80",
+    "cdppvc/cloudera_thirdparty/rhel8/postgresql-10",
+    "cdppvc/cloudera_thirdparty/service-idler",
+    "cdppvc/cloudera_thirdparty/ubi-alertmanager",
+    "cdppvc/cloudera_thirdparty/ubi-configmap-reload",
+    "cdppvc/cloudera_thirdparty/ubi-grafana",
+    "cdppvc/cloudera_thirdparty/ubi-k8s-sidecar",
+    "cdppvc/cloudera_thirdparty/ubi-kube-state-metrics",
+    "cdppvc/cloudera_thirdparty/ubi-node_exporter",
+    "cdppvc/cloudera_thirdparty/ubi-pod-reloader",
+    "cdppvc/cloudera_thirdparty/ubi-prometheus",
+    "cdppvc/cloudera_thirdparty/ubi-pushgateway",
+    "cdppvc/cloudera_thirdparty/ubi-snmp_notifier",
+    "cdppvc/cloudera_thirdparty/ubi-traefik",
+    "cdppvc/cloudera_thirdparty/ubi-vault"
+  ]
+}
+
+
+[root@nexus ~]# docker image ls
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+
+[root@nexus ~]# docker pull nexus.cdpkvm.cldr:9999/cdppvc/cloudera_thirdparty/fluent-bit:v1.4.6-3896242
+Trying to pull repository nexus.cdpkvm.cldr:9999/cdppvc/cloudera_thirdparty/fluent-bit ... 
+v1.4.6-3896242: Pulling from nexus.cdpkvm.cldr:9999/cdppvc/cloudera_thirdparty/fluent-bit
+f4816e38b7e0: Pull complete 
+7c949fdfdbff: Pull complete 
+f949750d27a4: Pull complete 
+fe54547c530b: Pull complete 
+Digest: sha256:d3d7a16bc8f3eb5782efde9b79945eeb5c67119361e1d8daf31f7421d795ff5f
+Status: Downloaded newer image for nexus.cdpkvm.cldr:9999/cdppvc/cloudera_thirdparty/fluent-bit:v1.4.6-3896242
+
+[root@nexus ~]# docker image ls
+REPOSITORY                                                     TAG                 IMAGE ID            CREATED             SIZE
+nexus.cdpkvm.cldr:9999/cdppvc/cloudera_thirdparty/fluent-bit   v1.4.6-3896242      a5d1d3a3a3ef        2 years ago         220 MB
+
+[root@nexus ~]# docker login https://nexus.cdpkvm.cldr:9999/cdppvc --username admin --password admin
+Login Succeeded
+[root@nexus ~]# bash copy-docker.txt 
+This script pushes all Docker images used in CDP Private Cloud to the specified custom Docker Repository.
+Start download Docker images to nexus.cdpkvm.cldr:9999/cdppvc.
+Using docker to process the images.
+
+Processing 1/234 cloudera_thirdparty/busybox:1.32-rootless
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  725k  100  725k    0     0  2358k      0 --:--:-- --:--:-- --:--:-- 2361k
+The push refers to a repository [nexus.cdpkvm.cldr:9999/cdppvc/cloudera_thirdparty/busybox]
+a7c31a31c1ea: Pushed 
+67f770da229b: Pushed 
+1.32-rootless: digest: sha256:63aaa832da05e480af944af6f5b3383250cce8ef2fe929bb12f21e07a645d4f9 size: 734
+Untagged: nexus.cdpkvm.cldr:9999/cdppvc/cloudera_thirdparty/busybox:1.32-rootless
+Untagged: nexus.cdpkvm.cldr:9999/cdppvc/cloudera_thirdparty/busybox@sha256:63aaa832da05e480af944af6f5b3383250cce8ef2fe929bb12f21e07a645d4f9
+Untagged: 368243204766.dkr.ecr.us-west-2.amazonaws.com/cdp-private/cloudera_thirdparty/busybox:1.32-rootless
+Deleted: sha256:38521b008bdf5ed434e77f4bcda3c8f289168903f11127a68b5b1c5846e37606
+Deleted: sha256:a6819ca486163b828c8b2fe7f80ce1bc2da7f2a3ac1aaa13c17efae4163a7bea
+Deleted: sha256:67f770da229bf16d0c280f232629b0c1f1243a884df09f6b940a1c7288535a6d
