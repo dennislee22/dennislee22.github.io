@@ -1,0 +1,448 @@
+ocpbastion:
+
+openssl crl2pkcs7 -nocrl -certfile /etc/pki/tls/certs/ca-bundle.crt | openssl pkcs7 -print_certs | grep subject > pkiorig
+
+openssl crl2pkcs7 -nocrl -certfile /etc/pki/tls/certs/ca-bundle.crt | openssl pkcs7 -print_certs | grep subject | wc -l
+127
+
+
+[root@ocpbastion ~]# oc get clusterversions.config.openshift.io
+NAME      VERSION   AVAILABLE   PROGRESSING   SINCE   STATUS
+version   4.7.53    True        False         12m     Cluster version is 4.7.53
+
+[root@ocpbastion ~]# oc get nodes
+NAME                        STATUS   ROLES           AGE   VERSION
+master01.ocp4.cdpkvm.cldr   Ready    master,worker   31m   v1.20.15+98b2293
+master02.ocp4.cdpkvm.cldr   Ready    master,worker   31m   v1.20.15+98b2293
+master03.ocp4.cdpkvm.cldr   Ready    master,worker   31m   v1.20.15+98b2293
+
+[root@ocpbastion ~]# oc get co
+NAME                                       VERSION   AVAILABLE   PROGRESSING   DEGRADED   SINCE
+authentication                             4.7.53    True        False         False      14m
+baremetal                                  4.7.53    True        False         False      28m
+cloud-credential                           4.7.53    True        False         False      39m
+cluster-autoscaler                         4.7.53    True        False         False      28m
+config-operator                            4.7.53    True        False         False      30m
+console                                    4.7.53    True        False         False      19m
+csi-snapshot-controller                    4.7.53    True        False         False      24m
+dns                                        4.7.53    True        False         False      28m
+etcd                                       4.7.53    True        False         False      28m
+image-registry                             4.7.53    True        False         False      24m
+ingress                                    4.7.53    True        False         False      26m
+insights                                   4.7.53    True        False         False      23m
+kube-apiserver                             4.7.53    True        False         False      27m
+kube-controller-manager                    4.7.53    True        False         False      27m
+kube-scheduler                             4.7.53    True        False         False      28m
+kube-storage-version-migrator              4.7.53    True        False         False      29m
+machine-api                                4.7.53    True        False         False      29m
+machine-approver                           4.7.53    True        False         False      29m
+machine-config                             4.7.53    True        False         False      29m
+marketplace                                4.7.53    True        False         False      29m
+monitoring                                 4.7.53    True        False         False      23m
+network                                    4.7.53    True        False         False      29m
+node-tuning                                4.7.53    True        False         False      29m
+openshift-apiserver                        4.7.53    True        False         False      24m
+openshift-controller-manager               4.7.53    True        False         False      27m
+openshift-samples                          4.7.53    True        False         False      23m
+operator-lifecycle-manager                 4.7.53    True        False         False      29m
+operator-lifecycle-manager-catalog         4.7.53    True        False         False      29m
+operator-lifecycle-manager-packageserver   4.7.53    True        False         False      24m
+service-ca                                 4.7.53    True        False         False      30m
+storage                                    4.7.53    True        False         False      30m
+
+
+[root@ocpbastion ~]# oc get pods -n openshift-ingress
+NAME                              READY   STATUS    RESTARTS   AGE
+router-default-5b7459c989-fcf4w   1/1     Running   0          91m
+router-default-5b7459c989-jvhpr   1/1     Running   0          91m
+
+
+[root@ocpbastion ~]# oc describe pod router-default-5b7459c989-fcf4w -n openshift-ingress | grep -i "Node:"
+Node:                 master01.ocp4.cdpkvm.cldr/10.15.4.182
+[root@ocpbastion ~]# oc describe pod router-default-5b7459c989-jvhpr -n openshift-ingress | grep -i "Node:"
+Node:                 master02.ocp4.cdpkvm.cldr/10.15.4.183
+
+
+[root@ocpbastion ~]# oc debug node/master01.ocp4.cdpkvm.cldr
+Starting pod/master01ocp4cdpkvmcldr-debug ...
+To use host binaries, run `chroot /host`
+Pod IP: 10.15.4.182
+If you don't see a command prompt, try pressing enter.
+sh-4.4# chroot /host
+sh-4.4# lsblk
+NAME   MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+vda    252:0    0  100G  0 disk 
+|-vda1 252:1    0    1M  0 part 
+|-vda2 252:2    0  127M  0 part 
+|-vda3 252:3    0  384M  0 part /boot
+`-vda4 252:4    0 99.5G  0 part /sysroot
+vdb    252:16   0  250G  0 disk 
+vdc    252:32   0  400G  0 disk 
+
+
+[root@ocpbastion ~]# oc get nodes -l cluster.ocs.openshift.io/openshift-storage=
+NAME                        STATUS   ROLES           AGE     VERSION
+master01.ocp4.cdpkvm.cldr   Ready    master,worker   4h31m   v1.20.15+98b2293
+master02.ocp4.cdpkvm.cldr   Ready    master,worker   4h31m   v1.20.15+98b2293
+master03.ocp4.cdpkvm.cldr   Ready    master,worker   4h31m   v1.20.15+98b2293
+
+
+
+[root@ocpbastion ~]# oc get pv
+NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS      CLAIM                                               STORAGECLASS                  REASON   AGE
+local-pv-17bf8fbc                          300Gi      RWO            Delete           Bound       openshift-storage/ocs-deviceset-vdb-0-data-2slfmj   vdb                                    23m
+local-pv-3115c83f                          400Gi      RWO            Delete           Available                                                       vdb                                    2m41s
+local-pv-62cdcca                           300Gi      RWO            Delete           Bound       openshift-storage/ocs-deviceset-vdb-0-data-06dblw   vdb                                    23m
+local-pv-9c30413c                          400Gi      RWO            Delete           Available                                                       vdb                                    2m31s
+local-pv-aca516bf                          300Gi      RWO            Delete           Bound       openshift-storage/ocs-deviceset-vdb-0-data-1t74g8   vdb                                    23m
+local-pv-e330e1ed                          400Gi      RWO            Delete           Available                                                       vdb                                    2m52s
+pvc-5146e4af-95c1-4de2-b0f6-6da0fb3f6db4   50Gi       RWO            Delete           Bound       openshift-storage/db-noobaa-db-pg-0                 ocs-storagecluster-ceph-rbd            20m
+
+[root@ocpbastion ~]# oc get pvc
+NAME                              STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS                  AGE
+db-noobaa-db-pg-0                 Bound    pvc-5146e4af-95c1-4de2-b0f6-6da0fb3f6db4   50Gi       RWO            ocs-storagecluster-ceph-rbd   33m
+ocs-deviceset-vdb-0-data-06dblw   Bound    local-pv-62cdcca                           300Gi      RWO            vdb                           34m
+ocs-deviceset-vdb-0-data-1t74g8   Bound    local-pv-aca516bf                          300Gi      RWO            vdb                           34m
+ocs-deviceset-vdb-0-data-2slfmj   Bound    local-pv-17bf8fbc                          300Gi      RWO            vdb                           34m
+
+
+[root@ocpbastion ~]# oc get sc
+NAME                                    PROVISIONER                             RECLAIMPOLICY   VOLUMEBINDINGMODE      ALLOWVOLUMEEXPANSION   AGE
+cdw-disk                                kubernetes.io/no-provisioner            Delete          WaitForFirstConsumer   false                  22m
+ocs-storagecluster-ceph-rbd (default)   openshift-storage.rbd.csi.ceph.com      Delete          Immediate              true                   40m
+ocs-storagecluster-ceph-rgw             openshift-storage.ceph.rook.io/bucket   Delete          Immediate              false                  40m
+ocs-storagecluster-cephfs               openshift-storage.cephfs.csi.ceph.com   Delete          Immediate              true                   40m
+openshift-storage.noobaa.io             openshift-storage.noobaa.io/obc         Delete          Immediate              false                  36m
+vdb                                     kubernetes.io/no-provisioner            Delete          WaitForFirstConsumer   false                  42m
+
+
+
+
+[root@ocpbastion ~]# oc get pods -n cdp | head
+NAME                                                              READY   STATUS                  RESTARTS   AGE
+cdp-release-alert-admin-service-957bfcb58-hz8g7                   0/2     ImagePullBackOff        0          77s
+cdp-release-classic-clusters-7df4fb5ccb-94bsl                     0/3     Init:ImagePullBackOff   0          71s
+cdp-release-cluster-access-manager-57447b4895-bnfc7               0/2     ImagePullBackOff        0          76s
+cdp-release-cluster-proxy-1.0.0-67b59bd449-nz8pb                  0/2     ErrImagePull            0          72s
+cdp-release-cpx-liftie-7dccf746b7-85djb                           0/2     ImagePullBackOff        0          82s
+cdp-release-dex-cp-74788c5f79-t6cqt                               0/2     ImagePullBackOff        0          79s
+cdp-release-dmx-55bbfd8cd9-skkg6                                  0/3     ImagePullBackOff        0          71s
+cdp-release-dps-gateway-1.0-5d58765b8-6p4ff                       0/3     ImagePullBackOff        0          87s
+cdp-release-dps-gateway-1.0-5d58765b8-jbfqj                       0/3     ImagePullBackOff        0          87s
+[root@ocpbastion ~]# oc describe pod cdp-release-alert-admin-service-957bfcb58-hz8g7 -n cdp | tail
+  Normal   Pulling         62s (x2 over 78s)  kubelet            Pulling image "nexus.cdpkvm.cldr:9999/cdppvc/cloudera_thirdparty/fluent-bit:v1.4.6-3896242"
+  Warning  Failed          62s (x2 over 78s)  kubelet            Failed to pull image "nexus.cdpkvm.cldr:9999/cdppvc/cloudera/monitoring-app:1.3.5-b30": rpc error: code = Unknown desc = error pinging docker registry nexus.cdpkvm.cldr:9999: Get "https://nexus.cdpkvm.cldr:9999/v2/": x509: certificate signed by unknown authority
+  Warning  Failed          62s (x2 over 78s)  kubelet            Error: ErrImagePull
+  Normal   Pulling         62s (x2 over 78s)  kubelet            Pulling image "nexus.cdpkvm.cldr:9999/cdppvc/cloudera/monitoring-app:1.3.5-b30"
+  Warning  Failed          62s (x2 over 78s)  kubelet            Failed to pull image "nexus.cdpkvm.cldr:9999/cdppvc/cloudera_thirdparty/fluent-bit:v1.4.6-3896242": rpc error: code = Unknown desc = error pinging docker registry nexus.cdpkvm.cldr:9999: Get "https://nexus.cdpkvm.cldr:9999/v2/": x509: certificate signed by unknown authority
+  Warning  Failed          62s (x2 over 78s)  kubelet            Error: ErrImagePull
+  Normal   BackOff         49s (x3 over 78s)  kubelet            Back-off pulling image "nexus.cdpkvm.cldr:9999/cdppvc/cloudera/monitoring-app:1.3.5-b30"
+  Warning  Failed          49s (x3 over 78s)  kubelet            Error: ImagePullBackOff
+  Normal   BackOff         49s (x3 over 78s)  kubelet            Back-off pulling image "nexus.cdpkvm.cldr:9999/cdppvc/cloudera_thirdparty/fluent-bit:v1.4.6-3896242"
+  Warning  Failed          49s (x3 over 78s)  kubelet            Error: ImagePullBackOff
+  
+  
+https://docs.openshift.com/container-platform/4.7/cicd/builds/setting-up-trusted-ca.html
+
+
+[root@ocpbastion ~]# oc create configmap registry-cas -n openshift-config --from-file=nexus.cdpkvm.cldr..9999=/root/nexus.crt 
+configmap/registry-cas created
+[root@ocpbastion ~]# oc patch image.config.openshift.io/cluster --patch '{"spec":{"additionalTrustedCA":{"name":"registry-cas"}}}' --type=merge
+image.config.openshift.io/cluster patched
+
+
+[root@ocpbastion ~]# oc get pvc
+NAME                                                   STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS                  AGE
+cdp-release-prometheus-server                          Bound    pvc-63b9d337-d7c1-4051-b4c5-e46949affd0d   10Gi       RWO            ocs-storagecluster-ceph-rbd   23m
+logs                                                   Bound    pvc-2c623b62-e90b-40b2-92c5-e4343528885a   20Gi       RWO            ocs-storagecluster-ceph-rbd   23m
+storage-volume-cdp-release-prometheus-alertmanager-0   Bound    pvc-e3e0ac29-70b1-445e-80b3-b7a92a8f1923   2Gi        RWO            ocs-storagecluster-ceph-rbd   23m
+storage-volume-cdp-release-prometheus-alertmanager-1   Bound    pvc-93b032f5-2115-4c92-b77c-940458d39412   2Gi        RWO            ocs-storagecluster-ceph-rbd   10m
+
+
+CDW:
+
+[root@ocpbastion ~]# oc -n shared-services get pods
+NAME                                    READY   STATUS    RESTARTS   AGE
+log-router-g787n                        2/2     Running   0          55s
+log-router-q8j6c                        2/2     Running   0          55s
+log-router-xfrbt                        2/2     Running   0          55s
+openshift-idling-controller-manager-0   1/1     Running   0          54s
+
+
+
+
+https://access.redhat.com/documentation/en-us/red_hat_openshift_container_storage/4.6/html/deploying_openshift_container_storage_using_bare_metal_infrastructure/deploy-using-local-storage-devices-bm#installing-local-storage-operator_rhocs
+
+[root@ocpbastion ~]# oc -n warehouse-1656305490-mgc9 get pvc
+No resources found in warehouse-1656305490-mgc9 namespace.
+[root@ocpbastion ~]# oc -n warehouse-1656305490-mgc9 get pods
+NAME                    READY   STATUS    RESTARTS   AGE
+das-event-processor-0   1/1     Running   0          8m23s
+metastore-0             1/1     Running   0          8m23s
+metastore-1             1/1     Running   0          5m54s
+
+
+
+[root@ocpbastion ~]# oc get sc
+NAME                                    PROVISIONER                             RECLAIMPOLICY   VOLUMEBINDINGMODE      ALLOWVOLUMEEXPANSION   AGE
+cdw-disk                                kubernetes.io/no-provisioner            Delete          WaitForFirstConsumer   false                  2m9s
+ocs-storagecluster-ceph-rbd (default)   openshift-storage.rbd.csi.ceph.com      Delete          Immediate              true                   24h
+ocs-storagecluster-ceph-rgw             openshift-storage.ceph.rook.io/bucket   Delete          Immediate              false                  24h
+ocs-storagecluster-cephfs               openshift-storage.cephfs.csi.ceph.com   Delete          Immediate              true                   24h
+openshift-storage.noobaa.io             openshift-storage.noobaa.io/obc         Delete          Immediate              false                  24h
+vdb                                     kubernetes.io/no-provisioner            Delete          WaitForFirstConsumer   false                  24h
+
+[root@ocpbastion ~]# oc get pv | head -1; oc get pv | grep local
+NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS      CLAIM                                                                                        STORAGECLASS                  REASON   AGE
+local-pv-12e7ab5                           400Gi      RWO            Delete           Available                                                                                                cdw-disk                               2m33s
+local-pv-17bf8fbc                          300Gi      RWO            Delete           Bound       openshift-storage/ocs-deviceset-vdb-0-data-2slfmj                                            vdb                                    24h
+local-pv-33a6a00a                          400Gi      RWO            Delete           Available                                                                                                cdw-disk                               2m34s
+local-pv-62cdcca                           300Gi      RWO            Delete           Bound       openshift-storage/ocs-deviceset-vdb-0-data-06dblw                                            vdb                                    24h
+local-pv-abb1e063                          400Gi      RWO            Delete           Available                                                                                                cdw-disk                               2m34s
+local-pv-aca516bf                          300Gi      RWO            Delete           Bound       openshift-storage/ocs-deviceset-vdb-0-data-1t74g8                                            vdb                                    24h
+
+
+[root@ocpbastion ~]# oc describe pv local-pv-12e7ab5
+Name:              local-pv-12e7ab5
+Labels:            storage.openshift.com/local-volume-owner-name=cdw-localdisk-each-worker
+                   storage.openshift.com/local-volume-owner-namespace=openshift-local-storage
+Annotations:       pv.kubernetes.io/provisioned-by: local-volume-provisioner-master01.ocp4.cdpkvm.cldr-4603dd1e-328f-46b2-b086-48f98ec5d9e7
+Finalizers:        [kubernetes.io/pv-protection]
+StorageClass:      cdw-disk
+Status:            Available
+Claim:             
+Reclaim Policy:    Delete
+Access Modes:      RWO
+VolumeMode:        Filesystem
+Capacity:          400Gi
+Node Affinity:     
+  Required Terms:  
+    Term 0:        kubernetes.io/hostname in [master01.ocp4.cdpkvm.cldr]
+Message:           
+Source:
+    Type:  LocalVolume (a persistent volume backed by local storage on a node)
+    Path:  /mnt/local-storage/cdw-disk/vdc
+Events:    <none>
+
+
+
+
+provision hive (1 executor):
+
+[root@ocpbastion ~]# oc -n compute-1656330332-ph2j get pods
+NAME                             READY   STATUS    RESTARTS   AGE
+das-webapp-0                     1/1     Running   0          2m43s
+hiveserver2-0                    1/1     Running   0          2m43s
+huebackend-0                     1/1     Running   0          2m43s
+huefrontend-6bcbb8fdfb-8kb7s     1/1     Running   0          2m43s
+query-coordinator-0-0            1/1     Running   0          2m32s
+query-executor-0-0               1/1     Running   0          2m32s
+standalone-compute-operator-0    1/1     Running   0          2m43s
+usage-monitor-564fdcdbcc-mbgmc   1/1     Running   0          2m43s
+
+[root@ocpbastion ~]# oc -n compute-1656330332-ph2j get pvc
+NAME                                                  STATUS   VOLUME              CAPACITY   ACCESS MODES   STORAGECLASS   AGE
+query-executor-1656330358-volume-query-executor-0-0   Bound    local-pv-abb1e063   400Gi      RWO            cdw-disk       2m34s
+
+
+[root@ocpbastion ~]# oc -n compute-1656330332-ph2j describe pod query-executor-0-0 | grep Node:
+Node:         master03.ocp4.cdpkvm.cldr/10.15.4.184
+
+[root@ocpbastion ~]# oc describe pv local-pv-abb1e063 | grep master
+                   pv.kubernetes.io/provisioned-by: local-volume-provisioner-master03.ocp4.cdpkvm.cldr-43054c69-a851-47c4-a3c3-b7d2b74d8a2e
+    Term 0:        kubernetes.io/hostname in [master03.ocp4.cdpkvm.cldr]
+
+[root@ocpbastion ~]# oc describe pv local-pv-abb1e063 | grep hostname
+    Term 0:        kubernetes.io/hostname in [master03.ocp4.cdpkvm.cldr]
+    
+    
+provision impala (1 executor):
+
+[root@ocpbastion ~]# oc -n impala-1656330683-rm4v get pods
+NAME                                 READY   STATUS    RESTARTS   AGE
+catalogd-74869dbf89-ldrmh            1/1     Running   0          2m2s
+coordinator-0                        4/4     Running   0          2m2s
+coordinator-1                        3/4     Running   0          80s
+huebackend-0                         2/2     Running   0          2m2s
+huefrontend-74c45775c-zz2lv          1/1     Running   0          2m2s
+impala-autoscaler-5b484b9fb7-znsxw   1/1     Running   0          2m1s
+impala-executor-000-0                1/1     Running   0          2m2s
+statestored-694d8b5fbb-529tp         1/1     Running   0          2m2s
+usage-monitor-755869884-ww6cn        1/1     Running   0          2m2s
+
+[root@ocpbastion ~]# oc -n impala-1656330683-rm4v get pvc
+NAME                                         STATUS   VOLUME              CAPACITY   ACCESS MODES   STORAGECLASS   AGE
+scratch-cache-volume-coordinator-0           Bound    local-pv-abb1e063   400Gi      RWO            cdw-disk       9s
+scratch-cache-volume-impala-executor-000-0   Bound    local-pv-33a6a00a   400Gi      RWO            cdw-disk       9s
+[root@ocpbastion ~]# oc ^C
+[root@ocpbastion ~]# oc -n impala-1656330683-rm4v describe pod coordinator-0 | grep Node:
+Node:         master03.ocp4.cdpkvm.cldr/10.15.4.184
+[root@ocpbastion ~]# oc describe pv local-pv-abb1e063 | grep hostname
+    Term 0:        kubernetes.io/hostname in [master03.ocp4.cdpkvm.cldr]
+[root@ocpbastion ~]# oc -n impala-1656330683-rm4v describe pod impala-executor-000-0 | grep Node:
+Node:         master02.ocp4.cdpkvm.cldr/10.15.4.183
+[root@ocpbastion ~]# oc describe pv local-pv-33a6a00a | grep hostname
+    Term 0:        kubernetes.io/hostname in [master02.ocp4.cdpkvm.cldr]
+[root@ocpbastion ~]# oc get sc | head -1 ; oc get sc | grep cdw-disk
+NAME                                    PROVISIONER                             RECLAIMPOLICY   VOLUMEBINDINGMODE      ALLOWVOLUMEEXPANSION   AGE
+cdw-disk                                kubernetes.io/no-provisioner            Delete          WaitForFirstConsumer   false                  53s
+[root@ocpbastion ~]# ssh core@master03.ocp4.cdpkvm.cldr
+Red Hat Enterprise Linux CoreOS 47.84.202206080457-0
+  Part of OpenShift 4.7, RHCOS is a Kubernetes native operating system
+  managed by the Machine Config Operator (`clusteroperator/machine-config`).
+
+WARNING: Direct SSH access to machines is not recommended; instead,
+make configuration changes via `machineconfig` objects:
+  https://docs.openshift.com/container-platform/4.7/architecture/architecture-rhcos.html
+
+---
+Last login: Mon Jun 27 11:27:34 2022 from 10.15.4.189
+[core@master03 ~]$ ll /mnt/local-storage/
+total 0
+drwxr-xr-x. 2 root root 17 Jun 27 08:41 cdw-disk
+drwxr-xr-x. 2 root root 17 Jun 26 15:18 vdb
+[core@master03 ~]$ ll /mnt/local-storage/cdw-disk
+total 0
+lrwxrwxrwx. 1 root root 8 Jun 27 08:41 vdc -> /dev/vdc                                             cdw-disk                               11m
+
+
+[root@ocpbastion ~]# oc get sc | head -1 ; oc get sc | grep cdw-disk
+NAME                                    PROVISIONER                             RECLAIMPOLICY   VOLUMEBINDINGMODE      ALLOWVOLUMEEXPANSION   AGE
+cdw-disk                                kubernetes.io/no-provisioner            Delete          WaitForFirstConsumer   false                  53s
+
+
+Add new disk in cdw-disk in local storage operator
+
+
+[root@ocpbastion ~]# ssh core@master02.ocp4.cdpkvm.cldr
+Red Hat Enterprise Linux CoreOS 47.84.202206080457-0
+  Part of OpenShift 4.7, RHCOS is a Kubernetes native operating system
+  managed by the Machine Config Operator (`clusteroperator/machine-config`).
+
+WARNING: Direct SSH access to machines is not recommended; instead,
+make configuration changes via `machineconfig` objects:
+  https://docs.openshift.com/container-platform/4.7/architecture/architecture-rhcos.html
+
+---
+Last login: Mon Jun 27 11:27:22 2022 from 10.15.4.189
+[core@master02 ~]$ lsblk
+NAME   MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+loop0    7:0    0  300G  0 loop 
+rbd0   251:0    0    2G  0 disk /var/lib/kubelet/pods/0bd4e204-3a6f-457f-8b05-68b4ae4b59a5/volumes/kubernetes.io~csi/pvc-8dfd9e8b-4ce5-4b9d-aa35-04ef516ca124/
+rbd1   251:16   0    2G  0 disk /var/lib/kubelet/pods/bc1f562c-de29-48d8-92d5-55e73db4cbf3/volumes/kubernetes.io~csi/pvc-1aa5ade9-5ace-4058-a074-957abf8aaaaa/
+rbd2   251:32   0   20G  0 disk /var/lib/kubelet/pods/e04b26fe-229b-4fec-b056-4cd67c9950a1/volumes/kubernetes.io~csi/pvc-cfa677f6-5fd3-4d96-a5b5-dda4162a36f5/
+vda    252:0    0  100G  0 disk 
+|-vda1 252:1    0    1M  0 part 
+|-vda2 252:2    0  127M  0 part 
+|-vda3 252:3    0  384M  0 part /boot
+`-vda4 252:4    0 99.5G  0 part /sysroot
+vdb    252:16   0  300G  0 disk 
+vdc    252:32   0  400G  0 disk 
+vdd    252:48   0  200G  0 disk 
+[core@master02 ~]$ ll /mnt/local-storage/
+total 0
+drwxr-xr-x. 2 root root 17 Jun 27 08:41 cdw-disk
+drwxr-xr-x. 2 root root 17 Jun 26 15:17 vdb
+[core@master02 ~]$ ll /mnt/local-storage/cdw-disk/
+total 0
+lrwxrwxrwx. 1 root root 8 Jun 27 08:41 vdc -> /dev/vdc
+
+
+[core@master02 ~]$ ll /mnt/local-storage/cdw-disk/
+total 0
+lrwxrwxrwx. 1 root root 8 Jun 27 08:41 vdc -> /dev/vdc
+lrwxrwxrwx. 1 root root 8 Jun 27 12:00 vdd -> /dev/vdd
+
+[root@ocpbastion ~]# oc get pv | head -1; oc get pv | grep local
+NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS      CLAIM                                                                                        STORAGECLASS                  REASON   AGE
+local-pv-12e7ab5                           400Gi      RWO            Delete           Available                                                                                                cdw-disk                               5m59s
+local-pv-17bf8fbc                          300Gi      RWO            Delete           Bound       openshift-storage/ocs-deviceset-vdb-0-data-2slfmj                                            vdb                                    25h
+local-pv-33a6a00a                          400Gi      RWO            Delete           Available                                                                                                cdw-disk                               6m40s
+local-pv-62cdcca                           300Gi      RWO            Delete           Bound       openshift-storage/ocs-deviceset-vdb-0-data-06dblw                                            vdb                                    25h
+local-pv-abb1e063                          400Gi      RWO            Delete           Available                                                                                                cdw-disk                               6m10s
+local-pv-aca516bf                          300Gi      RWO            Delete           Bound       openshift-storage/ocs-deviceset-vdb-0-data-1t74g8                                            vdb                                    25h
+local-pv-c8fe6eea                          200Gi      RWO            Delete           Available                                                                                                cdw-disk                               85s
+local-pv-d30bd8ac                          200Gi      RWO            Delete           Available                                                                                                cdw-disk                               77s
+local-pv-dc533915                          200Gi      RWO            Delete           Available                                                                                                cdw-disk                               66s
+
+
+impala 4 executor:
+
+[root@ocpbastion ~]# oc -n impala-1656333286-nrm8 get pods
+NAME                                READY   STATUS    RESTARTS   AGE
+catalogd-567f684bcb-4dxph           1/1     Running   0          80s
+coordinator-0                       4/4     Running   0          80s
+huebackend-0                        2/2     Running   0          80s
+huefrontend-7c765bf44d-47dkq        1/1     Running   0          80s
+impala-autoscaler-6c7564d7f-lpndc   1/1     Running   0          80s
+impala-executor-000-0               1/1     Running   0          80s
+impala-executor-000-1               1/1     Running   0          80s
+impala-executor-000-2               1/1     Running   0          80s
+impala-executor-000-3               1/1     Running   0          80s
+statestored-f9d6b4bb7-hhk65         1/1     Running   0          80s
+usage-monitor-8677878c4b-q5hx8      1/1     Running   0          80s
+
+[root@ocpbastion ~]# oc -n impala-1656333286-nrm8 get pvc
+NAME                                         STATUS   VOLUME              CAPACITY   ACCESS MODES   STORAGECLASS   AGE
+scratch-cache-volume-coordinator-0           Bound    local-pv-abb1e063   400Gi      RWO            cdw-disk       103s
+scratch-cache-volume-impala-executor-000-0   Bound    local-pv-d30bd8ac   200Gi      RWO            cdw-disk       103s
+scratch-cache-volume-impala-executor-000-1   Bound    local-pv-dc533915   200Gi      RWO            cdw-disk       103s
+scratch-cache-volume-impala-executor-000-2   Bound    local-pv-c8fe6eea   200Gi      RWO            cdw-disk       103s
+scratch-cache-volume-impala-executor-000-3   Bound    local-pv-33a6a00a   400Gi      RWO            cdw-disk       103s
+
+
+[root@ocpbastion ~]# oc describe pv local-pv-33a6a00a | grep hostname
+    Term 0:        kubernetes.io/hostname in [master02.ocp4.cdpkvm.cldr]
+
+[root@ocpbastion ~]# oc describe pv local-pv-dc533915 | grep hostname
+    Term 0:        kubernetes.io/hostname in [master02.ocp4.cdpkvm.cldr]
+    
+[root@ocpbastion ~]# oc -n impala-1656333286-nrm8 describe pod impala-executor-000-1 | grep Node:
+Node:         master02.ocp4.cdpkvm.cldr/10.15.4.183
+
+[root@ocpbastion ~]# oc -n impala-1656333286-nrm8 describe pod impala-executor-000-3 | grep Node:
+Node:         master02.ocp4.cdpkvm.cldr/10.15.4.183
+
+
+[root@ocpbastion ~]# oc -n impala-1656333286-nrm8 exec -ti impala-executor-000-1 -- /bin/sh
+sh-4.2$ lsblk
+NAME   MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+rbd0   251:0    0    2G  0 disk 
+vdd    252:48   0  200G  0 disk /opt/impala/scratch
+vdb    252:16   0  300G  0 disk 
+rbd1   251:16   0    2G  0 disk 
+loop0    7:0    0  300G  0 loop 
+vdc    252:32   0  400G  0 disk 
+vda    252:0    0  100G  0 disk 
+|-vda4 252:4    0 99.5G  0 part /opt/impala/logs/minidumps
+|-vda2 252:2    0  127M  0 part 
+|-vda3 252:3    0  384M  0 part 
+`-vda1 252:1    0    1M  0 part 
+rbd2   251:32   0   20G  0 disk 
+
+sh-4.2$ ls -l /opt/impala/scratch/
+total 0
+-rw-r--r--. 1 hive 1000800000 0 Jun 27 12:35 impala-cache-file-524e9102ab341ef1:1917da93c3905ab4
+drwxr-sr-x. 2 hive 1000800000 6 Jun 27 12:35 impala-scratch
+
+
+[root@ocpbastion ~]# oc -n impala-1656333286-nrm8 exec -ti impala-executor-000-3 -- /bin/sh
+sh-4.2$ lsblk
+NAME   MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+rbd0   251:0    0    2G  0 disk 
+vdd    252:48   0  200G  0 disk 
+vdb    252:16   0  300G  0 disk 
+rbd1   251:16   0    2G  0 disk 
+loop0    7:0    0  300G  0 loop 
+vdc    252:32   0  400G  0 disk /opt/impala/scratch
+vda    252:0    0  100G  0 disk 
+|-vda4 252:4    0 99.5G  0 part /opt/impala/logs/minidumps
+|-vda2 252:2    0  127M  0 part 
+|-vda3 252:3    0  384M  0 part 
+`-vda1 252:1    0    1M  0 part 
+rbd2   251:32   0   20G  0 disk 
+sh-4.2$ ls -l /opt/impala/scratch
+total 0
+-rw-r--r--. 1 hive 1000800000 0 Jun 27 12:46 impala-cache-file-154c4655952ade0d:c400e0289decbc93
+drwxr-sr-x. 2 hive 1000800000 6 Jun 27 12:46 impala-scratch
+
