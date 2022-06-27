@@ -1,0 +1,334 @@
+
+https://learn.hashicorp.com/tutorials/vault/raft-deployment-guide?in=vault/raft
+
+yum install -y yum-utils
+
+yum-config-manager --add-repo https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
+
+yum -y install vault
+
+[root@nfs1 ~]# more createcert.sh 
+if [ "$#" -ne 1 ]
+then
+  echo "Error: No domain name argument provided"
+  echo "Usage: Provide a domain name as an argument"
+  exit 1
+fi
+
+DOMAIN=$1
+
+# Create root CA & Private key
+
+openssl req -x509 \
+            -sha256 -days 356 \
+            -nodes \
+            -newkey rsa:2048 \
+            -subj "/CN=${DOMAIN}/C=SG/L=Spore" \
+            -keyout hashirootCA.key -out hashirootCA.crt 
+
+# Generate Private key 
+
+openssl genrsa -out ${DOMAIN}.key 2048
+
+# Create csf conf
+
+cat > csr.conf <<EOF
+[ req ]
+default_bits = 2048
+prompt = no
+default_md = sha256
+req_extensions = req_ext
+distinguished_name = dn
+
+[ dn ]
+C = SG
+ST = Spore
+L = City
+CN = ${DOMAIN}
+
+[ req_ext ]
+subjectAltName = @alt_names
+
+[ alt_names ]
+DNS.1 = ${DOMAIN}
+IP.1 = 127.0.0.1
+IP.2 = 10.15.4.168
+
+EOF
+
+# create CSR request using private key
+
+openssl req -new -key ${DOMAIN}.key -out ${DOMAIN}.csr -config csr.conf
+
+# Create a external config file for the certificate
+
+cat > cert.conf <<EOF
+
+authorityKeyIdentifier=keyid,issuer
+basicConstraints=CA:FALSE
+keyUsage = digitalSignature, nonRepudiation, keyEncipherment, dataEncipherment
+subjectAltName = @alt_names
+
+[alt_names]
+DNS.1 = ${DOMAIN}
+
+EOF
+
+# Create SSl with self signed CA
+
+openssl x509 -req \
+    -in ${DOMAIN}.csr \
+    -CA hashirootCA.crt -CAkey hashirootCA.key \
+    -CAcreateserial -out ${DOMAIN}.crt \
+    -days 365 \
+    -sha256 -extfile cert.conf
+    
+# ./createvaultcert.sh vaultnode.cdpkvm.cldr
+Generating a 2048 bit RSA private key
+......................................+++
+..............+++
+writing new private key to 'hashirootCA.key'
+-----
+Generating RSA private key, 2048 bit long modulus
+............................+++
+.......+++
+e is 65537 (0x10001)
+Signature ok
+subject=/C=SG/ST=Spore/L=City/CN=vaultnode.cdpkvm.cldr
+Getting CA Private Key
+
+[root@vaultnode ~]# ls -lt
+total 52
+-rw-r--r--  1 root root 1245 Jun 26 19:58 vaultnode.cdpkvm.cldr.crt
+-rw-r--r--  1 root root   17 Jun 26 19:58 hashirootCA.srl
+-rw-r--r--  1 root root  214 Jun 26 19:58 cert.conf
+-rw-r--r--  1 root root 1054 Jun 26 19:58 vaultnode.cdpkvm.cldr.csr
+-rw-r--r--  1 root root  294 Jun 26 19:58 csr.conf
+-rw-r--r--  1 root root 1675 Jun 26 19:58 vaultnode.cdpkvm.cldr.key
+-rw-r--r--  1 root root 1204 Jun 26 19:58 hashirootCA.crt
+-rw-r--r--  1 root root 1704 Jun 26 19:58 hashirootCA.key
+-rwxrwxrwx  1 root root 1383 Jun 26 19:57 createvaultcert.sh
+
+[root@vaultnode ~]# cp vaultnode.cdpkvm.cldr.crt /opt/vault/tls/
+[root@vaultnode ~]# cp hashirootCA.crt /opt/vault/tls/
+[root@vaultnode ~]# chown root:root /opt/vault/tls/vaultnode.cdpkvm.cldr.crt /opt/vault/tls/hashirootCA.crt
+[root@vaultnode ~]# cp vaultnode.cdpkvm.cldr.key /opt/vault/tls/
+[root@vaultnode ~]# chown root:vault /opt/vault/tls/vaultnode.cdpkvm.cldr.key
+[root@vaultnode ~]# chmod 0644 /opt/vault/tls/vaultnode.cdpkvm.cldr.crt /opt/vault/tls/hashirootCA.crt
+[root@vaultnode ~]# chmod 0640 /opt/vault/tls/vaultnode.cdpkvm.cldr.key
+
+
+
+[root@vaultnode ~]# cp /etc/vault.d/vault.hcl /etc/vault.d/vault.hcl-orig
+
+[root@vaultnode ~]# vi /etc/vault.d/vault.hcl
+ui = true
+cluster_addr  = "https://10.15.4.188:8201"
+api_addr      = "https://10.15.4.188:8200"
+#mlock = true
+disable_mlock = true
+
+storage "file" {
+  path = "/opt/vault/data"
+}
+
+# HTTPS listener
+listener "tcp" {
+  address       = "0.0.0.0:8200"
+  tls_cert_file = "/opt/vault/tls/vaultnode.cdpkvm.cldr.crt"
+  tls_key_file  = "/opt/vault/tls/vaultnode.cdpkvm.cldr.key"
+  tls_client_ca_file = "/opt/vault/tls/hashirootCA.crt"
+}
+
+[root@vaultnode ~]# systemctl enable vault.service
+Created symlink from /etc/systemd/system/multi-user.target.wants/vault.service to /usr/lib/systemd/system/vault.service.
+[root@vaultnode ~]# systemctl start vault.service
+[root@vaultnode ~]# systemctl status vault.service
+● vault.service - "HashiCorp Vault - A tool for managing secrets"
+   Loaded: loaded (/usr/lib/systemd/system/vault.service; enabled; vendor preset: disabled)
+   Active: active (running) since Sun 2022-06-26 20:07:03 +08; 7s ago
+     Docs: https://www.vaultproject.io/docs/
+ Main PID: 7531 (vault)
+   CGroup: /system.slice/vault.service
+           └─7531 /usr/bin/vault server -config=/etc/vault.d/vault.hcl
+
+Jun 26 20:07:03 vaultnode.cdpkvm.cldr vault[7531]: Log Level: info
+Jun 26 20:07:03 vaultnode.cdpkvm.cldr vault[7531]: Mlock: supported: true, enabled: false
+Jun 26 20:07:03 vaultnode.cdpkvm.cldr vault[7531]: Recovery Mode: false
+Jun 26 20:07:03 vaultnode.cdpkvm.cldr vault[7531]: Storage: file
+Jun 26 20:07:03 vaultnode.cdpkvm.cldr vault[7531]: Version: Vault v1.11.0, built 2022-06-17T15:48:44Z
+Jun 26 20:07:03 vaultnode.cdpkvm.cldr vault[7531]: Version Sha: ea296ccf58507b25051bc0597379c467046eb2f1
+Jun 26 20:07:03 vaultnode.cdpkvm.cldr systemd[1]: Started "HashiCorp Vault - A tool for managing secrets".
+Jun 26 20:07:03 vaultnode.cdpkvm.cldr vault[7531]: ==> Vault server started! Log data will stream in below:
+Jun 26 20:07:03 vaultnode.cdpkvm.cldr vault[7531]: 2022-06-26T20:07:03.031+0800 [INFO]  proxy environment: http_proxy="" https_proxy="" no_proxy=""
+Jun 26 20:07:03 vaultnode.cdpkvm.cldr vault[7531]: 2022-06-26T20:07:03.033+0800 [INFO]  core: Initializing version history cache for core
+
+[root@vaultnode ~]# netstat -an | grep 820
+tcp        0      0 0.0.0.0:8200            0.0.0.0:*               LISTEN    
+
+
+
+[root@vaultnode ~]# vault status
+Error checking seal status: Get "https://127.0.0.1:8200/v1/sys/seal-status": x509: cannot validate certificate for 127.0.0.1 because it doesn't contain any IP SANs
+
+[root@vaultnode ~]# export VAULT_ADDR=https://vaultnode.cdpkvm.cldr:8200
+[root@vaultnode ~]# vault status
+Error checking seal status: Get "https://vaultnode.cdpkvm.cldr:8200/v1/sys/seal-status": x509: certificate signed by unknown authority
+[root@vaultnode ~]# curl -v "https://vaultnode.cdpkvm.cldr:8200/v1/sys/seal-status"
+* About to connect() to vaultnode.cdpkvm.cldr port 8200 (#0)
+*   Trying 10.15.4.188...
+* Connected to vaultnode.cdpkvm.cldr (10.15.4.188) port 8200 (#0)
+* Initializing NSS with certpath: sql:/etc/pki/nssdb
+*   CAfile: /etc/pki/tls/certs/ca-bundle.crt
+  CApath: none
+* Server certificate:
+* 	subject: CN=vaultnode.cdpkvm.cldr,L=City,ST=Spore,C=SG
+* 	start date: Jun 26 11:58:41 2022 GMT
+* 	expire date: Jun 26 11:58:41 2023 GMT
+* 	common name: vaultnode.cdpkvm.cldr
+* 	issuer: L=Spore,C=SG,CN=vaultnode.cdpkvm.cldr
+* NSS error -8179 (SEC_ERROR_UNKNOWN_ISSUER)
+* Peer's Certificate issuer is not recognized.
+* Closing connection 0
+curl: (60) Peer's Certificate issuer is not recognized.
+More details here: http://curl.haxx.se/docs/sslcerts.html
+
+curl performs SSL certificate verification by default, using a "bundle"
+ of Certificate Authority (CA) public keys (CA certs). If the default
+ bundle file isn't adequate, you can specify an alternate file
+ using the --cacert option.
+If this HTTPS server uses a certificate signed by a CA represented in
+ the bundle, the certificate verification probably failed due to a
+ problem with the certificate (it might be expired, or the name might
+ not match the domain name in the URL).
+If you'd like to turn off curl's verification of the certificate, use
+ the -k (or --insecure) option.
+ 
+ 
+[root@vaultnode ~]# openssl crl2pkcs7 -nocrl -certfile /etc/pki/tls/certs/ca-bundle.crt | openssl pkcs7 -print_certs | grep subject | wc -l
+127
+[root@vaultnode ~]# cp hashirootCA.crt /etc/pki/ca-trust/source/anchors/
+[root@vaultnode ~]# update-ca-trust extract
+[root@vaultnode ~]# openssl crl2pkcs7 -nocrl -certfile /etc/pki/tls/certs/ca-bundle.crt | openssl pkcs7 -print_certs | grep subject | wc -l
+128
+[root@vaultnode ~]# openssl crl2pkcs7 -nocrl -certfile /etc/pki/tls/certs/ca-bundle.crt | openssl pkcs7 -print_certs | grep subject | grep vaultnode
+subject=/CN=vaultnode.cdpkvm.cldr/C=SG/L=Spore
+
+[root@vaultnode ~]# curl -v "https://vaultnode.cdpkvm.cldr:8200/v1/sys/seal-status"
+* About to connect() to vaultnode.cdpkvm.cldr port 8200 (#0)
+*   Trying 10.15.4.188...
+* Connected to vaultnode.cdpkvm.cldr (10.15.4.188) port 8200 (#0)
+* Initializing NSS with certpath: sql:/etc/pki/nssdb
+*   CAfile: /etc/pki/tls/certs/ca-bundle.crt
+  CApath: none
+* NSS: client certificate not found (nickname not specified)
+* SSL connection using TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+* Server certificate:
+* 	subject: CN=vaultnode.cdpkvm.cldr,L=City,ST=Spore,C=SG
+* 	start date: Jun 26 11:58:41 2022 GMT
+* 	expire date: Jun 26 11:58:41 2023 GMT
+* 	common name: vaultnode.cdpkvm.cldr
+* 	issuer: L=Spore,C=SG,CN=vaultnode.cdpkvm.cldr
+> GET /v1/sys/seal-status HTTP/1.1
+> User-Agent: curl/7.29.0
+> Host: vaultnode.cdpkvm.cldr:8200
+> Accept: */*
+> 
+< HTTP/1.1 200 OK
+< Cache-Control: no-store
+< Content-Type: application/json
+< Strict-Transport-Security: max-age=31536000; includeSubDomains
+< Date: Sun, 26 Jun 2022 12:10:30 GMT
+< Content-Length: 205
+< 
+{"type":"shamir","initialized":false,"sealed":true,"t":0,"n":0,"progress":0,"nonce":"","version":"1.11.0","build_date":"2022-06-17T15:48:44Z","migration":false,"recovery_seal":false,"storage_type":"file"}
+* Connection #0 to host vaultnode.cdpkvm.cldr left intact
+
+
+
+[root@vaultnode ~]# vault status
+Key                Value
+---                -----
+Seal Type          shamir
+Initialized        false
+Sealed             true
+Total Shares       0
+Threshold          0
+Unseal Progress    0/0
+Unseal Nonce       n/a
+Version            1.11.0
+Build Date         2022-06-17T15:48:44Z
+Storage Type       file
+HA Enabled         false
+
+
+[root@vaultnode ~]# vault operator init
+Unseal Key 1: qCyfRZhpKkkCpXAHLPc28605LScab/Fo9YGOJqblMzRN
+Unseal Key 2: POnDdnb8RIds7WwnuIQVFfHC52J3+J8S7bmiupWuUPHH
+Unseal Key 3: ZktP0B0UHUquj+D0qJWOuAbPqt4pMJu6vrmWvHKtvKdk
+Unseal Key 4: IlFZxb0K6rUo/zigmMZsqJlb2GprMvIZQz+GIublrYKi
+Unseal Key 5: +YcoFVtqy+Ogj7YUc+suXMd0PNDL6tlSqgVIoGqPy9UU
+
+Initial Root Token: hvs.8APNSZlgrWGx0faVsYpRp8MB
+
+Vault initialized with 5 key shares and a key threshold of 3. Please securely
+distribute the key shares printed above. When the Vault is re-sealed,
+restarted, or stopped, you must supply at least 3 of these keys to unseal it
+before it can start servicing requests.
+
+Vault does not store the generated root key. Without at least 3 keys to
+reconstruct the root key, Vault will remain permanently sealed!
+
+It is possible to generate new unseal keys, provided you have a quorum of
+existing unseal keys shares. See "vault operator rekey" for more information.
+
+[root@vaultnode ~]# vault operator unseal
+Unseal Key (will be hidden): 
+Key                Value
+---                -----
+Seal Type          shamir
+Initialized        true
+Sealed             true
+Total Shares       5
+Threshold          3
+Unseal Progress    1/3
+Unseal Nonce       53aa399b-a5ae-ed7b-e394-910d8ac321b9
+Version            1.11.0
+Build Date         2022-06-17T15:48:44Z
+Storage Type       file
+HA Enabled         false
+[root@vaultnode ~]# vault operator unseal
+Unseal Key (will be hidden): 
+Key                Value
+---                -----
+Seal Type          shamir
+Initialized        true
+Sealed             true
+Total Shares       5
+Threshold          3
+Unseal Progress    2/3
+Unseal Nonce       53aa399b-a5ae-ed7b-e394-910d8ac321b9
+Version            1.11.0
+Build Date         2022-06-17T15:48:44Z
+Storage Type       file
+HA Enabled         false
+[root@vaultnode ~]# vault operator unseal
+Unseal Key (will be hidden): 
+Key             Value
+---             -----
+Seal Type       shamir
+Initialized     true
+Sealed          false
+Total Shares    5
+Threshold       3
+Version         1.11.0
+Build Date      2022-06-17T15:48:44Z
+Storage Type    file
+Cluster Name    vault-cluster-c2798ec9
+Cluster ID      8388b375-fa80-8419-23b3-7d344a74798c
+HA Enabled      false
+
+
+
+
+
