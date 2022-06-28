@@ -446,3 +446,96 @@ total 0
 -rw-r--r--. 1 hive 1000800000 0 Jun 27 12:46 impala-cache-file-154c4655952ade0d:c400e0289decbc93
 drwxr-sr-x. 2 hive 1000800000 6 Jun 27 12:46 impala-scratch
 
+
+
+ocpcml:
+
+[root@ocpbastion ~]# oc get pods
+NAME                                             READY   STATUS      RESTARTS   AGE
+api-75f7d749f-8r72d                              1/1     Running     0          6m54s
+cron-7bbfc48b5b-svxz2                            2/2     Running     0          6m54s
+db-0                                             2/2     Running     0          6m54s
+db-migrate-2.0.28-b66-9nj26                      0/1     Completed   0          6m44s
+ds-cdh-client-b8dd5d99-f5c7f                     3/3     Running     0          6m54s
+ds-operator-6f4c4c8957-wjjtk                     2/2     Running     1          6m54s
+ds-reconciler-7fccf5cbd9-nfcjv                   2/2     Running     0          6m54s
+ds-vfs-689c467d96-tttxv                          2/2     Running     0          6m54s
+feature-flags-69447f8575-2jjzz                   2/2     Running     0          6m54s
+fluentd-forwarder-5d855989fc-dxxvl               1/1     Running     0          6m54s
+hadoop-cli-7.2.10-hf1-3z0poka-bwjqt              0/1     Completed   0          4m46s
+hadoop-cli-7.2.11-hf4-62chh-sj7v8                0/1     Completed   0          4m46s
+hadoop-cli-7.2.8-hf1-v6yy0j-z7lpj                0/1     Completed   0          4m46s
+livelog-0                                        2/2     Running     0          6m54s
+livelog-publisher-8nptf                          2/2     Running     0          6m54s
+livelog-publisher-jb5ph                          2/2     Running     0          6m54s
+livelog-publisher-m87d9                          2/2     Running     0          6m54s
+model-metrics-77bd8c6575-f4j8w                   1/1     Running     3          6m54s
+model-metrics-db-0                               1/1     Running     0          6m54s
+model-proxy-f5ff968cd-czv2k                      2/2     Running     0          6m54s
+prometheus-postgres-exporter-6f785b7755-6j68b    1/1     Running     0          6m54s
+runtime-addon-trigger-2.0.28-b66-txfcj           0/1     Completed   0          6m44s
+runtime-initial-repo-inserter-2.0.28-b66-j2psv   0/1     Completed   0          6m44s
+runtime-manager-7775c48879-9kwgt                 2/2     Running     0          6m54s
+s2i-builder-7f4879fb78-22qgv                     2/2     Running     0          6m54s
+s2i-builder-7f4879fb78-nd7rs                     2/2     Running     0          6m54s
+s2i-builder-7f4879fb78-z4zqt                     2/2     Running     0          6m54s
+s2i-client-6f596848d8-kbkjb                      2/2     Running     0          6m54s
+s2i-git-server-0                                 2/2     Running     0          6m54s
+s2i-queue-0                                      2/2     Running     0          6m54s
+s2i-registry-auth-7556777cbf-7nfpf               2/2     Running     0          6m54s
+s2i-registry-c6787ccd-6rh4p                      2/2     Running     0          6m54s
+s2i-server-bb479d45b-h8ljs                       2/2     Running     0          6m54s
+secret-generator-0                               2/2     Running     0          6m54s
+spark247-13-hf2-nvcpz-p4bmw                      0/1     Completed   0          4m46s
+spark311-13-hf2-ft7g6a-nqtd6                     0/1     Completed   0          4m46s
+tcp-ingress-controller-69c976d9d9-ctpsw          2/2     Running     0          6m54s
+usage-reporter-6f67b66bd9-mm5df                  2/2     Running     0          6m54s
+web-66476566f9-2jjs5                             2/2     Running     0          6m54s
+web-66476566f9-n6lrc                             2/2     Running     0          6m54s
+web-66476566f9-t5dxg                             2/2     Running     0          6m54s
+[root@ocpbastion ~]# oc get pvc
+NAME                                    STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS                  AGE
+livelog-data-livelog-0                  Bound    pvc-4054e760-535c-4667-8820-6bbedde65022   1Ti        RWO            ocs-storagecluster-ceph-rbd   7m2s
+model-metrics-data-model-metrics-db-0   Bound    pvc-0b96f2d7-5341-4d55-8992-a4ced2aba6bb   100Gi      RWO            ocs-storagecluster-ceph-rbd   7m2s
+persist-dir-secret-generator-0          Bound    pvc-9a40c7cb-649b-4453-b377-e98f65316b3b   10Mi       RWO            ocs-storagecluster-ceph-rbd   7m2s
+postgres-data-versioned-db-0            Bound    pvc-c7142527-fcbf-47dd-b29e-570edee3bf2b   1Ti        RWO            ocs-storagecluster-ceph-rbd   7m2s
+projects-pvc                            Bound    projects-share-ws1                         1Ti        RWX                                          7m3s
+registry-pvc                            Bound    pvc-97381aea-f0b6-42a2-9638-883f9cc1fb5f   1Ti        RWO            ocs-storagecluster-ceph-rbd   7m3s
+s2i-git-server-repos-s2i-git-server-0   Bound    pvc-20671830-671c-4c76-9538-1ea5d083058a   1Ti        RWO            ocs-storagecluster-ceph-rbd   7m2s
+s2i-queue-pvc                           Bound    pvc-ee89ea8f-7a99-4f7b-9995-03c49b9a1e0c   2Gi        RWO            ocs-storagecluster-ceph-rbd   7m3s
+
+
+CDE:
+
+[root@ocpbastion ~]# oc -n dex-base-hqxd5d59 get pvc
+NAME               STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS                  AGE
+dex-base-db-pvc    Bound    pvc-55f1024a-c2b0-4a73-8370-1413ac7ac4cf   100Gi      RWO            ocs-storagecluster-ceph-rbd   95s
+dex-base-grafana   Bound    pvc-9fda6a03-06bd-4f8f-9313-84d5c11d2d0c   10Gi       RWO            ocs-storagecluster-ceph-rbd   95s
+[root@ocpbastion ~]# oc -n dex-base-hqxd5d59 get pods
+NAME                                           READY   STATUS    RESTARTS   AGE
+cdp-cde-embedded-db-0                          1/1     Running   0          97s
+dex-base-configs-manager-6c57c88f69-nwrqk      2/2     Running   0          97s
+dex-base-dex-downloads-5c9697dbb4-wm6l4        1/1     Running   0          97s
+dex-base-grafana-846c88d599-6xj59              1/1     Running   0          97s
+dex-base-hqxd5d59-controller-7bd8d95f4-rgb5p   1/1     Running   0          97s
+dex-base-knox-6779786dd5-6hz6t                 1/1     Running   0          97s
+dex-base-management-api-797bb8d8f5-nqsdg       1/1     Running   0          97s
+fluentd-forwarder-688cb7bc7b-xzbn8             1/1     Running   0          97s
+
+
+[root@ocpbastion ~]# oc -n dex-app-dzxzpmsh get pvc
+NAME                             STATUS    VOLUME   CAPACITY   ACCESS MODES   STORAGECLASS   AGE
+airflow-dags                     Pending                                      nfs            7s
+airflow-logs                     Pending                                      nfs            7s
+dex-app-dzxzpmsh-livystate-pvc   Pending                                      nfs            7s
+dex-app-dzxzpmsh-safari-pvc      Pending                                      nfs            7s
+dex-app-dzxzpmsh-storage-pvc     Pending                                      nfs            7s
+[root@ocpbastion ~]# oc -n dex-app-dzxzpmsh get pods
+NAME                                                  READY   STATUS    RESTARTS   AGE
+dex-app-dzxzpmsh-airflow-scheduler-5bd7f969cc-qncpq   0/1     Pending   0          15s
+dex-app-dzxzpmsh-airflow-web-76d8b987c9-2rssk         0/1     Pending   0          14s
+dex-app-dzxzpmsh-airflowapi-6877c7d55d-2gtl4          0/2     Pending   0          15s
+dex-app-dzxzpmsh-api-886b7df76-6gxvf                  0/1     Pending   0          15s
+dex-app-dzxzpmsh-livy-5f5b7d95db-nctdk                0/1     Pending   0          15s
+dex-app-dzxzpmsh-safari-957b79f49-bs7hq               0/1     Pending   0          15s
+
