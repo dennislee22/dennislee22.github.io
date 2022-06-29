@@ -1,9 +1,9 @@
 ---
 layout: default
 title: Embedded Container Service
-parent: Installation
-grand_parent: CDP Private Cloud
-nav_order: 5
+parent: CDP Private Cloud
+nav_order: 6
+
 ---
 
 # Embedded Container Service (ECS) Installation
