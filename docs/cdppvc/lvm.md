@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Deploy LVM Disk
-parent: CDP PvC ECS: Day-2
+parent: "CDP PvC ECS: Day-2"
 grand_parent: CDP Private Cloud
 nav_order: 2
 ---
