@@ -3,7 +3,7 @@ layout: default
 title: "Post-Deployment Configuration"
 parent: "Base Cluster (Data Lake)"
 grand_parent: CDP Private Cloud
-nav_order: 5
+nav_order: 2
 ---
 
 # CDP PvC Base Configuration
