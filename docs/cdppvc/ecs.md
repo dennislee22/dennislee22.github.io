@@ -3,7 +3,6 @@ layout: default
 title: Embedded Container Service
 parent: CDP Private Cloud
 nav_order: 6
-
 ---
 
 # Embedded Container Service (ECS) Installation
