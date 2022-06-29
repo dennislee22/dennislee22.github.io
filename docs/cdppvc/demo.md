@@ -8,7 +8,7 @@ nav_order: 1
 
 
 ## Demo Architecture
-- The next subtopics will describe the end-to-end CDP Private Cloud installation procedure using the following demo architecture diagram. 
+- The next subtopics will describe the end-to-end CDP Private Cloud installation procedure using the following demo/proof-of-concept architecture diagram. 
 
     ![](../../assets/images/logicalarch.png)
 
