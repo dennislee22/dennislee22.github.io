@@ -1,9 +1,9 @@
 ---
+
 layout: default
-title: Prerequisites
-parent: Installation
-grand_parent: CDP Private Cloud
-nav_order: 1
+title: Installation Prerequisites
+parent: CDP Private Cloud
+nav_order: 2
 
 ---
 
@@ -14,31 +14,40 @@ CDP Private Cloud solution require direct integration with some 3rd party/extern
 
 ![](../../assets/images/3partydiagram.png)
 
+This article and its sub-articles explain the requirements as well as the step-by-step procedure to deploy CDP Private Cloud solution with ECS platform based on the following software versions.
+
+| Software       | Version         |
+|:-------------|:------------------|
+| CDP Base           | 7.1.7 `rel. May 2022`  | 
+| Cloudera Manager   | 7.5.5 `rel. May 2022`  | 
+| CDP Data Services  | 1.3.4 `rel. May 2022`  | 
+
 The following prerequisites need to be prepared prior to installing the CDP Private Cloud solution with ECS platform. The CDP Private Cloud solution with Openshift platform has a slightly different requirements which will not be covered in this article.
 
 - TOC
 {:toc}
 
 ---
+## Openshift
 
-## Cloudera Subscription
+### Cloudera Subscription
 
 - Obtain a valid product subscription from Cloudera. Cloudera Manager requires a valid license to install accordingly. 
 
-## Cloudera Services
+### Cloudera Services
 
 - The minimum CDP PvC Base services and its dependencies to install CML, CDW and CDE are illustrated in the following table.
 
     ![](../../assets/images/base_svc_table1.png)
     
-## Hardware
+### Hardware
     
 - Hardware requirements are determined by specific CDP services to be installed in both CDP PvC Base cluster and ECS platform. For instance, CDP PvC Base services such as [HDFS](https://docs.cloudera.com/cdp-private-cloud-upgrade/latest/release-guide/topics/cdpdc-hdfs.html), [Zookeeper](https://docs.cloudera.com/cdp-private-cloud-upgrade/latest/release-guide/topics/cdpdc-zookeeper.html) and [Ozone](https://docs.cloudera.com/cdp-private-cloud-upgrade/latest/release-guide/topics/cdpdc-ozone.html) have dedicated storage requirements. 
 - Longhorn serves as the distributed block storage subsystem to persist data for the containers in the ECS platform. Each ECS node needs to be equipped with the direct-attached SSD/NVMe disk for the [Longhorn storage](https://longhorn.io/docs/1.2.4/best-practices/#minimum-recommended-hardware). Longhorn could only use a single volume disk per node and thereby [LVM]({{ site.baseurl }}{% link docs/cdppvc/lvm.md %}) is recommended to be used for exposing a single volume backed by one/many physical disk.
 - CDW requires locally attached SCSI device (SSD/NVMe) in each ECS worker/agent node.
 
 
-## Host Settings
+### Host Settings
 
 - The supported OS and the filesystems are listed [here](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/installation/topics/cdpdc-os-requirements.html).
 - [JDK](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/installation/topics/cdpdc-java-requirements.html) must be installed in each host.
@@ -61,24 +70,24 @@ The following prerequisites need to be prepared prior to installing the CDP Priv
     # yum install iscsi-initiator-utils
     ```
 
-## DNS Server
+### DNS Server
 
 - An external DNS server must contain the forward and reverse zones of the company domain name. The external DNS server must be able to resolve the hostname of all CDP PvC Base hosts, ECS nodes and the 3rd party components (includes Kerberos, LDAP server, external database, NFS server) and perform reverse DNS lookup. 
 - Wildcard DNS entry must be configured; e.g. `*.apps.ecs1.cdpkvm.cldr`. This helps to reduce Day-2 operational task to set separate DNS entry for each newly provisioned external-facing application/service.
 
 ![](../../assets/images/wildcarddns.png)
 
-## Kerberos + LDAP Server + Certificate
+### Kerberos + LDAP Server + Certificate
 
 - An [external Kerberos server](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/security-kerberos-authentication/topics/cm-security-kerberos-enabling-intro.html) and the Kerberos key distribution center (KDC) (with a realm established) must be available to provide authentication to CDP services, users and hosts.
-- An external LDAP-compliant identity/directory server is required to enable the CDP Private Cloud solution to look up for the user accounts and groups in the directory.
+- An external secured LDAP-compliant identity/directory server (ldaps) is required to enable the CDP Private Cloud solution to look up for the user accounts and groups in the directory.
 - [Auto-TLS](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/security-encrypting-data-in-transit/topics/cm-security-auto-tls.html) should be enabled using certificates created and managed by a Cloudera Manager certificate authority (CA), or certificates signed by a trusted public CA or your own internal CA. Prepare the certificate of your choice.
 
-## External NFS
+### External NFS
 
 - CML requires external [NFS server](https://docs.cloudera.com/machine-learning/1.3.4/private-cloud-requirements/topics/ml-pvc-external-nfs-server.html) to store the project files and directories. NFS version 4.1 must be supported.
 
-## Relational Database
+### Relational Database
 
 - The database requirements is described in this [link](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/installation/topics/cdpdc-database-requirements.html). 
 - The reference settings of PostgreSQL database can be obtained [here](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/installation/topics/cdpdc-configuring-starting-postgresql-server.html).
@@ -136,17 +145,23 @@ The following prerequisites need to be prepared prior to installing the CDP Priv
   CREATE DATABASE huedb1 OWNER cdpadmin ENCODING 'UTF8';
   ```
 
-## Internet
+### Internet
 
 - A stable connectivity to internet is required during installation to download the software parcels from the public Cloudera repository.
 
-## External Firewall (if applicable)
+### External Firewall (if applicable)
 
 - Refer [here](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/installation/topics/cdpdc-ports.html) to configure the necessary network ports in the external firewall to allow access to the CDP Private Cloud cluster.
 
-## Load Balancer (if applicable)
+### Load Balancer (if applicable)
 
 - An external load balancer is needed to route traffics towards redundant nodes of a particular service.
+
+## ECS
+
+### Cloudera Subscription
+
+- Obtain a valid product subscription from Cloudera. Cloudera Manager requires a valid license to install accordingly. 
 
 
 ---
