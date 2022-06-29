@@ -539,3 +539,58 @@ dex-app-dzxzpmsh-api-886b7df76-6gxvf                  0/1     Pending   0       
 dex-app-dzxzpmsh-livy-5f5b7d95db-nctdk                0/1     Pending   0          15s
 dex-app-dzxzpmsh-safari-957b79f49-bs7hq               0/1     Pending   0          15s
 
+
+
+
+
+ECS:
+
+[root@ecsmaster1 ~]# kubectl -n compute-1656482548-g2jx get pods
+NAME                            READY   STATUS    RESTARTS   AGE
+das-webapp-0                    1/1     Running   0          5m22s
+hiveserver2-0                   1/1     Running   0          5m22s
+huebackend-0                    1/1     Running   0          5m22s
+huefrontend-589cb7546f-c5d9n    1/1     Running   0          5m22s
+query-coordinator-0-0           1/1     Running   0          5m18s
+query-coordinator-0-1           1/1     Running   0          5m18s
+query-coordinator-0-2           1/1     Running   0          5m18s
+query-coordinator-0-3           1/1     Running   0          5m18s
+query-executor-0-0              1/1     Running   0          5m18s
+query-executor-0-1              1/1     Running   0          5m18s
+query-executor-0-2              1/1     Running   0          5m18s
+query-executor-0-3              1/1     Running   0          5m18s
+standalone-compute-operator-0   1/1     Running   0          5m22s
+usage-monitor-97df8f4d4-6qqpf   1/1     Running   0          5m22s
+
+
+[root@ecsmaster1 ~]# kubectl -n compute-1656482548-g2jx get pvc
+NAME                                                  STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   AGE
+query-executor-1656482568-volume-query-executor-0-0   Bound    pvc-656b1bb8-57f8-44dd-8396-a83c4b3f13eb   100Gi      RWO            local-path     2m56s
+query-executor-1656482568-volume-query-executor-0-1   Bound    pvc-8716ac21-3dc4-42c6-9a32-1e84c58b8845   100Gi      RWO            local-path     2m56s
+query-executor-1656482568-volume-query-executor-0-2   Bound    pvc-7bdff9fe-8135-494a-b0a0-4933d94e4f90   100Gi      RWO            local-path     2m56s
+query-executor-1656482568-volume-query-executor-0-3   Bound    pvc-e9318ee8-66fe-4c4a-9a0e-576163d5fa1b   100Gi      RWO            local-path     2m56s
+
+[root@ecsmaster1 ~]# kubectl describe pv pvc-8716ac21-3dc4-42c6-9a32-1e84c58b8845  | grep hostname
+    Term 0:        kubernetes.io/hostname in [ecsworker3.cdpkvm.cldr]
+[root@ecsmaster1 ~]# kubectl describe pv pvc-e9318ee8-66fe-4c4a-9a0e-576163d5fa1b | grep hostname
+    Term 0:        kubernetes.io/hostname in [ecsworker3.cdpkvm.cldr]
+
+[root@ecsmaster1 ~]# kubectl get sc
+NAME                 PROVISIONER             RECLAIMPOLICY   VOLUMEBINDINGMODE      ALLOWVOLUMEEXPANSION   AGE
+local-path           rancher.io/local-path   Delete          WaitForFirstConsumer   false                  38d
+longhorn (default)   driver.longhorn.io      Delete          Immediate              true                   38d
+longhorn-nfs         nfs.longhorn.io         Delete          Immediate              false                  38d
+
+
+[root@ecsworker3 ~]# tree /localpath/
+/localpath/
+|-- local-storage
+|   |-- pvc-8716ac21-3dc4-42c6-9a32-1e84c58b8845_compute-1656482548-g2jx_query-executor-1656482568-volume-query-executor-0-1
+|   |   `-- llap-2396830618975518217
+|   `-- pvc-e9318ee8-66fe-4c4a-9a0e-576163d5fa1b_compute-1656482548-g2jx_query-executor-1656482568-volume-query-executor-0-3
+|       `-- llap-5697099011548069627
+`-- longhorntmp
+    |-- longhorn-disk.cfg
+    `-- replicas
+
+7 directories, 1 file
