@@ -1,12 +1,12 @@
 ---
 layout: default
-title: Cloudera Manager
+title: Cloudera Manager Deployment
 parent: CDP Private Cloud
 nav_order: 3
 
 ---
 
-# Cloudera Manager Installation
+# Cloudera Manager Deployment
 {: .no_toc }
 
 This article explains the necessary steps to install Cloudera Manager (CM) on CentOS7.9. CentOS7.9 is [one of the supported operating systems](https://supportmatrix.cloudera.com/) in CDP Private Cloud solution. Please ensure that all [prerequisites]({{ site.baseurl }}{% link docs/cdppvc/prerequisites.md %}) have already been prepared prior to running this procedure.
