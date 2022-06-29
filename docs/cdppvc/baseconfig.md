@@ -1,6 +1,6 @@
 ---
 layout: default
-title: "Post-Deployment Configuration"
+title: "Base Post-Deployment"
 parent: "Base Cluster (Data Lake)"
 grand_parent: CDP Private Cloud
 nav_order: 2
