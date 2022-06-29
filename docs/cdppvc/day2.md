@@ -1,6 +1,6 @@
 ---
 layout: default
-title: "Day-2 Tasks"
+title: "CDP PvC ECS: Day-2"
 parent: CDP Private Cloud
 has_children: true
 nav_order: 8
