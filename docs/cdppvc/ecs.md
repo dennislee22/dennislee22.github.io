@@ -1,11 +1,11 @@
 ---
 layout: default
-title: Embedded Container Service
+title: ECS Deployment
 parent: CDP Private Cloud
 nav_order: 6
 ---
 
-# Embedded Container Service (ECS) Installation
+# Embedded Container Service (ECS) Deployment
 {: .no_toc }
 
 This article explains the necessary steps to install the ECS platform upon successful [deployment and configuration of CDP PvC Base cluster]({{ site.baseurl }}{% link docs/cdppvc/base.md %}). Please ensure that all the [prerequisites]({{ site.baseurl }}{% link docs/cdppvc/prerequisites.md %}) have already been prepared accordingly.
