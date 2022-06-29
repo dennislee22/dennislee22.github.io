@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Setup ECS Environment
-parent: CDP PvC How To ...
+parent: CDP PvC ECS: Day-2
 grand_parent: CDP Private Cloud
 nav_order: 1
 ---
