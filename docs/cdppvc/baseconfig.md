@@ -9,7 +9,7 @@ nav_order: 2
 # CDP PvC Base Post-Deployment Configuration
 {: .no_toc }
 
-Check and make necessary configurations to ensure that the CDP PvC Base cluster has been set up correctly prior to installing the ECS platform. 
+Check and make necessary configurations to ensure that the CDP PvC Base cluster has been set up correctly prior to installing the Data Services on the Kubernetes platform. 
 
 - TOC
 {:toc}
