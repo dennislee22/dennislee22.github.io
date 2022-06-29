@@ -2,7 +2,7 @@
 layout: default
 title: Openshift Deployment
 parent: CDP Private Cloud
-nav_order: 6
+nav_order: 5
 ---
 
 # Embedded Container Service (ECS) Deployment
