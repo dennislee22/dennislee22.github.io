@@ -1,9 +1,9 @@
 ---
 layout: default
-title: "CDP PvC ECS: Day-2"
+title: "CDP PvC: Day-2"
 parent: CDP Private Cloud
 has_children: true
-nav_order: 7
+nav_order: 8
 ---
 
 # How to ...
