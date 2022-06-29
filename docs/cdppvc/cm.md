@@ -1,9 +1,9 @@
 ---
 layout: default
 title: Cloudera Manager
-parent: Installation
-grand_parent: CDP Private Cloud
-nav_order: 2
+parent: CDP Private Cloud
+nav_order: 3
+
 ---
 
 # Cloudera Manager Installation
