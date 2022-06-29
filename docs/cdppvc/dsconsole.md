@@ -1,12 +1,12 @@
 ---
 layout: default
-title: CDP Data Services Management Console
+title: CDP Data Services Console
 parent: Data Services
 grand_parent: CDP Private Cloud
 nav_order: 1
 ---
 
-# CDP Data Services Management Console
+# CDP Data Services Console
 {: .no_toc }
 
 This article explains the steps to deploy and configure the CDP Data Services environment after successful installation of the [ECS]({{ site.baseurl }}{% link docs/cdppvc/ecs.md %}) platform. This sets the stage for hosting CML, CDE and CDW services which will be explained in the subsequent subtopics.
