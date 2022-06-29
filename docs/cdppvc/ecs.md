@@ -2,8 +2,8 @@
 layout: default
 title: ECS Deployment
 parent: CDP Private Cloud
-nav_order: 7
----
+nav_order: 6
+--
 
 # Embedded Container Service (ECS) Deployment
 {: .no_toc }
