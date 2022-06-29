@@ -1,6 +1,6 @@
 ---
 layout: default
-title: ECS Deployment
+title: Openshift Deployment
 parent: CDP Private Cloud
 nav_order: 6
 ---
