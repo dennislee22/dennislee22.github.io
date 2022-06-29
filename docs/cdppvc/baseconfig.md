@@ -2,8 +2,8 @@
 layout: default
 title: CDP PvC Base Configuration
 parent: Installation
-grand_parent: CDP Private Cloud
-nav_order: 4
+parent: CDP Private Cloud
+nav_order: 5
 ---
 
 # CDP PvC Base Configuration
