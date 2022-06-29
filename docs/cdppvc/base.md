@@ -3,7 +3,6 @@ layout: default
 title: CDP PvC Base Cluster
 parent: CDP Private Cloud
 nav_order: 4
-
 ---
 
 # CDP PvC Base Cluster Deployment
