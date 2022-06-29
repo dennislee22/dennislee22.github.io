@@ -2,7 +2,7 @@
 layout: default
 title: ECS Deployment
 parent: CDP Private Cloud
-nav_order: 6
+nav_order: 7
 ---
 
 # Embedded Container Service (ECS) Deployment
