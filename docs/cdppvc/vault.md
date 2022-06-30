@@ -29,3 +29,6 @@ This article describes the steps to deploy the external Hashicorp Vault in the d
     ![](../../assets/images/ocp4/vault1.png)
     
     ![](../../assets/images/ocp4/vault2.png)    
+    
+    
+    
