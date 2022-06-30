@@ -10,7 +10,7 @@ nav_order: 2
 # Installation Prerequisites
 {: .no_toc }
 
-CDP Private Cloud solution require direct integration with some 3rd party/external components. 
+CDP Private Cloud solution requires direct integration with some 3rd party/external components. 
 
 For CDP Private Cloud solution with Openshift, the required external components are represented by the purple-coloured boxes as shown below.
 
