@@ -10,11 +10,17 @@ nav_order: 2
 # Prerequisites
 {: .no_toc }
 
-CDP Private Cloud solution require direct integration with some 3rd party/external components as represented by the purple-coloured boxes depicted in the following logical architecture diagram. As of time of writing, ECS platform can host the following CDP PvC Data Services - Cloudera Data Warehouse (CDW), Cloudera Machine Learning (CML) and Cloudera Data Engineering (CDE).
+CDP Private Cloud solution require direct integration with some 3rd party/external components. 
 
-![](../../assets/images/3partydiagram.png)
+For CDP Private Cloud solution with Openshift, the required external components are depicted (purple-coloured boxes) in the following logical architecture diagram.
 
-This article and its sub-articles explain the requirements as well as the step-by-step procedure to deploy CDP Private Cloud solution with ECS platform based on the following software versions.
+![](../../assets/images/3partyocp.png)
+
+For CDP Private Cloud solution with ECS, the required external components are depicted (purple-coloured boxes) in the following logical architecture diagram.
+
+![](../../assets/images/3partyecs.png)
+
+This article and its sub-articles explain the requirements as well as the step-by-step procedure to deploy CDP Private Cloud solution using the following software versions.
 
 | Software       | Version         |
 |:-------------|:------------------|
@@ -22,7 +28,7 @@ This article and its sub-articles explain the requirements as well as the step-b
 | Cloudera Manager   | 7.5.5 `rel. May 2022`  | 
 | CDP Data Services  | 1.3.4 `rel. May 2022`  | 
 
-The following prerequisites need to be prepared prior to installing the CDP Private Cloud solution with ECS platform. The CDP Private Cloud solution with Openshift platform has a slightly different requirements which will not be covered in this article.
+The following prerequisites need to be prepared prior to installing the Data Services on the Kubernetes platform. The CDP Private Cloud solution with Openshift platform has a slightly different requirements which will not be covered in this article.
 
 - TOC
 {:toc}
