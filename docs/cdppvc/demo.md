@@ -8,9 +8,9 @@ nav_order: 1
 
 
 ## Demo Architecture
-- The next subtopics will describe the end-to-end CDP Private Cloud installation procedure using the following demo/proof-of-concept architecture diagram. 
-- In this demo, the CDP PvC Data Services are hosted on the Kubernetes platform powered by the Openshift and/or the ECS (Embedded Container Service) platform. Both are mutually exclusive whereby CDP Private Cloud solution requires either one of them. Also, CDP PvC solution has the capability to integrate the CDP Base cluster with both of them. 
-- CM installs the minimum CDP PvC Base services in the CDP PvC Base hosts. These services serve as the prerequisites prior to installing the specific CDP PvC Data Service(s) on the Kubernetes platform. Further details will be explained in the subsequent subtopic.
+- The next subtopics will describe the end-to-end CDP Private Cloud installation procedure using the following demo/proof-of-concept architecture. 
+- In this demo, the CDP PvC Data Services are hosted on the Kubernetes platform powered by the Openshift and/or the ECS (Embedded Container Service) platform. Both are mutually exclusive whereby CDP Private Cloud solution requires either one of them. Note that CDP PvC solution also has the capability to integrate the CDP Base cluster with Openshift and ECS platforms simultaneously. 
+- CM installs the minimum CDP PvC Base services in the CDP PvC Base hosts. These services serve as the prerequisites prior to installing the specific CDP PvC Data Service(s) on the Kubernetes platform. 
 
    CDP Private Cloud Base
    {: .label .label-blue } 
@@ -24,7 +24,7 @@ nav_order: 1
    {: .label .label-blue } 
     ![](../../assets/images/ocparch.png)
 
-- The Openshift environment in this demo environment comprises of 3 servers collating both Openshift master and worker roles whereby such design is not suitable for production environment. In the actual production environment, the required number of worker nodes depends heavily on the actual dimensioning input and master nodes are not supposed to host the production workloads and the [Openshift Container Storage](https://access.redhat.com/documentation/en-us/red_hat_openshift_container_storage/4.7). 
+- The Openshift platform in this demo environment comprises of 3 servers collating both Openshift master and worker roles. Note that such architecture is only meant for demo purpose and strictly not suitable for production environment.
 
    CDP Private Cloud Base with ECS
    {: .label .label-blue } 
