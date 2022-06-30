@@ -168,7 +168,7 @@ The following prerequisites need to be prepared prior to installing the Data Ser
 
 ![](../../assets/images/ocp4/ocp4.png)
 
-- If custom ingress certificate is needed, deploy [this](https://docs.openshift.com/container-platform/4.7/security/certificates/replacing-default-ingress-certificate.html) prior to the installation of CDP Data Services on Openshift platform.
+- If custom ingress certificate is needed, deploy the certificate using [this](https://docs.openshift.com/container-platform/4.7/security/certificates/replacing-default-ingress-certificate.html) method prior to the installation of CDP Data Services Control Plane on the Openshift platform.
 
 ### Docker Registry
 
