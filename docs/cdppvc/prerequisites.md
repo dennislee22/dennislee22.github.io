@@ -159,7 +159,7 @@ The following prerequisites need to be prepared prior to installing the Data Ser
 
 ### Openshift Container Storage
 
-- Openshift Container Storage (OCS) serves as the distributed block storage subsystem to persist data for the containers in the Openshift platform. Each OCS node needs to be equipped with the direct-attached SSD/NVMe disk.
+- Openshift Container Storage (OCS) serves as the distributed block storage subsystem to persist data for the containers in the Openshift platform. Each OCS node is equipped with the direct-attached SSD/NVMe disk.
 
 ### Docker Registry
 
