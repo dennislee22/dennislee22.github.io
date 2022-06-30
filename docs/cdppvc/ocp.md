@@ -6,10 +6,10 @@ has_children: true
 nav_order: 5
 ---
 
-# Embedded Container Service (ECS) Deployment
+# Openshift Deployment
 {: .no_toc }
 
-This article explains the necessary steps to install the ECS platform upon successful [deployment and configuration of CDP PvC Base cluster]({{ site.baseurl }}{% link docs/cdppvc/base.md %}). Please ensure that all the [prerequisites]({{ site.baseurl }}{% link docs/cdppvc/prerequisites.md %}) have already been prepared accordingly.
+This article explains the necessary steps to prepare the necessary components to deploy the CDP Private Cloud Data Services on the Openshift platform. Please ensure that all the [prerequisites]({{ site.baseurl }}{% link docs/cdppvc/prerequisites.md %}) have already been prepared accordingly.
 
 - TOC
 {:toc}
