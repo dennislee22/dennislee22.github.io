@@ -88,7 +88,7 @@ This article describes the steps to deploy the external docker registry using Ne
     </New>
     ``` 
 
-8. Configure the '/opt/sonatype/sonatype-work/nexus3/etc/nexus.properties' file. Sample is shown below.
+8. Configure the `/opt/sonatype/sonatype-work/nexus3/etc/nexus.properties` file. Sample is shown below.
 
     ```yaml
     # Jetty section
@@ -114,11 +114,9 @@ This article describes the steps to deploy the external docker registry using Ne
     # systemctl restart nexus-repository-manager 
     ```
 
-10. Browse the Nexus portal and configure the SSL port.
+10. Log in to the Nexus portal to setup the Docker repository with SSL port.
 
     ![](../../assets/images/ocp4/nexus0.png)
-
-    ![](../../assets/images/ocp4/nexus1.png)
     
     ![](../../assets/images/ocp4/nexus2.png)   
 
@@ -167,7 +165,7 @@ This article describes the steps to deploy the external docker registry using Ne
     ```
 
 
-13. Update the CA cert in your server.
+13. Update the CA cert (nexus.crt) in your server.
  
     ```bash 
     # cp nexus.crt /etc/pki/ca-trust/source/anchors/
@@ -178,7 +176,7 @@ This article describes the steps to deploy the external docker registry using Ne
 14. Check that the CA cert has been succesfully imported into the truststore of your server.
  
     ```bash 
-    # # openssl crl2pkcs7 -nocrl -certfile /etc/pki/tls/certs/ca-bundle.crt | openssl pkcs7 -print_certs | grep subject | grep nexus
+    # openssl crl2pkcs7 -nocrl -certfile /etc/pki/tls/certs/ca-bundle.crt | openssl pkcs7 -print_certs | grep subject | grep nexus
     subject=/C=SG/ST=Unspecified/L=Unspecified/O=Sonatype/OU=Sonatype/CN=nexus.cdpkvm.cldr
     ```
 
