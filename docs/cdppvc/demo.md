@@ -9,7 +9,7 @@ nav_order: 1
 
 ## Demo Architecture
 - The next subtopics will describe the end-to-end CDP Private Cloud installation procedure using the following demo/proof-of-concept architecture. 
-- In this demo, the CDP PvC Data Services are hosted on the Kubernetes platform powered by the Openshift and/or the ECS (Embedded Container Service) platform. Both are mutually exclusive whereby CDP Private Cloud solution requires either one of them. Note that CDP PvC solution also has the capability to integrate the CDP Base cluster with Openshift and ECS platforms simultaneously. 
+- In this demo, the CDP PvC Data Services are hosted on the Kubernetes platform powered by the Openshift and/or the ECS (Embedded Container Service) platform. Both are mutually exclusive whereby CDP Private Cloud solution requires either one of them. Note that CDP PvC solution also has the capability to integrate the CDP Base cluster with both Openshift and ECS platforms simultaneously. 
 - CM installs the minimum CDP PvC Base services in the CDP PvC Base hosts. These services serve as the prerequisites prior to installing the specific CDP PvC Data Service(s) on the Kubernetes platform. 
 
    CDP Private Cloud Base
