@@ -157,17 +157,26 @@ The following prerequisites need to be prepared prior to installing the Data Ser
 
 ## Openshift Requirements
 
+### Openshift Settings
+
+- Prepare the `kubeconfig` file that has the cluster access for a single user with `cluster-admin` privilege.
+
 ### Openshift Container Storage
 
 - Openshift Container Storage (OCS) serves as the distributed block storage subsystem to persist data for the containers in the Openshift platform. Each OCS node is equipped with the direct-attached SSD/NVMe disk.
+- Configure the OCS block storage PV as the default storageClass.
+
+![](../../assets/images/ocp4/ocp4.png)
+
+- If custom ingress certificate is needed, deploy [this](https://docs.openshift.com/container-platform/4.7/security/certificates/replacing-default-ingress-certificate.html) prior to the installation of CDP Data Services on Openshift platform.
 
 ### Docker Registry
 
-- An external docker registry is required to store the Cloudera container images, e.g. Nexus Docker Registry.
+- An external SSL-enabled Docker registry is required to store the Cloudera container images, e.g. Nexus Docker Registry. See this [link]({{ site.baseurl }}{% link docs/cdppvc/nexus.md %}) to explore the sample methods to deploy the SSL-enabled Docker registry using Nexus solution.
 
 ### Hashicorp Vault
 
-- An external Hashicorp vault is required to store and encrypt the system's secrets and certificates.
+- An external SSL-enabled Hashicorp vault is required to store and encrypt the system's secrets and certificates. See this [link]({{ site.baseurl }}{% link docs/cdppvc/vault.md %}) to explore the sample methods to deploy SSL-enabled Hashicorp Vault server.
 
 ## ECS Requirements
 
