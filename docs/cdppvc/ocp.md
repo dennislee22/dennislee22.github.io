@@ -6,6 +6,6 @@ has_children: true
 nav_order: 5
 ---
 
-This article explains the necessary steps to prepare the necessary components prior to deploying the CDP Private Cloud Data Services on the Openshift platform. Please ensure that all the [prerequisites]({{ site.baseurl }}{% link docs/cdppvc/prerequisites.md %}) have already been prepared accordingly.
+The following sub-articles explain the steps to prepare the necessary components prior to deploying the CDP Private Cloud Data Services on the Openshift platform.
 
 
