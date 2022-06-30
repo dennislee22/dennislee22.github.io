@@ -217,5 +217,5 @@ This article describes the steps to deploy the external docker registry using Ne
     nexus.cdpkvm.cldr:9999/cdppvc/cloudera_thirdparty/fluent-bit   v1.4.6-3896242      a5d1d3a3a3ef        2 years ago         220 MB
     ```
 
-16. For CDP Data Services on Openshift platform solution, import the CA certificate `nexus.crt` into the Openshift platform using this [method](https://docs.openshift.com/container-platform/4.7/cicd/builds/setting-up-trusted-ca.html).
+16. For CDP Data Services on Openshift platform solution, import the CA certificate `nexus.crt` into the Openshift platform using this [method](https://docs.openshift.com/container-platform/4.7/cicd/builds/setting-up-trusted-ca.html). This step is needed to prevent "x509: certificate signed by unknown authority" issue when the system attempts to pull the docker images from the above Docker registry to provision the CDP Data Services Control Plane pods.
 
