@@ -7,16 +7,16 @@ nav_order: 2
 
 ---
 
-# Prerequisites
+# Installation Prerequisites
 {: .no_toc }
 
 CDP Private Cloud solution require direct integration with some 3rd party/external components. 
 
-For CDP Private Cloud solution with Openshift, the required external components are depicted (purple-coloured boxes) in the following logical architecture diagram.
+For CDP Private Cloud solution with Openshift, the required external components are represented by the purple-coloured boxes as shown below.
 
 ![](../../assets/images/3partyocp.png)
 
-For CDP Private Cloud solution with ECS, the required external components are depicted (purple-coloured boxes) in the following logical architecture diagram.
+For CDP Private Cloud solution with ECS, the required external components are represented by the purple-coloured boxes as shown below.
 
 ![](../../assets/images/3partyecs.png)
 
@@ -34,7 +34,7 @@ The following prerequisites need to be prepared prior to installing the Data Ser
 {:toc}
 
 ---
-## Openshift
+## General Requirements
 
 ### Cloudera Subscription
 
@@ -48,12 +48,11 @@ The following prerequisites need to be prepared prior to installing the Data Ser
     
 ### Hardware
     
-- Hardware requirements are determined by specific CDP services to be installed in both CDP PvC Base cluster and ECS platform. For instance, CDP PvC Base services such as [HDFS](https://docs.cloudera.com/cdp-private-cloud-upgrade/latest/release-guide/topics/cdpdc-hdfs.html), [Zookeeper](https://docs.cloudera.com/cdp-private-cloud-upgrade/latest/release-guide/topics/cdpdc-zookeeper.html) and [Ozone](https://docs.cloudera.com/cdp-private-cloud-upgrade/latest/release-guide/topics/cdpdc-ozone.html) have dedicated storage requirements. 
-- Longhorn serves as the distributed block storage subsystem to persist data for the containers in the ECS platform. Each ECS node needs to be equipped with the direct-attached SSD/NVMe disk for the [Longhorn storage](https://longhorn.io/docs/1.2.4/best-practices/#minimum-recommended-hardware). Longhorn could only use a single volume disk per node and thereby [LVM]({{ site.baseurl }}{% link docs/cdppvc/lvm.md %}) is recommended to be used for exposing a single volume backed by one/many physical disk.
-- CDW requires locally attached SCSI device (SSD/NVMe) in each ECS worker/agent node.
+- Hardware requirements are determined by specific CDP services to be installed in both CDP PvC Base cluster and the data services on the Kubernetes platform. For instance, CDP PvC Base services such as [HDFS](https://docs.cloudera.com/cdp-private-cloud-upgrade/latest/release-guide/topics/cdpdc-hdfs.html), [Zookeeper](https://docs.cloudera.com/cdp-private-cloud-upgrade/latest/release-guide/topics/cdpdc-zookeeper.html) and [Ozone](https://docs.cloudera.com/cdp-private-cloud-upgrade/latest/release-guide/topics/cdpdc-ozone.html) have dedicated storage requirements. 
+- CDW requires locally attached SCSI device (SSD/NVMe) in each Kubernetes worker node.
 
 
-### Host Settings
+### CDP Base Host Settings
 
 - The supported OS and the filesystems are listed [here](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/installation/topics/cdpdc-os-requirements.html).
 - [JDK](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/installation/topics/cdpdc-java-requirements.html) must be installed in each host.
@@ -159,16 +158,51 @@ The following prerequisites need to be prepared prior to installing the Data Ser
 
 - Refer [here](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/installation/topics/cdpdc-ports.html) to configure the necessary network ports in the external firewall to allow access to the CDP Private Cloud cluster.
 
-### Load Balancer (if applicable)
+### Load Balancer
 
 - An external load balancer is needed to route traffics towards redundant nodes of a particular service.
 
-## ECS
+## Openshift Requirements
 
-### Cloudera Subscription
+### Openshift Container Storage
 
-- Obtain a valid product subscription from Cloudera. Cloudera Manager requires a valid license to install accordingly. 
+- Openshift Container Storage (OCS) serves as the distributed block storage subsystem to persist data for the containers in the Openshift platform. Each OCS node needs to be equipped with the direct-attached SSD/NVMe disk.
 
+### Docker Registry
+
+- An external docker registry is required to store the Cloudera container images, e.g. Nexus Docker Registry.
+
+### Hashicorp Vault
+
+- An external Hashicorp vault is required to store and encrypt the system's secrets and certificates.
+
+## ECS Requirements
+
+### Longhorn Storage
+
+- Longhorn serves as the distributed block storage subsystem to persist data for the containers in the ECS platform. Each ECS node needs to be equipped with the direct-attached SSD/NVMe disk for the [Longhorn storage](https://longhorn.io/docs/1.2.4/best-practices/#minimum-recommended-hardware). Longhorn could only use a single volume disk per node and thereby [LVM]({{ site.baseurl }}{% link docs/cdppvc/lvm.md %}) is recommended to be used for exposing a single volume backed by one/many physical disk.
+
+### ECS Host Settings
+
+- The supported OS and the filesystems are listed [here](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/installation/topics/cdpdc-os-requirements.html).
+- [JDK](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/installation/topics/cdpdc-java-requirements.html) must be installed in each host.
+- Configure the hosts with [IPv4](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/installation/topics/cdpdc-configure-network-names.html) only. Set the hostname with unique FQDN (Fully Qualified Domain Name). Ensure /etc/hosts with the IP address and of each host in the cluster.
+- Disable [firewall](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/installation/topics/cdpdc-disabling-firewall.html) within each host.
+- Set the [SELinux](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/installation/topics/cdpdc-setting-selinux-mode.html) mode accordingly.
+- Every host must be installed with NTP client and able to synchronize the time with the external NTP server.
+- Each host must be installed with the Kerberos client and library in order to join the Kerberos domain.
+
+    ```bash
+    # yum install krb5-workstation krb5-libs
+    ```
+
+- For every ECS node that is equipped with Nvidia GPU card, ensure that the GPU hosts have Nvidia Drivers and Nvidia-container-runtime installed.
+- All ECS nodes must be installed with nfs-utils and iscsi-initiator-utils packages.
+
+    ```bash
+    # yum install nfs-utils
+    # yum install iscsi-initiator-utils
+    ```
 
 ---
    
