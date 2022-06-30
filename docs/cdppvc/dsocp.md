@@ -61,3 +61,4 @@ This article describes the steps to deploy the CDP Data Services Control Plane o
     
     
     ![](../../assets/images/ocp4/ocp6.png)      
+    
