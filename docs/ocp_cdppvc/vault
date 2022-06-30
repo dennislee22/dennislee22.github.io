@@ -1,7 +1,7 @@
 
 https://learn.hashicorp.com/tutorials/vault/raft-deployment-guide?in=vault/raft
 
-yum install -y yum-utils
+
 
 yum-config-manager --add-repo https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
 
