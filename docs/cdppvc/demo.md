@@ -24,7 +24,7 @@ nav_order: 1
    {: .label .label-blue } 
     ![](../../assets/images/ocparch.png)
 
-- The Openshift environment in this demo environment comprises of 3 servers collating both master and worker roles. In the actual production environment, the required number of worker nodes depends heavily on the actual dimensioning input and master nodes are not supposed to host the production workloads and the [Openshift Container Storage](https://access.redhat.com/documentation/en-us/red_hat_openshift_container_storage/4.7). 
+- The Openshift environment in this demo environment comprises of 3 servers collating both Openshift master and worker roles whereby such design is not suitable for production environment. In the actual production environment, the required number of worker nodes depends heavily on the actual dimensioning input and master nodes are not supposed to host the production workloads and the [Openshift Container Storage](https://access.redhat.com/documentation/en-us/red_hat_openshift_container_storage/4.7). 
 
    CDP Private Cloud Base with ECS
    {: .label .label-blue } 
