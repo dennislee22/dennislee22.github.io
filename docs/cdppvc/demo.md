@@ -37,5 +37,5 @@ nav_order: 1
    Next Step
    {: .label .label-blue } 
    
-- Explore the installation prerequisites for the CDP Private Cloud in the next [subtopic]({{ site.baseurl }}{% link docs/cdppvc/prerequisites.md %}).
+- Explore the installation prerequisites for the CDP Private Cloud in the next [topic]({{ site.baseurl }}{% link docs/cdppvc/prerequisites.md %}).
         
