@@ -13,3 +13,14 @@ This article describes the steps to deploy the CDW disk using `Local Storage Ope
 
 ---
 
+
+
+    ![](../../assets/images/ocp4/ocplocaldiskcdw1.png)
+    
+    ![](../../assets/images/ocp4/ocplocaldiskcdw2.png)
+    
+    ![](../../assets/images/ocp4/ocplocaldiskcdw3.png)
+    
+    ![](../../assets/images/ocp4/ocplocaldiskcdw4.png)
+    
+    ![](../../assets/images/ocp4/ocplocaldiskcdw5.png)    
