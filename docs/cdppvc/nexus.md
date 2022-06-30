@@ -9,7 +9,7 @@ nav_order: 1
 # Docker Registry in Nexus
 {: .no_toc }
 
-This article describes the steps to deploy the external docker registry using Nexus solution in the designated server.
+This article describes the steps to deploy the external docker registry using Nexus in the designated Nexus server.
 
 ---
 
@@ -20,7 +20,7 @@ This article describes the steps to deploy the external docker registry using Ne
     # wget -P /etc/yum.repos.d/ https://repo.sonatype.com/repository/community-hosted/rpm/sonatype-community.repo
     ```
 
-2. Install the necessary software packages.
+2. Install the following software packages.
 
     ```bash
     # yum install docker wget -y
@@ -35,7 +35,7 @@ This article describes the steps to deploy the external docker registry using Ne
     ```
 
 
-4. Configure SSL on the server based on the description highlighted in this [link](https://help.sonatype.com/repomanager3/nexus-repository-administration/configuring-ssl). Create the SSL certificate using the hostname of the Nexus server with the associated SSL key.
+4. Create the SSL certificates on the server based on the description highlighted in this [link](https://help.sonatype.com/repomanager3/nexus-repository-administration/configuring-ssl). The following `nexus.crt` certificate will be used during CDP PvC Data Services installation.
 
     ```bash  
     # keytool -genkeypair -keystore keystore.jks -storepass password -alias jetty -keyalg RSA -keysize 2048 -validity 5000 -keypass password -dname 'CN=nexus.cdpkvm.cldr, OU=Sonatype, O=Sonatype, L=Unspecified, ST=Unspecified, C=SG' -ext 'SAN=DNS:nexus.cdpkvm.cldr' -ext "BC=ca:true"
@@ -48,6 +48,7 @@ This article describes the steps to deploy the external docker registry using Ne
 
     # openssl pkcs12 -nocerts -nodes -in nexus.p12 -out nexus.key
     ```  
+    
 5. Copy the JKS file to '/opt/sonatype/sonatype-work/nexus3/etc/ssl/' directory.
 
     ```bash   
@@ -67,7 +68,7 @@ This article describes the steps to deploy the external docker registry using Ne
                 08:BF:E3:9F:53:50:0A:57:B5:BB:1E:E4:5A:D2:4E:0F:E1:10:5D:11
     ```  
     
-7. Configure the '/opt/sonatype/nexus3/etc/jetty/jetty-https.xml' file. Sample is shown below.
+7. Configure the '/opt/sonatype/nexus3/etc/jetty/jetty-https.xml' file. Sample is shown as follows.
 
     ```yaml
     <New id="sslContextFactory" class="org.eclipse.jetty.util.ssl.SslContextFactory$Server">
@@ -165,7 +166,7 @@ This article describes the steps to deploy the external docker registry using Ne
     ```
 
 
-13. Update the CA cert (nexus.crt) in your server.
+13. Update the CA cert (nexus.crt) in the server.
  
     ```bash 
     # cp nexus.crt /etc/pki/ca-trust/source/anchors/
@@ -173,7 +174,7 @@ This article describes the steps to deploy the external docker registry using Ne
     ```
 
 
-14. Check that the CA cert has been succesfully imported into the truststore of your server.
+14. Check that the CA cert has succesfully been imported into the truststore of the server.
  
     ```bash 
     # openssl crl2pkcs7 -nocrl -certfile /etc/pki/tls/certs/ca-bundle.crt | openssl pkcs7 -print_certs | grep subject | grep nexus
@@ -181,7 +182,7 @@ This article describes the steps to deploy the external docker registry using Ne
     ```
 
 
-14. You may now curl the Docker SSL-enabled URL.  
+14. You may now curl the SSL-enabled Docker URL successfully.  
  
     ```bash 
     #  curl -u admin:admin "https://nexus.cdpkvm.cldr:9999/v2/_catalog" | jq
