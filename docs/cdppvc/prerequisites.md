@@ -38,7 +38,7 @@ nav_order: 2
 | CDP Data Services  | 1.3.4 `rel. May 2022`  | 
 
 
-### Cloudera Services
+### CDP Base Services
 
 - The minimum CDP PvC Base services and its dependencies to install CML, CDW and CDE are illustrated in the table below.
 
@@ -195,13 +195,12 @@ nav_order: 2
 - Disable [firewall](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/installation/topics/cdpdc-disabling-firewall.html) within each host.
 - Set the [SELinux](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/installation/topics/cdpdc-setting-selinux-mode.html) mode accordingly.
 - Every host must be installed with NTP client and able to synchronize the time with the external NTP server.
+- For every ECS node that is equipped with Nvidia GPU card, ensure that the GPU hosts have Nvidia Drivers and Nvidia-container-runtime installed.
 - Each host must be installed with the Kerberos client and library in order to join the Kerberos domain.
 
     ```bash
     # yum install krb5-workstation krb5-libs
     ```
-
-- For every ECS node that is equipped with Nvidia GPU card, ensure that the GPU hosts have Nvidia Drivers and Nvidia-container-runtime installed.
 - All ECS nodes must be installed with nfs-utils and iscsi-initiator-utils packages.
 
     ```bash
