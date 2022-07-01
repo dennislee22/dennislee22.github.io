@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Cloudera Data Warehouse (Openshift)
-parent: Data Services
+parent: CDP PvC Data Services
 grand_parent: CDP Private Cloud
 nav_order: 5
 ---
