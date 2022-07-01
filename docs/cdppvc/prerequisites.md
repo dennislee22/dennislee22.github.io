@@ -37,7 +37,7 @@ nav_order: 2
 | Cloudera Manager   | 7.5.5 `rel. May 2022`  | 
 | CDP Data Services  | 1.3.4 `rel. May 2022`  | 
 
-- The supported Openshift version is published in this [link](https://docs.cloudera.com/cdp-private-cloud-data-services/1.3.4/installation/topics/cdppvc-installation-openshift.html). This demo uses Openshift 4.7.
+- The supported Openshift version is explained in this [link](https://docs.cloudera.com/cdp-private-cloud-data-services/1.3.4/installation/topics/cdppvc-installation-openshift.html). This demo uses Openshift 4.7.
 
 ### CDP Base Services
 
@@ -78,9 +78,8 @@ nav_order: 2
 ### Kerberos + LDAP Server + Certificate
 
 - An [external Kerberos server](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/security-kerberos-authentication/topics/cm-security-kerberos-enabling-intro.html) and the Kerberos key distribution center (KDC) (with a realm established) must be available to provide authentication to CDP services, users and hosts.
-- An external `secured` LDAP-compliant identity/directory server (ldaps) is required to enable the CDP Private Cloud solution to look up for the user accounts and groups in the directory.
+- An external `secured` LDAP-compliant identity/directory server (ldaps) is required to enable the CDP Private Cloud solution to look up for the user accounts and groups in the directory. This is expected to be ready prior to installing the CDP Private Cloud solution and its installation procedure is not covered in this article.
 - [Auto-TLS](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/security-encrypting-data-in-transit/topics/cm-security-auto-tls.html) should be enabled using certificates created and managed by a Cloudera Manager certificate authority (CA), or certificates signed by a trusted public CA or your own internal CA. Prepare the certificate of your choice.
-- The external IDM is expected to be ready prior to installing the CDP Private Cloud solution and its installation procedure is not covered in this article.
 
 ### External NFS
 
@@ -125,7 +124,7 @@ nav_order: 2
   CREATE USER cdpadmin WITH PASSWORD 'cdpadmin';
   ```  
   
-- Create the following databases in the external PostgreSQL server for CDP PvC Data Services deployment on ECS platform.
+- Create the following databases in the external PostgreSQL server before installting CDP PvC Data Services on ECS platform.
 
   ```yaml
   CREATE DATABASE dbenv OWNER cdpadmin ENCODING 'UTF8';
