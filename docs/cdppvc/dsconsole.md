@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Data Services Console
-parent: Data Services
+parent: CDP PvC Data Services
 grand_parent: CDP Private Cloud
 nav_order: 1
 ---
