@@ -182,7 +182,7 @@ nav_order: 2
 
 ### Openshift Settings
 
-- Prepare the `kubeconfig` file that has the cluster access for a single user with `cluster-admin` privilege.
+- Prepare the `kubeconfig` file for a single user with `cluster-admin` privilege that has the Openshift cluster access.
 - Openshift platform is expected to be ready prior to installing the CDP PvC Data Services. Openshift installation is not covered in this article. Please refer to the official guidelines from Red Hat. 
 - If custom ingress certificate is needed, deploy the certificate using [this](https://docs.openshift.com/container-platform/4.7/security/certificates/replacing-default-ingress-certificate.html) method prior to the installation of CDP Data Services Control Plane on the Openshift platform.
 
