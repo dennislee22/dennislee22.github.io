@@ -22,9 +22,7 @@ This article explains the steps to configure the CDP Data Services environment. 
 
     ![](../../assets/images/dsconsole/cmds.png)
     
-2. The system will redirect the browser to the following page. Click `Management Console`.   
-
-    ![](../../assets/images/dsconsole/dsmenu.png)
+2. The system will redirect the browser to the `Management Console` landing page.   
 
 3. Log in as the Local Administrator.
 
