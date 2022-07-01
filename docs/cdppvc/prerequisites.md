@@ -194,6 +194,12 @@ nav_order: 2
 
 - Openshift Container Storage (OCS) serves as the distributed block storage subsystem to persist data for the containers in the Openshift platform. Each OCS node is equipped with the direct-attached SSD/NVMe disk.
 - OCS is expected to be ready prior to installing the CDP PvC Data Services. OCS installation is not covered in this article. Please refer to the official guidelines from Red Hat. 
+- The Openshift dashboard should reflect all OCS components in green mode as depicted below.
+
+    ![](../../assets/images/ocp4/ocp2.png)   
+    
+    ![](../../assets/images/ocp4/ocp3.png)  
+    
 - Configure the OCS block storage PV as the default storageClass.
 
 ![](../../assets/images/ocp4/ocp4.png)
