@@ -25,17 +25,17 @@ This article describes the steps to deploy the CDP Data Services Control Plane o
 
     ![](../../assets/images/ocp4/addocp3.png)  
     
-4. Select `Use a custom Docker Repository (Recommended for production)` option. Enter the fields based on the setup of the [Docker registry in the Nexus server](% link docs/cdppvc/nexus.md %}).
+4. Select `Use a custom Docker Repository (Recommended for production)` option. Enter the fields based on the setup of the [Docker registry in the Nexus server]({{ site.baseurl }}{% link docs/cdppvc/nexus.md %}).
 
     ![](../../assets/images/ocp4/addocp4.png)     
 
-5. Select `Use existing databases (Recommended for production)` option. Enter the fields based on the prerequisites highlighted in the [Installation Prerequisites](% link docs/cdppvc/prerequisites.md %}) page.
+5. Select `Use existing databases (Recommended for production)` option. Enter the fields based on the prerequisites highlighted in the [Installation Prerequisites]({{ site.baseurl }}{% link docs/cdppvc/prerequisites.md %}) page.
 
     ![](../../assets/images/ocp4/addocp5.png)  
     
 6. Select the `kubeconfig` file as highlighted in the [Installation Prerequisites](% link docs/cdppvc/prerequisites.md %}) page. 
-For Vault configuration, enter the fields based on the setup of the [Hashicorp Vault](% link docs/cdppvc/vault.md %}). 
-For Storage, enter the default block storageClass of the deployed [OCS](% link docs/cdppvc/prerequisites.md %}).
+For Vault configuration, enter the fields based on the setup of the [Hashicorp Vault]({{ site.baseurl }}{% link docs/cdppvc/vault.md %}). 
+For Storage, enter the default block storageClass of the deployed [OCS]({{ site.baseurl }}{% link docs/cdppvc/prerequisites.md %}).
 
     ![](../../assets/images/ocp4/addocp6.png)  
     
