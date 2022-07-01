@@ -26,7 +26,7 @@ nav_order: 2
 ---
 ## General Requirements
 
-### Cloudera Subscription
+### Software Version
 
 - Obtain a valid product subscription from Cloudera. Cloudera Manager requires a valid license to install accordingly. 
 - The software version of the CDP Private Cloud solution components involved in this demo is stated below.
@@ -37,7 +37,7 @@ nav_order: 2
 | Cloudera Manager   | 7.5.5 `rel. May 2022`  | 
 | CDP Data Services  | 1.3.4 `rel. May 2022`  | 
 
-- The supported Openshift version is published in this [link](https://docs.cloudera.com/cdp-private-cloud-data-services/1.3.4/installation/topics/cdppvc-installation-openshift.html).
+- The supported Openshift version is published in this [link](https://docs.cloudera.com/cdp-private-cloud-data-services/1.3.4/installation/topics/cdppvc-installation-openshift.html). This demo uses Openshift 4.7.
 
 ### CDP Base Services
 
