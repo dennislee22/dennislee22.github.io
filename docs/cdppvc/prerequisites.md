@@ -91,7 +91,8 @@ nav_order: 2
 - The database requirements is described in this [link](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/installation/topics/cdpdc-database-requirements.html). 
 - The reference settings of PostgreSQL database can be obtained [here](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/installation/topics/cdpdc-configuring-starting-postgresql-server.html).
 - [SSL](https://docs.cloudera.com/cdp-private-cloud-data-services/1.3.4/installation/topics/cdppvc-installation-external-db-setup.html) must be enabled in the database.
-- This demo uses [PostgreSQL 12](https://docs.cloudera.com/data-warehouse/1.3.4/private-cloud-getting-started/topics/dw-private-cloud-base-cluster-database-requirements.html) database as the external database. The database is expected to be ready prior to installing the CDP Private Cloud solution. Postgres database installation is not covered in this article.
+- This demo uses [PostgreSQL 12](https://docs.cloudera.com/data-warehouse/1.3.4/private-cloud-getting-started/topics/dw-private-cloud-base-cluster-database-requirements.html) database as the external database. 
+- The database is expected to be ready prior to installing the CDP Private Cloud solution. PostgreSQL database installation is not covered in this article.
 - Create the following databases in the external PostgreSQL server with its users and the associated privileges. Note that simple passwords are being created but the actual production environment should make use of complex passwords. Not every created database is being used here but serves as a placeholder for future use case.
 
   ```yaml
@@ -121,6 +122,11 @@ nav_order: 2
   CREATE USER registry WITH PASSWORD 'registry';
   GRANT ALL PRIVILEGES ON DATABASE "registry" to registry;
   CREATE USER cdpadmin WITH PASSWORD 'cdpadmin';
+  ```  
+  
+- Create the following databases in the external PostgreSQL server for CDP PvC Data Services deployment on ECS platform.
+
+  ```yaml
   CREATE DATABASE dbenv OWNER cdpadmin ENCODING 'UTF8';
   CREATE DATABASE dbmlx OWNER cdpadmin ENCODING 'UTF8';
   CREATE DATABASE dbdwx OWNER cdpadmin ENCODING 'UTF8';
@@ -132,9 +138,25 @@ nav_order: 2
   CREATE DATABASE dbums OWNER cdpadmin ENCODING 'UTF8';
   CREATE DATABASE cmregistration OWNER cdpadmin ENCODING 'UTF8';
   CREATE DATABASE clusterproxy OWNER cdpadmin ENCODING 'UTF8';
-  ```  
+  ```
   
-- Create the following CDW databases in the external PostgreSQL server. These databases need to be pre-created prior to deploying CDW on the CDP PvC ECS platform.
+- Create the following additional databases in the external PostgreSQL server if CDP PvC Data Services are also to be installed in Openshift platform in addition to the ECS platform.
+
+  ```yaml
+  CREATE DATABASE dbenv2 OWNER cdpadmin ENCODING 'UTF8';
+  CREATE DATABASE dbmlx2 OWNER cdpadmin ENCODING 'UTF8';
+  CREATE DATABASE dbdwx2 OWNER cdpadmin ENCODING 'UTF8';
+  CREATE DATABASE dbliftie2 OWNER cdpadmin ENCODING 'UTF8';
+  CREATE DATABASE dbdex2 OWNER cdpadmin ENCODING 'UTF8';
+  CREATE DATABASE dbresourcepoolmanager2 OWNER cdpadmin ENCODING 'UTF8';
+  CREATE DATABASE dbclusteraccessmanager2 OWNER cdpadmin ENCODING 'UTF8';
+  CREATE DATABASE dbalerts2 OWNER cdpadmin ENCODING 'UTF8';
+  CREATE DATABASE dbums2 OWNER cdpadmin ENCODING 'UTF8';
+  CREATE DATABASE cmregistration2 OWNER cdpadmin ENCODING 'UTF8';
+  CREATE DATABASE clusterproxy2 OWNER cdpadmin ENCODING 'UTF8';
+  ```
+
+- Create the following CDW databases in the external PostgreSQL server. These databases need to be pre-created prior to deploying CDW on the CDP PvC Data Services platform.
 
   ```yaml
   CREATE DATABASE dasenv OWNER cdpadmin ENCODING 'UTF8';
@@ -143,7 +165,7 @@ nav_order: 2
   CREATE DATABASE dasdb1 OWNER cdpadmin ENCODING 'UTF8';
   CREATE DATABASE huedb1 OWNER cdpadmin ENCODING 'UTF8';
   ```
-
+  
 ### Internet
 
 - A stable connectivity to internet is required during installation to download the software parcels from the public Cloudera repository.
