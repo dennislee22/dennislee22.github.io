@@ -151,4 +151,4 @@ This article explains the necessary steps to install the minimum services on CDP
    Next Step
    {: .label .label-blue }
    
-- Proceed to configure the necessary settings of CDP PvCBase cluster in the next [subtopic]({{ site.baseurl }}{% link docs/cdppvc/baseconfig.md %}).
+- Proceed to configure the necessary settings of CDP PvC Base cluster in the next [subtopic]({{ site.baseurl }}{% link docs/cdppvc/baseconfig.md %}).
