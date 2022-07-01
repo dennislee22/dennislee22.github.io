@@ -3,7 +3,7 @@ layout: default
 title: Cloudera Data Engineering
 parent: Data Services
 grand_parent: CDP Private Cloud
-nav_order: 4
+nav_order: 5
 ---
 
 # Cloudera Data Engineering (CDE)
