@@ -262,6 +262,6 @@ The following steps are the mandatory to run prior to creating the ECS platform.
 ---    
    Next Step
    {: .label .label-blue } 
-- Proceed to create the CDP Base cluster in the next [subtopic]({{ site.baseurl }}{% link docs/cdppvc/base.md %}).
+- Proceed to create the CDP Base cluster in the next [topic]({{ site.baseurl }}{% link docs/cdppvc/base.md %}).
         
 
