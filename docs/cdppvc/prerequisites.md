@@ -124,7 +124,7 @@ nav_order: 2
   CREATE USER cdpadmin WITH PASSWORD 'cdpadmin';
   ```  
   
-- Create the following databases in the external PostgreSQL server before installting CDP PvC Data Services on ECS platform.
+- Create the following databases in the external PostgreSQL server before installing CDP PvC Data Services on ECS platform.
 
   ```yaml
   CREATE DATABASE dbenv OWNER cdpadmin ENCODING 'UTF8';
@@ -168,7 +168,7 @@ nav_order: 2
   
 ### Internet
 
-- A stable connectivity to internet is required during installation to download the software parcels from the public Cloudera repository.
+- A stable connectivity to internet is required during installation to download the software parcels from the Cloudera public repository.
 
 ### External Firewall (if applicable)
 
