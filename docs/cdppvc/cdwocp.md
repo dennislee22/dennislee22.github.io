@@ -9,7 +9,7 @@ nav_order: 4
 # Cloudera Data Warehouse (CDW) on Openshift
 {: .no_toc }
 
-This article explains the steps to deploy the CDW service on Openshift platform after successful configuration of the [Data Services Management Console]({{ site.baseurl }}{% link docs/cdppvc/dsconsole.md %}).
+This article explains the steps to deploy the CDW service on Openshift platform after successful configuration of the [CDP Data Services Management Console]({{ site.baseurl }}{% link docs/cdppvc/dsconsole.md %}).
 
 - TOC
 {:toc}
@@ -47,6 +47,8 @@ This article explains the steps to deploy the CDW service on Openshift platform 
     ![](../../assets/images/ocp4/ocpcdw3.png) 
 
     ![](../../assets/images/ocp4/ocpcdw4.png) 
+
+    Take note of the following artifacts.
     
     ```bash   
     [root@ocpbastion ~]# oc -n compute-1656330332-ph2j get pods
@@ -68,8 +70,7 @@ This article explains the steps to deploy the CDW service on Openshift platform 
     [root@ocpbastion ~]# oc -n compute-1656330332-ph2j describe pod query-executor-0-0 | grep Node:
     Node:         master03.ocp4.cdpkvm.cldr/10.15.4.184
 
-    [root@ocpbastion ~]# oc describe pv local-pv-abb1e063 | grep master
-                   pv.kubernetes.io/provisioned-by: local-volume-provisioner-master03.ocp4.cdpkvm.cldr-43054c69-a851-47c4-a3c3-b7d2b74d8a2e
+    [root@ocpbastion ~]# oc describe pv local-pv-abb1e063 | grep hostname
         Term 0:        kubernetes.io/hostname in [master03.ocp4.cdpkvm.cldr]
 
     [root@ocpbastion ~]# oc describe pv local-pv-abb1e063 | grep hostname
@@ -105,11 +106,11 @@ This article explains the steps to deploy the CDW service on Openshift platform 
     [root@ocpbastion ~]# oc -n impala-1656330683-rm4v describe pod coordinator-0 | grep Node:
     Node:         master03.ocp4.cdpkvm.cldr/10.15.4.184
     
-    [root@ocpbastion ~]# oc describe pv local-pv-abb1e063 | grep hostname
-        Term 0:        kubernetes.io/hostname in [master03.ocp4.cdpkvm.cldr]
-
     [root@ocpbastion ~]# oc -n impala-1656330683-rm4v describe pod impala-executor-000-0 | grep Node:
     Node:         master02.ocp4.cdpkvm.cldr/10.15.4.183
+    
+    [root@ocpbastion ~]# oc describe pv local-pv-abb1e063 | grep hostname
+        Term 0:        kubernetes.io/hostname in [master03.ocp4.cdpkvm.cldr]
    
     [root@ocpbastion ~]# oc describe pv local-pv-33a6a00a | grep hostname
         Term 0:        kubernetes.io/hostname in [master02.ocp4.cdpkvm.cldr]
@@ -178,7 +179,6 @@ This article explains the steps to deploy the CDW service on Openshift platform 
 
     [root@ocpbastion ~]# oc -n impala-1656333286-nrm8 describe pod impala-executor-000-3 | grep Node:
     Node:         master02.ocp4.cdpkvm.cldr/10.15.4.183
-
 
     [root@ocpbastion ~]# oc -n impala-1656333286-nrm8 exec -ti impala-executor-000-1 -- /bin/sh
     sh-4.2$ lsblk
