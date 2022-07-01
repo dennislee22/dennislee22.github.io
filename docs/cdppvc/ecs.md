@@ -126,5 +126,5 @@ This article explains the necessary steps to install the ECS platform upon succe
    Next Step
    {: .label .label-blue } 
    
-- Proceed to configure CDP PvC Data Services in the next [topic]({{ site.baseurl }}{% link docs/cdppvc/ds.md %}).
+- Proceed to configure CDP PvC Data Services in this [topic]({{ site.baseurl }}{% link docs/cdppvc/ds.md %}).
         
