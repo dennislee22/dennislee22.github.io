@@ -115,9 +115,11 @@ This article describes the steps to deploy the external docker registry in the d
     # systemctl restart nexus-repository-manager 
     ```
 
-10. Log in to the Nexus portal to setup the Docker repository with SSL port.
+10. Log in to the Nexus portal `https://nexus.cpdkvm.cldr:8443`
 
     ![](../../assets/images/ocp4/nexus0.png)
+    
+    Setup the Docker repository with SSL port. In this demo, the SSL-enabled docker repository URL is `https://nexus.cdpkvm.cldr:9999/cdppvc`.
     
     ![](../../assets/images/ocp4/nexus2.png)   
 
