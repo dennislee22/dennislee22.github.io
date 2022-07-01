@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Cloudera Data Warehouse
+title: Cloudera Data Warehouse on ECS
 parent: Data Services
 grand_parent: CDP Private Cloud
 nav_order: 3
@@ -9,7 +9,7 @@ nav_order: 3
 # Cloudera Data Warehouse (CDW)
 {: .no_toc }
 
-This article explains the steps to deploy the CDW service on the ECS platform after successful configuration of the [Data Services Management Console]({{ site.baseurl }}{% link docs/cdppvc/dsconsole.md %}).
+This article explains the steps to deploy the CDW service on ECS platform after successful configuration of the [Data Services Management Console]({{ site.baseurl }}{% link docs/cdppvc/dsconsole.md %}).
 
 - TOC
 {:toc}
@@ -71,7 +71,7 @@ This article explains the steps to deploy the CDW service on the ECS platform af
 
 ## CDW Artifacts inside ECS Platform
 
-   ```bash
+```bash
 # kubectl get ns
 NAME                                     STATUS   AGE
 cdp                                      Active   9h
@@ -92,26 +92,26 @@ vault-system                             Active   9h
 warehouse-1653181106-8vj6                Active   47m
 warehouse-1653181127-2v5k                Active   47m
 yunikorn                                 Active   9h
-   ```
+```
    
-   ```bash   
+```bash   
 # kubectl -n warehouse-1653181106-8vj6  get pods
 NAME                    READY   STATUS    RESTARTS   AGE
 das-event-processor-0   1/1     Running   0          49m
 metastore-0             1/1     Running   0          49m
 metastore-1             1/1     Running   0          48m
-   ```
+```
    
-   ```bash   
+```bash   
 # kubectl -n warehouse-1653181127-2v5k get pods
 NAME                                     READY   STATUS      RESTARTS   AGE
 das-event-processor-0                    1/1     Running     0          46m
 metastore-0                              1/1     Running     0          46m
 metastore-1                              1/1     Running     0          45m
 metastore-ranger-repo-create-job-fsjbk   0/1     Completed   0          46m
-   ```
+```
    
-   ```bash
+```bash
 # kubectl -n impala-1653181201-5gqh get pods
 NAME                                 READY   STATUS    RESTARTS   AGE
 catalogd-5cf658bb69-ksl7s            1/1     Running   0          44m
@@ -122,22 +122,22 @@ impala-autoscaler-578776d9c7-7fz5d   1/1     Running   0          44m
 impala-executor-000-0                1/1     Running   0          9m55s
 statestored-6499c77cfc-x2h58         1/1     Running   0          44m
 usage-monitor-85d5f97cf5-lj54b       1/1     Running   0          44m
-   ```
+```
    
-   ```bash
+```bash
 # kubectl -n impala-1653181201-5gqh get pvc
 NAME                                         STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   AGE
 scratch-cache-volume-coordinator-0           Bound    pvc-f13cc78e-4422-4688-914e-4ae273f631b0   100Gi      RWO            local-path     44m
 scratch-cache-volume-impala-executor-000-0   Bound    pvc-71bc8ec2-93d9-4006-afe5-3bb0bfbb0df1   100Gi      RWO            local-path     44m
-   ```
+```
 
-   ```bash
+```bash
 # kubectl get pv | grep impala
 pvc-71bc8ec2-93d9-4006-afe5-3bb0bfbb0df1   100Gi      RWO            Delete           Bound    impala-1653181201-5gqh/scratch-cache-volume-impala-executor-000-0                                                       local-path              46m
 pvc-f13cc78e-4422-4688-914e-4ae273f631b0   100Gi      RWO            Delete           Bound    impala-1653181201-5gqh/scratch-cache-volume-coordinator-0                                                               local-path              46m
-   ```
+```
 
-   ```bash
+```bash
 # kubectl describe pv pvc-f13cc78e-4422-4688-914e-4ae273f631b0
 Name:              pvc-f13cc78e-4422-4688-914e-4ae273f631b0
 Labels:            <none>
@@ -159,22 +159,22 @@ Source:
     Path:          /localpath/local-storage/pvc-f13cc78e-4422-4688-914e-4ae273f631b0_impala-1653181201-5gqh_scratch-cache-volume-coordinator-0
     HostPathType:  DirectoryOrCreate
 Events:            <none>
-   ```
+```
 
-   ```bash
+```bash
 # kubectl -n impala-1653181201-5gqh describe pod coordinator-0  | grep -i Node:
 Node:         ecsworker2.cdpkvm.cldr/10.15.4.171
-   ```
+```
 
 - In ecsworker2 node, check the contents in the localpath directory.
 
-   ```bash
-   # tree /localpath
-   /localpath
-   `-- local-storage
-    `-- pvc-f13cc78e-4422-4688-914e-4ae273f631b0_impala-1653181201-5gqh_scratch-cache-volume-coordinator-0
-        |-- impala-cache-file-07482f078a6de140:f90999799fab14bf
-        `-- impala-scratch
+```bash
+# tree /localpath
+/localpath
+`-- local-storage
+`-- pvc-f13cc78e-4422-4688-914e-4ae273f631b0_impala-1653181201-5gqh_scratch-cache-volume-coordinator-0
+|-- impala-cache-file-07482f078a6de140:f90999799fab14bf
+`-- impala-scratch
 
-    3 directories, 1 file
-   ```
+3 directories, 1 file
+```
