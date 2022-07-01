@@ -65,7 +65,6 @@ This article describes the steps to deploy the external Hashicorp Vault in the d
     DNS.1 = ${DOMAIN}
     IP.1 = 127.0.0.1
     IP.2 = 10.15.4.168
-
     EOF 
     
     # openssl req -new -key ${DOMAIN}.key -out ${DOMAIN}.csr -config csr.conf
@@ -135,7 +134,7 @@ This article describes the steps to deploy the external Hashicorp Vault in the d
     ```
 11. Check the status of the Vault. You might encounter the following errors and if yes, proceed with the following procedures to fix the errors.
 
-    ```bash
+    ```yaml
     # vault status
     Error checking seal status: Get "https://127.0.0.1:8200/v1/sys/seal-status": x509: cannot validate certificate for 127.0.0.1 because it doesn't contain any IP SANs
     
@@ -164,7 +163,7 @@ This article describes the steps to deploy the external Hashicorp Vault in the d
     
     ```
 
-12. Initialize the Vault operator. Jot down the root token and its associated `Unseal key` to unseal the Vault when needed.
+12. Initialize the Vault operator. Jot down the produced root token and its associated `Unseal key` to unseal the Vault when needed.
 
     ```bash
     # vault operator init
