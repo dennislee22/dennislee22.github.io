@@ -44,12 +44,15 @@ For Storage, enter the default block storageClass of the deployed [OCS]({{ site.
     ![](../../assets/images/ocp4/addocp7.png)  
     
 8. Click `Next`.   
+
     ![](../../assets/images/ocp4/addocp8.png)  
     
 9. Click `Finish`.    
+
     ![](../../assets/images/ocp4/addocp9.png)  
     
 10. The successful installation creates CDP PvC Control Plane on the Openshift platform as shown below.
+
     ![](../../assets/images/ocp4/addocp10.png)  
 
 
