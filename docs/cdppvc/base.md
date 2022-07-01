@@ -8,4 +8,4 @@ nav_order: 4
 
 # Base Cluster (Data Lake)
 
-The following subtopics explain the necessary steps to install and configure CDP PvC Base cluster.
+The following subtopics explain the necessary steps to install and configure the CDP PvC Base cluster.
