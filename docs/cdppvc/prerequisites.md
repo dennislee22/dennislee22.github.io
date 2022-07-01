@@ -188,8 +188,9 @@ nav_order: 2
 - The Openshift dashboard should reflect all components in green mode as depicted below.
     ![](../../assets/images/ocp4/ocp1.png)    
 - If custom ingress certificate is needed, deploy the certificate using [this](https://docs.openshift.com/container-platform/4.7/security/certificates/replacing-default-ingress-certificate.html) method prior to the installation of CDP Data Services Control Plane on the Openshift platform.
-
-
+- The `Local Storage Operator` must be provisioned to include the direct attached disk(s) for each Openshift worker node. See this [link]({{ site.baseurl }}{% link docs/cdppvc/ocpcdwdisk.md %}) to explore the provisioning method.    
+    
+    
 ### Openshift Container Storage
 
 - Openshift Container Storage (OCS) serves as the distributed block storage subsystem to persist data for the containers in the Openshift platform. Each OCS node is equipped with the direct-attached SSD/NVMe disk.
