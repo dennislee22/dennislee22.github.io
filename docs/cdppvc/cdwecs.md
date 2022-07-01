@@ -6,7 +6,7 @@ grand_parent: CDP Private Cloud
 nav_order: 3
 ---
 
-# Cloudera Data Warehouse (CDW)
+# Cloudera Data Warehouse (CDW) on ECS
 {: .no_toc }
 
 This article explains the steps to deploy the CDW service on ECS platform after successful configuration of the [Data Services Management Console]({{ site.baseurl }}{% link docs/cdppvc/dsconsole.md %}).
