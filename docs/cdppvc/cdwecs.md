@@ -30,9 +30,11 @@ This article explains the steps to deploy the CDW service on ECS platform after 
 
     ![](../../assets/images/dsconsole/cmds.png)
     
-2. The system will redirect the browser to the following page. Click `Data Warehouse`.   
+2. The system will redirect the browser to the following page. Log in using LDAP user credential and click `Data Warehouse`.   
 
-    ![](../../assets/images/dsconsole/dsmenu.png)
+    ![](../../assets/images/dsconsole/dslogin1.png)
+    
+    ![](../../assets/images/dsconsole/dslogin2.png)
 
 3. Click the thunder icon of the newly created data lake environment. Fill in the parameters using LDAP user credentials. Note that the databases must be pre-created as highlighted in the [prerequisites]({{ site.baseurl }}{% link docs/cdppvc/prerequisites.md %}) topic. 
 
