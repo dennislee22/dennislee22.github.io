@@ -10,25 +10,15 @@ nav_order: 2
 # Installation Prerequisites
 {: .no_toc }
 
-CDP Private Cloud solution requires direct integration with some 3rd party/external components. 
-
-For CDP Private Cloud solution with Openshift, the required external components are represented by the purple-coloured boxes as shown below.
+- CDP Private Cloud solution requires direct integration with some 3rd party/external components. 
+- For CDP Private Cloud solution with Openshift platform, the required external components are represented by the purple-coloured boxes as shown in the following diagram.
 
 ![](../../assets/images/3partyocp.png)
 
-For CDP Private Cloud solution with ECS, the required external components are represented by the purple-coloured boxes as shown below.
+- For CDP Private Cloud solution with ECS platform, the required external components are represented by the purple-coloured boxes as shown below.
 
 ![](../../assets/images/3partyecs.png)
 
-This article and its sub-articles explain the requirements as well as the step-by-step procedure to deploy CDP Private Cloud solution using the following software versions.
-
-| Software       | Version         |
-|:-------------|:------------------|
-| CDP Base           | 7.1.7 `rel. May 2022`  | 
-| Cloudera Manager   | 7.5.5 `rel. May 2022`  | 
-| CDP Data Services  | 1.3.4 `rel. May 2022`  | 
-
-The following prerequisites need to be prepared prior to installing the Data Services on the Kubernetes platform. The CDP Private Cloud solution with Openshift platform has a slightly different requirements which will not be covered in this article.
 
 - TOC
 {:toc}
@@ -39,10 +29,18 @@ The following prerequisites need to be prepared prior to installing the Data Ser
 ### Cloudera Subscription
 
 - Obtain a valid product subscription from Cloudera. Cloudera Manager requires a valid license to install accordingly. 
+- The software version of the CDP Private Cloud solution components involved in this demo is stated below.
+
+| Software       | Version         |
+|:-------------|:------------------|
+| CDP Base           | 7.1.7 `rel. May 2022`  | 
+| Cloudera Manager   | 7.5.5 `rel. May 2022`  | 
+| CDP Data Services  | 1.3.4 `rel. May 2022`  | 
+
 
 ### Cloudera Services
 
-- The minimum CDP PvC Base services and its dependencies to install CML, CDW and CDE are illustrated in the following table.
+- The minimum CDP PvC Base services and its dependencies to install CML, CDW and CDE are illustrated in the table below.
 
     ![](../../assets/images/base_svc_table1.png)
     
@@ -72,25 +70,28 @@ The following prerequisites need to be prepared prior to installing the Data Ser
 
 - An external DNS server must contain the forward and reverse zones of the company domain name. The external DNS server must be able to resolve the hostname of all CDP PvC hosts and the 3rd party components (includes Kerberos, LDAP server, external database, NFS server) and perform reverse DNS lookup. 
 - Wildcard DNS entry must be configured; e.g. `*.apps.ecs1.cdpkvm.cldr`. This helps to reduce Day-2 operational task to set separate DNS entry for each newly provisioned external-facing application/service.
+- The external DNS server is expected to be ready prior to installing the CDP Private Cloud solution and its installation procedure is not covered in this article.
 
 ![](../../assets/images/wildcarddns.png)
 
 ### Kerberos + LDAP Server + Certificate
 
 - An [external Kerberos server](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/security-kerberos-authentication/topics/cm-security-kerberos-enabling-intro.html) and the Kerberos key distribution center (KDC) (with a realm established) must be available to provide authentication to CDP services, users and hosts.
-- An external secured LDAP-compliant identity/directory server (ldaps) is required to enable the CDP Private Cloud solution to look up for the user accounts and groups in the directory.
+- An external `secured` LDAP-compliant identity/directory server (ldaps) is required to enable the CDP Private Cloud solution to look up for the user accounts and groups in the directory.
 - [Auto-TLS](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/security-encrypting-data-in-transit/topics/cm-security-auto-tls.html) should be enabled using certificates created and managed by a Cloudera Manager certificate authority (CA), or certificates signed by a trusted public CA or your own internal CA. Prepare the certificate of your choice.
+- The external IDM is expected to be ready prior to installing the CDP Private Cloud solution and its installation procedure is not covered in this article.
 
 ### External NFS
 
 - CML requires external [NFS server](https://docs.cloudera.com/machine-learning/1.3.4/private-cloud-requirements/topics/ml-pvc-external-nfs-server.html) to store the project files and directories. NFS version 4.1 must be supported.
+- The external NFS storage is expected to be ready prior to installing the CDP Private Cloud solution. External NFS storage installation is not covered in this article.
 
 ### Relational Database
 
 - The database requirements is described in this [link](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/installation/topics/cdpdc-database-requirements.html). 
 - The reference settings of PostgreSQL database can be obtained [here](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/installation/topics/cdpdc-configuring-starting-postgresql-server.html).
 - [SSL](https://docs.cloudera.com/cdp-private-cloud-data-services/1.3.4/installation/topics/cdppvc-installation-external-db-setup.html) must be enabled in the database.
-- This demo uses [PostgreSQL 12](https://docs.cloudera.com/data-warehouse/1.3.4/private-cloud-getting-started/topics/dw-private-cloud-base-cluster-database-requirements.html) database as the external database.
+- This demo uses [PostgreSQL 12](https://docs.cloudera.com/data-warehouse/1.3.4/private-cloud-getting-started/topics/dw-private-cloud-base-cluster-database-requirements.html) database as the external database. The database is expected to be ready prior to installing the CDP Private Cloud solution. Postgres database installation is not covered in this article.
 - Create the following databases in the external PostgreSQL server with its users and the associated privileges. Note that simple passwords are being created but the actual production environment should make use of complex passwords. Not every created database is being used here but serves as a placeholder for future use case.
 
   ```yaml
@@ -160,15 +161,17 @@ The following prerequisites need to be prepared prior to installing the Data Ser
 ### Openshift Settings
 
 - Prepare the `kubeconfig` file that has the cluster access for a single user with `cluster-admin` privilege.
+- Openshift platform is expected to be ready prior to installing the CDP PvC Data Services. Openshift installation is not covered in this article. Please refer to the official guidelines from Red Hat. 
+- If custom ingress certificate is needed, deploy the certificate using [this](https://docs.openshift.com/container-platform/4.7/security/certificates/replacing-default-ingress-certificate.html) method prior to the installation of CDP Data Services Control Plane on the Openshift platform.
+
 
 ### Openshift Container Storage
 
 - Openshift Container Storage (OCS) serves as the distributed block storage subsystem to persist data for the containers in the Openshift platform. Each OCS node is equipped with the direct-attached SSD/NVMe disk.
+- OCS is expected to be ready prior to installing the CDP PvC Data Services. OCS installation is not covered in this article. Please refer to the official guidelines from Red Hat. 
 - Configure the OCS block storage PV as the default storageClass.
 
 ![](../../assets/images/ocp4/ocp4.png)
-
-- If custom ingress certificate is needed, deploy the certificate using [this](https://docs.openshift.com/container-platform/4.7/security/certificates/replacing-default-ingress-certificate.html) method prior to the installation of CDP Data Services Control Plane on the Openshift platform.
 
 ### Docker Registry
 
