@@ -9,7 +9,7 @@ nav_order: 3
 # CDP Data Services Control Plane on Openshift
 {: .no_toc }
 
-This article describes the steps to deploy the CDP Data Services Control Plane on the Openshift platform.
+This article describes the steps to deploy the CDP Data Services Control Plane on the Openshift platform. Please ensure that all the [prerequisites]({{ site.baseurl }}{% link docs/cdppvc/prerequisites.md %}) have already been prepared accordingly.
 
 - TOC
 {:toc}
