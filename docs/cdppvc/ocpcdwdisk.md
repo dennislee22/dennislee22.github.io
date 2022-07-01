@@ -29,11 +29,9 @@ This article describes the steps to deploy and scale the direct attached disk(s)
 
     ![](../../assets/images/ocp4/ocplocaldiskcdw2.png)
 
-4. Enter the fields based on the identical device path of the direct attached disk for each Openshift worker node.
-
     ![](../../assets/images/ocp4/ocplocaldiskcdw3.png)
     
-5. Successful implementation will produce the following local persistent volumes automatically. In this demo, each Openshift worker node has a single 400Gi direct attached SSD.
+4. Successful implementation will produce the following local persistent volumes automatically. In this demo, each Openshift worker node has a single 400Gi direct attached SSD.
 
     ```bash
     [root@ocpbastion ~]# oc get pv | head -1; oc get pv | grep local
@@ -46,20 +44,19 @@ This article describes the steps to deploy and scale the direct attached disk(s)
     local-pv-aca516bf                          300Gi      RWO            Delete           Bound       openshift-storage/ocs-deviceset-vdb-0-data-1t74g8                                            vdb                                    24h
     ```    
 
-6. Successful implememtation also creates a new storageClass `cdw-disk` ready to be consumed by CDW.
+5. Successful implememtation also creates a new storageClass `cdw-disk` ready to be consumed by CDW.
 
     ```bash
     [root@ocpbastion ~]# oc get sc | head -1; oc get sc | grep cdw
     NAME                                    PROVISIONER                             RECLAIMPOLICY   VOLUMEBINDINGMODE      ALLOWVOLUMEEXPANSION   AGE
     cdw-disk                                kubernetes.io/no-provisioner            Delete          WaitForFirstConsumer   false                  2m9s
-              24h
     ```
     
 ## Scale CDW Disk in Openshift
 
 1. A new 200Gi disk has been added in each Openshift worker node and the device path is `/dev/vdd`.
 
-2. In Openshift dashboard, navigate to `Operators` > `Installed Operators` > `Local Storage Operator` > `All Instances` > `cdw-localdisk-each-worker` > `YAML`. Edit the file by adding `- /dev/vdd` under the `devicePaths` category. Click `Save` button.
+2. In Openshift dashboard, navigate to `Operators` > `Installed Operators` > `Local Storage Operator` > `All Instances` > `cdw-localdisk-each-worker` > `YAML`. Edit the YAML file by adding `- /dev/vdd` under the `devicePaths` category. Click `Save` button.
     
     ![](../../assets/images/ocp4/ocplocaldiskcdw4.png)
     
