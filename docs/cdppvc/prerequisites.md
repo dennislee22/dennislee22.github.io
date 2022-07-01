@@ -213,4 +213,4 @@ nav_order: 2
    Next Step
    {: .label .label-blue }
    
-- After preparing the abovementioned prerequisites, proceed to check out the steps to install Cloudera Manager in the subsequent [subtopic]({{ site.baseurl }}{% link docs/cdppvc/cm.md %}).
+- After preparing the abovementioned prerequisites, proceed to check out the steps to install Cloudera Manager in the subsequent [topic]({{ site.baseurl }}{% link docs/cdppvc/cm.md %}).
