@@ -9,7 +9,7 @@ nav_order: 1
 # Docker Registry in Nexus
 {: .no_toc }
 
-This article describes the steps to deploy the external docker registry using Nexus in the designated Nexus server.
+This article describes the steps to deploy the external docker registry in the designated Nexus server.
 
 ---
 
