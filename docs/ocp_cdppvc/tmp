@@ -88,22 +88,6 @@ master03.ocp4.cdpkvm.cldr   Ready    master,worker   4h31m   v1.20.15+98b2293
 
 
 
-[root@ocpbastion ~]# oc get pv
-NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS      CLAIM                                               STORAGECLASS                  REASON   AGE
-local-pv-17bf8fbc                          300Gi      RWO            Delete           Bound       openshift-storage/ocs-deviceset-vdb-0-data-2slfmj   vdb                                    23m
-local-pv-3115c83f                          400Gi      RWO            Delete           Available                                                       vdb                                    2m41s
-local-pv-62cdcca                           300Gi      RWO            Delete           Bound       openshift-storage/ocs-deviceset-vdb-0-data-06dblw   vdb                                    23m
-local-pv-9c30413c                          400Gi      RWO            Delete           Available                                                       vdb                                    2m31s
-local-pv-aca516bf                          300Gi      RWO            Delete           Bound       openshift-storage/ocs-deviceset-vdb-0-data-1t74g8   vdb                                    23m
-local-pv-e330e1ed                          400Gi      RWO            Delete           Available                                                       vdb                                    2m52s
-pvc-5146e4af-95c1-4de2-b0f6-6da0fb3f6db4   50Gi       RWO            Delete           Bound       openshift-storage/db-noobaa-db-pg-0                 ocs-storagecluster-ceph-rbd            20m
-
-[root@ocpbastion ~]# oc get pvc
-NAME                              STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS                  AGE
-db-noobaa-db-pg-0                 Bound    pvc-5146e4af-95c1-4de2-b0f6-6da0fb3f6db4   50Gi       RWO            ocs-storagecluster-ceph-rbd   33m
-ocs-deviceset-vdb-0-data-06dblw   Bound    local-pv-62cdcca                           300Gi      RWO            vdb                           34m
-ocs-deviceset-vdb-0-data-1t74g8   Bound    local-pv-aca516bf                          300Gi      RWO            vdb                           34m
-ocs-deviceset-vdb-0-data-2slfmj   Bound    local-pv-17bf8fbc                          300Gi      RWO            vdb                           34m
 
 
 [root@ocpbastion ~]# oc get sc
