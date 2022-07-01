@@ -1,15 +1,15 @@
 ---
 layout: default
-title: Cloudera Data Warehouse on ECS
+title: Cloudera Data Warehouse on Openshift
 parent: Data Services
 grand_parent: CDP Private Cloud
-nav_order: 3
+nav_order: 4
 ---
 
-# Cloudera Data Warehouse (CDW)
+# Cloudera Data Warehouse (CDW) on Openshift
 {: .no_toc }
 
-This article explains the steps to deploy the CDW service on ECS platform after successful configuration of the [Data Services Management Console]({{ site.baseurl }}{% link docs/cdppvc/dsconsole.md %}).
+This article explains the steps to deploy the CDW service on Openshift platform after successful configuration of the [Data Services Management Console]({{ site.baseurl }}{% link docs/cdppvc/dsconsole.md %}).
 
 - TOC
 {:toc}
@@ -26,155 +26,182 @@ This article explains the steps to deploy the CDW service on ECS platform after 
 
 ## CDW Deployment
 
-1. In CM, navigate to `Data Services`. Click `Open CDP Private Cloud Data Services`. 
+1. In CM, navigate to `Data Services`. Click `Open CDP Private Cloud Data Services` of `cdp`. 
 
-    ![](../../assets/images/dsconsole/cmds.png)
+    ![](../../assets/images/ocp4/addocp10.png) 
     
-2. The system will redirect the browser to the following page. Click `Data Warehouse`.   
+2. The system will redirect the browser to the following page. Log in using LDAP user credential and click `Data Warehouse`.   
 
-    ![](../../assets/images/dsconsole/dsmenu.png)
+    ![](../../assets/images/dsconsole/dslogin1.png)
+    
+    ![](../../assets/images/dsconsole/dslogin2.png)
 
 3. Click the thunder icon of the newly created data lake environment. Fill in the parameters using LDAP user credentials. Note that the databases must be pre-created as highlighted in the [prerequisites]({{ site.baseurl }}{% link docs/cdppvc/prerequisites.md %}) topic. 
 
-    ![](../../assets/images/cdw/cdw1.png)
+    ![](../../assets/images/ocp4/ocpcdw1.png)
 
-4. Create a new database catalog. 
-
-    ![](../../assets/images/cdw/cdw2.png)
+    ![](../../assets/images/ocp4/ocpcdw2.png)
     
-5. Create a new virtual warehouse as shown in the following example.
+4. Create a new `Hive` virtual warehouse with 1 executor as shown below.
 
-    ![](../../assets/images/cdw/cdw3.png)    
+    ![](../../assets/images/ocp4/ocpcdw3.png) 
+
+    ![](../../assets/images/ocp4/ocpcdw4.png) 
     
-    ![](../../assets/images/cdw/cdw4.png)   
+    ```bash   
+    [root@ocpbastion ~]# oc -n compute-1656330332-ph2j get pods
+    NAME                             READY   STATUS    RESTARTS   AGE
+    das-webapp-0                     1/1     Running   0          2m43s
+    hiveserver2-0                    1/1     Running   0          2m43s
+    huebackend-0                     1/1     Running   0          2m43s
+    huefrontend-6bcbb8fdfb-8kb7s     1/1     Running   0          2m43s
+    query-coordinator-0-0            1/1     Running   0          2m32s
+    query-executor-0-0               1/1     Running   0          2m32s
+    standalone-compute-operator-0    1/1     Running   0          2m43s
+    usage-monitor-564fdcdbcc-mbgmc   1/1     Running   0          2m43s
+
+    [root@ocpbastion ~]# oc -n compute-1656330332-ph2j get pvc
+    NAME                                                  STATUS   VOLUME              CAPACITY   ACCESS MODES   STORAGECLASS   AGE
+    query-executor-1656330358-volume-query-executor-0-0   Bound    local-pv-abb1e063   400Gi      RWO            cdw-disk       2m34s
+
+
+    [root@ocpbastion ~]# oc -n compute-1656330332-ph2j describe pod query-executor-0-0 | grep Node:
+    Node:         master03.ocp4.cdpkvm.cldr/10.15.4.184
+
+    [root@ocpbastion ~]# oc describe pv local-pv-abb1e063 | grep master
+                   pv.kubernetes.io/provisioned-by: local-volume-provisioner-master03.ocp4.cdpkvm.cldr-43054c69-a851-47c4-a3c3-b7d2b74d8a2e
+        Term 0:        kubernetes.io/hostname in [master03.ocp4.cdpkvm.cldr]
+
+    [root@ocpbastion ~]# oc describe pv local-pv-abb1e063 | grep hostname
+        Term 0:        kubernetes.io/hostname in [master03.ocp4.cdpkvm.cldr]
+    ```
     
-6. Click `HUE` on the newly created virtual warehouse to access the Hue dashboard.
+5. Remove the above created `Hive` virtual warehouse. Create a new `Impala` virtual warehouse with 1 executor as shown in the following example.
 
-7. In Hue dashboard, run the SELECT request on the default database will trigger "AuthorizationException" error. This is because the authorization for this user has not been configured in Ranger.
-
-    ![](../../assets/images/cdw/cdwranger1.png)   
-
-8. In Ranger dashboard, click the newly created warehouse under the `Hadoop SQL` category.
-
-    ![](../../assets/images/cdw/cdwranger2.png)   
+    ![](../../assets/images/ocp4/ocpcdw5.png) 
     
-9. Click `all - database, table`. Add the LDAP user in the list and click `save`.
+    ![](../../assets/images/ocp4/ocpcdw6.png) 
+    
+    Take note of the following artifacts.
+    
+    ```bash    
+    [root@ocpbastion ~]# oc -n impala-1656330683-rm4v get pods
+    NAME                                 READY   STATUS    RESTARTS   AGE
+    catalogd-74869dbf89-ldrmh            1/1     Running   0          2m2s
+    coordinator-0                        4/4     Running   0          2m2s
+    coordinator-1                        3/4     Running   0          80s
+    huebackend-0                         2/2     Running   0          2m2s
+    huefrontend-74c45775c-zz2lv          1/1     Running   0          2m2s
+    impala-autoscaler-5b484b9fb7-znsxw   1/1     Running   0          2m1s
+    impala-executor-000-0                1/1     Running   0          2m2s
+    statestored-694d8b5fbb-529tp         1/1     Running   0          2m2s
+    usage-monitor-755869884-ww6cn        1/1     Running   0          2m2s
 
-    ![](../../assets/images/cdw/cdwranger3.png)   
-    
-10. The outcome should be similar as follows.   
-    
-    ![](../../assets/images/cdw/cdwranger4.png)      
-    
-11. In Hue dashboard, rerun the same SELECT request on the default database. The result should no longer prompt the same "AuthorizationException" error.  
-    
+    [root@ocpbastion ~]# oc -n impala-1656330683-rm4v get pvc
+    NAME                                         STATUS   VOLUME              CAPACITY   ACCESS MODES   STORAGECLASS   AGE
+    scratch-cache-volume-coordinator-0           Bound    local-pv-abb1e063   400Gi      RWO            cdw-disk       9s
+    scratch-cache-volume-impala-executor-000-0   Bound    local-pv-33a6a00a   400Gi      RWO            cdw-disk       9s
 
-## CDW Artifacts inside ECS Platform
+    [root@ocpbastion ~]# oc -n impala-1656330683-rm4v describe pod coordinator-0 | grep Node:
+    Node:         master03.ocp4.cdpkvm.cldr/10.15.4.184
+    
+    [root@ocpbastion ~]# oc describe pv local-pv-abb1e063 | grep hostname
+        Term 0:        kubernetes.io/hostname in [master03.ocp4.cdpkvm.cldr]
 
-```bash
-# kubectl get ns
-NAME                                     STATUS   AGE
-cdp                                      Active   9h
-cdp-env-1-85b71ddc-monitoring-platform   Active   117m
-default                                  Active   9h
-default-470e0dec-monitoring-platform     Active   9h
-ecs-webhooks                             Active   9h
-impala-1653181201-5gqh                   Active   46m
-infra-prometheus                         Active   9h
-kube-node-lease                          Active   9h
-kube-public                              Active   9h
-kube-system                              Active   9h
-kubernetes-dashboard                     Active   9h
-local-path-storage                       Active   9h
-longhorn-system                          Active   9h
-shared-services                          Active   116m
-vault-system                             Active   9h
-warehouse-1653181106-8vj6                Active   47m
-warehouse-1653181127-2v5k                Active   47m
-yunikorn                                 Active   9h
-```
+    [root@ocpbastion ~]# oc -n impala-1656330683-rm4v describe pod impala-executor-000-0 | grep Node:
+    Node:         master02.ocp4.cdpkvm.cldr/10.15.4.183
    
-```bash   
-# kubectl -n warehouse-1653181106-8vj6  get pods
-NAME                    READY   STATUS    RESTARTS   AGE
-das-event-processor-0   1/1     Running   0          49m
-metastore-0             1/1     Running   0          49m
-metastore-1             1/1     Running   0          48m
-```
-   
-```bash   
-# kubectl -n warehouse-1653181127-2v5k get pods
-NAME                                     READY   STATUS      RESTARTS   AGE
-das-event-processor-0                    1/1     Running     0          46m
-metastore-0                              1/1     Running     0          46m
-metastore-1                              1/1     Running     0          45m
-metastore-ranger-repo-create-job-fsjbk   0/1     Completed   0          46m
-```
-   
-```bash
-# kubectl -n impala-1653181201-5gqh get pods
-NAME                                 READY   STATUS    RESTARTS   AGE
-catalogd-5cf658bb69-ksl7s            1/1     Running   0          44m
-coordinator-0                        4/4     Running   0          44m
-huebackend-0                         2/2     Running   0          44m
-huefrontend-5949769cf-562r4          1/1     Running   0          44m
-impala-autoscaler-578776d9c7-7fz5d   1/1     Running   0          44m
-impala-executor-000-0                1/1     Running   0          9m55s
-statestored-6499c77cfc-x2h58         1/1     Running   0          44m
-usage-monitor-85d5f97cf5-lj54b       1/1     Running   0          44m
-```
-   
-```bash
-# kubectl -n impala-1653181201-5gqh get pvc
-NAME                                         STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   AGE
-scratch-cache-volume-coordinator-0           Bound    pvc-f13cc78e-4422-4688-914e-4ae273f631b0   100Gi      RWO            local-path     44m
-scratch-cache-volume-impala-executor-000-0   Bound    pvc-71bc8ec2-93d9-4006-afe5-3bb0bfbb0df1   100Gi      RWO            local-path     44m
-```
+    [root@ocpbastion ~]# oc describe pv local-pv-33a6a00a | grep hostname
+        Term 0:        kubernetes.io/hostname in [master02.ocp4.cdpkvm.cldr]
 
-```bash
-# kubectl get pv | grep impala
-pvc-71bc8ec2-93d9-4006-afe5-3bb0bfbb0df1   100Gi      RWO            Delete           Bound    impala-1653181201-5gqh/scratch-cache-volume-impala-executor-000-0                                                       local-path              46m
-pvc-f13cc78e-4422-4688-914e-4ae273f631b0   100Gi      RWO            Delete           Bound    impala-1653181201-5gqh/scratch-cache-volume-coordinator-0                                                               local-path              46m
-```
+    [root@ocpbastion ~]# ssh core@master03.ocp4.cdpkvm.cldr
+    Red Hat Enterprise Linux CoreOS 47.84.202206080457-0    
+    Part of OpenShift 4.7, RHCOS is a Kubernetes native operating system
+    managed by the Machine Config Operator (`clusteroperator/machine-config`).
 
-```bash
-# kubectl describe pv pvc-f13cc78e-4422-4688-914e-4ae273f631b0
-Name:              pvc-f13cc78e-4422-4688-914e-4ae273f631b0
-Labels:            <none>
-Annotations:       pv.kubernetes.io/provisioned-by: rancher.io/local-path
-Finalizers:        [kubernetes.io/pv-protection]
-StorageClass:      local-path
-Status:            Bound
-Claim:             impala-1653181201-5gqh/scratch-cache-volume-coordinator-0
-Reclaim Policy:    Delete
-Access Modes:      RWO
-VolumeMode:        Filesystem
-Capacity:          100Gi
-Node Affinity:     
-  Required Terms:  
-    Term 0:        kubernetes.io/hostname in [ecsworker2.cdpkvm.cldr]
-Message:           
-Source:
-    Type:          HostPath (bare host directory volume)
-    Path:          /localpath/local-storage/pvc-f13cc78e-4422-4688-914e-4ae273f631b0_impala-1653181201-5gqh_scratch-cache-volume-coordinator-0
-    HostPathType:  DirectoryOrCreate
-Events:            <none>
-```
+    WARNING: Direct SSH access to machines is not recommended; instead,
+    make configuration changes via `machineconfig` objects:
+    https://docs.openshift.com/container-platform/4.7/architecture/architecture-rhcos.html
 
-```bash
-# kubectl -n impala-1653181201-5gqh describe pod coordinator-0  | grep -i Node:
-Node:         ecsworker2.cdpkvm.cldr/10.15.4.171
-```
+    ---
+    Last login: Mon Jun 27 11:27:34 2022 from 10.15.4.189
 
-- In ecsworker2 node, check the contents in the localpath directory.
+    [core@master03 ~]$ ll /mnt/local-storage/
+    total 0
+    drwxr-xr-x. 2 root root 17 Jun 27 08:41 cdw-disk
+    drwxr-xr-x. 2 root root 17 Jun 26 15:18 vdb
+    
+    [core@master03 ~]$ ll /mnt/local-storage/cdw-disk
+    total 0
+    lrwxrwxrwx. 1 root root 8 Jun 27 08:41 vdc -> /dev/vdc                                             cdw-disk                               11m
+    ```
 
-```bash
-# tree /localpath
-/localpath
-`-- local-storage
-`-- pvc-f13cc78e-4422-4688-914e-4ae273f631b0_impala-1653181201-5gqh_scratch-cache-volume-coordinator-0
-|-- impala-cache-file-07482f078a6de140:f90999799fab14bf
-`-- impala-scratch
+6. Remove the above created `Impala` virtual warehouse. Create a new `Hive` virtual warehouse with 4 executors as shown in the following example.
+    
+    ![](../../assets/images/ocp4/ocpcdw7.png) 
+    
+    ![](../../assets/images/ocp4/ocpcdw8.png) 
+    
+    Take note of the following artifacts.
+    
+    ```bash    
+    [root@ocpbastion ~]# oc -n impala-1656333286-nrm8 get pods
+    NAME                                READY   STATUS    RESTARTS   AGE
+    catalogd-567f684bcb-4dxph           1/1     Running   0          80s
+    coordinator-0                       4/4     Running   0          80s
+    huebackend-0                        2/2     Running   0          80s
+    huefrontend-7c765bf44d-47dkq        1/1     Running   0          80s
+    impala-autoscaler-6c7564d7f-lpndc   1/1     Running   0          80s
+    impala-executor-000-0               1/1     Running   0          80s
+    impala-executor-000-1               1/1     Running   0          80s
+    impala-executor-000-2               1/1     Running   0          80s
+    impala-executor-000-3               1/1     Running   0          80s
+    statestored-f9d6b4bb7-hhk65         1/1     Running   0          80s
+    usage-monitor-8677878c4b-q5hx8      1/1     Running   0          80s
+    
+    [root@ocpbastion ~]# oc -n impala-1656333286-nrm8 get pvc
+    NAME                                         STATUS   VOLUME              CAPACITY   ACCESS MODES   STORAGECLASS   AGE
+    scratch-cache-volume-coordinator-0           Bound    local-pv-abb1e063   400Gi      RWO            cdw-disk       103s
+    scratch-cache-volume-impala-executor-000-0   Bound    local-pv-d30bd8ac   200Gi      RWO            cdw-disk       103s
+    scratch-cache-volume-impala-executor-000-1   Bound    local-pv-dc533915   200Gi      RWO            cdw-disk       103s
+    scratch-cache-volume-impala-executor-000-2   Bound    local-pv-c8fe6eea   200Gi      RWO            cdw-disk       103s
+    scratch-cache-volume-impala-executor-000-3   Bound    local-pv-33a6a00a   400Gi      RWO            cdw-disk       103s
 
-3 directories, 1 file
-```
+    [root@ocpbastion ~]# oc describe pv local-pv-33a6a00a | grep hostname
+        Term 0:        kubernetes.io/hostname in [master02.ocp4.cdpkvm.cldr]
+
+    [root@ocpbastion ~]# oc describe pv local-pv-dc533915 | grep hostname
+        Term 0:        kubernetes.io/hostname in [master02.ocp4.cdpkvm.cldr]
+    
+    [root@ocpbastion ~]# oc -n impala-1656333286-nrm8 describe pod impala-executor-000-1 | grep Node:
+    Node:         master02.ocp4.cdpkvm.cldr/10.15.4.183
+
+    [root@ocpbastion ~]# oc -n impala-1656333286-nrm8 describe pod impala-executor-000-3 | grep Node:
+    Node:         master02.ocp4.cdpkvm.cldr/10.15.4.183
+
+
+    [root@ocpbastion ~]# oc -n impala-1656333286-nrm8 exec -ti impala-executor-000-1 -- /bin/sh
+    sh-4.2$ lsblk
+    NAME   MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+    rbd0   251:0    0    2G  0 disk 
+    vdd    252:48   0  200G  0 disk /opt/impala/scratch
+    vdb    252:16   0  300G  0 disk 
+    rbd1   251:16   0    2G  0 disk 
+    loop0    7:0    0  300G  0 loop 
+    vdc    252:32   0  400G  0 disk 
+    vda    252:0    0  100G  0 disk 
+    |-vda4 252:4    0 99.5G  0 part /opt/impala/logs/minidumps
+    |-vda2 252:2    0  127M  0 part 
+    |-vda3 252:3    0  384M  0 part 
+    `-vda1 252:1    0    1M  0 part 
+    rbd2   251:32   0   20G  0 disk 
+
+    sh-4.2$ ls -l /opt/impala/scratch/
+    total 0
+    -rw-r--r--. 1 hive 1000800000 0 Jun 27 12:35 impala-cache-file-524e9102ab341ef1:1917da93c3905ab4
+    drwxr-sr-x. 2 hive 1000800000 6 Jun 27 12:35 impala-scratch
+    ```
+
+
+    
+  
