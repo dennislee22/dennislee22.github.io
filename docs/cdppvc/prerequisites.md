@@ -27,9 +27,9 @@ nav_order: 2
 ## General Requirements
 
 ### Software Version
-
-- Obtain a valid product subscription from Cloudera. Cloudera Manager requires a valid license to install accordingly. 
+ 
 - The software version of the CDP Private Cloud solution components involved in this demo is stated below.
+- Obtain a valid product subscription from Cloudera. Cloudera Manager requires a valid license to install accordingly.
 
 | Software       | Version         |
 |:-------------|:------------------|
