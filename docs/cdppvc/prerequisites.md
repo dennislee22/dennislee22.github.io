@@ -37,6 +37,7 @@ nav_order: 2
 | Cloudera Manager   | 7.5.5 `rel. May 2022`  | 
 | CDP Data Services  | 1.3.4 `rel. May 2022`  | 
 
+- The supported Openshift version is published in this [link](https://docs.cloudera.com/cdp-private-cloud-data-services/1.3.4/installation/topics/cdppvc-installation-openshift.html).
 
 ### CDP Base Services
 
@@ -184,6 +185,8 @@ nav_order: 2
 
 - Prepare the `kubeconfig` file for a single user with `cluster-admin` privilege that has the Openshift cluster access.
 - Openshift platform is expected to be ready prior to installing the CDP PvC Data Services. Openshift installation is not covered in this article. Please refer to the official guidelines from Red Hat. 
+- The Openshift dashboard should reflect all components in green mode as depicted below.
+    ![](../../assets/images/ocp4/ocp1.png)    
 - If custom ingress certificate is needed, deploy the certificate using [this](https://docs.openshift.com/container-platform/4.7/security/certificates/replacing-default-ingress-certificate.html) method prior to the installation of CDP Data Services Control Plane on the Openshift platform.
 
 
