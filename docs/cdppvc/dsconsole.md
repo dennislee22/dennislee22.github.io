@@ -137,7 +137,8 @@ This article explains the steps to deploy and configure the CDP Data Services en
    {: .label .label-blue } 
    
 - Create the CML service in this [subtopic]({{ site.baseurl }}{% link docs/cdppvc/cml.md %}).
-- Create the CDW service in this [subtopic]({{ site.baseurl }}{% link docs/cdppvc/cdw.md %}).
+- Create the CDW service (ECS) in this [subtopic]({{ site.baseurl }}{% link docs/cdppvc/cdwecs.md %}).
+- Create the CDW service (Openshift) in this [subtopic]({{ site.baseurl }}{% link docs/cdppvc/cdwocp.md %}).
 - Create the CDE service in this [subtopic]({{ site.baseurl }}{% link docs/cdppvc/cde.md %}).
     
 
