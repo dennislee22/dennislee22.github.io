@@ -9,7 +9,7 @@ nav_order: 4
 # Cloudera Data Warehouse (CDW) on Openshift
 {: .no_toc }
 
-This article explains the steps to deploy the CDW service on Openshift platform after successful configuration of the [CDP Data Services Management Console]({{ site.baseurl }}{% link docs/cdppvc/dsconsole.md %}).
+This article explains the steps to deploy the CDW service on Openshift platform after successful configuration of the [CDP PvC Data Services Management Console]({{ site.baseurl }}{% link docs/cdppvc/dsconsole.md %}).
 
 - TOC
 {:toc}
