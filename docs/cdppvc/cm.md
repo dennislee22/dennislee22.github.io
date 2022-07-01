@@ -155,45 +155,45 @@ This article explains the necessary steps to install Cloudera Manager (CM) on Ce
     
 8. After successful installation, log in to the CM website. `https://cm.cdpkvm.cldr:7183`
     
-    ![](../../assets/images/cm_login.png)
+    ![](../../assets/images/cm/cm_login.png)
     
 9. Select the Cloudera license txt file as requested.
 
-    ![](../../assets/images/license.png)
+    ![](../../assets/images/cm/license.png)
     
 10. Click `here to setup a KDC` link and click `Continue`.
 
-    ![](../../assets/images/kdc1.png)    
+    ![](../../assets/images/cm/kdc1.png)    
     
 11. In this demo, Red Hat IPA is the KDC server. Apply the instructions based on the OS of the CM. Select `I have completed all the above steps.` and click `Continue`.
 
-    ![](../../assets/images/kdc2.png) 
+    ![](../../assets/images/cm/kdc2.png) 
     
 12. Fill in the fields and click `Continue`.
 
-    ![](../../assets/images/kdc3.png) 
+    ![](../../assets/images/cm/kdc3.png) 
     
 13. Select `Manage krb5.conf through Cloudera Manager` option and click `Continue`.
 
-    ![](../../assets/images/kdc4.png) 
+    ![](../../assets/images/cm/kdc4.png) 
     
 14. Enter account credentials and click `Continue`.
 
-    ![](../../assets/images/kdc5.png) 
+    ![](../../assets/images/cm/kdc5.png) 
     
 15. The following output shows you have successfully setup the KDC. Click `Finish`.
 
-    ![](../../assets/images/kdc6.png) 
+    ![](../../assets/images/cm/kdc6.png) 
     
 16. Both AutoTLS and KDC have successfully been set up in CM. 
 
-    ![](../../assets/images/kdc7.png) 
+    ![](../../assets/images/cm/kdc7.png) 
     
 ## CM Integration with External LDAP
 
 1. Navigate to `Administration` > `Settings`. Search for `backend` and select the following options so that CM will also look up the user in the external LDAP server.
 
-    ![](../../assets/images/cmsetting1.png) 
+    ![](../../assets/images/cm/cmsetting1.png) 
     
 2. Configure CM with the necessary external LDAP server settings as shown in the following example. Note that this demo is connected to the Red Hat IPA.
 
@@ -216,7 +216,7 @@ This article explains the necessary steps to install Cloudera Manager (CM) on Ce
     
 4. Configure a new user in the external LDAP server. Log in CM with this newly created user. Log implies that CM manages to contact LDAP server and allow successful login. However, this new user has no role configured in CM.
 
-    ![](../../assets/images/cmsetting2.png) 
+    ![](../../assets/images/cm/cmsetting2.png) 
 
     ```bash
     # tail -f /var/log/cloudera-scm-server/cloudera-scm-server.log
@@ -226,17 +226,17 @@ This article explains the necessary steps to install Cloudera Manager (CM) on Ce
 
 5. Log out and log in with the database admin account. Navigate to `Administration` > `Users & Roles`.
 
-    ![](../../assets/images/cmsetting3.png) 
+    ![](../../assets/images/cm/cmsetting3.png) 
     
 6. Assign `Full Administrator` role for this ldap user.  
     
-    ![](../../assets/images/cmsetting4.png)  
+    ![](../../assets/images/cm/cmsetting4.png)  
 
-    ![](../../assets/images/cmsetting5.png)  
+    ![](../../assets/images/cm/cmsetting5.png)  
     
 7. Log out and log in with the ldap user again. This time this ldap user has full access of the CM dashboard.
 
-    ![](../../assets/images/cmsetting6.png)   
+    ![](../../assets/images/cm/cmsetting6.png)   
     
 
 ## External Database SSL Certificate Import
