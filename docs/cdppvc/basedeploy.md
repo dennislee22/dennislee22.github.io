@@ -10,7 +10,7 @@ nav_order: 1
 # CDP PvC Base Cluster Deployment
 {: .no_toc }
 
-This article explains the necessary steps to install the minimum services on CDP PvC Base platform prior to installing the CDP Data Services on the ECS platform. Please ensure that all the [prerequisites]({{ site.baseurl }}{% link docs/cdppvc/prerequisites.md %}) have been prepared and [CM]({{ site.baseurl }}{% link docs/cdppvc/cm.md %}) has already been installed successfully before running this procedure.
+This article explains the necessary steps to install the minimum services on CDP PvC Base platform prior to installing the CDP PvC Data Services on the Kubernetes platform. Please ensure that all the [prerequisites]({{ site.baseurl }}{% link docs/cdppvc/prerequisites.md %}) have been prepared and [CM]({{ site.baseurl }}{% link docs/cdppvc/cm.md %}) has already been installed successfully before running this procedure.
 
 - TOC
 {:toc}
@@ -106,7 +106,7 @@ This article explains the necessary steps to install the minimum services on CDP
     ![](../../assets/images/cdpbase/addbase8-1.png)
     ![](../../assets/images/cdpbase/addbase8-2.png)
     
-9. Select `Custom Services`. Select `Atlas`, `HDFS`, `Hive`, `Ozone`, `Ranger`, `Yarn`, `Yarn Queue Manager` and `Zookeeper`. These are the minimum services needed on the CDP PvC Base cluster as the prerequisites to provision CDW, CML and CDE on ECS platform later.
+9. Select `Custom Services`. Select `Atlas`, `HDFS`, `Hive`, `Ozone`, `Ranger`, `Yarn`, `Yarn Queue Manager` and `Zookeeper`. These are the minimum services needed on the CDP PvC Base cluster as the prerequisites to provision CDW, CML and CDE on Kubernetes platform later.
 
     ![](../../assets/images/cdpbase/addbase9.png)
     
