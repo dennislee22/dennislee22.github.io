@@ -8,4 +8,4 @@ nav_order: 4
 
 # Base Cluster (Data Lake)
 
-The following subtopics explain the necessary steps to install and configure Cloudera Private Cloud Base cluster.
+The following subtopics explain the necessary steps to install and configure CDP PvC Base cluster.
