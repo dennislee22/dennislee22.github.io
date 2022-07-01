@@ -8,9 +8,12 @@ nav_order: 1
 
 
 ## Demo Architecture 
-- CDP Private Cloud solution is comprised of CDP PvC Base cluster, Cloudera Manager (CM) and CDP PvC Data Services.
-- In this demo, the CDP PvC Data Services are hosted on the Kubernetes platform powered by the Openshift and/or the ECS (Embedded Container Service) platform. Both are mutually exclusive whereby CDP Private Cloud solution requires either one of them. In addition, CDP PvC solution has the capability to integrate the CDP Base cluster with both Openshift and ECS platforms simultaneously and this setup will be shown in this demo. 
-- The next subtopics will describe the end-to-end CDP Private Cloud installation procedure using the following demo/proof-of-concept architecture.
+- CDP Private Cloud solution is comprised of the following components:
+        - CDP PvC Base cluster
+        - Cloudera Manager (CM)
+        - CDP PvC Data Services.
+- In this demo, the CDP PvC Data Services are hosted on the Kubernetes platform powered by the Openshift and/or the ECS (Embedded Container Service) platform. Both are mutually exclusive whereby CDP Private Cloud solution requires only one of them. In addition, CDP PvC solution also has the capability to integrate the CDP Base cluster with both Openshift and ECS platforms simultaneously and this setup will be shown in this demo. 
+- The next topics will describe the end-to-end CDP Private Cloud installation procedure using the following demo/proof-of-concept architecture.
 
    CDP Private Cloud Base
    {: .label .label-blue } 
@@ -25,14 +28,15 @@ nav_order: 1
    {: .label .label-blue } 
     ![](../../assets/images/ocparch.png)
 
-- The Openshift platform in this demo environment comprises of 3 servers collating both Openshift master and worker roles. Note that such architecture is only meant for demo purpose and strictly not suitable for production environment.
+- The Openshift platform in this demo environment consists of 3 servers and each server hosts both Openshift master and worker roles. Note that such architecture is only meant for demo purpose and strictly not suitable for production environment.
+- OCPbastion node is the Openshift installer and client.
 
    CDP Private Cloud Base with ECS
    {: .label .label-blue } 
     ![](../../assets/images/ecsarch.png)    
 
 
-- The ECS platform in this demo environment comprises of 1 master node and 2 ECS worker/agent nodes. In the actual production environment, the required number of ECS worker nodes depends heavily on the actual dimensioning input and how the failover mechanism is designed accordingly.
+- The ECS platform in this demo environment consists of 1 master node and 2 ECS worker/agent nodes. In the actual production environment, the required number of ECS worker nodes depends heavily on the actual dimensioning input and how the failover mechanism is designed accordingly.
 
 ---    
    Next Step
