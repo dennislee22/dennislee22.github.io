@@ -9,7 +9,7 @@ nav_order: 5
 # Cloudera Data Engineering (CDE)
 {: .no_toc }
 
-This article explains the steps to deploy the CDE service on the Kubernetes platform after successful configuration of the [Data Services Management Console]({{ site.baseurl }}{% link docs/cdppvc/dsconsole.md %}).
+This article explains the steps to deploy the CDE service on the Kubernetes platform after successful configuration of the [CDP PvC Data Services Management Console]({{ site.baseurl }}{% link docs/cdppvc/dsconsole.md %}).
 
 - TOC
 {:toc}
