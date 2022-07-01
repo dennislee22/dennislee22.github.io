@@ -9,7 +9,7 @@ nav_order: 1
 # Data Services Console
 {: .no_toc }
 
-This article explains the steps to configure the CDP Data Services environment. This sets the stage for hosting CML, CDE and CDW services which will be explained in the subsequent subtopics.
+This article explains the steps to configure the CDP PvC Data Services environment. This sets the stage for hosting CML, CDE and CDW services which will be explained in the subsequent subtopics.
 
 - TOC
 {:toc}
