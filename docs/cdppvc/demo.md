@@ -9,9 +9,9 @@ nav_order: 1
 
 ## Demo Architecture 
 - CDP Private Cloud solution is comprised of the following components:
-        - CDP PvC Base cluster
-        - Cloudera Manager (CM)
-        - CDP PvC Data Services.
+    - CDP PvC Base cluster
+    - Cloudera Manager (CM)
+    - CDP PvC Data Services.
 - In this demo, the CDP PvC Data Services are hosted on the Kubernetes platform powered by the Openshift and/or the ECS (Embedded Container Service) platform. Both are mutually exclusive whereby CDP Private Cloud solution requires only one of them. In addition, CDP PvC solution also has the capability to integrate the CDP Base cluster with both Openshift and ECS platforms simultaneously and this setup will be shown in this demo. 
 - The next topics will describe the end-to-end CDP Private Cloud installation procedure using the following demo/proof-of-concept architecture.
 
