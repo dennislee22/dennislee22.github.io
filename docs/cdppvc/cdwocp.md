@@ -76,7 +76,7 @@ This article explains the steps to deploy the CDW service on Openshift platform 
         Term 0:        kubernetes.io/hostname in [master03.ocp4.cdpkvm.cldr]
     ```
     
-5. Remove the above created `Hive` virtual warehouse. Create a new `Impala` virtual warehouse with 1 executor as shown in the following example.
+5. Remove the above `Hive` virtual warehouse. Create a new `Impala` virtual warehouse with 1 executor as shown in the following example.
 
     ![](../../assets/images/ocp4/ocpcdw5.png) 
     
@@ -136,7 +136,7 @@ This article explains the steps to deploy the CDW service on Openshift platform 
     lrwxrwxrwx. 1 root root 8 Jun 27 08:41 vdc -> /dev/vdc                                             cdw-disk                               11m
     ```
 
-6. Remove the above created `Impala` virtual warehouse. Create a new `Hive` virtual warehouse with 4 executors as shown in the following example.
+6. Remove the above `Impala` virtual warehouse. Create a new `Impala` virtual warehouse with 4 executors as shown below.
     
     ![](../../assets/images/ocp4/ocpcdw7.png) 
     
