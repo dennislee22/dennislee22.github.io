@@ -99,7 +99,7 @@ This article describes the steps to deploy the external Hashicorp Vault in the d
     # cp /etc/vault.d/vault.hcl /etc/vault.d/vault.hcl-orig
     ```
 
-8. Edit the `/etc/vault.d/vault.hcl` file. `10.15.4.188` is the IP address of the Vault node.
+8. Edit the `/etc/vault.d/vault.hcl` file. In this demo, `10.15.4.188` is the IP address of the Vault node.
 
     ```bash
     ui = true
