@@ -51,7 +51,14 @@ For Storage, enter the default block storageClass of the deployed [OCS]({{ site.
     
 10. The successful installation creates CDP PvC Control Plane on the Openshift platform as shown below.
     ![](../../assets/images/ocp4/addocp10.png)  
-     
+
+
+---    
+   Next Step
+   {: .label .label-blue } 
+   
+- Proceed to configure CDP PvC Data Services in this [topic]({{ site.baseurl }}{% link docs/cdppvc/ds.md %}).
+
 ## CDP Data Services Control Plane Artifacts
     
 ```bash
