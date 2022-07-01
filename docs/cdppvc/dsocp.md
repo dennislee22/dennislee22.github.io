@@ -16,7 +16,7 @@ This article describes the steps to deploy the CDP Data Services Control Plane o
 
 ---
 
-# Install CDP Data Services Control Plane on Openshift
+## Install CDP Data Services Control Plane on Openshift
 1. In Cloudera Manager portal, navigate to `Data Services` on the left panel and click `Add CDP Private Cloud Containerized Cluster`.
 
     ![](../../assets/images/ocp4/addocp1.png)
@@ -66,7 +66,7 @@ For Storage, enter the default block storageClass of the deployed [OCS]({{ site.
    
 - Proceed to configure CDP PvC Data Services in this [topic]({{ site.baseurl }}{% link docs/cdppvc/ds.md %}).
 
-# CDP Data Services Control Plane Artifacts
+## CDP Data Services Control Plane Artifacts
     
 ```bash
 [root@ocpbastion ~]# oc -n cdp get pods
