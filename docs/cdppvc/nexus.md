@@ -9,7 +9,7 @@ nav_order: 1
 # Docker Registry in Nexus
 {: .no_toc }
 
-This article describes the steps to deploy the external docker registry in the designated Nexus server.
+This article describes the steps to deploy the external Docker registry in the designated Nexus server.
 
 ---
 
@@ -49,7 +49,7 @@ This article describes the steps to deploy the external docker registry in the d
     # openssl pkcs12 -nocerts -nodes -in nexus.p12 -out nexus.key
     ```  
     
-5. Copy the JKS file to '/opt/sonatype/sonatype-work/nexus3/etc/ssl/' directory.
+5. Copy the JKS file to `/opt/sonatype/sonatype-work/nexus3/etc/ssl/` directory.
 
     ```bash   
     # cp keystore.jks /opt/sonatype/sonatype-work/nexus3/etc/ssl/
@@ -68,7 +68,7 @@ This article describes the steps to deploy the external docker registry in the d
                 08:BF:E3:9F:53:50:0A:57:B5:BB:1E:E4:5A:D2:4E:0F:E1:10:5D:11
     ```  
     
-7. Configure the '/opt/sonatype/nexus3/etc/jetty/jetty-https.xml' file. Sample is shown as follows.
+7. Configure the `/opt/sonatype/nexus3/etc/jetty/jetty-https.xml` file. Sample is shown as follows.
 
     ```yaml
     <New id="sslContextFactory" class="org.eclipse.jetty.util.ssl.SslContextFactory$Server">
@@ -97,14 +97,14 @@ This article describes the steps to deploy the external docker registry in the d
     # application-host=0.0.0.0
     # nexus-args=${jetty.etc}/jetty.xml,${jetty.etc}/jetty-http.xml,${jetty.etc}/jetty-requestlog.xml
     nexus-args=${jetty.etc}/jetty.xml,${jetty.etc}/jetty-http.xml,${jetty.etc}/jetty-https.xml,${jetty.etc}/jetty-requestlog.xml
+    
     # nexus-context-path=/
-
     # Nexus section
     # nexus-edition=nexus-pro-edition
     # nexus-features=\
     #  nexus-pro-feature
-
     # nexus.hazelcast.discovery.isEnabled=true
+ 
     application-port-ssl=8443
     ssl.etc=${karaf.data}/etc/ssl
     ``` 
@@ -134,8 +134,9 @@ This article describes the steps to deploy the external docker registry in the d
     
 12. Test the SSL Docker URL. Note that an error "SEC_ERROR_UNTRUSTED_ISSUER" has occured.
 
-    ```bash
+    ```yaml
     # curl -v -u admin:admin "https://nexus.cdpkvm.cldr:9999/v2/_catalog"
+    
     * About to connect() to nexus.cdpkvm.cldr port 9999 (#0)
     *   Trying 10.15.4.177...
     * Connected to nexus.cdpkvm.cldr (10.15.4.177) port 9999 (#0)
@@ -168,7 +169,7 @@ This article describes the steps to deploy the external docker registry in the d
     ```
 
 
-13. Update the CA cert (nexus.crt) in the server.
+13. Update the CA cert (nexus.crt) in the truststore of the server.
  
     ```bash 
     # cp nexus.crt /etc/pki/ca-trust/source/anchors/
@@ -219,5 +220,5 @@ This article describes the steps to deploy the external docker registry in the d
     nexus.cdpkvm.cldr:9999/cdppvc/cloudera_thirdparty/fluent-bit   v1.4.6-3896242      a5d1d3a3a3ef        2 years ago         220 MB
     ```
 
-16. For CDP Data Services on Openshift platform solution, import the CA certificate `nexus.crt` into the Openshift platform using this [method](https://docs.openshift.com/container-platform/4.7/cicd/builds/setting-up-trusted-ca.html). This step is needed to prevent "x509: certificate signed by unknown authority" issue when the system attempts to pull the docker images from the above Docker registry to provision the CDP Data Services Control Plane pods.
+16. For CDP Data Services on Openshift platform solution, import the CA certificate `nexus.crt` into the Openshift platform using this [method](https://docs.openshift.com/container-platform/4.7/cicd/builds/setting-up-trusted-ca.html). This step is needed to prevent "x509: certificate signed by unknown authority" issue when the system attempts to pull the docker images from the above Docker registry in the process of provisioning the CDP Data Services Control Plane pods.
 
