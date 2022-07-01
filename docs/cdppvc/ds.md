@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Data Services
+title: CDP PvC Data Services
 parent: CDP Private Cloud
 has_children: true
 nav_order: 7
