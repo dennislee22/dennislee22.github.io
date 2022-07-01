@@ -66,7 +66,6 @@ This article explains the steps to deploy the CDW service on Openshift platform 
     NAME                                                  STATUS   VOLUME              CAPACITY   ACCESS MODES   STORAGECLASS   AGE
     query-executor-1656330358-volume-query-executor-0-0   Bound    local-pv-abb1e063   400Gi      RWO            cdw-disk       2m34s
 
-
     [root@ocpbastion ~]# oc -n compute-1656330332-ph2j describe pod query-executor-0-0 | grep Node:
     Node:         master03.ocp4.cdpkvm.cldr/10.15.4.184
 
