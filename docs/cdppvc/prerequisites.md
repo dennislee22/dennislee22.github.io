@@ -11,11 +11,11 @@ nav_order: 2
 {: .no_toc }
 
 - CDP Private Cloud solution requires direct integration with some 3rd party/external components. 
-- For CDP Private Cloud solution with Openshift platform, the required external components are represented by the purple-coloured boxes as shown in the following diagram.
+- For CDP Private Cloud solution with Openshift platform, the required external components are represented by the purple-coloured components as shown in the following diagram.
 
 ![](../../assets/images/3partyocp.png)
 
-- For CDP Private Cloud solution with ECS platform, the required external components are represented by the purple-coloured boxes as shown below.
+- For CDP Private Cloud solution with ECS platform, the required external components are represented by the purple-coloured components as shown below.
 
 ![](../../assets/images/3partyecs.png)
 
