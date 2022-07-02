@@ -48,7 +48,7 @@ nav_order: 2
 ### Hardware
     
 - Hardware requirements are determined by specific CDP services to be installed in both CDP PvC Base cluster and the data services on the Kubernetes platform. For instance, CDP PvC Base services such as [HDFS](https://docs.cloudera.com/cdp-private-cloud-upgrade/latest/release-guide/topics/cdpdc-hdfs.html), [Zookeeper](https://docs.cloudera.com/cdp-private-cloud-upgrade/latest/release-guide/topics/cdpdc-zookeeper.html) and [Ozone](https://docs.cloudera.com/cdp-private-cloud-upgrade/latest/release-guide/topics/cdpdc-ozone.html) have dedicated storage requirements. 
-- CDW requires locally attached SCSI device (SSD/NVMe) in each Kubernetes worker node.
+- CDW requires locally attached SCSI device (SSD/NVMe) in each Kubernetes worker node as highlighted in this [link](https://docs.cloudera.com/data-warehouse/1.3.4/private-cloud-getting-started/topics/dw-private-cloud-openshift-get-started-requirements.html).
 
 
 ### CDP Base Host Settings
