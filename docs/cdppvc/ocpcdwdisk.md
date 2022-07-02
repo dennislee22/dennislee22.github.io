@@ -10,6 +10,7 @@ nav_order: 1
 {: .no_toc }
 
 This article describes the steps to deploy and scale the direct attached disk(s) in each Openshift worker node for CDW by using the `Local Storage Operator` in Openshift platform.
+Please note that the sizing of the direct attached disk for CDW illustrated in this demo does not match the production requirements. For production requirements, please refer to this [link](https://docs.cloudera.com/data-warehouse/1.3.4/private-cloud-getting-started/topics/dw-private-cloud-openshift-get-started-requirements.html).
 
 - TOC
 {:toc}
