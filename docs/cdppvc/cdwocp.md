@@ -10,6 +10,7 @@ nav_order: 5
 {: .no_toc }
 
 This article explains the steps to deploy the CDW service on Openshift platform after successful configuration of the [CDP PvC Data Services Management Console]({{ site.baseurl }}{% link docs/cdppvc/dsconsole.md %}).
+Please note that the sizing of the direct attached disk for CDW illustrated in this demo does not match the production requirements.
 
 - TOC
 {:toc}
