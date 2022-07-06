@@ -578,3 +578,352 @@ longhorn-nfs         nfs.longhorn.io         Delete          Immediate          
     `-- replicas
 
 7 directories, 1 file
+
+
+
+
+control plane:
+[root@ocpbastion ~]# oc adm top pods -n yunikorn
+NAME                                             CPU(cores)   MEMORY(bytes)   
+yunikorn-admission-controller-58985d458f-2sjvk   2m           19Mi            
+yunikorn-scheduler-59886d55b6-h99m2              1601m        239Mi           
+[root@ocpbastion ~]# oc adm top pods -n cdp
+NAME                                                              CPU(cores)   MEMORY(bytes)   
+cdp-release-alert-admin-service-957bfcb58-8wcr4                   2m           88Mi            
+cdp-release-classic-clusters-648cc99645-kr5j7                     25m          1058Mi          
+cdp-release-cluster-access-manager-69b56fc4db-shvwv               2m           58Mi            
+cdp-release-cluster-proxy-1.0.0-7cb6bfbbbd-zwzpr                  21m          940Mi           
+cdp-release-cpx-liftie-6568b4669c-tcfwk                           0m           81Mi            
+cdp-release-dex-cp-598965f46c-dzg9z                               2m           94Mi            
+cdp-release-dmx-55bbfd8cd9-wlqml                                  6m           987Mi           
+cdp-release-dps-gateway-1.0-5d58765b8-p5t5m                       9m           114Mi           
+cdp-release-dps-gateway-1.0-5d58765b8-scrh2                       7m           110Mi           
+cdp-release-dwx-server-76476fc4b5-7nb72                           4m           133Mi           
+cdp-release-dwx-ui-865f4998d7-ct5sq                               0m           22Mi            
+cdp-release-dwx-ui-865f4998d7-mn7cq                               0m           22Mi            
+cdp-release-grafana-54d8b7cf5-64nnm                               6m           193Mi           
+cdp-release-logger-alert-receiver-f56f64dc8-4wpzh                 0m           69Mi            
+cdp-release-metrics-server-exporter-65f65c54b-2bg7j               1m           74Mi            
+cdp-release-monitoring-app-6f6c9b8fb4-dkzdd                       0m           71Mi            
+cdp-release-monitoring-metricproxy-b5f85766c-5js7j                0m           71Mi            
+cdp-release-monitoring-metricproxy-b5f85766c-6j2dl                0m           68Mi            
+cdp-release-monitoring-pvcservice-757bf9bdd4-rmrx4                1m           98Mi            
+cdp-release-prometheus-alertmanager-0                             3m           61Mi            
+cdp-release-prometheus-alertmanager-1                             1m           59Mi            
+cdp-release-prometheus-kube-state-metrics-65c8fd786b-782w2        0m           40Mi            
+cdp-release-prometheus-server-c66797d5f-gqlsx                     7m           213Mi           
+cdp-release-reloader-676bb9945c-pmjfb                             0m           22Mi            
+cdp-release-resource-pool-manager-67dbdfcdd8-6bg9f                6m           51Mi            
+cdp-release-thunderhead-cdp-private-authentication-consoletp42g   0m           45Mi            
+cdp-release-thunderhead-cdp-private-commonconsole-7ffdf77d4qhnw   0m           44Mi            
+cdp-release-thunderhead-cdp-private-environments-console-5ggnpv   0m           44Mi            
+cdp-release-thunderhead-compute-api-6b795564fd-s9jj2              0m           779Mi           
+cdp-release-thunderhead-consoleauthenticationcdp-8c765dd9725plv   0m           799Mi           
+cdp-release-thunderhead-de-api-688c9b6b7-4w5xn                    1m           725Mi           
+cdp-release-thunderhead-environment-69b8cd49c5-t878p              10m          1209Mi          
+cdp-release-thunderhead-environments2-api-6767bdd568-59r8s        5m           897Mi           
+cdp-release-thunderhead-iam-api-7565b47677-njsqt                  0m           816Mi           
+cdp-release-thunderhead-iam-console-cdd6dd84f-cp98q               0m           44Mi            
+cdp-release-thunderhead-kerberosmgmt-api-68cdd5b56-s7qzc          0m           775Mi           
+cdp-release-thunderhead-ml-api-8f488bc95-jhq6k                    1m           765Mi           
+cdp-release-thunderhead-resource-management-console-6f8dcfsb7nk   0m           44Mi            
+cdp-release-thunderhead-sdx2-api-7476f74476-g7lr7                 1m           747Mi           
+cdp-release-thunderhead-servicediscoverysimple-bdf5fb467-8whfw    1m           723Mi           
+cdp-release-thunderhead-usermanagement-private-5f494b96dd-vwbwp   14m          958Mi           
+dp-mlx-control-plane-app-5ff67bdf77-76t46                         0m           85Mi            
+dp-mlx-control-plane-app-health-poller-66fd654d9f-zwvtm           0m           55Mi            
+fluentd-aggregator-0                                              10m          3551Mi          
+snmp-notifier-7498cc86bc-rk4g6                                    0m           35Mi             
+[root@ocpbastion ~]# oc adm top pods -n cdp-env-1-d9aab9ef-monitoring-platform 
+NAME                                                        CPU(cores)   MEMORY(bytes)   
+monitoring-cm-health-exporter-7944475f99-h7l6b              4m           876Mi           
+monitoring-logger-alert-receiver-79fd679b8d-2c7w6           1m           117Mi           
+monitoring-metrics-server-exporter-5dc47fbbb9-bq4zb         2m           131Mi           
+monitoring-platform-proxy-6777989db7-lxkds                  2m           101Mi           
+monitoring-prometheus-alertmanager-0                        3m           112Mi           
+monitoring-prometheus-alertmanager-1                        3m           110Mi           
+monitoring-prometheus-kube-state-metrics-54b79bd9c8-jpqb7   0m           85Mi            
+monitoring-prometheus-pushgateway-99499d6d6-czgcl           1m           89Mi            
+monitoring-prometheus-server-6f74fdbc9c-mzvlh               6m           221Mi           
+snmp-notifier-765477fc6c-l2rx9                              1m           89Mi   
+
+CML:
+[root@ocpbastion ~]# oc adm top pods -n ws1
+NAME                                            CPU(cores)   MEMORY(bytes)   
+api-786d4c8876-lj6dh                            0m           25Mi            
+cron-5df9b4d86d-pwj46                           0m           48Mi            
+db-0                                            6m           92Mi            
+ds-cdh-client-6bcdb4bfcb-2qjz6                  0m           822Mi           
+ds-operator-69d5d4c9db-6pc72                    0m           66Mi            
+ds-reconciler-6b894fd4b4-mqmv4                  6m           107Mi           
+ds-vfs-b489bcf97-flkgb                          0m           55Mi            
+feature-flags-6bfcbbf4c4-t7gvl                  5m           63Mi            
+fluentd-forwarder-6f7c84878d-g587g              2m           143Mi           
+governance-759d59dd7-pr9qh                      0m           1025Mi          
+livelog-0                                       0m           61Mi            
+livelog-publisher-8z7vk                         0m           44Mi            
+livelog-publisher-h5z9f                         0m           46Mi            
+livelog-publisher-slkbf                         0m           43Mi            
+model-metrics-6df595b558-xb9rt                  0m           15Mi            
+model-metrics-db-0                              4m           23Mi            
+model-proxy-6ccb778c9-km86k                     0m           70Mi            
+prometheus-postgres-exporter-5956d48756-gkdp9   0m           10Mi            
+runtime-manager-64db747ff6-h6m8p                0m           42Mi            
+s2i-builder-7b4f878b5d-h5vl9                    0m           340Mi           
+s2i-builder-7b4f878b5d-s7rmk                    0m           31Mi            
+s2i-builder-7b4f878b5d-svbms                    0m           31Mi            
+s2i-client-5f966bc7d9-7jpw7                     0m           69Mi            
+s2i-git-server-0                                0m           43Mi            
+s2i-queue-0                                     21m          248Mi           
+s2i-registry-7fd6658c6c-mzsf7                   1m           63Mi            
+s2i-registry-auth-54dfb46556-zc7k4              1m           33Mi            
+s2i-server-bd7954c8d-2jbf8                      0m           45Mi            
+secret-generator-0                              1m           55Mi            
+tcp-ingress-controller-c6c56d7d6-vc72w          0m           36Mi            
+usage-reporter-675f6488cc-dmngb                 0m           29Mi            
+web-6b9459d445-kjppb                            2m           217Mi           
+web-6b9459d445-tkxj7                            0m           242Mi           
+web-6b9459d445-zzw7b                            0m           160Mi           
+[root@ocpbastion ~]# oc adm top pods -n ws1-user-1
+NAME                                           CPU(cores)   MEMORY(bytes)   
+churn-model-api-endpoint-3-1-8fc6dc846-4bfr6   2m           261Mi           
+ftkstf3074bmexmw                               11m          369Mi 
+
+
+CDW-impala:
+[root@ocpbastion ~]# oc adm top pods -n shared-services
+NAME                                    CPU(cores)   MEMORY(bytes)   
+log-router-9mdxr                        1416m        324Mi           
+log-router-b4jkp                        975m         297Mi           
+log-router-bh2tc                        991m         327Mi           
+openshift-idling-controller-manager-0   1m           11Mi
+[root@ocpbastion ~]# oc adm top pods -n warehouse-1656567061-jjzw
+NAME                    CPU(cores)   MEMORY(bytes)   
+das-event-processor-0   29m          2850Mi          
+metastore-0             39m          3033Mi          
+metastore-1             16m          2981Mi 
+[root@ocpbastion ~]# oc adm top pods -n impala-1656935869-bvq4
+NAME                                 CPU(cores)   MEMORY(bytes)   
+catalogd-76b9c5cd86-vgsqp            26m          488Mi           
+coordinator-0                        565m         594Mi           
+huebackend-0                         121m         216Mi           
+impala-autoscaler-855b978c68-s7mfr   15m          14Mi            
+impala-executor-000-0                15m          422Mi           
+impala-executor-000-1                7m           433Mi           
+statestored-8689bbd5db-5pzsx         8m           12Mi 
+
+CDW-hive:
+[root@ocpbastion ~]# oc adm top pods -n shared-services
+NAME                                    CPU(cores)   MEMORY(bytes)   
+log-router-9mdxr                        1416m        324Mi           
+log-router-b4jkp                        975m         297Mi           
+log-router-bh2tc                        991m         327Mi           
+openshift-idling-controller-manager-0   1m           11Mi 
+[root@ocpbastion ~]# oc adm top pods -n compute-1656936094-2st6
+NAME                             CPU(cores)   MEMORY(bytes)   
+das-webapp-0                     18m          424Mi           
+hiveserver2-0                    31m          1300Mi          
+huebackend-0                     13m          217Mi           
+huefrontend-57f8d69bc7-g8lhp     0m           9Mi             
+query-coordinator-0-0            41m          703Mi           
+query-coordinator-0-1            43m          703Mi           
+query-executor-0-0               41m          949Mi           
+query-executor-0-1               52m          975Mi           
+standalone-compute-operator-0    0m           27Mi            
+usage-monitor-6c4fd58bc4-cgtkk   3m           12Mi 
+
+CDE:
+[root@ocpbastion ~]# oc -n dex-base-g86mlq9q  adm top pods
+NAME                                           CPU(cores)   MEMORY(bytes)   
+cdp-cde-embedded-db-0                          8m           505Mi           
+dex-base-configs-manager-5f74f57564-64dvh      0m           289Mi           
+dex-base-dex-downloads-779d65779c-p2dsr        0m           23Mi            
+dex-base-g86mlq9q-controller-c4465b645-ft944   11m          294Mi           
+dex-base-grafana-6c65dffc48-2w5lh              0m           24Mi            
+dex-base-knox-5d6688b4-cf6wk                   1m           420Mi           
+dex-base-management-api-586dfb4c94-d246f       0m           247Mi           
+fluentd-forwarder-757d65d65c-kghfm             0m           91Mi 
+
+[root@ocpbastion ~]# oc -n dex-app-p5q6xqdq get pods
+NAME                                                 READY   STATUS    RESTARTS   AGE
+dex-app-p5q6xqdq-airflow-scheduler-b78794fc8-v5wt8   0/1     Pending   0          61s
+dex-app-p5q6xqdq-airflow-web-57f878b97f-vg74v        0/1     Pending   0          61s
+dex-app-p5q6xqdq-airflowapi-64d4bf6767-b7pt2         0/2     Pending   0          61s
+dex-app-p5q6xqdq-api-7bccbf4877-z9vj5                0/1     Pending   0          61s
+dex-app-p5q6xqdq-livy-7b69c9d7f9-s4d44               0/1     Pending   0          61s
+dex-app-p5q6xqdq-safari-5745ddd96d-rjblh             0/1     Pending   0          61s
+
+
+
+CDW (not low resource mode)
+
+[root@ocpbastion ~]# oc -n impala-1657000326-zvn5 describe pvc scratch-cache-volume-coordinator-0 
+Name:          scratch-cache-volume-coordinator-0
+Namespace:     impala-1657000326-zvn5
+StorageClass:  cdw-disk
+Status:        Pending
+Volume:        
+Labels:        app=coordinator
+Annotations:   <none>
+Finalizers:    [kubernetes.io/pvc-protection]
+Capacity:      
+Access Modes:  
+VolumeMode:    Filesystem
+Used By:       coordinator-0
+Events:
+  Type    Reason                Age               From                         Message
+  ----    ------                ----              ----                         -------
+  Normal  WaitForFirstConsumer  60s               persistentvolume-controller  waiting for first consumer to be created before binding
+  Normal  WaitForPodScheduled   1s (x4 over 46s)  persistentvolume-controller  waiting for pod coordinator-0 to be scheduled
+[root@ocpbastion ~]# oc -n impala-1657000326-zvn5 get pvc scratch-cache-volume-coordinator-0 -o yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  creationTimestamp: "2022-07-05T05:52:25Z"
+  finalizers:
+  - kubernetes.io/pvc-protection
+  labels:
+    app: coordinator
+  managedFields:
+  - apiVersion: v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:labels:
+          .: {}
+          f:app: {}
+      f:spec:
+        f:accessModes: {}
+        f:resources:
+          f:requests:
+            .: {}
+            f:storage: {}
+        f:storageClassName: {}
+        f:volumeMode: {}
+      f:status:
+        f:phase: {}
+    manager: kube-controller-manager
+    operation: Update
+    time: "2022-07-05T05:52:25Z"
+  name: scratch-cache-volume-coordinator-0
+  namespace: impala-1657000326-zvn5
+  resourceVersion: "5586288"
+  selfLink: /api/v1/namespaces/impala-1657000326-zvn5/persistentvolumeclaims/scratch-cache-volume-coordinator-0
+  uid: f385a97c-dfd0-44f7-ade7-265fdc8518c8
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 600Gi
+  storageClassName: cdw-disk
+  volumeMode: Filesystem
+status:
+  phase: Pending
+
+[root@ocpbastion ~]# oc -n impala-1657000326-zvn5 get pvc scratch-cache-volume-impala-executor-000-0 -o yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  creationTimestamp: "2022-07-05T05:52:25Z"
+  finalizers:
+  - kubernetes.io/pvc-protection
+  labels:
+    app: impala-executor
+  managedFields:
+  - apiVersion: v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:labels:
+          .: {}
+          f:app: {}
+      f:spec:
+        f:accessModes: {}
+        f:resources:
+          f:requests:
+            .: {}
+            f:storage: {}
+        f:storageClassName: {}
+        f:volumeMode: {}
+      f:status:
+        f:phase: {}
+    manager: kube-controller-manager
+    operation: Update
+    time: "2022-07-05T05:52:25Z"
+  name: scratch-cache-volume-impala-executor-000-0
+  namespace: impala-1657000326-zvn5
+  resourceVersion: "5586245"
+  selfLink: /api/v1/namespaces/impala-1657000326-zvn5/persistentvolumeclaims/scratch-cache-volume-impala-executor-000-0
+  uid: 1926bb4e-ac1c-4357-9127-bf68eebbd640
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 600Gi
+  storageClassName: cdw-disk
+  volumeMode: Filesystem
+status:
+  phase: Pending
+
+impala:
+# oc -n impala-1657000326-zvn5 get pod impala-executor-000-0  -o yaml
+    resources:
+      limits:
+        memory: 116736M
+      requests:
+        cpu: "14"
+        memory: 116736M
+
+# oc -n impala-1657000326-zvn5 get pod coordinator-0  -o yaml
+      limits:
+        memory: 102400M
+      requests:
+        cpu: "8"
+        memory: 102400M        
+        
+hive:
+# oc -n compute-1657001663-wz6k get pod query-coordinator-0-0  -o yaml
+    resources:
+      limits:
+        cpu: "2"
+        memory: 4096M
+      requests:
+        cpu: "2"
+        memory: 4096M
+
+# oc -n compute-1657001663-wz6k get pod query-executor-0-0 -o yaml
+    resources:
+      limits:
+        cpu: "12"
+        memory: 116736M
+      requests:
+        cpu: "12"
+        memory: 116736M
+
+
+
+cp -r /sdx-templates/* /sdx-templates-shared
+echo "hive/dwx-env-6hcbzr" > /sdx-templates-shared/hive.krb5template
+cp /tmp/hive/conf/* /etc/hive/conf/
+
+/usr/local/bin/config-merger /tmp/hive/conf/hive-site.xml /mnt/config/current/hive-conf/hive-site.xml /etc/hive/conf/hive-site.xml -wf2 hive.metastore.kerberos.principal -set hive.server2.authentication.kerberos.principal='${SERVICE_PRINCIPAL}' -set hive.server2.authentication.kerberos.keytab=/mnt/config/current/hive -set hive.cluster.delegation.token.store.class=org.apache.hadoop.hive.thrift.ZooKeeperTokenStore -set hive.metastore.sasl.enabled=true
+
+/usr/local/bin/config-merger /tmp/hadoop/conf/core-site.xml /mnt/config/current/hive-conf/core-site.xml /etc/hadoop/conf/core-site.xml
+cp /mnt/config/current/hive-conf/yarn-site.xml /etc/hadoop/conf/yarn-site.xml
+cp /mnt/config/current/hive-conf/hdfs-site.xml /etc/hadoop/conf/hdfs-site.xml
+export OZONE_SITE_LOCATION=/mnt/config/current/hive-conf/ozone-site.xml; if [ -f "$OZONE_SITE_LOCATION" ]; then cp $OZONE_SITE_LOCATION /etc/hadoop/conf/ozone-site.xml; else echo "File does not exist: $OZONE_SITE_LOCATION"; fi;
+ cp /mnt/config/current/krb5.conf /etc/krb5.conf && klist -kt /mnt/config/current/hive | sed -n -e '$p'|awk '{ print $NF }' | sed 's/^/export SERVICE_PRINCIPAL=/' > /mnt/config/current/principal.env
+ 
+ echo "export RANGER_URL=\"$(awk '/ranger.plugin.hive.policy.rest.url/{getline; print}' /mnt/config/current/ranger-hive-security.xml | sed -E 's/^.*<value>(.*)<\/value>$/\1/g' | sed 's/\/$//' )\"" >> /mnt/config/current/principal.env
+ 
+ echo "export RANGER_CLUSTER_NAME=\"$(awk '/ranger.plugin.hive.access.cluster.name/{getline; print}' /mnt/config/current/ranger-hive-security.xml | cut -d '>' -f 2 | cut -f 1 -d'<')\"" >> /mnt/config/current/principal.env
+ 
+ source /mnt/config/current/principal.env; find /etc/hive/conf/ -type f | while read file; do cat $file | envsubst '$SERVICE_PRINCIPAL' | envsubst '$HADOOP_USER_NAME' | envsubst '$WAREHOUSE_DIR' > $file.new; mv $file.new $file; done
+ 
+ 
+  while ! nc -zv -w 2 metastore-service 9083; do echo "waiting for metastore-service to connect on 9083.."; sleep 5; done;
+  
+   /sys-entrypoint.sh
+        
