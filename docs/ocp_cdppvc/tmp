@@ -926,4 +926,13 @@ export OZONE_SITE_LOCATION=/mnt/config/current/hive-conf/ozone-site.xml; if [ -f
   while ! nc -zv -w 2 metastore-service 9083; do echo "waiting for metastore-service to connect on 9083.."; sleep 5; done;
   
    /sys-entrypoint.sh
-        
+
+
+CREATE EXTERNAL TABLE IF NOT EXISTS testdb.students(
+  student_ID INT, FirstName STRING, LastName STRING,    
+  year STRING, Major STRING)
+  COMMENT 'Student Names'
+  ROW FORMAT DELIMITED
+  FIELDS TERMINATED BY ','
+  STORED AS TEXTFILE
+  LOCATION 'hdfs://test/hivedir'
