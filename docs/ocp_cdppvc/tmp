@@ -936,3 +936,136 @@ CREATE EXTERNAL TABLE IF NOT EXISTS testdb.students(
   FIELDS TERMINATED BY ','
   STORED AS TEXTFILE
   LOCATION 'hdfs://test/hivedir'
+
+CML:
+# # Word counts
+# 
+# This example shows how to count the occurrences of each word in a text file.
+
+from __future__ import print_function
+import sys, re
+from operator import add
+from pyspark.sql import SparkSession
+
+spark = SparkSession\
+    .builder\
+    .appName("PythonWordCount")\
+    .getOrCreate()
+
+# Add the data file to hdfs.
+!hdfs dfs -put resources/cgroup-v2.txt /tmp
+
+lines = spark.read.text("/tmp/cgroup-v2.txt").rdd.map(lambda r: r[0])
+counts = lines.flatMap(lambda x: x.split(' ')) \
+              .map(lambda x: (x, 1)) \
+              .reduceByKey(add) \
+              .sortBy(lambda x: x[1], False)
+output = counts.collect()
+for (word, count) in output:
+    print("%s: %i" % (word, count))
+
+spark.stop()
+
+
+
+
+
+[root@ocpbastion ~]# oc get networkpolicy
+NAME                           POD-SELECTOR   AGE
+allow-from-openshift-ingress   <none>         24h
+allow-from-workspace2          <none>         24h
+allow-from-workspace2-user-1   <none>         24h
+(reverse-i-search)`-0': oc exec -ti huebackend^C  -- /bin/sh
+[root@ocpbastion ~]# oc get networkpolicy allow-from-openshift-ingress -o yaml
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  creationTimestamp: "2022-07-07T08:34:28Z"
+  generation: 1
+  managedFields:
+  - apiVersion: networking.k8s.io/v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:spec:
+        f:ingress: {}
+        f:policyTypes: {}
+    manager: operator
+    operation: Update
+    time: "2022-07-07T08:34:28Z"
+  name: allow-from-openshift-ingress
+  namespace: workspace2-user-1
+  resourceVersion: "6934442"
+  selfLink: /apis/networking.k8s.io/v1/namespaces/workspace2-user-1/networkpolicies/allow-from-openshift-ingress
+  uid: 565d34d6-f2e3-4cfd-9116-25da69927804
+spec:
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          network.openshift.io/policy-group: ingress
+  podSelector: {}
+  policyTypes:
+  - Ingress
+[root@ocpbastion ~]# oc get networkpolicy allow-from-workspace2 -o yaml
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  creationTimestamp: "2022-07-07T08:34:28Z"
+  generation: 1
+  managedFields:
+  - apiVersion: networking.k8s.io/v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:spec:
+        f:ingress: {}
+        f:policyTypes: {}
+    manager: operator
+    operation: Update
+    time: "2022-07-07T08:34:28Z"
+  name: allow-from-workspace2
+  namespace: workspace2-user-1
+  resourceVersion: "6934434"
+  selfLink: /apis/networking.k8s.io/v1/namespaces/workspace2-user-1/networkpolicies/allow-from-workspace2
+  uid: 10fe39ef-f044-4926-bd47-e629781703d4
+spec:
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: workspace2
+  podSelector: {}
+  policyTypes:
+  - Ingress
+[root@ocpbastion ~]# oc get networkpolicy allow-from-workspace2-user-1 -o yaml
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  creationTimestamp: "2022-07-07T08:34:28Z"
+  generation: 1
+  managedFields:
+  - apiVersion: networking.k8s.io/v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:spec:
+        f:ingress: {}
+        f:policyTypes: {}
+    manager: operator
+    operation: Update
+    time: "2022-07-07T08:34:28Z"
+  name: allow-from-workspace2-user-1
+  namespace: workspace2-user-1
+  resourceVersion: "6934428"
+  selfLink: /apis/networking.k8s.io/v1/namespaces/workspace2-user-1/networkpolicies/allow-from-workspace2-user-1
+  uid: fa1dac31-8779-420b-b1a7-817a62f0c125
+spec:
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: workspace2-user-1
+  podSelector: {}
+  policyTypes:
+  - Ingress
+  
+  
+  
