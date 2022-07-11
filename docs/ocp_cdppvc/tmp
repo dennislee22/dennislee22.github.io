@@ -936,6 +936,30 @@ CREATE EXTERNAL TABLE IF NOT EXISTS testdb.students(
   FIELDS TERMINATED BY ','
   STORED AS TEXTFILE
   LOCATION 'hdfs://test/hivedir'
+  
+CREATE EXTERNAL TABLE db1.tmp(
+  FirstName string, LastName string,    
+  MSISDN bigint, DOB date, age int,
+  Postcode int, City string)
+  COMMENT 'Residents Details'
+  ROW FORMAT DELIMITED
+  FIELDS TERMINATED BY ','
+  STORED AS TEXTFILE
+  LOCATION 'hdfs:/tmp/residents'
+
+CREATE TABLE db1.avro(
+  FirstName string, LastName string,    
+  MSISDN bigint, DOB date, age int,
+  Postcode int, City string)
+  STORED AS avro
+  
+INSERT INTO TABLE avro SELECT * FROM tmp
+
+CREATE TABLE db1.parquet(
+  FirstName string, LastName string,    
+  MSISDN bigint, DOB date, age int,
+  Postcode int, City string)
+  STORED AS parquet
 
 CML:
 # # Word counts
