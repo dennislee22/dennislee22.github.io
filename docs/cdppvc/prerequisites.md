@@ -44,7 +44,9 @@ nav_order: 2
 - The minimum CDP PvC Base services and its dependencies to install CML, CDW and CDE are illustrated in the table below.
 
     ![](../../assets/images/base_svc_table1.png)
-    
+
+- Hive on Tez is required to enable compaction in CDW.
+
 ### Hardware
     
 - Hardware requirements are determined by specific CDP services to be installed in both CDP PvC Base cluster and the data services on the Kubernetes platform. For instance, CDP PvC Base services such as [HDFS](https://docs.cloudera.com/cdp-private-cloud-upgrade/latest/release-guide/topics/cdpdc-hdfs.html), [Zookeeper](https://docs.cloudera.com/cdp-private-cloud-upgrade/latest/release-guide/topics/cdpdc-zookeeper.html) and [Ozone](https://docs.cloudera.com/cdp-private-cloud-upgrade/latest/release-guide/topics/cdpdc-ozone.html) have dedicated storage requirements. 
