@@ -936,7 +936,7 @@ CREATE EXTERNAL TABLE db1.tmp(
   ROW FORMAT DELIMITED
   FIELDS TERMINATED BY ','
   STORED AS TEXTFILE
-  LOCATION 'hdfs:/tmp/residents'
+  LOCATION 'hdfs:/tmp/sampledata'
 
 CREATE TABLE db1.avro(
   FirstName string, LastName string,    
@@ -951,6 +951,194 @@ CREATE TABLE db1.parquet(
   MSISDN bigint, DOB date, age int,
   Postcode int, City string)
   STORED AS parquet
+  
+CREATE TABLE db1.orc(
+  FirstName string, LastName string,    
+  MSISDN bigint, DOB date, age int,
+  Postcode int, City string)
+  STORED AS orc  
+
+CREATE EXTERNAL TABLE db1.tmp2(
+  Caller bigint, Called bigint)
+  ROW FORMAT DELIMITED
+  FIELDS TERMINATED BY ','
+  STORED AS TEXTFILE
+  LOCATION 'hdfs:/tmp/callrecords'
+
+CREATE TABLE db1.orc2(   
+  Caller bigint, Called bigint)
+  STORED AS orc    
+
+CREATE TABLE db1.avro2(
+  one string)
+  STORED AS avro
+  TBLPROPERTIES ('avro.schema.literal'='{
+  "name": "sample1",
+  "type": "record",
+  "fields": [
+  {"name":"one", "type":"string"}]}');
+INSERT INTO TABLE avro2 SELECT first FROM tmp3 
+SELECT * from avro2
+ALTER TABLE db1.avro2 SET TBLPROPERTIES 
+  ('avro.schema.literal'='{
+  "name": "sample1",
+  "type": "record",
+  "fields": [
+  {"name":"one", "type":"string"},
+  {"name":"two", "type":["null","long"], "default":null}
+  ]}')
+ALTER TABLE db1.avro2 ADD COLUMNS (two bigint)
+
+CREATE TABLE db1.parquet2(
+  one string)
+  STORED AS PARQUET
+  TBLPROPERTIES ('parquet.schema.literal'='{
+  "name": "sample1",
+  "type": "record",
+  "fields": [
+  {"name":"one", "type":"binary"}]}');
+INSERT INTO TABLE parquet2 SELECT first FROM tmp3 
+SELECT * from parquet2
+ALTER TABLE db1.parquet2 SET TBLPROPERTIES 
+  ('parquet.schema.literal'='{
+  "name": "sample1",
+  "type": "record",
+  "fields": [
+  {"name":"one", "type":"binary"},
+  {"name":"two", "type":"INT64"}
+  ]}')
+ALTER TABLE db1.parquet2 ADD COLUMNS (two bigint)
+INSERT INTO TABLE parquet2 (two) SELECT second FROM tmp3 
+INSERT INTO TABLE parquet2 SELECT * FROM tmp3
+
+CREATE TABLE db1.orc2(
+  one string)
+  STORED AS PARQUET
+  TBLPROPERTIES ('orc.schema.literal'='{
+  "name": "sample1",
+  "type": "record",
+  "fields": [
+  {"name":"one", "type":"binary"}]}');
+INSERT INTO TABLE orc2 SELECT first FROM tmp3
+SELECT * from parquet2
+ALTER TABLE db1.orc2 SET TBLPROPERTIES 
+  ('orc.schema.literal'='{
+  "name": "sample1",
+  "type": "record",
+  "fields": [
+  {"name":"one", "type":"binary"},
+  {"name":"two", "type":"bigint"}
+  ]}')
+ALTER TABLE db1.orc2 ADD COLUMNS (two bigint)
+INSERT INTO TABLE orc2 (two) SELECT second FROM tmp3 
+
+CREATE TABLE db1.parquet(
+  FirstName string, LastName string,    
+  MSISDN bigint, DOB date, age int,
+  Postcode int, City string)
+  STORED AS parquet
+  TBLPROPERTIES ('parquet.schema.literal'='{
+  "name": "sample1",
+  "type": "record",
+  "fields": [
+  {"name":"one", "type":"binary"},
+  {"name":"two", "type":"binary"},
+  {"name":"three", "type":"INT64"},
+  {"name":"four", "type":"date"},
+  {"name":"five", "type":"INT32"},
+  {"name":"six", "type":"INT32"},
+  {"name":"seven", "type":"binary"}
+  ]}')
+INSERT INTO TABLE parquet SELECT * FROM tmp
+
+
+CREATE TABLE db1.avro(
+  FirstName string, LastName string,    
+  MSISDN bigint, DOB date, age int,
+  Postcode int, City string)
+  STORED AS avro
+  TBLPROPERTIES ('avro.schema.literal'='{
+  "name": "sample1",
+  "type": "record",
+  "fields": [
+  {"name":"one", "type":"string"},
+  {"name":"two", "type":"string"},
+  {"name":"three", "type":"long"},
+  {"name":"four", "type":"string"},
+  {"name":"five", "type":"int"},
+  {"name":"six", "type":"int"},
+  {"name":"seven", "type":"string"}
+  ]}')
+INSERT INTO TABLE avro SELECT * FROM tmp 
+
+CREATE TABLE db1.orc(
+  FirstName string, LastName string,    
+  MSISDN bigint, DOB date, age int,
+  Postcode int, City string)
+  STORED AS orc
+  TBLPROPERTIES ('orc.schema.literal'='{
+  "name": "sample1",
+  "type": "record",
+  "fields": [
+  {"name":"one", "type":"binary"},
+  {"name":"two", "type":"binary"},
+  {"name":"three", "type":"bigint"},
+  {"name":"four", "type":"binary"},
+  {"name":"five", "type":"int"},
+  {"name":"six", "type":"int"},
+  {"name":"seven", "type":"binary"}
+  ]}')
+INSERT INTO TABLE orc SELECT * FROM tmp
+
+CREATE TABLE db1.parquet2(
+  FirstName string, LastName string,    
+  MSISDN bigint, DOB date, age int,
+  Postcode int, City string)
+  STORED AS parquet
+  TBLPROPERTIES (
+  "parquet.compression"="SNAPPY",
+  'parquet.schema.literal'='{
+  "name": "sample1",
+  "type": "record",
+  "fields": [
+  {"name":"one", "type":"string"},
+  {"name":"two", "type":"string"},
+  {"name":"three", "type":"long"},
+  {"name":"four", "type":"date"},
+  {"name":"five", "type":"long"},
+  {"name":"six", "type":"int"},
+  {"name":"seven", "type":"string"}
+  ]}')
+INSERT INTO TABLE parquet2 SELECT * FROM tmp  
+
+
+CREATE TABLE db1.orc2(
+  FirstName string, LastName string,    
+  MSISDN bigint, DOB date, age int,
+  Postcode int, City string)
+  STORED AS orc
+  TBLPROPERTIES (
+  "orc.compression"="SNAPPY",
+  'orc.schema.literal'='{
+  "name": "sample1",
+  "type": "record",
+  "fields": [
+  {"name":"one", "type":"binary"},
+  {"name":"two", "type":"binary"},
+  {"name":"three", "type":"bigint"},
+  {"name":"four", "type":"binary"},
+  {"name":"five", "type":"int"},
+  {"name":"six", "type":"int"},
+  {"name":"seven", "type":"binary"}
+  ]}')
+INSERT INTO TABLE orc SELECT * FROM tmp
+
+
+SELECT AVG(Age) AS Avgage FROM tmp
+SELECT lastname, firstname, msisdn FROM tmp WHERE age >= 30 AND age <= 60
+
+select A.lastname,A.firstname,A.msisdn from orc A where A.msisdn in 
+(select B.caller from orc2 B where B.called = 61919437 )
 
 CML:
 # # Word counts
