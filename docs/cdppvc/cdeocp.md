@@ -18,8 +18,6 @@ This article explains the steps to deploy the CDE service on the Openshift platf
 
 
 ## CDE Deployment
-
-
     
 1. At the CDE main portal, you may enable the CDE service. Click `Enable CDE Service`.      
 
