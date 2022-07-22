@@ -19,35 +19,49 @@ This article explains the steps to deploy the CDE service on the Openshift platf
 
 ## CDE Deployment
 
-1. In CM, navigate to `Data Services`. Click `Open CDP Private Cloud Data Services`. 
 
-    ![](../../assets/images/dsconsole/cmds.png)
     
-2. The browser will redirect to the following page. Click `Data Engineering`.   
-
-    ![](../../assets/images/dsconsole/dsmenu.png)
-    
-3. At the CDE main portal, you may enable the CDE service. Click `Enable CDE Service`.      
+1. At the CDE main portal, you may enable the CDE service. Click `Enable CDE Service`.      
 
     ![](../../assets/images/cde/cde1.png)
 
-4. Fill in the fields below and click `Enable`.
+2. Fill in the fields below and click `Enable`.
 
-    ![](../../assets/images/cde/cde2.png)
+    ![](../../assets/images/cde/cdeocp1.png)
     
-5. Next, you may create a new virtual cluster. Click `Create DE Cluster`.        
+3. Next, you may create a new virtual cluster. Click `Create DE Cluster`.        
     
-    ![](../../assets/images/cde/cde3.png)
+    ![](../../assets/images/cde/cdeocp2.png)
     
-6. Fill in the fields below and click `Create`.    
+4. Fill in the fields below and click `Create`.    
     
-    ![](../../assets/images/cde/cde4.png)
+    ![](../../assets/images/cde/cdeocp3.png)
     
-7. The virtual CDE cluster is ready to run the Spark/Airflow job. Proceed to create the job accordingly. 
+5. The virtual CDE cluster is now ready. 
     
-    ![](../../assets/images/cde/cde5.png)
+    ![](../../assets/images/cde/cdeocp4.png)
   
+6. Read the guidance in this [link](https://docs.cloudera.com/data-engineering/1.3.4/manage-clusters/topics/cde-private-cloud-create-cluster.html) and create the self-signed certificate. Inject the certificate into the secret object of the CDE dex-base namespace.
+    
+    ```bash
+    # ./cdp-cde-utils.sh init-virtual-cluster -h 8pzf9tsf.cde-vc4tzlpg.apps.apps.ocp4.cdpkvm.cldr -a
+    ```
+    
+    Verify that the following secret have been created as a result of the previous step.
+    ```bash
+    # oc -n dex-base-vc4tzlpg get secret | grep tls
+    tls-dex-app-8pzf9tsf                             kubernetes.io/tls                     2      81m
+    tls-dex-base                                     kubernetes.io/tls                     2      81m
+    ```
 
+7. After the successful completion of the previous step, you may now access the `AIRFLOW UI` and the `GRAFANA CHARTS`.
+
+    ![](../../assets/images/cde/cdeocp5.png)
+    
+    ![](../../assets/images/cde/cdeocp6.png)
+    
+    ![](../../assets/images/cde/cdeocp7.png)
+    
 ## CDE Artifacts inside ECS Platform
 
    ```bash
