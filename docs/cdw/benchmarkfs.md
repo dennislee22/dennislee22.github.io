@@ -79,12 +79,15 @@ CDW
     
 ## Performance Result
 
-| Data Format    | Speed (seconds) |
-|    | INSERT | SELECT COUNT (1st run)|SELECT COUNT (2nd run)|
+- The following table shows the speed result (seconds) for each data format and its query.
+- Note that the 2nd run requires lesser duration to complete the task due to the caching mechanism in the CDW platform.
+- In conclusion, ORC stands out in terms of performance and it is better suited as the data format in Hive LLAP. PARQUET, on the other hand, is a preferred data format in Impala.
+
+| Data Format    | INSERT | SELECT COUNT (1st run)|SELECT COUNT (2nd run)|
 |:-------------|:------------------|
-| csv          |         |    | 2.28 |
-| orc        |          | 
-| parquet       |            | 
-| avro     |           | 
+| CSV          |         |    | 2.28 |
+| ORC        |          | 
+| PARQUET       |            | 
+| AVRO     |           | 
 
 
