@@ -1,11 +1,11 @@
 ---
 layout: default
-title: Longhorn
+title: Cloudera Data Warehouse
 nav_order: 4
 has_children: true
-permalink: docs/longhorn
+permalink: docs/cdw
 ---
 
-![](../../assets/images/longhorn/longhorn-horizontal-color.png)
+![](../../assets/images/cdw/cdwlogo.png)
 
 {: .no_toc }
