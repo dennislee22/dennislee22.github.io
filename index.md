@@ -2,7 +2,7 @@
 layout: default
 title: Home
 nav_order: 1
-description: "Just a piece of technical blog"
+description: "All I know about DATA"
 permalink: /
 ---
 
