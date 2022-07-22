@@ -3,7 +3,7 @@ layout: default
 title: Cloudera Data Engineering (ECS)
 parent: CDP PvC Data Services
 grand_parent: CDP Private Cloud
-nav_order: 6
+nav_order: 5
 ---
 
 # Cloudera Data Engineering (CDE) on ECS
