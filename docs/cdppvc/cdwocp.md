@@ -3,7 +3,7 @@ layout: default
 title: Cloudera Data Warehouse (Openshift)
 parent: CDP PvC Data Services
 grand_parent: CDP Private Cloud
-nav_order: 5
+nav_order: 4
 ---
 
 # Cloudera Data Warehouse (CDW) on Openshift
