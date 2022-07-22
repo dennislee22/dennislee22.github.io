@@ -79,10 +79,10 @@ CDW
     
 ## Performance Result
 
-| Data Format    | Speed |
+| Data Format    | Speed (seconds) |
 |    | INSERT | SELECT COUNT (1st run)|SELECT COUNT (2nd run)|
 |:-------------|:------------------|
-| csv          |         | 
+| csv          |         |    | 2.28 |
 | orc        |          | 
 | parquet       |            | 
 | avro     |           | 
