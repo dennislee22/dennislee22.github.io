@@ -1,13 +1,13 @@
 ---
 layout: default
-title: Demystifying Data Storage Format in CDW
+title: Parquet, Orc, Avro and CSV Benchmarking
 parent: Cloudera Data Warehouse
 ---
 
 # Parquet, Orc, Avro and CSV Benchmarking
 {: .no_toc }
 
-CDW is 
+CDW 
 
 - TOC
 {:toc}
@@ -15,38 +15,76 @@ CDW is
 ---
 
 
-## Hardware
+## Prerequisites
 
-- The performance benchmarking tests are carried out using the following hardware specification.
+- The performance benchmarking tests are carried out using CDW on the CDP PvC (Openshift) platform with the following hardware specification.
 
 | CPU          | Intel(R) Xeon(R) Gold 5220R CPU @ 2.20GHz | 
 | Memory  | DIMM DDR4 Synchronous Registered (Buffered) 2933 MHz (0.3 ns) | 
 | Disk | SSD P4610 1.6TB SFF    | 
 
-- The datasheet for the storage disk `SSD P4610` can be obtained [here](https://ark.intel.com/content/www/us/en/ark/products/140103/intel-ssd-dc-p4610-series-1-6tb-2-5in-pcie-3-1-x4-3d2-tlc.html). The performance specifications stated in this datasheet can be used to benchmark against the result of the tests.
 
-## Architecture
+- A sample data with 300 million rows of csv data is produced using python script with the [faker](https://faker.readthedocs.io/en/master/) generator. The format is shown as follows.
 
-- The Longhorn performance tests are carried out in a Kubernetes cluster with 3 physical nodes connected to each other on the same subnet. Each test run inside the stateful pod that is attached to the storage class backed by the Longhorn persistent volume with replica size 2 and 3.
-- The local attached storage performance test is carried out directly on the operating system of the physical server.
+    ```yaml
+    Maria,Harmon,32378521,1998-11-14,17,30766,Durhammouth
+    ```
 
-![](../../assets/images/longhorn/bench5.png) 
+- Copy the file to the HDFS cluster.
 
-## Storage Performance Tool
+    ```bash
+    # hdfs dfs -put 300mil.csv /tmp/sampledata/
+    
+    # hdfs dfs -du -h /tmp/sampledata/
+    16.0 G  47.9 G  /tmp/sampledata/300mil.csv    
+    ```
 
-- `fio` is used as the storage performance tool using different block size (bs) and IOdepth as illustrated in the following table. Part of the tests are performed based on random 50% read and 50% write (files scattered around the disk). The rest is based on sequential 100% read and 100% write operations.
+- In CDW, create a `Hive LLAP` and an `Impala` virtual warehouse with only 1 executor each.
 
-| Block Size (bs)      | IOdepth         |
+    ![](../../assets/images/cdw/cdwfs1.png)
+
+## Testing Procedure in Hive LLAP
+
+1. Access `Hue` tool of the `Hive LLAP` virtual warehouse. Create database `db1`.
+
+    ![](../../assets/images/cdw/cdwfs2.png)    
+ 
+2. Use the SQL Editor to create an external table in the database `db1`.
+ 
+    ![](../../assets/images/cdw/cdwfs3.png)       
+
+3. Execute the following command and take note of the speed result. Repeat running the same command and jot down the result again.
+    
+    ![](../../assets/images/cdw/cdwfs4.png)
+    
+4. Create a Hive managed table using ORC data format.
+    
+    ![](../../assets/images/cdw/cdwfs5.png)
+
+5. Load the data in this newly created ORC based table with the data from the external `tmp` table. Take note of the speed to execute this task completely.
+
+    ![](../../assets/images/cdw/cdwfs7.png)
+
+6. Execute the following command and take note of the speed result. Repeat running the same command and jot down the result again.
+
+    ![](../../assets/images/cdw/cdwfs8.png)
+    
+    
+7. Repeat step 4 to 6 for data format AVRO using the following SQL script.
+
+
+    ```yaml
+    Maria,Harmon,32378521,1998-11-14,17,30766,Durhammouth
+    ```
+    
+## Performance Result
+
+| Data Format    | Speed |
+|    | INSERT | SELECT COUNT (1st run)|SELECT COUNT (2nd run)|
 |:-------------|:------------------|
-| 4k          | 32        | 
-| 8k        | 32         | 
-| 64k       | 16           | 
-| 1024k     | 8          | 
+| csv          |         | 
+| orc        |          | 
+| parquet       |            | 
+| avro     |           | 
 
-
-- The full `fio` command with random 50% read and 50% write operation is shown as follows.
-
-```yaml
-fio --name=fiotest --filename=test --size=10Gb --numjobs=8 --ioengine=libaio --group_reporting --runtime=60 --startdelay=60 --bs=8k --iodepth=32 --rw=randrw --direct=1 --rwmixread=50
-```
 
