@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Demystifying Data Storage Format in CDW
-parent: cdw
+parent: Cloudera Data Warehouse
 ---
 
 # Parquet, Orc, Avro and CSV Benchmarking
