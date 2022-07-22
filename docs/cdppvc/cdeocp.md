@@ -27,9 +27,7 @@ This article explains the steps to deploy the CDE service on the Openshift platf
 
     ![](../../assets/images/cde/cdeocp1.png)
     
-3. Next, you may create a new virtual cluster. Click `Create DE Cluster`.        
-    
-    ![](../../assets/images/cde/cdeocp2.png)
+3. Next, you may create a new virtual cluster. Click `Create DE Cluster`.
     
 4. Fill in the fields below and click `Create`.    
     
@@ -110,14 +108,6 @@ dex-base-dex-downloads-7hqxk   service.cde-vc4tzlpg.apps.apps.ocp4.cdpkvm.cldr  
 dex-base-dex-downloads-7qwth   service.cde-vc4tzlpg.apps.apps.ocp4.cdpkvm.cldr    /(favicon\.ico)    dex-base-dex-downloads         http-port                     None
 dex-base-grafana-77zkn         service.cde-vc4tzlpg.apps.apps.ocp4.cdpkvm.cldr    /grafana           dex-base-grafana               service                       None
 dex-base-knox-tz2md            service.cde-vc4tzlpg.apps.apps.ocp4.cdpkvm.cldr    /gateway           dex-base-knox                  gatewayport                   None
-   ```
-
-   ```bash   
-# oc -n dex-app-8pzf9tsf get route
-NAME                                 HOST/PORT            PATH          SERVICES                       PORT        TERMINATION   WILDCARD
-dex-app-8pzf9tsf-airflow-web-6f9xg   HostAlreadyClaimed   /airflow      dex-app-8pzf9tsf-airflow-web   http-web                  None
-dex-app-8pzf9tsf-api-hgskh           HostAlreadyClaimed   /dex/?(.*)    dex-app-8pzf9tsf-api           api-port                  None
-dex-app-8pzf9tsf-livy-6wvbf          HostAlreadyClaimed   /livy/?(.*)   dex-app-8pzf9tsf-livy          http-port                 None
    ```
 
    ```bash   
