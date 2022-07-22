@@ -3,7 +3,7 @@ layout: default
 title: Cloudera Data Engineering (Openshift)
 parent: CDP PvC Data Services
 grand_parent: CDP Private Cloud
-nav_order: 3
+nav_order: 6
 ---
 
 # Cloudera Data Engineering (CDE) on Openshift
