@@ -1,15 +1,15 @@
 ---
 layout: default
-title: Cloudera Data Engineering
+title: Cloudera Data Engineering (ECS)
 parent: CDP PvC Data Services
 grand_parent: CDP Private Cloud
 nav_order: 3
 ---
 
-# Cloudera Data Engineering (CDE)
+# Cloudera Data Engineering (CDE) on ECS
 {: .no_toc }
 
-This article explains the steps to deploy the CDE service on the Kubernetes platform after successful configuration of the [CDP PvC Data Services Management Console]({{ site.baseurl }}{% link docs/cdppvc/dsconsole.md %}).
+This article explains the steps to deploy the CDE service on the ECS platform after successful configuration of the [CDP PvC Data Services Management Console]({{ site.baseurl }}{% link docs/cdppvc/dsconsole.md %}).
 
 - TOC
 {:toc}
