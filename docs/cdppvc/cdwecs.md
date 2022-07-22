@@ -3,7 +3,7 @@ layout: default
 title: Cloudera Data Warehouse (ECS)
 parent: CDP PvC Data Services
 grand_parent: CDP Private Cloud
-nav_order: 4
+nav_order: 3
 ---
 
 # Cloudera Data Warehouse (CDW) on ECS
