@@ -1,7 +1,8 @@
 ---
 layout: default
-title: Parquet, ORC, Avro and CSV Benchmarking
+title: SNAPPY Compression
 parent: Data Warehousing
+nav_order: 2
 ---
 
 # Parquet, ORC, Avro and CSV Benchmarking
