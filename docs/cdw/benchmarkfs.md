@@ -205,12 +205,13 @@ nav_order: 1
 ## Performance Result
 
 - The following table shows the time taken (in seconds) to run each SQL query and its associated file format without SNAPPY compression.
+- By default, ZLIB compression is enabled for any managed ORC-based table in `Hive` engine in CDW unless specified.
 
 
 | File Format  | Engine | INSERT | SELECT COUNT (1st)|SELECT COUNT (2nd) |SELECT AVG(1st)|SELECT AVG(2nd)|
 |:-------------|:----------------|:------------------|:------------------|---------------|---------------|
 | CSV          | Hive   | N.A.   |26.83              | 2.28              |44.2           |4.1            |
-| ORC          | Hive   | 507    |0.40               | 0.39              |8.13           |0.39           | 
+| ORC (ZLIB)   | Hive   | 507    |0.40               | 0.39              |8.13           |0.39           | 
 | Avro         | Hive   | 355    |0.40               | 0.38              |207            |0.40           |
 | Parquet      | Hive   | 332    |0.38               | 0.38              |11.78          |0.37           |
 | Parquet      | Parquet| 32     |0.36               | 0.35              |1.76           |1.62           |
