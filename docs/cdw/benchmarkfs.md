@@ -1,8 +1,10 @@
 ---
+
 layout: default
 title: Parquet, ORC, Avro and CSV Benchmarking
 parent: Data Warehousing
 nav_order: 1
+
 ---
 
 # Parquet, ORC, Avro and CSV Benchmarking
@@ -16,7 +18,6 @@ nav_order: 1
 {:toc}
 
 ---
-
 
 ## Prerequisites
 
@@ -144,7 +145,7 @@ nav_order: 1
     
 ## Performance Result
 
-- The following table shows the speed result in terms of seconds for each SQL query and its associated file format without SNAPPY compression.
+- The following table shows the time taken to run each SQL query and its associated file format without SNAPPY compression.
 
 
 | File Format  | Engine | INSERT | SELECT COUNT (1st)|SELECT COUNT (2nd) |SELECT AVG(1st)|SELECT AVG(2nd)|
