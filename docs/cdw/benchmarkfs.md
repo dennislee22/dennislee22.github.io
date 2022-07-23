@@ -153,7 +153,7 @@ nav_order: 1
     
 ## Performance Result
 
-- The following table shows the time taken to run each SQL query and its associated file format without SNAPPY compression.
+- The following table shows the time taken (in seconds) to run each SQL query and its associated file format without SNAPPY compression.
 
 
 | File Format  | Engine | INSERT | SELECT COUNT (1st)|SELECT COUNT (2nd) |SELECT AVG(1st)|SELECT AVG(2nd)|
