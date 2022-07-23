@@ -112,7 +112,7 @@ nav_order: 2
     MSISDN bigint, DOB date, age int,
     Postcode int, City string)
     STORED AS parquet
-    TBLPROPERTIES ('parquet.schema.literal'='{
+    TBLPROPERTIES ("parquet.compression"="SNAPPY",'parquet.schema.literal'='{
     "name": "sample1",
     "type": "record",
     "fields": [
@@ -144,7 +144,7 @@ nav_order: 2
     MSISDN bigint, DOB date, age int,
     Postcode int, City string)
     STORED AS avro
-    TBLPROPERTIES ('avro.schema.literal'='{
+    TBLPROPERTIES ("avro.compression"="SNAPPY",'avro.schema.literal'='{
     "name": "sample1",
     "type": "record",
     "fields": [
@@ -155,9 +155,9 @@ nav_order: 2
     {"name":"age", "type":"int"},
     {"name":"Postcode", "type":"int"},
     {"name":"City", "type":"string"}
-    ]}')
-    ```    
-
+    ]}');
+    ```
+    
 11. Run the following SQL queries twice and take note of the speed result.
 
     ```yaml
@@ -171,21 +171,25 @@ nav_order: 2
     
 ## Performance Result
 
-- The following table shows the time taken to run each SQL query and its associated file format without SNAPPY compression. This result is adapted from the previous test as described [here]({{ site.baseurl }}{% link docs/cdw/benchmarkfs.md %}).
+- The following table shows the time taken (in seconds) to run each SQL query and its associated file format without SNAPPY compression. This result is adapted from the previous test as described [here]({{ site.baseurl }}{% link docs/cdw/benchmarkfs.md %}).
 
 
 | File Format  | Engine | INSERT | SELECT COUNT (1st)|SELECT COUNT (2nd) |SELECT AVG(1st)|SELECT AVG(2nd)|
 |:-------------|:----------------|:------------------|:------------------|---------------|---------------|
-| CSV          | Hive   | N.A.   |26.83              | 2.28              |44.2           |4.1            |
 | ORC          | Hive   | 507    |0.40               | 0.39              |8.13           |0.39           | 
 | Avro         | Hive   | 513    |0.40               | 0.38              |287            |0.40           |
 | Parquet      | Hive   | 332    |0.38               | 0.38              |11.78          |0.37           |
 | Parquet      | Parquet| 32     |0.36               | 0.35              |1.76           |0.37           |
-| CSV          | Parquet| N.A.   |3.12               | 1.75              |4.69           |4.1            |
 
 
-- The following table shows the time taken to run each SQL query and its associated file format with SNAPPY compression.
+- The following table shows the time taken (in seconds) to run each SQL query and its associated file format with SNAPPY compression.
 
+| File Format  | Engine | INSERT | SELECT COUNT (1st)|SELECT COUNT (2nd) |SELECT AVG(1st)|SELECT AVG(2nd)|
+|:-------------|:----------------|:------------------|:------------------|---------------|---------------|
+| ORC          | Hive   | 1    |1               | 1             |1           |1          | 
+| Avro         | Hive   | 1    |1              | 1             |1            |1           |
+| Parquet      | Hive   | 352    |1            | 1              |1         |1           |
+| Parquet      | Parquet| 1     |1              | 1             |1          |1           |
 
 
 ## Conclusion
