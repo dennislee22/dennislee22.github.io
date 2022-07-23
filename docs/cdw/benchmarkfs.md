@@ -67,7 +67,7 @@ nav_order: 1
     
     ![](../../assets/images/cdw/cdwfs5.png)
 
-5. Load the data from the external `tmp` table into this newly created ORC-based table. Take note of the speed to execute this task completely.
+5. Insert the data from the external `tmp` table into this newly created ORC-based table. Take note of the speed to execute this task completely.
 
     ![](../../assets/images/cdw/cdwfs6.png)
     
