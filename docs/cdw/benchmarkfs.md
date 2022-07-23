@@ -76,13 +76,17 @@ nav_order: 1
     ![](../../assets/images/cdw/cdwfs7.png)
     
 
-7. Execute the following command and take note of the query speed result. Repeat running the same command and jot down the result again.
+7. Run the following SQL queries twice and take note of the speed result.
 
-    ```bash
+    ```yaml
     SELECT COUNT (*) FROM db1.orc;   
     ```    
     
-8. Repeat step 4 to 7 for file format Parquet using the table with following schema.
+    ```yaml
+    SELECT AVG(age) FROM db1.orc where lastname = 'Davis' and age > 30 and age < 40;
+    ``` 
+    
+8. Repeat step 4 to 6 for file format Parquet using the table with following schema.
 
     ```yaml
     CREATE TABLE db1.parquet(
@@ -104,13 +108,17 @@ nav_order: 1
     ]}')
     ```
 
-9. Execute the following command and take note of the query speed result. Repeat running the same command and jot down the result again.
+9. Run the following SQL queries twice and take note of the speed result.
 
-    ```bash
+    ```yaml
     SELECT COUNT (*) FROM db1.parquet;   
     ```    
+    
+    ```yaml
+    SELECT AVG(age) FROM db1.parquet where lastname = 'Davis' and age > 30 and age < 40;
+    ``` 
 
-10. Repeat step 4 to 7 for file format Avro using the table with following schema.
+10. Repeat step 4 to 6 for file format Avro using the table with following schema.
 
     ```yaml
     CREATE TABLE db1.avro(
@@ -139,7 +147,7 @@ nav_order: 1
     ```    
 
     ```yaml
-    SELECT AVG(age) FROM parquet2 where lastname = 'Davis' and age > 30 and age < 40;
+    SELECT AVG(age) FROM avro where lastname = 'Davis' and age > 30 and age < 40;
     ``` 
     
     
