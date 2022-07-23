@@ -82,7 +82,7 @@ This article describes the steps to test the performance of these file formats i
     SELECT AVG(age) FROM db1.orc where lastname = 'Davis' and age > 30 and age < 40;
     ``` 
     
-8. Repeat step 4 for file format Parquet by creating the table with following schema.
+8. Repeat step 4 for file format Parquet by creating a table with the following schema.
 
     ```yaml
     CREATE TABLE db1.parquet(
@@ -104,7 +104,7 @@ This article describes the steps to test the performance of these file formats i
     ]}')
     ```
 
-9. Run the following SQL queries twice and take note of the speed result.
+9. Run the following SQL queries twice and take note of the speed to run them completely.
 
     ```yaml
     SELECT COUNT (*) FROM db1.parquet;   
@@ -114,7 +114,7 @@ This article describes the steps to test the performance of these file formats i
     SELECT AVG(age) FROM db1.parquet where lastname = 'Davis' and age > 30 and age < 40;
     ``` 
 
-10. Repeat step 4 for file format Avro by creating the table with following schema.
+10. Repeat step 4 for file format Avro by creating a table with the following schema.
 
     ```yaml
     CREATE TABLE db1.avro(
@@ -136,7 +136,7 @@ This article describes the steps to test the performance of these file formats i
     ]}')
     ```    
 
-11. Run the following SQL queries twice and take note of the speed result.
+11. Run the following SQL queries twice and take note of the speed to run them completely.
 
     ```yaml
     SELECT COUNT (*) FROM db1.avro;
@@ -174,10 +174,10 @@ This article describes the steps to test the performance of these file formats i
     ]}')
     ```    
 
-15. Insert the data from the external `tmp` table into this newly created ORC-based table. Take note of the speed to execute this task completely.
+15. Insert the data from the external `tmp` table into this newly created Parquet-based table. Take note of the speed to execute this task completely.
 
     ```yaml
-    insert into table db2.parquet2 select * from db1.tmp;  
+    INSERT INTO table db2.parquet2 SELECT * from db1.tmp;  
     ```    
     
 16. Run the following SQL queries twice and take note of the speed result.
@@ -217,8 +217,8 @@ This article describes the steps to test the performance of these file formats i
 
 ## Conclusion
 
-- In comparison to running the same SQL queries in other platform, CDW in CDP Private Cloud platform might take shorter duration to process the queries due to its high-speed caching mechanism especially when running the same query repeatedly.
-- Parquet stands out in terms of able to run interactive SQL query at the fastest speed. As it is a pioneer file format for Impala, running SQL query in Impala produces quicker result compared to running the same query in Hive engine. Impala is endorsing Parquet while it has some [limitations](https://impala.apache.org/docs/build/html/topics/impala_file_formats.html) supporting other file formats.
-- Although Parquet emerges as the winner in terms of performance, Avro and ORC are still very relevant for other use cases and objectives. Avro is popular for its schema evolution mechanism and ORC provides high efficiency in terms of storing the Hive data.
+- In comparison to running the same SQL queries in other solution, CDW in CDP Private Cloud platform might take shorter duration to process the queries - thanks to its high-speed caching mechanism especially when running the same query repeatedly.
+- Parquet stands out in terms of running the interactive SQL query at the fastest speed. As it is a pioneer file format for Impala, running SQL query in Parquet-based table in Impala produces quicker result compared to running the same query in Hive engine. Impala is endorsing Parquet while it has some [limitations](https://impala.apache.org/docs/build/html/topics/impala_file_formats.html) supporting other file formats.
+- Although Parquet emerges as the winner in terms of performance, Avro and ORC are still very relevant for other use cases and objectives. Avro is popular for its schema evolution mechanism. ORC provides high efficiency in terms of storing the Hive data and is usually positioned for ETL/ELT process.
 
 ---
