@@ -8,6 +8,9 @@ parent: Data Warehousing
 {: .no_toc }
 
 - There is a variety of file format choices in the [Hadoop ecosystem](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/impala-reference/topics/impala-file-formats.html). The popular file formats are ORC, Parquet, CSV and Avro. Parquet and ORC are both columnar-storage type whereas ORC is of the row-based format.
+- While Impala engine is designed to achieve low-latency and high-performance interactive SQL queries, Impala is endorsing Parquet as it has [limitations](https://impala.apache.org/docs/build/html/topics/impala_file_formats.html) to support other file formats.
+- Avro is popular for its schema evolution mechanism.
+- ORC provides high efficiency in terms of storing the Hive data.
 - This article describes the steps to test the performance of these file formats in both Hive LLAP and Impala query engine.
 
 - TOC
@@ -71,14 +74,15 @@ parent: Data Warehousing
 6. Check the result of the loaded data.    
 
     ![](../../assets/images/cdw/cdwfs7.png)
+    
 
-6. Execute the following command and take note of the query speed result. Repeat running the same command and jot down the result again.
+7. Execute the following command and take note of the query speed result. Repeat running the same command and jot down the result again.
 
     ```bash
     SELECT COUNT (*) FROM db1.orc;   
     ```    
     
-7. Repeat step 4 to 5 for file format Parquet using the table with following schema.
+8. Repeat step 4 to 7 for file format Parquet using the table with following schema.
 
     ```yaml
     CREATE TABLE db1.parquet(
@@ -100,13 +104,13 @@ parent: Data Warehousing
     ]}')
     ```
 
-8. Execute the following command and take note of the query speed result. Repeat running the same command and jot down the result again.
+9. Execute the following command and take note of the query speed result. Repeat running the same command and jot down the result again.
 
     ```bash
     SELECT COUNT (*) FROM db1.parquet;   
     ```    
 
-9. Repeat step 4 to 5 for file format Avro using the table with following schema.
+10. Repeat step 4 to 7 for file format Avro using the table with following schema.
 
     ```yaml
     CREATE TABLE db1.avro(
@@ -128,26 +132,46 @@ parent: Data Warehousing
     ]}')
     ```    
 
-10. Run the following SQL query and take note of the speed result. Repeat running the same command and jot down the result again.
+11. Run the following SQL queries twice and take note of the speed result.
 
-    ```bash
-    SELECT COUNT (*) FROM db1.avro;   
+    ```yaml
+    SELECT COUNT (*) FROM db1.avro;
     ```    
+
+    ```yaml
+    SELECT AVG(age) FROM parquet2 where lastname = 'Davis' and age > 30 and age < 40;
+    ``` 
+    
     
 ## Performance Result
 
-- The following table shows the speed result (seconds) for each file format and its query.
-- In comparison to other platform, the SQL queries might take shorter duration to complete due to the caching mechanism in the CDW platform.
+- The following table shows the speed result in terms of seconds for each SQL query and its associated file format without SNAPPY compression.
 
 
-| File Format  | Engine | INSERT | SELECT COUNT (1st run)|SELECT COUNT (2nd run)|
-|:-------------|:----------------|:----------------------|:---------------------|
-| CSV          | Hive   | N.A.   |26.83                  | 2.28                 |
-| ORC          | Hive   | 507    |0.40                   | 0.39                 | 
-| Parquet      | Hive   | 332    |0.38                   | 0.38                 |
-| Avro         | Hive   | 513    |0.40                   | 0.38                 |
+| File Format  | Engine | INSERT | SELECT COUNT (1st)|SELECT COUNT (2nd) |SELECT AVG(1st)|SELECT AVG(2nd)|
+|:-------------|:----------------|:------------------|:------------------|---------------|---------------|
+| CSV          | Hive   | N.A.   |26.83              | 2.28              |44.2           |4.1            |
+| ORC          | Hive   | 507    |0.40               | 0.39              |8.13           |0.39           | 
+| Avro         | Hive   | 513    |0.40               | 0.38              |287            |0.40           |
+| Parquet      | Hive   | 332    |0.38               | 0.38              |11.78          |0.37           |
+| Parquet      | Parquet| 32     |0.36               | 0.35              |1.76           |0.37           |
+| CSV          | Parquet| N.A.   |3.12               | 1.75              |4.69           |4.1            |
 
 ## Conclusion
 
-- ORC stands out in terms of performance and it is better suited as the file format for Hive LLAP. 
-- Parquet is a preferred file format for Impala.
+- Parquet stands out in terms of speed of running interactive SQL query. As it is a pioneer file format for Impala, running SQL query in Impala produces quicker result compared to running the same query in Hive engine.
+- In comparison to running the same SQL queries in other platform, CDW in CDP Private Cloud platform might take shorter duration to process the queries due to its high-speed caching mechanism especially when running the same query repeatedly.
+
+
+
+7. Check the HDFS storage size of the table.
+
+    ```bash
+    # hdfs dfs -du -h /warehouse/tablespace/managed/hive/db1.db
+    12.6 G  37.7 G  /warehouse/tablespace/managed/hive/db1.db/avro
+    4.1 G   12.4 G  /warehouse/tablespace/managed/hive/db1.db/orc
+    9.7 G   29.0 G  /warehouse/tablespace/managed/hive/db1.db/parquet 
+    ```    
+
+# hdfs dfs -du -h /warehouse/tablespace/managed/hive/db2.db
+6.4 G  19.3 G  /warehouse/tablespace/managed/hive/db2.db/parquet2
