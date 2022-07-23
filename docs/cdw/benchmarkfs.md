@@ -84,7 +84,7 @@ nav_order: 1
     SELECT AVG(age) FROM db1.orc where lastname = 'Davis' and age > 30 and age < 40;
     ``` 
     
-8. Repeat step 4 to 6 for file format Parquet using the table with following schema.
+8. Repeat step 4 for file format Parquet by creating the table with following schema.
 
     ```yaml
     CREATE TABLE db1.parquet(
@@ -116,7 +116,7 @@ nav_order: 1
     SELECT AVG(age) FROM db1.parquet where lastname = 'Davis' and age > 30 and age < 40;
     ``` 
 
-10. Repeat step 4 to 6 for file format Avro using the table with following schema.
+10. Repeat step 4 for file format Avro by creating the table with following schema.
 
     ```yaml
     CREATE TABLE db1.avro(
