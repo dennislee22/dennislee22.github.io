@@ -202,7 +202,7 @@ This article describes the steps to test the performance of these file formats i
     
 ## Performance Result
 
-- The following table shows the time taken (in seconds) to run each SQL query and its associated file format without SNAPPY compression.
+- The following table shows the time taken (in seconds) to run each SQL query in the specific file format table without SNAPPY compression.
 - By default, ZLIB compression is enabled for any managed ORC-based table in `Hive` engine in CDW unless specified.
 
 
