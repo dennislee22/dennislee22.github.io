@@ -2,16 +2,15 @@
 layout: default
 title: Parquet, ORC, Avro and CSV Benchmarking
 parent: Data Warehousing
+nav_order: 1
 ---
 
 # Parquet, ORC, Avro and CSV Benchmarking
 {: .no_toc }
 
-- There is a variety of file format choices in the [Hadoop ecosystem](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/impala-reference/topics/impala-file-formats.html). The popular file formats are ORC, Parquet, CSV and Avro. Parquet and ORC are both columnar-storage type whereas ORC is of the row-based format.
-- While Impala engine is designed to achieve low-latency and high-performance interactive SQL queries, Impala is endorsing Parquet as it has [limitations](https://impala.apache.org/docs/build/html/topics/impala_file_formats.html) to support other file formats.
-- Avro is popular for its schema evolution mechanism.
-- ORC provides high efficiency in terms of storing the Hive data.
-- This article describes the steps to test the performance of these file formats in both Hive LLAP and Impala query engine.
+- There is a variety of file format choices in the Hadoop ecosystem. The popular file formats are ORC, Parquet, CSV and Avro. Parquet and ORC are both columnar-storage type whereas ORC is of the row-based format.
+- While Impala engine is designed to achieve low-latency and high-performance interactive SQL queries, Impala is endorsing Parquet as it has some [limitations](https://impala.apache.org/docs/build/html/topics/impala_file_formats.html) supporting other file formats.
+- This article describes the steps to test the performance of these file formats in both Hive LLAP and Impala query engine using Cloudera Data Warehouse (CDW) in CDP Private Cloud platform.
 
 - TOC
 {:toc}
@@ -159,19 +158,7 @@ parent: Data Warehousing
 
 ## Conclusion
 
-- Parquet stands out in terms of speed of running interactive SQL query. As it is a pioneer file format for Impala, running SQL query in Impala produces quicker result compared to running the same query in Hive engine.
 - In comparison to running the same SQL queries in other platform, CDW in CDP Private Cloud platform might take shorter duration to process the queries due to its high-speed caching mechanism especially when running the same query repeatedly.
+- Parquet stands out in terms of speed of running interactive SQL query. As it is a pioneer file format for Impala, running SQL query in Impala produces quicker result compared to running the same query in Hive engine.
+- Although Parquet emerges as the winner, both Avro and ORC are also being used for other purpose and use case. Avro is popular for its schema evolution mechanism and ORC provides high efficiency in terms of storing the Hive data.
 
-
-
-7. Check the HDFS storage size of the table.
-
-    ```bash
-    # hdfs dfs -du -h /warehouse/tablespace/managed/hive/db1.db
-    12.6 G  37.7 G  /warehouse/tablespace/managed/hive/db1.db/avro
-    4.1 G   12.4 G  /warehouse/tablespace/managed/hive/db1.db/orc
-    9.7 G   29.0 G  /warehouse/tablespace/managed/hive/db1.db/parquet 
-    ```    
-
-# hdfs dfs -du -h /warehouse/tablespace/managed/hive/db2.db
-6.4 G  19.3 G  /warehouse/tablespace/managed/hive/db2.db/parquet2
