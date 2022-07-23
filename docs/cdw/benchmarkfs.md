@@ -121,13 +121,13 @@ nav_order: 1
     "name": "sample1",
     "type": "record",
     "fields": [
-    {"name":"one", "type":"string"},
-    {"name":"two", "type":"string"},
-    {"name":"three", "type":"long"},
-    {"name":"four", "type":"string"},
-    {"name":"five", "type":"int"},
-    {"name":"six", "type":"int"},
-    {"name":"seven", "type":"string"}
+    {"name":"FirstName", "type":"string"},
+    {"name":"LastName", "type":"string"},
+    {"name":"MSISDN", "type":"long"},
+    {"name":"DOB", "type":"string"},
+    {"name":"age", "type":"int"},
+    {"name":"Postcode", "type":"int"},
+    {"name":"City", "type":"string"}
     ]}')
     ```    
 
