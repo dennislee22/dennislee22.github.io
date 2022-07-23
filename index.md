@@ -14,7 +14,7 @@ permalink: /
 
 [Longhorn]({{ site.baseurl }}{% link docs/longhorn/longhorn.md %}){: .btn .btn-purple .fs-5 .mb-4 .mb-md-0 .mr-2 }
 
-[Cloudera Data Warehouse]({{ site.baseurl }}{% link docs/cdw/benchmarkfs.md %}){: .btn .btn-purple .fs-5 .mb-4 .mb-md-0 .mr-2 }
+[Data Warehousing]({{ site.baseurl }}{% link docs/cdw/benchmarkfs.md %}){: .btn .btn-purple .fs-5 .mb-4 .mb-md-0 .mr-2 }
 
 
 
