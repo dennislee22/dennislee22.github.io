@@ -10,7 +10,7 @@ nav_order: 1
 
 - There is a variety of file format choices in the Hadoop ecosystem. The popular file formats are ORC, Parquet, CSV and Avro. Parquet and ORC are both columnar-storage type whereas ORC is of the row-based format.
 - While Impala engine is designed to achieve low-latency and high-performance interactive SQL queries, Impala is endorsing Parquet as it has some [limitations](https://impala.apache.org/docs/build/html/topics/impala_file_formats.html) supporting other file formats.
-- This article describes the steps to test the performance of these file formats in both Hive LLAP and Impala query engine using Cloudera Data Warehouse (CDW) in CDP Private Cloud platform.
+- This article describes the steps to test the performance of these file formats in both Hive LLAP and Impala query engine using Cloudera Data Warehouse (CDW) with 1 executor engine pod in CDP Private Cloud platform.
 
 - TOC
 {:toc}
@@ -151,7 +151,7 @@ nav_order: 1
 |:-------------|:----------------|:------------------|:------------------|---------------|---------------|
 | CSV          | Hive   | N.A.   |26.83              | 2.28              |44.2           |4.1            |
 | ORC          | Hive   | 507    |0.40               | 0.39              |8.13           |0.39           | 
-| Avro         | Hive   | 513    |0.40               | 0.38              |287            |0.40           |
+| Avro         | Hive   | 355    |0.40               | 0.38              |207            |0.40           |
 | Parquet      | Hive   | 332    |0.38               | 0.38              |11.78          |0.37           |
 | Parquet      | Parquet| 32     |0.36               | 0.35              |1.76           |0.37           |
 | CSV          | Parquet| N.A.   |3.12               | 1.75              |4.69           |4.1            |
