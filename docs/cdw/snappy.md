@@ -24,7 +24,7 @@ This article describes the steps to gauge the query performance and the storage 
 | Disk | SSD P4610 1.6TB SFF    | 
 
 
-- A sample data of 300 million CSV rows is produced using a python script with the [faker](https://faker.readthedocs.io/en/master/) generator. The schema of each row is sequenced as `Lastname, Firstname, MSISDN, Date of Birth, Postcode, City` as illustrated below.
+- A random sample data of 300 million CSV rows is produced using a python script with the [faker](https://faker.readthedocs.io/en/master/) generator. The schema of each row is sequenced as `Lastname, Firstname, MSISDN, Date of Birth, Postcode, City` as illustrated below.
 
     ```yaml
     Maria,Harmon,32378521,1998-11-14,17,30766,Durhammouth
