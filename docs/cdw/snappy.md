@@ -64,12 +64,13 @@ nav_order: 2
     
 
     ```yaml
+    SET hive.exec.compress.output=true;
     CREATE TABLE db1.orc_snappy(
     FirstName string, LastName string,    
     MSISDN bigint, DOB date, age int,
     Postcode int, City string)
-    STORED AS parquet
-    TBLPROPERTIES ('parquet.schema.literal'='{
+    STORED AS orc
+    TBLPROPERTIES ("orc.compress"="SNAPPY",'orc.schema.literal'='{
     "name": "sample1",
     "type": "record",
     "fields": [
@@ -90,8 +91,6 @@ nav_order: 2
     ```
     
 6. Check the result of the loaded data.    
-
-    ![](../../assets/images/cdw/cdwfs7.png)
     
 
 7. Run the following SQL queries twice and take note of the speed result.
@@ -107,7 +106,7 @@ nav_order: 2
 8. Repeat step 4 to 6 for file format Parquet using the table with following schema.
 
     ```yaml
-    CREATE TABLE db1.parquet(
+    CREATE TABLE db1.parquet_snappy(
     FirstName string, LastName string,    
     MSISDN bigint, DOB date, age int,
     Postcode int, City string)
@@ -139,25 +138,25 @@ nav_order: 2
 10. Repeat step 4 to 6 for file format Avro using the table with following schema.
 
     ```yaml
-set hive.exec.compress.output=true;
-set avro.output.codec=snappy;
-CREATE TABLE db1.avro_snappy(
-  FirstName string, LastName string,    
-  MSISDN bigint, DOB date, age int,
-  Postcode int, City string)
-  STORED AS avro
-  TBLPROPERTIES ('avro.schema.literal'='{
-  "name": "sample1",
-  "type": "record",
-  "fields": [
-  {"name":"FirstName", "type":"string"},
-  {"name":"LastName", "type":"string"},
-  {"name":"MSISDN", "type":"long"},
-  {"name":"DOB", "type":"string"},
-  {"name":"age", "type":"int"},
-  {"name":"Postcode", "type":"int"},
-  {"name":"City", "type":"string"}
-  ]}');
+    set hive.exec.compress.output=true;
+    set avro.output.codec=snappy;
+    CREATE TABLE db1.avro_snappy(
+    FirstName string, LastName string,    
+    MSISDN bigint, DOB date, age int,
+    Postcode int, City string)
+    STORED AS avro
+    TBLPROPERTIES ('avro.schema.literal'='{
+    "name": "sample1",
+    "type": "record",
+    "fields": [
+    {"name":"FirstName", "type":"string"},
+    {"name":"LastName", "type":"string"},
+    {"name":"MSISDN", "type":"long"},
+    {"name":"DOB", "type":"string"},
+    {"name":"age", "type":"int"},
+    {"name":"Postcode", "type":"int"},
+    {"name":"City", "type":"string"}
+    ]}');
     ```
     
 11. Run the following SQL queries twice and take note of the speed result.
@@ -182,17 +181,17 @@ CREATE TABLE db1.avro_snappy(
 | ORC          | Hive   | 507    |0.40               | 0.39              |8.13           |0.39           | 
 | Avro         | Hive   | 513    |0.40               | 0.38              |287            |0.40           |
 | Parquet      | Hive   | 332    |0.38               | 0.38              |11.78          |0.37           |
-| Parquet      | Parquet| 32     |0.36               | 0.35              |1.76           |0.37           |
+| Parquet      | Parquet| 32     |0.36               | 0.35              |1.76           |1.62          |
 
 
 - The following table shows the time taken (in seconds) to run each SQL query and its associated file format with SNAPPY compression.
 
 | File Format  | Engine | INSERT | SELECT COUNT (1st)|SELECT COUNT (2nd) |SELECT AVG(1st)|SELECT AVG(2nd)|
 |:-------------|:----------------|:------------------|:------------------|---------------|---------------|
-| ORC          | Hive   | 1    |0.40              | 0.39            |1           |1          | 
-| Avro         | Hive   | 352    |0.40               | 0.38              |329            |0.39           |
-| Parquet      | Hive   | 352    |0.38               | 0.38              |9.64           |0.37           |
-| Parquet      | Parquet| 1     |1              | 1             |1          |1           |
+| ORC          | Hive   | 1    |             |            |1           |1          | 
+| Avro         | Hive   | 323    |              |              |            |           |
+| Parquet      | Hive   | 352    |              |               |          |0.37           |
+| Parquet      | Parquet| 26     |0.36               | 0.36              |1.72         |1.72          |
 
 
 ## Storage Output
@@ -202,33 +201,96 @@ CREATE TABLE db1.avro_snappy(
     ```bash
     # hdfs dfs -du -h /warehouse/tablespace/managed/hive/db1.db
     13.0 G  38.9 G  /warehouse/tablespace/managed/hive/db1.db/avro
+    9.5 G   28.4 G  /warehouse/tablespace/managed/hive/db1.db/avro_snappy
     4.1 G   12.4 G  /warehouse/tablespace/managed/hive/db1.db/orc
-    9.7 G   29.0 G  /warehouse/tablespace/managed/hive/db1.db/parquet 
+    4.8 G   14.5 G  /warehouse/tablespace/managed/hive/db1.db/orc_snappy
+    9.7 G   29.0 G  /warehouse/tablespace/managed/hive/db1.db/parquet
+    7.0 G   20.9 G  /warehouse/tablespace/managed/hive/db1.db/parquet_snappy
     ```   
     
     ```bash
     # hdfs dfs -du -h /warehouse/tablespace/managed/hive/db2.db
     6.4 G  19.3 G  /warehouse/tablespace/managed/hive/db2.db/parquet2
+    6.4 G  19.3 G  /warehouse/tablespace/managed/hive/db2.db/parquet_snappy
     ```    
 
 
-# hive --orcfiledump /warehouse/tablespace/managed/hive/db1.db/orc/delta_0000001_0000001_0000/bucket_00000_0
-SLF4J: Class path contains multiple SLF4J bindings.
-SLF4J: Found binding in [jar:file:/opt/cloudera/parcels/CDH-7.1.7-1.cdh7.1.7.p0.15945976/jars/log4j-slf4j-impl-2.13.3.jar!/org/slf4j/impl/StaticLoggerBinder.class]
-SLF4J: Found binding in [jar:file:/opt/cloudera/parcels/CDH-7.1.7-1.cdh7.1.7.p0.15945976/jars/slf4j-log4j12-1.7.30.jar!/org/slf4j/impl/StaticLoggerBinder.class]
-SLF4J: See http://www.slf4j.org/codes.html#multiple_bindings for an explanation.
-SLF4J: Actual binding is of type [org.apache.logging.slf4j.Log4jLoggerFactory]
-WARNING: Use "yarn jar" to launch YARN applications.
-SLF4J: Class path contains multiple SLF4J bindings.
-SLF4J: Found binding in [jar:file:/opt/cloudera/parcels/CDH-7.1.7-1.cdh7.1.7.p0.15945976/jars/log4j-slf4j-impl-2.13.3.jar!/org/slf4j/impl/StaticLoggerBinder.class]
-SLF4J: Found binding in [jar:file:/opt/cloudera/parcels/CDH-7.1.7-1.cdh7.1.7.p0.15945976/jars/slf4j-log4j12-1.7.30.jar!/org/slf4j/impl/StaticLoggerBinder.class]
-SLF4J: See http://www.slf4j.org/codes.html#multiple_bindings for an explanation.
-SLF4J: Actual binding is of type [org.apache.logging.slf4j.Log4jLoggerFactory]
-Processing data file /warehouse/tablespace/managed/hive/db1.db/orc/delta_0000001_0000001_0000/bucket_00000_0 [length: 243634496]
-Structure for /warehouse/tablespace/managed/hive/db1.db/orc/delta_0000001_0000001_0000/bucket_00000_0
-File Version: 0.12 with ORC_135
-Rows: 16438711
+# hive --orcfiledump /warehouse/tablespace/managed/hive/db1.db/orc/delta_0000001_0000001_0000/bucket_00000_0 | grep Compression
 Compression: ZLIB
 Compression size: 32768
-Calendar: Julian/Gregorian
-Type: struct<operation:int,originalTransaction:bigint,bucket:int,rowId:bigint,currentTransaction:bigint,row:struct<firstname:string,lastname:string,msisdn:bigint,dob:date,age:int,postcode:int,city:string>>
+
+# hive --orcfiledump /warehouse/tablespace/managed/hive/db1.db/orc_snappy/delta_0000001_0000001_0000/bucket_00000_0 | grep Compression
+Compression: SNAPPY
+Compression size: 32768
+
+
+
+# hadoop fs -copyToLocal /warehouse/tablespace/managed/hive/db1.db/avro_snappy/delta_0000001_0000001_0000/000000_0 tmp.avro
+# avro-tools getmeta tmp.avro | grep codec
+avro.codec	snappy
+
+
+# hadoop fs -copyToLocal /warehouse/tablespace/managed/hive/db1.db/avro/delta_0000001_0000001_0000/000000_0 tmp2.avro
+# avro-tools getmeta tmp2.avro | grep codec
+#
+
+# hadoop fs -copyToLocal /warehouse/tablespace/managed/hive/db1.db/parquet_snappy/delta_0000001_0000001_0000/000000_0 tmp.parquet
+
+# hadoop fs -copyToLocal /warehouse/tablespace/managed/hive/db1.db/parquet/delta_0000001_0000001_0000/000000_0 tmp2.parquet
+# parquet-tools meta tmp.parquet
+file:        file:/root/tmp.parquet 
+creator:     parquet-mr version 1.10.99.2021.0.6-b96 (build 83328831d0a79be26dd977c497fd38b301335b4a) 
+extra:       writer.date.proleptic = false 
+extra:       writer.time.zone = UTC 
+extra:       writer.model.name = 3.1.3000.2021.0.6-b96 
+extra:       writer.zone.conversion.legacy = false 
+
+file schema: hive_schema 
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+firstname:   OPTIONAL BINARY L:STRING R:0 D:1
+lastname:    OPTIONAL BINARY L:STRING R:0 D:1
+msisdn:      OPTIONAL INT64 R:0 D:1
+dob:         OPTIONAL INT32 L:DATE R:0 D:1
+age:         OPTIONAL INT32 R:0 D:1
+postcode:    OPTIONAL INT32 R:0 D:1
+city:        OPTIONAL BINARY L:STRING R:0 D:1
+
+row group 1: RC:5390100 TS:188413650 OFFSET:4 
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+firstname:    BINARY SNAPPY DO:0 FPO:4 SZ:6763410/6763856/1.00 VC:5390100 ENC:BIT_PACKED,PLAIN_DICTIONARY,RLE ST:[min: Aaron, max: Zoe, num_nulls: 0]
+lastname:     BINARY SNAPPY DO:0 FPO:6763414 SZ:6765842/6767152/1.00 VC:5390100 ENC:BIT_PACKED,PLAIN_DICTIONARY,RLE ST:[min: Abbott, max: Zuniga, num_nulls: 0]
+msisdn:       INT64 SNAPPY DO:0 FPO:13529256 SZ:31528932/43129170/1.37 VC:5390100 ENC:BIT_PACKED,PLAIN,RLE ST:[min: 26, max: 99999997, num_nulls: 0]
+dob:          INT32 SNAPPY DO:0 FPO:45058188 SZ:21555328/21568770/1.00 VC:5390100 ENC:BIT_PACKED,PLAIN,RLE ST:[min: 1970-01-01, max: 2022-07-15, num_nulls: 0]
+age:          INT32 SNAPPY DO:0 FPO:66613516 SZ:4737802/4736178/1.00 VC:5390100 ENC:BIT_PACKED,PLAIN_DICTIONARY,RLE ST:[min: 0, max: 99, num_nulls: 0]
+postcode:     INT32 SNAPPY DO:0 FPO:71351318 SZ:21571232/21568770/1.00 VC:5390100 ENC:BIT_PACKED,PLAIN,RLE ST:[min: 501, max: 99950, num_nulls: 0]
+city:         BINARY SNAPPY DO:0 FPO:92922550 SZ:41644490/83879754/2.01 VC:5390100 ENC:BIT_PACKED,PLAIN,PLAIN_DICTIONARY,RLE ST:[min: Aaronberg, max: Zunigaville, num_nulls: 0]
+
+
+
+# parquet-tools meta tmp2.parquet
+file:        file:/root/tmp2.parquet 
+creator:     parquet-mr version 1.10.99.2021.0.6-b96 (build 83328831d0a79be26dd977c497fd38b301335b4a) 
+extra:       writer.date.proleptic = false 
+extra:       writer.time.zone = UTC 
+extra:       writer.model.name = 3.1.3000.2021.0.6-b96 
+extra:       writer.zone.conversion.legacy = false 
+
+file schema: hive_schema 
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+firstname:   OPTIONAL BINARY L:STRING R:0 D:1
+lastname:    OPTIONAL BINARY L:STRING R:0 D:1
+msisdn:      OPTIONAL INT64 R:0 D:1
+dob:         OPTIONAL INT32 L:DATE R:0 D:1
+age:         OPTIONAL INT32 R:0 D:1
+postcode:    OPTIONAL INT32 R:0 D:1
+city:        OPTIONAL BINARY L:STRING R:0 D:1
+
+row group 1: RC:3890100 TS:135252863 OFFSET:4 
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+firstname:    BINARY UNCOMPRESSED DO:0 FPO:4 SZ:4883456/4883456/1.00 VC:3890100 ENC:RLE,BIT_PACKED,PLAIN_DICTIONARY ST:[min: Aaron, max: Zoe, num_nulls: 0]
+lastname:     BINARY UNCOMPRESSED DO:0 FPO:4883460 SZ:4886753/4886753/1.00 VC:3890100 ENC:RLE,BIT_PACKED,PLAIN_DICTIONARY ST:[min: Abbott, max: Zuniga, num_nulls: 0]
+msisdn:       INT64 UNCOMPRESSED DO:0 FPO:9770213 SZ:31126845/31126845/1.00 VC:3890100 ENC:RLE,BIT_PACKED,PLAIN ST:[min: 26, max: 99999984, num_nulls: 0]
+dob:          INT32 UNCOMPRESSED DO:0 FPO:40897058 SZ:15566445/15566445/1.00 VC:3890100 ENC:RLE,BIT_PACKED,PLAIN ST:[min: 1970-01-01, max: 2022-07-15, num_nulls: 0]
+age:          INT32 UNCOMPRESSED DO:0 FPO:56463503 SZ:3418278/3418278/1.00 VC:3890100 ENC:RLE,BIT_PACKED,PLAIN_DICTIONARY ST:[min: 0, max: 99, num_nulls: 0]
+postcode:     INT32 UNCOMPRESSED DO:0 FPO:59881781 SZ:15566445/15566445/1.00 VC:3890100 ENC:RLE,BIT_PACKED,PLAIN ST:[min: 501, max: 99950, num_nulls: 0]
+city:         BINARY UNCOMPRESSED DO:0 FPO:75448226 SZ:59804641/59804641/1.00 VC:3890100 ENC:RLE,BIT_PACKED,PLAIN_DICTIONARY,PLAIN ST:[min: Aaronberg, max: Zunigaville, num_nulls: 0]
