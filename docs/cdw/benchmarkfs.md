@@ -67,6 +67,10 @@ parent: Data Warehousing
 5. Load the data from the external `tmp` table into this newly created ORC-based table. Take note of the speed to execute this task completely.
 
     ![](../../assets/images/cdw/cdwfs6.png)
+    
+6. Check the result of the loaded data.    
+
+    ![](../../assets/images/cdw/cdwfs7.png)
 
 6. Execute the following command and take note of the query speed result. Repeat running the same command and jot down the result again.
 
@@ -133,15 +137,15 @@ parent: Data Warehousing
 ## Performance Result
 
 - The following table shows the speed result (seconds) for each file format and its query.
-- Note that the 2nd run requires shorter duration to complete the task due to the caching mechanism in the CDW platform.
+- In comparison to other platform, the SQL queries might take shorter duration to complete due to the caching mechanism in the CDW platform.
 
 
 | File Format  | Engine | INSERT | SELECT COUNT (1st run)|SELECT COUNT (2nd run)|
 |:-------------|:----------------|:----------------------|:---------------------|
-| CSV          | Hive   | N.A.   |26.83                 | 2.28               |
-| ORC          | Hive   | 507    |0.40                  | 0.39               | 
-| Parquet      | Hive   | 332    |0.38                  | 0.38               |
-| Avro         | Hive   |        | 
+| CSV          | Hive   | N.A.   |26.83                  | 2.28                 |
+| ORC          | Hive   | 507    |0.40                   | 0.39                 | 
+| Parquet      | Hive   | 332    |0.38                   | 0.38                 |
+| Avro         | Hive   | 513    |0.40                   | 0.38                 |
 
 ## Conclusion
 
