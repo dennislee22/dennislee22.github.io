@@ -3,9 +3,9 @@ layout: default
 title: SNAPPY Compression
 parent: Data Warehousing
 nav_order: 2
----
 
-# SNAPPY Compression
+---
+# SNAPPY Compression for Parquet, ORC, Avro
 {: .no_toc }
 
 - This article describes the steps to gauge the performance and the storage output upon applying SNAPPY compression on the database tables with Avro, ORC and Parquet file formats in both Hive LLAP and Impala query engine using Cloudera Data Warehouse (CDW) in CDP Private Cloud platform.
@@ -142,7 +142,7 @@ nav_order: 2
     
 ## Performance Result
 
-- The following table shows the speed result in terms of seconds for each SQL query and its associated file format without SNAPPY compression.
+- The following table shows the time taken to run each SQL query and its associated file format without SNAPPY compression. This result is adapted from the previous test as described [here]({{ site.baseurl }}{% link docs/cdw/benchmarkfs.md %}).
 
 
 | File Format  | Engine | INSERT | SELECT COUNT (1st)|SELECT COUNT (2nd) |SELECT AVG(1st)|SELECT AVG(2nd)|
@@ -155,7 +155,7 @@ nav_order: 2
 | CSV          | Parquet| N.A.   |3.12               | 1.75              |4.69           |4.1            |
 
 
-- The following table shows the speed result in terms of seconds for each SQL query and its associated file format with SNAPPY compression.
+- The following table shows the time taken to run each SQL query and its associated file format with SNAPPY compression.
 
 
 
