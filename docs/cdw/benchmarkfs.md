@@ -7,11 +7,11 @@ nav_order: 1
 
 # Parquet, ORC, Avro and CSV Benchmarking
 
-There is a variety of file format choices in the Hadoop ecosystem. The popular file formats are ORC, Parquet, CSV and Avro. Parquet and ORC are both columnar-storage type whereas ORC is of the row-based format.
+There is a variety of file format choices in the Hadoop ecosystem. The popular file formats are ORC, Parquet, CSV and Avro. Parquet and ORC are both columnar-storage type whereas ORC uses the row-based format.
 
-While Impala engine is designed to achieve low-latency and high-performance interactive SQL queries, Impala is endorsing Parquet as it has some [limitations](https://impala.apache.org/docs/build/html/topics/impala_file_formats.html) supporting other file formats.
+While Impala engine is designed to achieve low-latency and high-performance interactive SQL queries, Impala is endorsing Parquet while it has some [limitations](https://impala.apache.org/docs/build/html/topics/impala_file_formats.html) supporting other file formats.
 
-This article describes the steps to test the performance of these file formats in both Hive LLAP and Impala query engine using Cloudera Data Warehouse (CDW) with 1 executor engine pod in CDP Private Cloud platform.
+This article describes the steps to test the performance of these file formats in both `Hive LLAP` and `Impala` query engine using Cloudera Data Warehouse (CDW) with one executor engine pod in the CDP Private Cloud platform.
 
 - TOC
 {:toc}
@@ -26,7 +26,7 @@ This article describes the steps to test the performance of these file formats i
 | Disk | SSD P4610 1.6TB SFF    | 
 
 
-- A sample data of 300 million CSV rows is produced using a python script with the [faker](https://faker.readthedocs.io/en/master/) generator. The schema of each row is sequenced as `Lastname, Firstname, MSISDN, Date of Birth, Postcode, City` as illustrated below.
+- A random sample data of 300 million CSV rows is produced using a python script with the [faker](https://faker.readthedocs.io/en/master/) generator. The schema of each row is sequenced as `Lastname, Firstname, MSISDN, Date of Birth, Postcode, City` as illustrated below.
 
     ```yaml
     Maria,Harmon,32378521,1998-11-14,17,30766,Durhammouth
