@@ -154,6 +154,11 @@ nav_order: 2
 | Parquet      | Parquet| 32     |0.36               | 0.35              |1.76           |0.37           |
 | CSV          | Parquet| N.A.   |3.12               | 1.75              |4.69           |4.1            |
 
+
+- The following table shows the speed result in terms of seconds for each SQL query and its associated file format with SNAPPY compression.
+
+
+
 ## Conclusion
 
 - Parquet stands out in terms of speed of running interactive SQL query. As it is a pioneer file format for Impala, running SQL query in Impala produces quicker result compared to running the same query in Hive engine.
@@ -165,10 +170,12 @@ nav_order: 2
 
     ```bash
     # hdfs dfs -du -h /warehouse/tablespace/managed/hive/db1.db
-    12.6 G  37.7 G  /warehouse/tablespace/managed/hive/db1.db/avro
+    13.0 G  38.9 G  /warehouse/tablespace/managed/hive/db1.db/avro
     4.1 G   12.4 G  /warehouse/tablespace/managed/hive/db1.db/orc
     9.7 G   29.0 G  /warehouse/tablespace/managed/hive/db1.db/parquet 
+    ```   
+    
+    ```bash
+    # hdfs dfs -du -h /warehouse/tablespace/managed/hive/db2.db
+    6.4 G  19.3 G  /warehouse/tablespace/managed/hive/db2.db/parquet2
     ```    
-
-# hdfs dfs -du -h /warehouse/tablespace/managed/hive/db2.db
-6.4 G  19.3 G  /warehouse/tablespace/managed/hive/db2.db/parquet2
