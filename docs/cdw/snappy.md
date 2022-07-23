@@ -5,14 +5,10 @@ parent: Data Warehousing
 nav_order: 2
 ---
 
-# Parquet, ORC, Avro and CSV Benchmarking
+# SNAPPY Compression
 {: .no_toc }
 
-- There is a variety of file format choices in the [Hadoop ecosystem](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/impala-reference/topics/impala-file-formats.html). The popular file formats are ORC, Parquet, CSV and Avro. Parquet and ORC are both columnar-storage type whereas ORC is of the row-based format.
-- While Impala engine is designed to achieve low-latency and high-performance interactive SQL queries, Impala is endorsing Parquet as it has [limitations](https://impala.apache.org/docs/build/html/topics/impala_file_formats.html) to support other file formats.
-- Avro is popular for its schema evolution mechanism.
-- ORC provides high efficiency in terms of storing the Hive data.
-- This article describes the steps to test the performance of these file formats in both Hive LLAP and Impala query engine.
+- This article describes the steps to gauge the performance and the storage output upon applying SNAPPY compression on the database tables with Avro, ORC and Parquet file formats in both Hive LLAP and Impala query engine using Cloudera Data Warehouse (CDW) in CDP Private Cloud platform.
 
 - TOC
 {:toc}
