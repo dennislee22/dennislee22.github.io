@@ -194,8 +194,15 @@ nav_order: 1
     SELECT AVG(age) FROM db2.parquet2 where lastname = 'Davis' and age > 30 and age < 40;
     ``` 
     
-17. Repeat step 4 to 6 for file format CSV.
+17. Repeat step 16 for `tmp` table with file format CSV.
 
+    ```yaml
+    SELECT COUNT (*) FROM db1.tmp;   
+    ```    
+    
+    ```yaml
+    SELECT AVG(age) FROM db1.tmp where lastname = 'Davis' and age > 30 and age < 40;
+    ``` 
     
 ## Performance Result
 
