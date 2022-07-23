@@ -8,7 +8,7 @@ nav_order: 2
 # SNAPPY Compression for Parquet, ORC, Avro
 {: .no_toc }
 
-- This article describes the steps to gauge the performance and the storage output upon applying SNAPPY compression on the database tables with Avro, ORC and Parquet file formats in both Hive LLAP and Impala query engine using Cloudera Data Warehouse (CDW) in CDP Private Cloud platform.
+- This article describes the steps to gauge the query performance and the storage output upon applying SNAPPY compression on the database tables with Avro, ORC and Parquet file formats in both Hive LLAP and Impala query engine using Cloudera Data Warehouse (CDW) in CDP Private Cloud platform.
 
 - TOC
 {:toc}
@@ -60,26 +60,51 @@ nav_order: 2
     
     ![](../../assets/images/cdw/cdwfs4.png)
     
-4. Create a Hive managed table using the ORC file format based on the schema as shown below. The data type of the specific file format can obtained [here](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/impala-reference/topics/impala-file-formats.html).
+4. Create a Hive managed table using the ORC file format with SNAPPY compression as illustrated below.
     
-    ![](../../assets/images/cdw/cdwfs5.png)
 
-5. Load the data from the external `tmp` table into this newly created ORC-based table. Take note of the speed to execute this task completely.
+    ```yaml
+    CREATE TABLE db1.orc_snappy(
+    FirstName string, LastName string,    
+    MSISDN bigint, DOB date, age int,
+    Postcode int, City string)
+    STORED AS parquet
+    TBLPROPERTIES ('parquet.schema.literal'='{
+    "name": "sample1",
+    "type": "record",
+    "fields": [
+    {"name":"one", "type":"binary"},
+    {"name":"two", "type":"binary"},
+    {"name":"three", "type":"bigint"},
+    {"name":"four", "type":"binary"},
+    {"name":"five", "type":"int"},
+    {"name":"six", "type":"int"},
+    {"name":"seven", "type":"binary"}
+    ]}');
+    ```
+  
+5. Insert the data from the external `tmp` table into this newly created ORC-based table. Take note of the speed to execute this task completely.
 
-    ![](../../assets/images/cdw/cdwfs6.png)
+    ```yaml
+    INSERT INTO TABLE db1.orc_snappy SELECT * FROM tmp;
+    ```
     
 6. Check the result of the loaded data.    
 
     ![](../../assets/images/cdw/cdwfs7.png)
     
 
-7. Execute the following command and take note of the query speed result. Repeat running the same command and jot down the result again.
+7. Run the following SQL queries twice and take note of the speed result.
 
-    ```bash
+    ```yaml
     SELECT COUNT (*) FROM db1.orc;   
     ```    
     
-8. Repeat step 4 to 7 for file format Parquet using the table with following schema.
+    ```yaml
+    SELECT AVG(age) FROM db1.orc where lastname = 'Davis' and age > 30 and age < 40;
+    ``` 
+    
+8. Repeat step 4 to 6 for file format Parquet using the table with following schema.
 
     ```yaml
     CREATE TABLE db1.parquet(
@@ -101,13 +126,17 @@ nav_order: 2
     ]}')
     ```
 
-9. Execute the following command and take note of the query speed result. Repeat running the same command and jot down the result again.
+9. Run the following SQL queries twice and take note of the speed result.
 
-    ```bash
+    ```yaml
     SELECT COUNT (*) FROM db1.parquet;   
     ```    
+    
+    ```yaml
+    SELECT AVG(age) FROM db1.parquet where lastname = 'Davis' and age > 30 and age < 40;
+    ``` 
 
-10. Repeat step 4 to 7 for file format Avro using the table with following schema.
+10. Repeat step 4 to 6 for file format Avro using the table with following schema.
 
     ```yaml
     CREATE TABLE db1.avro(
@@ -119,13 +148,13 @@ nav_order: 2
     "name": "sample1",
     "type": "record",
     "fields": [
-    {"name":"one", "type":"string"},
-    {"name":"two", "type":"string"},
-    {"name":"three", "type":"long"},
-    {"name":"four", "type":"string"},
-    {"name":"five", "type":"int"},
-    {"name":"six", "type":"int"},
-    {"name":"seven", "type":"string"}
+    {"name":"FirstName", "type":"string"},
+    {"name":"LastName", "type":"string"},
+    {"name":"MSISDN", "type":"long"},
+    {"name":"DOB", "type":"string"},
+    {"name":"age", "type":"int"},
+    {"name":"Postcode", "type":"int"},
+    {"name":"City", "type":"string"}
     ]}')
     ```    
 
@@ -136,7 +165,7 @@ nav_order: 2
     ```    
 
     ```yaml
-    SELECT AVG(age) FROM parquet2 where lastname = 'Davis' and age > 30 and age < 40;
+    SELECT AVG(age) FROM avro where lastname = 'Davis' and age > 30 and age < 40;
     ``` 
     
     
