@@ -6,7 +6,7 @@ description: "All I know about DATA"
 permalink: /
 ---
 
-# Topic that might interest you:
+# DATA topic that might interest you:
 
 ---
 
