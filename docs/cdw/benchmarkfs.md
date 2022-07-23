@@ -19,7 +19,7 @@ nav_order: 1
 ---
 ## Prerequisites
 
-- The performance benchmarking tests are carried out using CDW on the CDP PvC (Openshift) platform with the following hardware specification.
+- The performance benchmarking tests are carried out using CDW on the CDP Private Cloud (Openshift) platform with the following hardware specification.
 
 | CPU          | Intel(R) Xeon(R) Gold 5220R CPU @ 2.20GHz | 
 | Memory  | DIMM DDR4 Synchronous Registered (Buffered) 2933 MHz (0.3 ns) | 
