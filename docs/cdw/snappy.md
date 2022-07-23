@@ -139,23 +139,25 @@ nav_order: 2
 10. Repeat step 4 to 6 for file format Avro using the table with following schema.
 
     ```yaml
-    CREATE TABLE db1.avro(
-    FirstName string, LastName string,    
-    MSISDN bigint, DOB date, age int,
-    Postcode int, City string)
-    STORED AS avro
-    TBLPROPERTIES ("avro.compression"="SNAPPY",'avro.schema.literal'='{
-    "name": "sample1",
-    "type": "record",
-    "fields": [
-    {"name":"FirstName", "type":"string"},
-    {"name":"LastName", "type":"string"},
-    {"name":"MSISDN", "type":"long"},
-    {"name":"DOB", "type":"string"},
-    {"name":"age", "type":"int"},
-    {"name":"Postcode", "type":"int"},
-    {"name":"City", "type":"string"}
-    ]}');
+set hive.exec.compress.output=true;
+set avro.output.codec=snappy;
+CREATE TABLE db1.avro_snappy(
+  FirstName string, LastName string,    
+  MSISDN bigint, DOB date, age int,
+  Postcode int, City string)
+  STORED AS avro
+  TBLPROPERTIES ('avro.schema.literal'='{
+  "name": "sample1",
+  "type": "record",
+  "fields": [
+  {"name":"FirstName", "type":"string"},
+  {"name":"LastName", "type":"string"},
+  {"name":"MSISDN", "type":"long"},
+  {"name":"DOB", "type":"string"},
+  {"name":"age", "type":"int"},
+  {"name":"Postcode", "type":"int"},
+  {"name":"City", "type":"string"}
+  ]}');
     ```
     
 11. Run the following SQL queries twice and take note of the speed result.
@@ -167,7 +169,8 @@ nav_order: 2
     ```yaml
     SELECT AVG(age) FROM avro where lastname = 'Davis' and age > 30 and age < 40;
     ``` 
-    
+
+
     
 ## Performance Result
 
@@ -186,20 +189,15 @@ nav_order: 2
 
 | File Format  | Engine | INSERT | SELECT COUNT (1st)|SELECT COUNT (2nd) |SELECT AVG(1st)|SELECT AVG(2nd)|
 |:-------------|:----------------|:------------------|:------------------|---------------|---------------|
-| ORC          | Hive   | 1    |1               | 1             |1           |1          | 
-| Avro         | Hive   | 1    |1              | 1             |1            |1           |
-| Parquet      | Hive   | 352    |1            | 1              |1         |1           |
+| ORC          | Hive   | 1    |0.40              | 0.39            |1           |1          | 
+| Avro         | Hive   | 352    |0.40               | 0.38              |329            |0.39           |
+| Parquet      | Hive   | 352    |0.38               | 0.38              |9.64           |0.37           |
 | Parquet      | Parquet| 1     |1              | 1             |1          |1           |
 
 
-## Conclusion
+## Storage Output
 
-- Parquet stands out in terms of speed of running interactive SQL query. As it is a pioneer file format for Impala, running SQL query in Impala produces quicker result compared to running the same query in Hive engine.
-- In comparison to running the same SQL queries in other platform, CDW in CDP Private Cloud platform might take shorter duration to process the queries due to its high-speed caching mechanism especially when running the same query repeatedly.
-
-
-
-7. Check the HDFS storage size of the table.
+- The following output shows the HDFS storage size of the generated tables (with and without SNAPPY compression) for each file format. 
 
     ```bash
     # hdfs dfs -du -h /warehouse/tablespace/managed/hive/db1.db
@@ -212,3 +210,25 @@ nav_order: 2
     # hdfs dfs -du -h /warehouse/tablespace/managed/hive/db2.db
     6.4 G  19.3 G  /warehouse/tablespace/managed/hive/db2.db/parquet2
     ```    
+
+
+# hive --orcfiledump /warehouse/tablespace/managed/hive/db1.db/orc/delta_0000001_0000001_0000/bucket_00000_0
+SLF4J: Class path contains multiple SLF4J bindings.
+SLF4J: Found binding in [jar:file:/opt/cloudera/parcels/CDH-7.1.7-1.cdh7.1.7.p0.15945976/jars/log4j-slf4j-impl-2.13.3.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: Found binding in [jar:file:/opt/cloudera/parcels/CDH-7.1.7-1.cdh7.1.7.p0.15945976/jars/slf4j-log4j12-1.7.30.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: See http://www.slf4j.org/codes.html#multiple_bindings for an explanation.
+SLF4J: Actual binding is of type [org.apache.logging.slf4j.Log4jLoggerFactory]
+WARNING: Use "yarn jar" to launch YARN applications.
+SLF4J: Class path contains multiple SLF4J bindings.
+SLF4J: Found binding in [jar:file:/opt/cloudera/parcels/CDH-7.1.7-1.cdh7.1.7.p0.15945976/jars/log4j-slf4j-impl-2.13.3.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: Found binding in [jar:file:/opt/cloudera/parcels/CDH-7.1.7-1.cdh7.1.7.p0.15945976/jars/slf4j-log4j12-1.7.30.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: See http://www.slf4j.org/codes.html#multiple_bindings for an explanation.
+SLF4J: Actual binding is of type [org.apache.logging.slf4j.Log4jLoggerFactory]
+Processing data file /warehouse/tablespace/managed/hive/db1.db/orc/delta_0000001_0000001_0000/bucket_00000_0 [length: 243634496]
+Structure for /warehouse/tablespace/managed/hive/db1.db/orc/delta_0000001_0000001_0000/bucket_00000_0
+File Version: 0.12 with ORC_135
+Rows: 16438711
+Compression: ZLIB
+Compression size: 32768
+Calendar: Julian/Gregorian
+Type: struct<operation:int,originalTransaction:bigint,bucket:int,rowId:bigint,currentTransaction:bigint,row:struct<firstname:string,lastname:string,msisdn:bigint,dob:date,age:int,postcode:int,city:string>>
