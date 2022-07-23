@@ -215,7 +215,7 @@ nav_order: 1
 | ORC          | Hive   | 507    |0.40               | 0.39              |8.13           |0.39           | 
 | Avro         | Hive   | 355    |0.40               | 0.38              |207            |0.40           |
 | Parquet      | Hive   | 332    |0.38               | 0.38              |11.78          |0.37           |
-| Parquet      | Parquet| 32     |0.36               | 0.35              |1.76           |0.37           |
+| Parquet      | Parquet| 32     |0.36               | 0.35              |1.76           |1.62           |
 | CSV          | Parquet| N.A.   |3.12               | 1.75              |4.69           |4.1            |
 
 ## Conclusion
