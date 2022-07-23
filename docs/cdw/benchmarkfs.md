@@ -49,9 +49,9 @@ nav_order: 1
 
     ![](../../assets/images/cdw/cdwfs1.png)
 
-## Testing Procedure using Hive LLAP
+## Testing Procedure
 
-1. Access `Hue` tool of the `Hive LLAP` virtual warehouse. Create database `db1`.
+1. Access `Hue` tool of the `Hive` virtual warehouse. Create database `db1`.
 
     ![](../../assets/images/cdw/cdwfs2.png)    
  
@@ -149,7 +149,53 @@ nav_order: 1
     ```yaml
     SELECT AVG(age) FROM avro where lastname = 'Davis' and age > 30 and age < 40;
     ``` 
+
+12. Access `Hue` tool of the `Impala` virtual warehouse. Create database `db2`.
+   
+ 
+13. Use the SQL Editor to create an external table in the database `db2`.
     
+
+14. Create a managed table using the Parquet file format based on the schema as shown below.
+    
+    ```yaml
+    CREATE TABLE db2.parquet2(
+    FirstName string, LastName string,    
+    MSISDN bigint, DOB date, age int,
+    Postcode int, City string)
+    STORED AS parquet
+    TBLPROPERTIES ('parquet.schema.literal'='{
+    "name": "sample1",
+    "type": "record",
+    "fields": [
+    {"name":"one", "type":"binary"},
+    {"name":"two", "type":"binary"},
+    {"name":"three", "type":"INT64"},
+    {"name":"four", "type":"date"},
+    {"name":"five", "type":"INT32"},
+    {"name":"six", "type":"INT32"},
+    {"name":"seven", "type":"binary"}
+    ]}')
+    ```    
+
+15. Insert the data from the external `tmp` table into this newly created ORC-based table. Take note of the speed to execute this task completely.
+
+    ```yaml
+    insert into table db2.parquet2 select * from db1.tmp;  
+    ```    
+    
+16. Run the following SQL queries twice and take note of the speed result.
+
+    ```yaml
+    SELECT COUNT (*) FROM db2.parquet2;   
+    ```    
+    
+    ```yaml
+    SELECT AVG(age) FROM db2.parquet2 where lastname = 'Davis' and age > 30 and age < 40;
+    ``` 
+    
+17. Repeat step 4 to 6 for file format CSV.
+
     
 ## Performance Result
 
