@@ -328,7 +328,7 @@ This article describes the steps to gauge the query performance and storage outp
 
 - SNAPPY compression helps saving HDFS storage space and also offers higher performance result in terms of speed to complete the INSERT and SELECT queries. 
 - ZLIB compression seems saving slighly more storage but lagging in speed performance for ORC-base table in `Hive` engine in comparison to the SNAPPY compression technique.
-- Parquet stands out in terms of achieving the highest speed of running interactive SQL query. As it is a pioneer file format for `Impala`, running SQL query in Parquet-based table in Impala produces quicker result compared to running the same query in Hive engine with SNAPPY compression (which is enabled by default).
+- Parquet stands out in terms of achieving the highest speed for running the interactive SQL query. As it is a pioneer file format for `Impala`, running SQL query in Parquet-based table in Impala produces quicker result compared to running the same query in Hive engine with SNAPPY compression (which is enabled by default).
 
 ---
 
