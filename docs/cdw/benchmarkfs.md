@@ -60,15 +60,15 @@ parent: Data Warehousing
     
     ![](../../assets/images/cdw/cdwfs4.png)
     
-4. Create a Hive managed table using ORC file format using the schema as shown below. The data type of the specific file format can obtained [here](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/impala-reference/topics/impala-file-formats.html).
+4. Create a Hive managed table using the ORC file format based on the schema as shown below. The data type of the specific file format can obtained [here](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/impala-reference/topics/impala-file-formats.html).
     
     ![](../../assets/images/cdw/cdwfs5.png)
 
-5. Load the data in this newly created ORC based table with the data from the external `tmp` table. Take note of the speed to execute this task completely.
+5. Load the data from the external `tmp` table into this newly created ORC-based table. Take note of the speed to execute this task completely.
 
     ![](../../assets/images/cdw/cdwfs6.png)
 
-6. Execute the following command and take note of the speed result. Repeat running the same command and jot down the result again.
+6. Execute the following command and take note of the query speed result. Repeat running the same command and jot down the result again.
 
     ```bash
     SELECT COUNT (*) FROM db1.orc;   
@@ -96,7 +96,7 @@ parent: Data Warehousing
     ]}')
     ```
 
-8. Execute the following command and take note of the speed result. Repeat running the same command and jot down the result again.
+8. Execute the following command and take note of the query speed result. Repeat running the same command and jot down the result again.
 
     ```bash
     SELECT COUNT (*) FROM db1.parquet;   
@@ -124,7 +124,7 @@ parent: Data Warehousing
     ]}')
     ```    
 
-10. Execute the following command and take note of the speed result. Repeat running the same command and jot down the result again.
+10. Run the following SQL query and take note of the speed result. Repeat running the same command and jot down the result again.
 
     ```bash
     SELECT COUNT (*) FROM db1.avro;   
