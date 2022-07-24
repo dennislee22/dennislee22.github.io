@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Auto-scaling
+title: Auto-scaling in CDW
 parent: Data Warehousing
 nav_order: 3
 ---
