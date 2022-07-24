@@ -226,7 +226,7 @@ This article describes the steps to gauge the query performance and storage outp
 ## Compression Verification
     
 - By default, ZLIB compression is enabled for any managed ORC-based table in `Hive` engine in CDW unless specified. In this case, SNAPPY compression is enabled for `orc_snappy` table as highlighted in the testing procedure above.
-- Verify the compression method in the dataset file as shown below.
+- Verify the compression codec in the dataset file as shown below.
 
     ```bash
     # hive --orcfiledump /warehouse/tablespace/managed/hive/db1.db/orc/delta_0000001_0000001_0000/bucket_00000_0 | grep Compression
@@ -240,7 +240,7 @@ This article describes the steps to gauge the query performance and storage outp
     Compression size: 32768
     ```     
 - By default, no compression is enabled for any managed Avro-based table in `Hive` engine in CDW unless specified. In this case, SNAPPY compression is enabled for `avro_snappy` table as specified in the testing procedure above.
-- Verify the compression method in the dataset file as shown below.
+- Verify the compression codec in the dataset file as shown below.
 
     ```bash  
 
@@ -375,7 +375,7 @@ This article describes the steps to gauge the query performance and storage outp
 
 - SNAPPY compression helps saving HDFS storage space and also offers higher performance result in terms of speed to complete the INSERT and SELECT queries. 
 - ZLIB compression seems saving slighly more storage but lagging in speed performance for ORC-base table in `Hive` engine compared to SNAPPY compression.
-- Parquet stands out in terms of achieving the highest speed for running the interactive SQL query. As it is a pioneer file format for `Impala`, running SQL query in Parquet-based table in Impala produces quicker result compared to running the same query in Hive engine with SNAPPY compression (which is enabled by default).
+- Parquet stands out in terms of achieving the highest speed for running the interactive SQL query. As it is a pioneer file format for `Impala`, running SQL query in Parquet-based table in Impala produces quicker result compared to running the same query in Hive engine with SNAPPY compression codec (which is enabled by default).
 
 ---
 
