@@ -39,25 +39,21 @@ This article demonstrates how CDW in CDP Private Cloud platform scales up/down b
 
     ![](../../assets/images/cdw/cdwscale1.png)
     
+    ![](../../assets/images/cdw/cdwscale2.png)
     
- - Setup the `Beeline` tool as follows (if this has not been done before).
-
+ 
+## Setup Beeline tool
+ 
+1. Assuming that the default ingress certificate in Openshift has already been [replaced](https://docs.openshift.com/container-platform/4.7/security/certificates/replacing-default-ingress-certificate.html) with the generated certificate. In this case, the location of the file is /root/ingressca.crt.
+ 
+2. Import the cert into the default location of OpenJDK cacerts directory in which Beeline will read that SSL truststore by default.
+    
+    ```bash  
+    # keytool  -importcert -alias beeline -keystore /usr/lib/jvm/java-11-openjdk-11.0.15.0.9-2.el7_9.x86_64/lib/security/cacerts  -file  /root/ingressca2.crt
+    ```
+3. Verify that the certificate has been imported successfully. 
     ```bash
-    # keytool -list -v -keystore /usr/lib/jvm/java-11-openjdk-11.0.15.0.9-2.el7_9.x86_64/lib/security/cacerts | grep rootca
-   35  pwd
-   36  cd
-   37  pwd
-   38  more ingressca.crt 
-   39  openssl x509 -noout -text -in ingressca.crt 
-   40  vi asd
-   41  cat asd | base64 -d
-   42  cat asd | base64 -d > ingressca2.crt 
-   43  diff ingressca2.crt ingressca.crt 
-   44  openssl x509 -noout -text -in ingressca2.crt 
-   45  keytool  -importcert -alias beeline -keystore /usr/lib/jvm/java-11-openjdk-11.0.15.0.9-2.el7_9.x86_64/lib/security/cacerts  -file  /root/ingressca2.crt
-   46  beeline -u "jdbc:hive2://hs2-hive.apps.ocp4.cdpkvm.cldr/default;transportMode=http;httpPath=cliservice;ssl=true;retries=1;user=ldapuser1;password=ldapuser1"
-   47  rm ingressca.crt 
-   48  beeline -u "jdbc:hive2://hs2-hive.apps.ocp4.cdpkvm.cldr/default;transportMode=http;httpPath=cliservice;ssl=true;retries=1;user=ldapuser1;password=ldapuser1" 
+    # keytool -list -v -keystore /usr/lib/jvm/java-11-openjdk-11.0.15.0.9-2.el7_9.x86_64/lib/security/cacerts | grep beeline
     ```
 
 ## Testing Procedure
@@ -238,207 +234,90 @@ This article demonstrates how CDW in CDP Private Cloud platform scales up/down b
     ```    
     
 
-8. Take note of the the pod's log in the `Hive` namespace. After approximately 60 seconds (as configured),
+9. Take note of the the pod's log in the `Hive` namespace.
 
     ```bash
     # oc -n compute-1658641968-r8vh logs -f usage-monitor-5f9cfb8487-2zrrk
     ```
     
-    
-    
-time="2022-07-24T06:09:45Z" level=info msg="ReadyReplicas for query-coordinator-0: 1"
-time="2022-07-24T06:09:45Z" level=info msg="ReadyReplicas for query-coordinator-0: 1"
-time="2022-07-24T06:09:45Z" level=info msg="freeCoordinators: 0 executingQueries: 1 standaloneQueryCount: 0"
-
-time="2022-07-24T06:09:55Z" level=info msg="ReadyReplicas for query-coordinator-0: 1"
-time="2022-07-24T06:09:55Z" level=info msg="ReadyReplicas for query-coordinator-0: 1"
-time="2022-07-24T06:09:55Z" level=info msg="freeCoordinators: -1 executingQueries: 2 standaloneQueryCount: 0"
-
-time="2022-07-24T06:10:55Z" level=info msg="Queued query wait time of 94.655000 secs exceeded threshold 60, adding an additional compute group."
-time="2022-07-24T06:10:55Z" level=info msg="Auto-scale decision: 1"
-time="2022-07-24T06:10:55Z" level=info msg="Updating compute-1658641968-r8vh/hive to 2 compute groups"
-
-time="2022-07-24T06:11:05Z" level=info msg="ReadyReplicas for query-coordinator-0: 1"
-time="2022-07-24T06:11:05Z" level=info msg="ReadyReplicas for query-coordinator-1: 0"
-time="2022-07-24T06:11:05Z" level=info msg="compute-1658641968-r8vh/hive: 1 coordinators found for 2 compute groups, expected 2. May still be waiting for the results of a scaleup/scaledown"
-
-
-time="2022-07-24T06:13:35Z" level=info msg="Sending metrics event: {MetricsEvent ExecutingQueries: 2, QueryCount: 3, StandaloneQueryCount: 0 QueuedQueries: 1, WaitPercentiles: map[50:214640 60:214640 70:214640 80:214640 90:214640 95:214640 96:214640 97:214640 98:214640 99:214640]}"
-time="2022-07-24T06:13:35Z" level=info msg="ReadyReplicas for query-coordinator-0: 1"
-time="2022-07-24T06:13:35Z" level=info msg="ReadyReplicas for query-coordinator-1: 1"
-time="2022-07-24T06:13:35Z" level=info msg="Queued query wait time of 214.640000 secs exceeded threshold 60, adding an additional compute group."
-time="2022-07-24T06:13:35Z" level=info msg="Additional compute groups capped to 0 due to hitting max compute groups limit of 2"
-time="2022-07-24T06:13:35Z" level=info msg="Auto-scale decision: 0"
-
-
-time="2022-07-24T06:13:55Z" level=info msg="freeCoordinators: 1 executingQueries: 1 standaloneQueryCount: 0"
-time="2022-07-24T06:13:55Z" level=info msg="Number of free coordinators at 1 - scaling down by 1 compute group."
-time="2022-07-24T06:13:55Z" level=info msg="Auto-scale decision: -1"
-time="2022-07-24T06:13:55Z" level=info msg="Updating compute-1658641968-r8vh/hive to 1 compute groups"
-time="2022-07-24T06:13:55Z" level=info msg="Auto-suspend update: enabled: true, duration: 5m0s, minGroups: 1, maxGroups: 2, numGroups: 2"
-
-
-    ```    
-
-
-
-
-
-[root@ocpbastion ~]# oc -n compute-1658641968-r8vh get pods
-NAME                             READY   STATUS    RESTARTS   AGE
-das-webapp-0                     1/1     Running   0          19m
-hiveserver2-0                    1/1     Running   0          19m
-huebackend-0                     1/1     Running   0          19m
-huefrontend-78b8577f7c-fb4fp     1/1     Running   0          19m
-query-coordinator-0-0            1/1     Running   0          10m
-query-coordinator-1-0            1/1     Running   0          2m
-query-executor-0-0               1/1     Running   0          10m
-query-executor-1-0               1/1     Running   0          2m1s
-standalone-compute-operator-0    1/1     Running   0          19m
-usage-monitor-5f9cfb8487-2zrrk   1/1     Running   0          19m
-[root@ocpbastion ~]# oc -n compute-1658641968-r8vh get pvc
-NAME                                                  STATUS   VOLUME              CAPACITY   ACCESS MODES   STORAGECLASS   AGE
-query-executor-1658641992-volume-query-executor-0-0   Bound    local-pv-c8fe6eea   200Gi      RWO            cdw-disk       19m
-query-executor-1658643055-volume-query-executor-1-0   Bound    local-pv-dc533915   200Gi      RWO            cdw-disk       2m5s
-
-
-[root@ocpbastion ~]# oc -n compute-1658641968-r8vh get pods
-NAME                             READY   STATUS    RESTARTS   AGE
-das-webapp-0                     1/1     Running   0          24m
-hiveserver2-0                    1/1     Running   0          24m
-huebackend-0                     1/1     Running   0          24m
-huefrontend-78b8577f7c-fb4fp     1/1     Running   0          24m
-query-coordinator-0-0            1/1     Running   0          15m
-query-executor-0-0               1/1     Running   0          15m
-standalone-compute-operator-0    1/1     Running   0          24m
-usage-monitor-5f9cfb8487-2zrrk   1/1     Running   0          24m
-
-    
-8. Repeat step 4 for file format Parquet by creating a table with the following schema.
-
+    The first SQL query can be processed by the single query-executor pod without the need to scale up.    
     ```yaml
-    CREATE TABLE db1.parquet(
-    FirstName string, LastName string,    
-    MSISDN bigint, DOB date, age int,
-    Postcode int, City string)
-    STORED AS parquet
-    TBLPROPERTIES ('parquet.schema.literal'='{
-    "name": "sample1",
-    "type": "record",
-    "fields": [
-    {"name":"one", "type":"binary"},
-    {"name":"two", "type":"binary"},
-    {"name":"three", "type":"INT64"},
-    {"name":"four", "type":"date"},
-    {"name":"five", "type":"INT32"},
-    {"name":"six", "type":"INT32"},
-    {"name":"seven", "type":"binary"}
-    ]}')
+    time="2022-07-24T06:09:45Z" level=info msg="ReadyReplicas for query-coordinator-0: 1"
+    time="2022-07-24T06:09:45Z" level=info msg="ReadyReplicas for query-coordinator-0: 1"
+    time="2022-07-24T06:09:45Z" level=info msg="freeCoordinators: 0 executingQueries: 1 standaloneQueryCount: 0"
+    time="2022-07-24T06:09:55Z" level=info msg="ReadyReplicas for query-coordinator-0: 1"
+    time="2022-07-24T06:09:55Z" level=info msg="ReadyReplicas for query-coordinator-0: 1"
+    time="2022-07-24T06:09:55Z" level=info msg="freeCoordinators: -1 executingQueries: 2 standaloneQueryCount: 0"
     ```
 
-9. Run the following SQL queries twice and take note of the speed to run them completely.
+    As the second query hits the system, CDW decides to scale up after approximately 60 seconds (as configured).     
+    ```yaml    
+    time="2022-07-24T06:10:55Z" level=info msg="Queued query wait time of 94.655000 secs exceeded threshold 60, adding an additional compute group."
+    time="2022-07-24T06:10:55Z" level=info msg="Auto-scale decision: 1"
+    time="2022-07-24T06:10:55Z" level=info msg="Updating compute-1658641968-r8vh/hive to 2 compute groups"
+    time="2022-07-24T06:11:05Z" level=info msg="ReadyReplicas for query-coordinator-0: 1"
+    time="2022-07-24T06:11:05Z" level=info msg="ReadyReplicas for query-coordinator-1: 0"
+    time="2022-07-24T06:11:05Z" level=info msg="compute-1658641968-r8vh/hive: 1 coordinators found for 2 compute groups, expected 2. May still be waiting for the results of a scaleup/scaledown"
+    ```
 
-    ```yaml
-    SELECT COUNT (*) FROM db1.parquet;   
-    ```    
+    Because the maximum pod has been configured as 2, the system is not be able to provision more than 2 executor pods.
+    ```yaml 
+    time="2022-07-24T06:13:35Z" level=info msg="Sending metrics event: {MetricsEvent ExecutingQueries: 2, QueryCount: 3, StandaloneQueryCount: 0 QueuedQueries: 1, WaitPercentiles: map[50:214640 60:214640 70:214640 80:214640 90:214640 95:214640 96:214640 97:214640 98:214640 99:214640]}"
+    time="2022-07-24T06:13:35Z" level=info msg="ReadyReplicas for query-coordinator-0: 1"
+    time="2022-07-24T06:13:35Z" level=info msg="ReadyReplicas for query-coordinator-1: 1"
+    time="2022-07-24T06:13:35Z" level=info msg="Queued query wait time of 214.640000 secs exceeded threshold 60, adding an additional compute group."
+    time="2022-07-24T06:13:35Z" level=info msg="Additional compute groups capped to 0 due to hitting max compute groups limit of 2"
+    time="2022-07-24T06:13:35Z" level=info msg="Auto-scale decision: 0"
+    ```
     
-    ```yaml
-    SELECT AVG(age) FROM db1.parquet where lastname = 'Davis' and age > 30 and age < 40;
-    ``` 
-
-10. Repeat step 4 for file format Avro by creating a table with the following schema.
-
-    ```yaml
-    CREATE TABLE db1.avro(
-    FirstName string, LastName string,    
-    MSISDN bigint, DOB date, age int,
-    Postcode int, City string)
-    STORED AS avro
-    TBLPROPERTIES ('avro.schema.literal'='{
-    "name": "sample1",
-    "type": "record",
-    "fields": [
-    {"name":"FirstName", "type":"string"},
-    {"name":"LastName", "type":"string"},
-    {"name":"MSISDN", "type":"long"},
-    {"name":"DOB", "type":"string"},
-    {"name":"age", "type":"int"},
-    {"name":"Postcode", "type":"int"},
-    {"name":"City", "type":"string"}
-    ]}')
+    After one of the queries has successfully been processed completely, CDW decides to scale down.  
+    ```yaml 
+    time="2022-07-24T06:13:55Z" level=info msg="freeCoordinators: 1 executingQueries: 1 standaloneQueryCount: 0"
+    time="2022-07-24T06:13:55Z" level=info msg="Number of free coordinators at 1 - scaling down by 1 compute group."
+    time="2022-07-24T06:13:55Z" level=info msg="Auto-scale decision: -1"
+    time="2022-07-24T06:13:55Z" level=info msg="Updating compute-1658641968-r8vh/hive to 1 compute groups"
+    time="2022-07-24T06:13:55Z" level=info msg="Auto-suspend update: enabled: true, duration: 5m0s, minGroups: 1, maxGroups: 2, numGroups: 2"
     ```    
 
-11. Run the following SQL queries twice and take note of the speed to run them completely.
 
-    ```yaml
-    SELECT COUNT (*) FROM db1.avro;
-    ```    
+10. During the time when CDW scales up, an additional pod has been provisioned as shown below.
 
-    ```yaml
-    SELECT AVG(age) FROM db1.avro where lastname = 'Davis' and age > 30 and age < 40;
-    ``` 
 
-12. Access `Hue` tool of the `Impala` virtual warehouse. Create database `db2`.
-   
- 
-13. Use the SQL Editor to create an external table in the database `db2`.
+   ```bash
+   # oc -n compute-1658641968-r8vh get pods
+   NAME                             READY   STATUS    RESTARTS   AGE
+   das-webapp-0                     1/1     Running   0          19m
+   hiveserver2-0                    1/1     Running   0          19m
+   huebackend-0                     1/1     Running   0          19m
+   huefrontend-78b8577f7c-fb4fp     1/1     Running   0          19m
+   query-coordinator-0-0            1/1     Running   0          10m
+   query-coordinator-1-0            1/1     Running   0          2m
+   query-executor-0-0               1/1     Running   0          10m
+   query-executor-1-0               1/1     Running   0          2m1s
+   standalone-compute-operator-0    1/1     Running   0          19m
+   usage-monitor-5f9cfb8487-2zrrk   1/1     Running   0          19m
+
+    # oc -n compute-1658641968-r8vh get pvc
+    NAME                                                  STATUS   VOLUME              CAPACITY   ACCESS MODES   STORAGECLASS   AGE
+    query-executor-1658641992-volume-query-executor-0-0   Bound    local-pv-c8fe6eea   200Gi      RWO            cdw-disk       19m
+    query-executor-1658643055-volume-query-executor-1-0   Bound    local-pv-dc533915   200Gi      RWO            cdw-disk       2m5s
+   ```
+
+    ![](../../assets/images/cdw/cdwscale3.png)
+
+11. After CDW has successfully scaled in, the system is left with the initial 1 pod.
+
+   ```bash
+   # oc -n compute-1658641968-r8vh get pods
+   NAME                             READY   STATUS    RESTARTS   AGE
+   das-webapp-0                     1/1     Running   0          24m
+   hiveserver2-0                    1/1     Running   0          24m
+   huebackend-0                     1/1     Running   0          24m
+   huefrontend-78b8577f7c-fb4fp     1/1     Running   0          24m
+   query-coordinator-0-0            1/1     Running   0          15m
+   query-executor-0-0               1/1     Running   0          15m
+   standalone-compute-operator-0    1/1     Running   0          24m
+   usage-monitor-5f9cfb8487-2zrrk   1/1     Running   0          24m
+   ```yaml 
     
-
-14. Create a managed table using the Parquet file format based on the schema as shown below.
-    
-    ```yaml
-    CREATE TABLE db2.parquet2(
-    FirstName string, LastName string,    
-    MSISDN bigint, DOB date, age int,
-    Postcode int, City string)
-    STORED AS parquet
-    TBLPROPERTIES ('parquet.schema.literal'='{
-    "name": "sample1",
-    "type": "record",
-    "fields": [
-    {"name":"one", "type":"binary"},
-    {"name":"two", "type":"binary"},
-    {"name":"three", "type":"INT64"},
-    {"name":"four", "type":"date"},
-    {"name":"five", "type":"INT32"},
-    {"name":"six", "type":"INT32"},
-    {"name":"seven", "type":"binary"}
-    ]}')
-    ```    
-
-15. Insert the data from the external `tmp` table into this newly created Parquet-based table. Take note of the speed to execute this task completely.
-
-    ```yaml
-    INSERT INTO table db2.parquet2 SELECT * from db1.tmp;  
-    ```    
-    
-16. Run the following SQL queries twice and take note of the speed result.
-
-    ```yaml
-    SELECT COUNT (*) FROM db2.parquet2;   
-    ```    
-    
-    ```yaml
-    SELECT AVG(age) FROM db2.parquet2 where lastname = 'Davis' and age > 30 and age < 40;
-    ``` 
-    
-17. Repeat step 16 for `tmp` table with file format CSV.
-
-    ```yaml
-    SELECT COUNT (*) FROM db1.tmp;   
-    ```    
-    
-    ```yaml
-    SELECT AVG(age) FROM db1.tmp where lastname = 'Davis' and age > 30 and age < 40;
-    ``` 
-    
-
-
-
-
-
-
-
-
-
 ---
