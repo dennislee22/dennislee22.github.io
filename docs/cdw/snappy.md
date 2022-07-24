@@ -6,10 +6,11 @@ nav_order: 2
 
 ---
 # SNAPPY Compression for Parquet, ORC, Avro
+{: .no_toc }
 
 SNAPPY is a high speed compression/decompression library that allows Parquet-based table in particular to reduce storage space while increase performance to a certain degree.
 
-This article describes the steps to gauge the query performance and storage output upon applying SNAPPY compression on the database tables with Avro, ORC and Parquet file formats in both Hive LLAP and Impala query engine using CDW in CDP Private Cloud platform.
+This article describes the steps to gauge the query performance and storage output upon applying SNAPPY compression on the database tables with Avro, ORC and Parquet file formats in both `Hive LLAP` and `Impala` query engine using CDW in CDP Private Cloud platform.
 
 - TOC
 {:toc}
@@ -43,13 +44,13 @@ This article describes the steps to gauge the query performance and storage outp
     16.0 G  47.9 G  /tmp/sampledata/300mil.csv    
     ```
 
-- In CDW, create a `Hive` and an `Impala` virtual warehouse with only 1 executor each.
+- In CDW, create a `hive` and an `impala` virtual warehouse with only 1 executor each.
 
     ![](../../assets/images/cdw/cdwfs1.png)
 
 ## Testing Procedure
 
-1. Access `Hue` tool of the `Hive` virtual warehouse. Create database `db1`.
+1. Access `Hue` tool of the `hive` virtual warehouse. Create database `db1`.
 
     ![](../../assets/images/cdw/cdwfs2.png)    
  
@@ -226,7 +227,7 @@ This article describes the steps to gauge the query performance and storage outp
 
 ## Compression Verification
     
-- By default, ZLIB compression is enabled for any managed ORC-based table in `Hive` engine in CDW unless specified. In this case, SNAPPY compression is enabled for `orc_snappy` table as highlighted in the testing procedure above.
+- By default, ZLIB compression is enabled for any managed ORC-based table in `hive` engine in CDW unless specified. In this case, SNAPPY compression is enabled for `orc_snappy` table as highlighted in the testing procedure above.
 - Verify the compression codec in the dataset file as shown below.
 
     ```bash
