@@ -6,6 +6,7 @@ nav_order: 3
 ---
 
 # Auto-scaling in CDW
+{: .no_toc }
 
 Auto-scaling is becoming a new "norm" feature in any data warehouse solution. Auto-scaling prevents over-provisioning of computing resources and scale up only when additional resources are needed to process the higher than expected workloads at a specific time.  The ability to scale down automatically helps to save infrastructure cost when the resources are no longer needed due to lower workloads.
 
@@ -35,7 +36,7 @@ This article demonstrates how CDW in CDP Private Cloud platform scales up/down b
     16.0 G  47.9 G  /tmp/sampledata/300mil.csv    
     ```
 
-- In CDW, create a `Hive` virtual warehouse with minimum 1 executor and maximum 2 executors.
+- In CDW, create a `hive` virtual warehouse with minimum 1 executor and maximum 2 executors.
 
     ![](../../assets/images/cdw/cdwscale1.png)
     
@@ -49,7 +50,7 @@ This article demonstrates how CDW in CDP Private Cloud platform scales up/down b
 2. Import the cert into the default location of OpenJDK cacerts directory in which Beeline will read that SSL truststore by default.
     
     ```bash  
-    # keytool  -importcert -alias beeline -keystore /usr/lib/jvm/java-11-openjdk-11.0.15.0.9-2.el7_9.x86_64/lib/security/cacerts  -file  /root/ingressca2.crt
+    # keytool  -importcert -alias beeline -keystore /usr/lib/jvm/java-11-openjdk-11.0.15.0.9-2.el7_9.x86_64/lib/security/cacerts  -file  /root/ingressca.crt
     ```
 3. Verify that the certificate has been imported successfully. 
     ```bash
@@ -58,7 +59,7 @@ This article demonstrates how CDW in CDP Private Cloud platform scales up/down b
 
 ## Testing Procedure
 
-1. Access `Hue` tool of the `Hive` virtual warehouse. Create database `db1`.
+1. Access `Hue` tool of the `hive` virtual warehouse. Create database `db1`.
 
     ![](../../assets/images/cdw/cdwfs2.png)    
  
@@ -66,7 +67,7 @@ This article demonstrates how CDW in CDP Private Cloud platform scales up/down b
  
     ![](../../assets/images/cdw/cdwfs3.png)       
 
-3. Run the following SQL command.
+3. Run the following SQL command and verify the results accordingly.
     
     ![](../../assets/images/cdw/cdwfs4.png)
     
@@ -114,7 +115,7 @@ This article demonstrates how CDW in CDP Private Cloud platform scales up/down b
     ]}')
     ```   
     
-6. Open a terminal console, check the status of pods in the `Hive` namespace. Note that there is only 1 query-executor pod provisioned.
+6. Open a terminal console, check the status of pods in the `hive` namespace. Note that there is only 1 query-executor pod provisioned.
 
     ```bash
     # oc -n compute-1658641968-r8vh get pods
@@ -184,7 +185,7 @@ This article demonstrates how CDW in CDP Private Cloud platform scales up/down b
     ```    
 
     
-8. Open another SSH terminal, insert the data into the ORC-based table from the external `tmp` table by using the `Beeline` tool.  
+8. Open another SSH terminal, insert the data into the Avro-based table from the external `tmp` table by using the `Beeline` tool.  
 
     ```bash
     # beeline -u "jdbc:hive2://hs2-hive.apps.ocp4.cdpkvm.cldr/db1;transportMode=http;httpPath=cliservice;ssl=true;retries=3" -n ldapuser1 -p ldapuser1
@@ -210,9 +211,6 @@ This article demonstrates how CDW in CDP Private Cloud platform scales up/down b
     ----------------------------------------------------------------------------------------------
         VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED  
     ----------------------------------------------------------------------------------------------
-    ----------------------------------------------------------------------------------------------
-        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED  
-    ----------------------------------------------------------------------------------------------
     Map 1 ..........      llap     SUCCEEDED     20         20        0        0       0       0  
     Reducer 2 ......      llap     SUCCEEDED      1          1        0        0       0       0  
     ----------------------------------------------------------------------------------------------
@@ -234,7 +232,7 @@ This article demonstrates how CDW in CDP Private Cloud platform scales up/down b
     ```    
     
 
-9. Take note of the the pod's log in the `Hive` namespace.
+9. Take note of the the pod's log in the `hive` namespace.
 
     ```bash
     # oc -n compute-1658641968-r8vh logs -f usage-monitor-5f9cfb8487-2zrrk
@@ -297,15 +295,15 @@ This article demonstrates how CDW in CDP Private Cloud platform scales up/down b
    standalone-compute-operator-0    1/1     Running   0          19m
    usage-monitor-5f9cfb8487-2zrrk   1/1     Running   0          19m
 
-    # oc -n compute-1658641968-r8vh get pvc
-    NAME                                                  STATUS   VOLUME              CAPACITY   ACCESS MODES   STORAGECLASS   AGE
-    query-executor-1658641992-volume-query-executor-0-0   Bound    local-pv-c8fe6eea   200Gi      RWO            cdw-disk       19m
-    query-executor-1658643055-volume-query-executor-1-0   Bound    local-pv-dc533915   200Gi      RWO            cdw-disk       2m5s
+   # oc -n compute-1658641968-r8vh get pvc
+   NAME                                                  STATUS   VOLUME              CAPACITY   ACCESS MODES   STORAGECLASS   AGE
+   query-executor-1658641992-volume-query-executor-0-0   Bound    local-pv-c8fe6eea   200Gi      RWO            cdw-disk       19m
+   query-executor-1658643055-volume-query-executor-1-0   Bound    local-pv-dc533915   200Gi      RWO            cdw-disk       2m5s
    ```
 
-    ![](../../assets/images/cdw/cdwscale3.png)
+   ![](../../assets/images/cdw/cdwscale3.png)
 
-11. After CDW has successfully scaled in, the system is left with the initial 1 pod.
+11. After CDW has successfully scaled in, the system is now left with the initial 1 executor pod.
 
    ```bash
    # oc -n compute-1658641968-r8vh get pods
@@ -318,6 +316,6 @@ This article demonstrates how CDW in CDP Private Cloud platform scales up/down b
    query-executor-0-0               1/1     Running   0          15m
    standalone-compute-operator-0    1/1     Running   0          24m
    usage-monitor-5f9cfb8487-2zrrk   1/1     Running   0          24m
-   ```yaml 
+   ``` 
     
 ---
