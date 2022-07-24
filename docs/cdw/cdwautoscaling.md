@@ -279,29 +279,28 @@ This article demonstrates how CDW in CDP Private Cloud platform scales up/down b
 
 
 10. During the time when CDW scales up, an additional pod has been provisioned as shown below.
+ 
+    ```bash
+    # oc -n compute-1658641968-r8vh get pods
+    NAME                             READY   STATUS    RESTARTS   AGE
+    das-webapp-0                     1/1     Running   0          19m
+    hiveserver2-0                    1/1     Running   0          19m
+    huebackend-0                     1/1     Running   0          19m
+    huefrontend-78b8577f7c-fb4fp     1/1     Running   0          19m
+    query-coordinator-0-0            1/1     Running   0          10m
+    query-coordinator-1-0            1/1     Running   0          2m
+    query-executor-0-0               1/1     Running   0          10m
+    query-executor-1-0               1/1     Running   0          2m1s
+    standalone-compute-operator-0    1/1     Running   0          19m
+    usage-monitor-5f9cfb8487-2zrrk   1/1     Running   0          19m
 
+    # oc -n compute-1658641968-r8vh get pvc
+    NAME                                                  STATUS   VOLUME              CAPACITY   ACCESS MODES   STORAGECLASS   AGE
+    query-executor-1658641992-volume-query-executor-0-0   Bound    local-pv-c8fe6eea   200Gi      RWO            cdw-disk       19m
+    query-executor-1658643055-volume-query-executor-1-0   Bound    local-pv-dc533915   200Gi      RWO            cdw-disk       2m5s
+    ```
 
-   ```bash
-   # oc -n compute-1658641968-r8vh get pods
-   NAME                             READY   STATUS    RESTARTS   AGE
-   das-webapp-0                     1/1     Running   0          19m
-   hiveserver2-0                    1/1     Running   0          19m
-   huebackend-0                     1/1     Running   0          19m
-   huefrontend-78b8577f7c-fb4fp     1/1     Running   0          19m
-   query-coordinator-0-0            1/1     Running   0          10m
-   query-coordinator-1-0            1/1     Running   0          2m
-   query-executor-0-0               1/1     Running   0          10m
-   query-executor-1-0               1/1     Running   0          2m1s
-   standalone-compute-operator-0    1/1     Running   0          19m
-   usage-monitor-5f9cfb8487-2zrrk   1/1     Running   0          19m
-
-   # oc -n compute-1658641968-r8vh get pvc
-   NAME                                                  STATUS   VOLUME              CAPACITY   ACCESS MODES   STORAGECLASS   AGE
-   query-executor-1658641992-volume-query-executor-0-0   Bound    local-pv-c8fe6eea   200Gi      RWO            cdw-disk       19m
-   query-executor-1658643055-volume-query-executor-1-0   Bound    local-pv-dc533915   200Gi      RWO            cdw-disk       2m5s
-   ```
-
-   ![](../../assets/images/cdw/cdwscale3.png)
+    ![](../../assets/images/cdw/cdwscale3.png)
 
     
 ---
