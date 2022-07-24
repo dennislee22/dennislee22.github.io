@@ -41,7 +41,7 @@ This article describes the steps to test the performance of these file formats i
     16.0 G  47.9 G  /tmp/sampledata/300mil.csv    
     ```
 
-- In CDW, create a `Hive LLAP` and an `Impala` virtual warehouse with only 1 executor each.
+- In CDW, create a `Hive` and an `Impala` virtual warehouse with only 1 executor each.
 
     ![](../../assets/images/cdw/cdwfs1.png)
 
