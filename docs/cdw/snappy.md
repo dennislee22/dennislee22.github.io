@@ -222,6 +222,7 @@ This article describes the steps to gauge the query performance and storage outp
     
     ```yaml
     SELECT AVG(age) FROM db2.parquet2_snappy where lastname = 'Davis' and age > 30 and age < 40;
+    ```    
 
 ## Compression Verification
     
@@ -239,11 +240,11 @@ This article describes the steps to gauge the query performance and storage outp
     Compression: SNAPPY
     Compression size: 32768
     ```     
+    
 - By default, no compression is enabled for any managed Avro-based table in `Hive` engine in CDW unless specified. In this case, SNAPPY compression is enabled for `avro_snappy` table as specified in the testing procedure above.
 - Verify the compression codec in the dataset file as shown below.
 
-    ```bash  
-
+    ```bash
     # hadoop fs -copyToLocal /warehouse/tablespace/managed/hive/db1.db/avro_snappy/delta_0000001_0000001_0000/000000_0 tmp.avro
     
     # avro-tools getmeta tmp.avro | grep codec
@@ -331,7 +332,6 @@ This article describes the steps to gauge the query performance and storage outp
 ## Performance Result
 
 - The following table shows the time taken (in seconds) to run each SQL query in the specific file format table without SNAPPY compression. This result is adapted from the previous test as described [here]({{ site.baseurl }}{% link docs/cdw/benchmarkfs.md %}).
-
 
 | File Format  | Engine | INSERT | SELECT COUNT (1st)|SELECT COUNT (2nd) |SELECT AVG(1st)|SELECT AVG(2nd)|
 |:-------------|:----------------|:------------------|:------------------|---------------|---------------|
