@@ -174,14 +174,14 @@ This article demonstrates how CDW in CDP Private Cloud platform scales up/down b
     
     INFO  : Starting task [Stage-2:DEPENDENCY_COLLECTION] in serial mode
     ----------------------------------------------------------------------------------------------
-        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED  
-        ----------------------------------------------------------------------------------------------
-        Map 1 ..........      llap     SUCCEEDED     20         20        0        0       0       0  
-        Reducer 2 ......      llap     SUCCEEDED      1          1        0        0       0       0  e=0, numFilesErasureCoded=0]
-        ----------------------------------------------------------------------------------------------
-        VERTICES: 02/02  [==========================>>] 100%  ELAPSED TIME: 491.32 s   
-        ----------------------------------------------------------------------------------------------
-        300,000,000 rows affected (492.022 seconds) 
+    VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED  
+    ----------------------------------------------------------------------------------------------
+    Map 1 ..........      llap     SUCCEEDED     20         20        0        0       0       0  
+    Reducer 2 ......      llap     SUCCEEDED      1          1        0        0       0       0  e=0, numFilesErasureCoded=0]
+    ----------------------------------------------------------------------------------------------
+    VERTICES: 02/02  [==========================>>] 100%  ELAPSED TIME: 491.32 s   
+    ----------------------------------------------------------------------------------------------
+    300,000,000 rows affected (492.022 seconds) 
     ```    
 
     
@@ -248,7 +248,7 @@ This article demonstrates how CDW in CDP Private Cloud platform scales up/down b
     time="2022-07-24T06:09:55Z" level=info msg="freeCoordinators: -1 executingQueries: 2 standaloneQueryCount: 0"
     ```
 
-    As the second query hits the system, CDW decides to scale up after approximately 60 seconds (as configured).     
+    When the second query hits the system, CDW decides to scale up after approximately 60 seconds (as configured).     
     ```yaml    
     time="2022-07-24T06:10:55Z" level=info msg="Queued query wait time of 94.655000 secs exceeded threshold 60, adding an additional compute group."
     time="2022-07-24T06:10:55Z" level=info msg="Auto-scale decision: 1"
@@ -258,7 +258,7 @@ This article demonstrates how CDW in CDP Private Cloud platform scales up/down b
     time="2022-07-24T06:11:05Z" level=info msg="compute-1658641968-r8vh/hive: 1 coordinators found for 2 compute groups, expected 2. May still be waiting for the results of a scaleup/scaledown"
     ```
 
-    Because the maximum pod has been configured as 2, the system is not be able to provision more than 2 executor pods.
+    Because the maximum pod has been configured as 2, the system is not able to provision more than 2 executor pods.
     ```yaml 
     time="2022-07-24T06:13:35Z" level=info msg="Sending metrics event: {MetricsEvent ExecutingQueries: 2, QueryCount: 3, StandaloneQueryCount: 0 QueuedQueries: 1, WaitPercentiles: map[50:214640 60:214640 70:214640 80:214640 90:214640 95:214640 96:214640 97:214640 98:214640 99:214640]}"
     time="2022-07-24T06:13:35Z" level=info msg="ReadyReplicas for query-coordinator-0: 1"
@@ -268,7 +268,7 @@ This article demonstrates how CDW in CDP Private Cloud platform scales up/down b
     time="2022-07-24T06:13:35Z" level=info msg="Auto-scale decision: 0"
     ```
     
-    After one of the queries has successfully been processed completely, CDW decides to scale down.  
+    When one of the queries has successfully been processed completely, CDW decides to scale down.  
     ```yaml 
     time="2022-07-24T06:13:55Z" level=info msg="freeCoordinators: 1 executingQueries: 1 standaloneQueryCount: 0"
     time="2022-07-24T06:13:55Z" level=info msg="Number of free coordinators at 1 - scaling down by 1 compute group."
@@ -303,19 +303,5 @@ This article demonstrates how CDW in CDP Private Cloud platform scales up/down b
 
    ![](../../assets/images/cdw/cdwscale3.png)
 
-11. After CDW has successfully scaled in, the system is now left with the initial 1 executor pod.
-
-   ```bash
-   # oc -n compute-1658641968-r8vh get pods
-   NAME                             READY   STATUS    RESTARTS   AGE
-   das-webapp-0                     1/1     Running   0          24m
-   hiveserver2-0                    1/1     Running   0          24m
-   huebackend-0                     1/1     Running   0          24m
-   huefrontend-78b8577f7c-fb4fp     1/1     Running   0          24m
-   query-coordinator-0-0            1/1     Running   0          15m
-   query-executor-0-0               1/1     Running   0          15m
-   standalone-compute-operator-0    1/1     Running   0          24m
-   usage-monitor-5f9cfb8487-2zrrk   1/1     Running   0          24m
-   ``` 
     
 ---
