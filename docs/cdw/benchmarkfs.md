@@ -6,6 +6,7 @@ nav_order: 1
 ---
 
 # Parquet, ORC, Avro and CSV Benchmarking
+{: .no_toc }
 
 There is a variety of file format choices in the Hadoop ecosystem. The popular file formats are ORC, Parquet, CSV and Avro. Parquet and ORC are both columnar-storage type whereas ORC uses the row-based format.
 
@@ -41,13 +42,13 @@ This article describes the steps to test the performance of these file formats i
     16.0 G  47.9 G  /tmp/sampledata/300mil.csv    
     ```
 
-- In CDW, create a `Hive` and an `Impala` virtual warehouse with only 1 executor each.
+- In CDW, create a `hive` and an `impala` virtual warehouse with only 1 executor each.
 
     ![](../../assets/images/cdw/cdwfs1.png)
 
 ## Testing Procedure
 
-1. Access `Hue` tool of the `Hive` virtual warehouse. Create database `db1`.
+1. Access `Hue` tool of the `hive` virtual warehouse. Create database `db1`.
 
     ![](../../assets/images/cdw/cdwfs2.png)    
  
