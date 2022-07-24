@@ -7,6 +7,8 @@ nav_order: 2
 ---
 # SNAPPY Compression for Parquet, ORC, Avro
 
+SNAPPY is a high speed compression/decompression library that allows Parquet-based table in particular to reduce storage space while increase performance to a certain degree.
+
 This article describes the steps to gauge the query performance and storage output upon applying SNAPPY compression on the database tables with Avro, ORC and Parquet file formats in both Hive LLAP and Impala query engine using CDW in CDP Private Cloud platform.
 
 - TOC
@@ -41,13 +43,13 @@ This article describes the steps to gauge the query performance and storage outp
     16.0 G  47.9 G  /tmp/sampledata/300mil.csv    
     ```
 
-- In CDW, create a `Hive LLAP` and an `Impala` virtual warehouse with only 1 executor each.
+- In CDW, create a `Hive` and an `Impala` virtual warehouse with only 1 executor each.
 
     ![](../../assets/images/cdw/cdwfs1.png)
 
-## Testing Procedure using Hive LLAP
+## Testing Procedure
 
-1. Access `Hue` tool of the `Hive LLAP` virtual warehouse. Create database `db1`.
+1. Access `Hue` tool of the `Hive` virtual warehouse. Create database `db1`.
 
     ![](../../assets/images/cdw/cdwfs2.png)    
  
@@ -94,7 +96,7 @@ This article describes the steps to gauge the query performance and storage outp
     SELECT * FROM db1.orc_snappy;
     ```
 
-7. Run the following SQL queries twice and take note of the speed result.
+7. Run the following SQL queries twice and take note of the speed to complete the task.
 
     ```yaml
     SELECT COUNT (*) FROM db1.orc_snappy;   
@@ -166,7 +168,7 @@ This article describes the steps to gauge the query performance and storage outp
     ]}');
     ```
     
-12. Run the following SQL queries twice and take note of the speed result.
+12. Run the following SQL queries twice and take note of the speed to complete the task.
 
     ```yaml
     SELECT COUNT (*) FROM db1.avro_snappy;
@@ -176,9 +178,54 @@ This article describes the steps to gauge the query performance and storage outp
     SELECT AVG(age) FROM db1.avro_snappy where lastname = 'Davis' and age > 30 and age < 40;
     ``` 
 
+13. Access `Hue` tool of the `Impala` virtual warehouse. Create database `db2`.
+   
+ 
+14. Use the SQL Editor to create an external table in the database `db2`.
+    
+
+15. Create a managed table using the Parquet file format based on the schema as shown below.
+    
+    ```yaml
+    CREATE TABLE db2.parquet2_snappy(
+    FirstName string, LastName string,    
+    MSISDN bigint, DOB date, age int,
+    Postcode int, City string)
+    STORED AS parquet
+    TBLPROPERTIES (
+    "parquet.compression"="SNAPPY",
+    'parquet.schema.literal'='{
+    "name": "sample1",
+    "type": "record",
+    "fields": [
+    {"name":"one", "type":"string"},
+    {"name":"two", "type":"string"},
+    {"name":"three", "type":"long"},
+    {"name":"four", "type":"date"},
+    {"name":"five", "type":"long"},
+    {"name":"six", "type":"int"},
+    {"name":"seven", "type":"string"}
+    ]}')
+    ```    
+
+16. Insert the data from the external `tmp` table into this newly created Parquet-based table. Take note of the speed to execute this task completely.
+
+    ```yaml
+    INSERT INTO table db2.parquet2_snappy SELECT * from db1.tmp;  
+    ```    
+    
+17. Run the following SQL queries twice and take note of the speed result.
+
+    ```yaml
+    SELECT COUNT (*) FROM db2.parquet2_snappy;   
+    ```    
+    
+    ```yaml
+    SELECT AVG(age) FROM db2.parquet2_snappy where lastname = 'Davis' and age > 30 and age < 40;
+
 ## Compression Verification
     
-- By default, ZLIB compression is enabled for any managed ORC-based table in `Hive` engine in CDW unless specified. In this case, SNAPPY compression is enabled for `orc_snappy` table as highlighted above.
+- By default, ZLIB compression is enabled for any managed ORC-based table in `Hive` engine in CDW unless specified. In this case, SNAPPY compression is enabled for `orc_snappy` table as highlighted in the testing procedure above.
 - Verify the compression method in the dataset file as shown below.
 
     ```bash
@@ -192,7 +239,7 @@ This article describes the steps to gauge the query performance and storage outp
     Compression: SNAPPY
     Compression size: 32768
     ```     
-- By default, no compression is enabled for any managed Avro-based table in `Hive` engine in CDW unless specified. In this case, SNAPPY compression is enabled for `avro_snappy` table as specified in the aforementioned query.
+- By default, no compression is enabled for any managed Avro-based table in `Hive` engine in CDW unless specified. In this case, SNAPPY compression is enabled for `avro_snappy` table as specified in the testing procedure above.
 - Verify the compression method in the dataset file as shown below.
 
     ```bash  
@@ -211,7 +258,7 @@ This article describes the steps to gauge the query performance and storage outp
     #
     ``` 
     
-- By default, the dataset is `UNCOMPRESSED` for any managed Parquet-based table in `Hive` engine in CDW unless specified. In this case, SNAPPY compression is enabled for `parquet_snappy` table as specified in the query above.
+- By default, the dataset is `UNCOMPRESSED` for any managed Parquet-based table in `Hive` engine in CDW unless specified. In this case, SNAPPY compression is enabled for `parquet_snappy` table as specified in the testing procedure above.
 - Verify the compression method in the dataset file as shown below.
 
     ```bash 
@@ -321,13 +368,13 @@ This article describes the steps to gauge the query performance and storage outp
     ```bash
     # hdfs dfs -du -h /warehouse/tablespace/managed/hive/db2.db
     6.4 G  19.3 G  /warehouse/tablespace/managed/hive/db2.db/parquet2
-    6.4 G  19.3 G  /warehouse/tablespace/managed/hive/db2.db/parquet_snappy
+    6.4 G  19.3 G  /warehouse/tablespace/managed/hive/db2.db/parquet2_snappy
     ```    
 
 ## Conclusion
 
 - SNAPPY compression helps saving HDFS storage space and also offers higher performance result in terms of speed to complete the INSERT and SELECT queries. 
-- ZLIB compression seems saving slighly more storage but lagging in speed performance for ORC-base table in `Hive` engine in comparison to the SNAPPY compression technique.
+- ZLIB compression seems saving slighly more storage but lagging in speed performance for ORC-base table in `Hive` engine compared to SNAPPY compression.
 - Parquet stands out in terms of achieving the highest speed for running the interactive SQL query. As it is a pioneer file format for `Impala`, running SQL query in Parquet-based table in Impala produces quicker result compared to running the same query in Hive engine with SNAPPY compression (which is enabled by default).
 
 ---
