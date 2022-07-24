@@ -1,27 +1,21 @@
 ---
 layout: default
-title: Parquet, ORC, Avro and CSV Benchmarking
+title: Auto-scaling
 parent: Data Warehousing
-nav_order: 1
+nav_order: 3
 ---
 
-# Parquet, ORC, Avro and CSV Benchmarking
+# Auto-scaling in CDW
 
-There is a variety of file format choices in the Hadoop ecosystem. The popular file formats are ORC, Parquet, CSV and Avro. Parquet and ORC are both columnar-storage type whereas ORC uses the row-based format.
+Auto-scaling is becoming a new "norm" feature in any data warehouse solution. Auto-scaling prevents over-provisioning of computing resources and scale up only when additional resources are needed to process the higher than expected workloads at a specific time.  The ability to scale down automatically helps to save infrastructure cost when the resources are no longer needed due to lower workloads.
 
-This article describes the steps to test the performance of these file formats in both `Hive LLAP` and `Impala` query engine using Cloudera Data Warehouse (CDW) with one executor engine pod in the CDP Private Cloud platform.
+This article demonstrates how CDW in CDP Private Cloud platform scales up/down by auto-provisioning the container pod in Openshift depending on the needs of the SQL queries.
 
 - TOC
 {:toc}
 
 ---
 ## Prerequisites
-
-- The performance benchmarking tests are carried out using CDW on the CDP Private Cloud (Openshift) platform with the following hardware specification.
-
-| CPU          | Intel(R) Xeon(R) Gold 5220R CPU @ 2.20GHz | 
-| Memory  | DIMM DDR4 Synchronous Registered (Buffered) 2933 MHz (0.3 ns) | 
-| Disk | SSD P4610 1.6TB SFF    | 
 
 
 - A random sample data of 300 million CSV rows is produced using a python script with the [faker](https://faker.readthedocs.io/en/master/) generator. The schema of each row is sequenced as `Lastname, Firstname, MSISDN, Date of Birth, Postcode, City` as illustrated below.
@@ -41,9 +35,30 @@ This article describes the steps to test the performance of these file formats i
     16.0 G  47.9 G  /tmp/sampledata/300mil.csv    
     ```
 
-- In CDW, create a `Hive` and an `Impala` virtual warehouse with only 1 executor each.
+- In CDW, create a `Hive` virtual warehouse with minimum 1 executor and maximum 2 executors.
 
-    ![](../../assets/images/cdw/cdwfs1.png)
+    ![](../../assets/images/cdw/cdwscale1.png)
+    
+    
+ - Setup the `Beeline` tool as follows (if this has not been done before).
+
+    ```bash
+    # keytool -list -v -keystore /usr/lib/jvm/java-11-openjdk-11.0.15.0.9-2.el7_9.x86_64/lib/security/cacerts | grep rootca
+   35  pwd
+   36  cd
+   37  pwd
+   38  more ingressca.crt 
+   39  openssl x509 -noout -text -in ingressca.crt 
+   40  vi asd
+   41  cat asd | base64 -d
+   42  cat asd | base64 -d > ingressca2.crt 
+   43  diff ingressca2.crt ingressca.crt 
+   44  openssl x509 -noout -text -in ingressca2.crt 
+   45  keytool  -importcert -alias beeline -keystore /usr/lib/jvm/java-11-openjdk-11.0.15.0.9-2.el7_9.x86_64/lib/security/cacerts  -file  /root/ingressca2.crt
+   46  beeline -u "jdbc:hive2://hs2-hive.apps.ocp4.cdpkvm.cldr/default;transportMode=http;httpPath=cliservice;ssl=true;retries=1;user=ldapuser1;password=ldapuser1"
+   47  rm ingressca.crt 
+   48  beeline -u "jdbc:hive2://hs2-hive.apps.ocp4.cdpkvm.cldr/default;transportMode=http;httpPath=cliservice;ssl=true;retries=1;user=ldapuser1;password=ldapuser1" 
+    ```
 
 ## Testing Procedure
 
@@ -55,32 +70,249 @@ This article describes the steps to test the performance of these file formats i
  
     ![](../../assets/images/cdw/cdwfs3.png)       
 
-3. Execute the following command and take note of the speed result. Repeat running the same command and jot down the result again.
+3. Run the following SQL command.
     
     ![](../../assets/images/cdw/cdwfs4.png)
     
-4. Create a Hive managed table using the ORC file format based on the schema as shown below. The data type of the specific file format can obtained [here](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/impala-reference/topics/impala-file-formats.html).
+4. Create a Hive managed table using the Avro file format based on the schema as shown below.
     
-    ![](../../assets/images/cdw/cdwfs5.png)
-
-5. Insert the data from the external `tmp` table into this newly created ORC-based table. Take note of the speed to execute this task completely.
-
-    ![](../../assets/images/cdw/cdwfs6.png)
-    
-6. Check the result of the loaded data.    
-
-    ![](../../assets/images/cdw/cdwfs7.png)
-    
-
-7. Run the following SQL queries twice and take note of the speed result.
-
     ```yaml
-    SELECT COUNT (*) FROM db1.orc;   
+    CREATE TABLE db1.avro(
+    FirstName string, LastName string,    
+    MSISDN bigint, DOB date, age int,
+    Postcode int, City string)
+    STORED AS avro
+    TBLPROPERTIES ('avro.schema.literal'='{
+    "name": "sample1",
+    "type": "record",
+    "fields": [
+    {"name":"FirstName", "type":"string"},
+    {"name":"LastName", "type":"string"},
+    {"name":"MSISDN", "type":"long"},
+    {"name":"DOB", "type":"string"},
+    {"name":"age", "type":"int"},
+    {"name":"Postcode", "type":"int"},
+    {"name":"City", "type":"string"}
+    ]}')
+    ```   
+
+5. Create another Hive managed table using the ORC file format based on the schema as shown below.
+    
+    ```yaml
+    CREATE TABLE db1.orc(
+    FirstName string, LastName string,    
+    MSISDN bigint, DOB date, age int,
+    Postcode int, City string)
+    STORED AS orc
+    TBLPROPERTIES ('orc.schema.literal'='{
+    "name": "sample1",
+    "type": "record",
+    "fields": [
+    {"name":"one", "type":"binary"},
+    {"name":"two", "type":"binary"},
+    {"name":"three", "type":"bigint"},
+    {"name":"four", "type":"binary"},
+    {"name":"five", "type":"int"},
+    {"name":"six", "type":"int"},
+    {"name":"seven", "type":"binary"}
+    ]}')
+    ```   
+    
+6. Open a terminal console, check the status of pods in the `Hive` namespace. Note that there is only 1 query-executor pod provisioned.
+
+    ```bash
+    # oc -n compute-1658641968-r8vh get pods
+    NAME                             READY   STATUS    RESTARTS   AGE
+    das-webapp-0                     1/1     Running   0          4m26s
+    hiveserver2-0                    1/1     Running   0          4m26s
+    huebackend-0                     1/1     Running   0          4m26s
+    huefrontend-78b8577f7c-fb4fp     1/1     Running   0          4m26s
+    query-coordinator-0-0            1/1     Running   0          4m19s
+    query-executor-0-0               1/1     Running   0          4m19s
+    standalone-compute-operator-0    1/1     Running   0          4m26s
+    usage-monitor-5f9cfb8487-2zrrk   1/1     Running   0          4m26s
+
+    # oc -n compute-1658641968-r8vh get pvc
+    NAME                                                  STATUS   VOLUME              CAPACITY   ACCESS MODES   STORAGECLASS   AGE
+    query-executor-1658641992-volume-query-executor-0-0   Bound    local-pv-c8fe6eea   200Gi      RWO            cdw-disk       4m23s
+    ``` 
+
+7. Open another terminal console, insert the data into the ORC-based table from the external `tmp` table by using the `Beeline` tool.  
+
+
+    ```bash
+    # beeline -u "jdbc:hive2://hs2-hive.apps.ocp4.cdpkvm.cldr/db1;transportMode=http;httpPath=cliservice;ssl=true;retries=3" -n ldapuser1 -p ldapuser1
+    
+    ... filtered ...
+
+    Beeline version 3.1.3000.7.1.7.0-551 by Apache Hive
+    0: jdbc:hive2://hs2-hive.apps.ocp4.cdpkvm.cld> INSERT INTO table db1.orc SELECT * from db1.tmp; 
+    INFO  : Compiling command(queryId=hive_20220724060525_ed941551-d345-497d-b9f8-550a770809e5): INSERT INTO table db1.orc SELECT * from db1.tmp
+    INFO  : No Stats for db1@tmp, Columns: firstname, city, dob, postcode, msisdn, age, lastname
+    INFO  : Semantic Analysis Completed (retrial = false)
+    INFO  : Created Hive schema: Schema(fieldSchemas:[FieldSchema(name:tmp.firstname, type:string, comment:null), FieldSchema(name:tmp.lastname, type:string, comment:null), FieldSchema(name:tmp.msisdn, type:bigint, comment:null), FieldSchema(name:tmp.dob, type:date, comment:null), FieldSchema(name:tmp.age, type:int, comment:null), FieldSchema(name:tmp.postcode, type:int, comment:null), FieldSchema(name:tmp.city, type:string, comment:null)], properties:null)
+    INFO  : Completed compiling command(queryId=hive_20220724060525_ed941551-d345-497d-b9f8-550a770809e5); Time taken: 0.374 seconds
+    INFO  : Executing command(queryId=hive_20220724060525_ed941551-d345-497d-b9f8-550a770809e5): INSERT INTO table db1.orc SELECT * from db1.tmp
+    INFO  : Compute 'hive' is active.
+    INFO  : Query ID = hive_20220724060525_ed941551-d345-497d-b9f8-550a770809e5
+    INFO  : Total jobs = 1
+    INFO  : Launching Job 1 out of 1
+    INFO  : Starting task [Stage-1:MAPRED] in serial mode
+    INFO  : Subscribed to counters: [] for queryId: hive_20220724060525_ed941551-d345-497d-b9f8-550a770809e5
+    INFO  : Tez session hasn't been created yet. Opening session
+    INFO  : Dag name: INSERT INTO table db1.orc SELECT *...db1.tmp (Stage-1)
+    INFO  : Status: Running (Executing on YARN cluster with App id application_1658642600148_0000)
+
+    ----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED  
+    ----------------------------------------------------------------------------------------------
+    Map 1 ..........      llap     SUCCEEDED     20         20        0        0       0       0  
+    Reducer 2 ......      llap     SUCCEEDED      1          1        0        0       0       0  
+    ----------------------------------------------------------------------------------------------
+    VERTICES: 02/02  [==========================>>] 100%  ELAPSED TIME: 491.30 s   
+    ----------------------------------------------------------------------------------------------
+    INFO  : Status: DAG finished successfully in 490.14 seconds
+
+    ... filtered ...
+    
+    INFO  : Starting task [Stage-2:DEPENDENCY_COLLECTION] in serial mode
+    ----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED  
+        ----------------------------------------------------------------------------------------------
+        Map 1 ..........      llap     SUCCEEDED     20         20        0        0       0       0  
+        Reducer 2 ......      llap     SUCCEEDED      1          1        0        0       0       0  e=0, numFilesErasureCoded=0]
+        ----------------------------------------------------------------------------------------------
+        VERTICES: 02/02  [==========================>>] 100%  ELAPSED TIME: 491.32 s   
+        ----------------------------------------------------------------------------------------------
+        300,000,000 rows affected (492.022 seconds) 
+    ```    
+
+    
+8. Open another SSH terminal, insert the data into the ORC-based table from the external `tmp` table by using the `Beeline` tool.  
+
+    ```bash
+    # beeline -u "jdbc:hive2://hs2-hive.apps.ocp4.cdpkvm.cldr/db1;transportMode=http;httpPath=cliservice;ssl=true;retries=3" -n ldapuser1 -p ldapuser1
+
+    ... filtered ...
+
+    Beeline version 3.1.3000.7.1.7.0-551 by Apache Hive
+    0: jdbc:hive2://hs2-hive.apps.ocp4.cdpkvm.cld> INSERT INTO table db1.avro SELECT * from db1.tmp;
+    22/07/24 14:09:14 [main]: INFO jdbc.HiveConnection: Could not connect to the server. Retrying one more time.
+    INFO  : Compiling command(queryId=hive_20220724060914_ac401654-1582-4415-8b9a-d76abbeee5a0): INSERT INTO table db1.avro SELECT * from db1.tmp
+    INFO  : No Stats for db1@tmp, Columns: firstname, city, dob, postcode, msisdn, age, lastname
+    INFO  : Semantic Analysis Completed (retrial = false)
+    INFO  : Created Hive schema: Schema(fieldSchemas:[FieldSchema(name:_col0, type:string, comment:null), FieldSchema(name:_col1, type:string, comment:null), FieldSchema(name:_col2, type:bigint, comment:null), FieldSchema(name:_col3, type:string, comment:null), FieldSchema(name:_col4, type:int, comment:null), FieldSchema(name:_col5, type:int, comment:null), FieldSchema(name:_col6, type:string, comment:null)], properties:null)
+    INFO  : Completed compiling command(queryId=hive_20220724060914_ac401654-1582-4415-8b9a-d76abbeee5a0); Time taken: 0.432 seconds
+    INFO  : Executing command(queryId=hive_20220724060914_ac401654-1582-4415-8b9a-d76abbeee5a0): INSERT INTO table db1.avro SELECT * from db1.tmp
+    INFO  : Compute 'hive' is active.
+    INFO  : Query ID = hive_20220724060914_ac401654-1582-4415-8b9a-d76abbeee5a0
+    INFO  : Total jobs = 1
+    INFO  : Launching Job 1 out of 1
+    INFO  : Starting task [Stage-1:MAPRED] in serial mode
+    INFO  : Subscribed to counters: [] for queryId: hive_20220724060914_ac401654-1582-4415-8b9a-d76abbeee5a0
+    INFO  : Tez session hasn't been created yet. Opening session
+    ----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED  
+    ----------------------------------------------------------------------------------------------
+    ----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED  
+    ----------------------------------------------------------------------------------------------
+    Map 1 ..........      llap     SUCCEEDED     20         20        0        0       0       0  
+    Reducer 2 ......      llap     SUCCEEDED      1          1        0        0       0       0  
+    ----------------------------------------------------------------------------------------------
+    VERTICES: 02/02  [==========================>>] 100%  ELAPSED TIME: 345.48 s   
+    ----------------------------------------------------------------------------------------------
+    INFO  : Status: DAG finished successfully in 344.74 seconds
+
+    ... filtered ...
+    
+    ----------------------------------------------------------------------------------------------
+        VERTICES      MODE        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED  
+    ----------------------------------------------------------------------------------------------
+    Map 1 ..........      llap     SUCCEEDED     20         20        0        0       0       0  
+    Reducer 2 ......      llap     SUCCEEDED      1          1        0        0       0       0  ize=0, numFilesErasureCoded=0]
+    ----------------------------------------------------------------------------------------------
+    VERTICES: 02/02  [==========================>>] 100%  ELAPSED TIME: 346.46 s   
+    ----------------------------------------------------------------------------------------------
+    300,000,000 rows affected (608.205 seconds) 
     ```    
     
-    ```yaml
-    SELECT AVG(age) FROM db1.orc where lastname = 'Davis' and age > 30 and age < 40;
-    ``` 
+
+8. Take note of the the pod's log in the `Hive` namespace. After approximately 60 seconds (as configured),
+
+    ```bash
+    # oc -n compute-1658641968-r8vh logs -f usage-monitor-5f9cfb8487-2zrrk
+    ```
+    
+    
+    
+time="2022-07-24T06:09:45Z" level=info msg="ReadyReplicas for query-coordinator-0: 1"
+time="2022-07-24T06:09:45Z" level=info msg="ReadyReplicas for query-coordinator-0: 1"
+time="2022-07-24T06:09:45Z" level=info msg="freeCoordinators: 0 executingQueries: 1 standaloneQueryCount: 0"
+
+time="2022-07-24T06:09:55Z" level=info msg="ReadyReplicas for query-coordinator-0: 1"
+time="2022-07-24T06:09:55Z" level=info msg="ReadyReplicas for query-coordinator-0: 1"
+time="2022-07-24T06:09:55Z" level=info msg="freeCoordinators: -1 executingQueries: 2 standaloneQueryCount: 0"
+
+time="2022-07-24T06:10:55Z" level=info msg="Queued query wait time of 94.655000 secs exceeded threshold 60, adding an additional compute group."
+time="2022-07-24T06:10:55Z" level=info msg="Auto-scale decision: 1"
+time="2022-07-24T06:10:55Z" level=info msg="Updating compute-1658641968-r8vh/hive to 2 compute groups"
+
+time="2022-07-24T06:11:05Z" level=info msg="ReadyReplicas for query-coordinator-0: 1"
+time="2022-07-24T06:11:05Z" level=info msg="ReadyReplicas for query-coordinator-1: 0"
+time="2022-07-24T06:11:05Z" level=info msg="compute-1658641968-r8vh/hive: 1 coordinators found for 2 compute groups, expected 2. May still be waiting for the results of a scaleup/scaledown"
+
+
+time="2022-07-24T06:13:35Z" level=info msg="Sending metrics event: {MetricsEvent ExecutingQueries: 2, QueryCount: 3, StandaloneQueryCount: 0 QueuedQueries: 1, WaitPercentiles: map[50:214640 60:214640 70:214640 80:214640 90:214640 95:214640 96:214640 97:214640 98:214640 99:214640]}"
+time="2022-07-24T06:13:35Z" level=info msg="ReadyReplicas for query-coordinator-0: 1"
+time="2022-07-24T06:13:35Z" level=info msg="ReadyReplicas for query-coordinator-1: 1"
+time="2022-07-24T06:13:35Z" level=info msg="Queued query wait time of 214.640000 secs exceeded threshold 60, adding an additional compute group."
+time="2022-07-24T06:13:35Z" level=info msg="Additional compute groups capped to 0 due to hitting max compute groups limit of 2"
+time="2022-07-24T06:13:35Z" level=info msg="Auto-scale decision: 0"
+
+
+time="2022-07-24T06:13:55Z" level=info msg="freeCoordinators: 1 executingQueries: 1 standaloneQueryCount: 0"
+time="2022-07-24T06:13:55Z" level=info msg="Number of free coordinators at 1 - scaling down by 1 compute group."
+time="2022-07-24T06:13:55Z" level=info msg="Auto-scale decision: -1"
+time="2022-07-24T06:13:55Z" level=info msg="Updating compute-1658641968-r8vh/hive to 1 compute groups"
+time="2022-07-24T06:13:55Z" level=info msg="Auto-suspend update: enabled: true, duration: 5m0s, minGroups: 1, maxGroups: 2, numGroups: 2"
+
+
+    ```    
+
+
+
+
+
+[root@ocpbastion ~]# oc -n compute-1658641968-r8vh get pods
+NAME                             READY   STATUS    RESTARTS   AGE
+das-webapp-0                     1/1     Running   0          19m
+hiveserver2-0                    1/1     Running   0          19m
+huebackend-0                     1/1     Running   0          19m
+huefrontend-78b8577f7c-fb4fp     1/1     Running   0          19m
+query-coordinator-0-0            1/1     Running   0          10m
+query-coordinator-1-0            1/1     Running   0          2m
+query-executor-0-0               1/1     Running   0          10m
+query-executor-1-0               1/1     Running   0          2m1s
+standalone-compute-operator-0    1/1     Running   0          19m
+usage-monitor-5f9cfb8487-2zrrk   1/1     Running   0          19m
+[root@ocpbastion ~]# oc -n compute-1658641968-r8vh get pvc
+NAME                                                  STATUS   VOLUME              CAPACITY   ACCESS MODES   STORAGECLASS   AGE
+query-executor-1658641992-volume-query-executor-0-0   Bound    local-pv-c8fe6eea   200Gi      RWO            cdw-disk       19m
+query-executor-1658643055-volume-query-executor-1-0   Bound    local-pv-dc533915   200Gi      RWO            cdw-disk       2m5s
+
+
+[root@ocpbastion ~]# oc -n compute-1658641968-r8vh get pods
+NAME                             READY   STATUS    RESTARTS   AGE
+das-webapp-0                     1/1     Running   0          24m
+hiveserver2-0                    1/1     Running   0          24m
+huebackend-0                     1/1     Running   0          24m
+huefrontend-78b8577f7c-fb4fp     1/1     Running   0          24m
+query-coordinator-0-0            1/1     Running   0          15m
+query-executor-0-0               1/1     Running   0          15m
+standalone-compute-operator-0    1/1     Running   0          24m
+usage-monitor-5f9cfb8487-2zrrk   1/1     Running   0          24m
+
     
 8. Repeat step 4 for file format Parquet by creating a table with the following schema.
 
@@ -200,25 +432,13 @@ This article describes the steps to test the performance of these file formats i
     SELECT AVG(age) FROM db1.tmp where lastname = 'Davis' and age > 30 and age < 40;
     ``` 
     
-## Performance Result
-
-- The following table shows the time taken (in seconds) to run each SQL query in the specific file format table without SNAPPY compression.
-- By default, ZLIB compression is enabled for any managed ORC-based table in `Hive` engine in CDW unless specified.
 
 
-| File Format  | Engine | INSERT | SELECT COUNT (1st)|SELECT COUNT (2nd) |SELECT AVG(1st)|SELECT AVG(2nd)|
-|:-------------|:----------------|:------------------|:------------------|---------------|---------------|
-| CSV          | Hive   | N.A.   |26.83              | 2.28              |44.2           |4.1            |
-| ORC (ZLIB)   | Hive   | 507    |0.40               | 0.39              |8.13           |0.39           | 
-| Avro         | Hive   | 355    |0.40               | 0.38              |207            |0.40           |
-| Parquet      | Hive   | 332    |0.38               | 0.38              |11.78          |0.37           |
-| Parquet      | Parquet| 32     |0.36               | 0.35              |1.76           |1.62           |
-| CSV          | Parquet| N.A.   |3.12               | 1.75              |4.69           |4.1            |
 
-## Conclusion
 
-- In comparison to running the same SQL queries in other solution, CDW in CDP Private Cloud platform might take shorter duration to process the queries - thanks to its high-speed caching mechanism especially when running the same query repeatedly.
-- Parquet stands out in terms of running the interactive SQL query at the fastest speed. As it is a pioneer file format for Impala, running SQL query in Parquet-based table in Impala produces quicker result compared to running the same query in Hive engine. Impala is endorsing Parquet while it has some [limitations](https://impala.apache.org/docs/build/html/topics/impala_file_formats.html) supporting other file formats.
-- Although Parquet emerges as the winner in terms of performance, Avro and ORC are still very relevant for other use cases and objectives. Avro is popular for its schema evolution mechanism. ORC provides high efficiency in terms of storing the Hive data and is usually positioned for ETL/ELT process.
+
+
+
+
 
 ---
