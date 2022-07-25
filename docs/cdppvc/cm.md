@@ -197,16 +197,16 @@ This article explains the necessary steps to install Cloudera Manager (CM) on Ce
     
 2. Configure CM with the necessary external LDAP server settings as shown in the following example. Note that this demo is connected to the Red Hat IPA.
 
-| Parameter       | Value         |
-|:----------------|:------------------|
-| External Authentication Type         | LDAP  | 
-| LDAP URL  | ldap://idm.cdpkvm.cldr  | 
-| LDAP Bind User Distinguished Name  |  uid=admin,cn=users,cn=accounts,dc=cdpkvm,dc=cldr | 
-| LDAP Bind Password |  `password` | 
-| LDAP User Search Filter | (uid={0})  | 
-| LDAP User Search Base | cn=users,cn=accounts,dc=cdpkvm,dc=cldr  | 
-| LDAP Group Search Filter | (member={0})  | 
-| LDAP Group Search Base  |  cn=groups,cn=accounts,dc=cdpkvm,dc=cldr | 
+    | Parameter       | Value         |
+    |:----------------|:------------------|
+    | External Authentication Type         | LDAP  | 
+    | LDAP URL  | ldap://idm.cdpkvm.cldr  | 
+    | LDAP Bind User Distinguished Name  |  uid=admin,cn=users,cn=accounts,dc=cdpkvm,dc=cldr | 
+    | LDAP Bind Password |  `password` | 
+    | LDAP User Search Filter | (uid={0})  | 
+    | LDAP User Search Base | cn=users,cn=accounts,dc=cdpkvm,dc=cldr  | 
+    | LDAP Group Search Filter | (member={0})  | 
+    | LDAP Group Search Base  |  cn=groups,cn=accounts,dc=cdpkvm,dc=cldr | 
 
 3. Restart the cloudera-scm-server service.
 
@@ -235,9 +235,6 @@ This article explains the necessary steps to install Cloudera Manager (CM) on Ce
     ![](../../assets/images/cm/cmsetting5.png)  
     
 7. Log out and log in with the ldap user again. This time this ldap user has full access of the CM dashboard.
-
-    ![](../../assets/images/cm/cmsetting6.png)   
-    
 
 ## External Database SSL Certificate Import
 
