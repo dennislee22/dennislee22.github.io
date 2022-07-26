@@ -98,5 +98,24 @@ Check and make necessary configurations to ensure that the CDP PvC Base cluster 
     
     ![](../../assets/images/cdpbase/atlas2.png)       
 
+## External Database SSL Certificate Import
+
+The following steps are the mandatory to run prior to creating the ECS platform. This allows CDW to establish SSL connection with the external database using the database's certificate inside the CM's truststore.
+
+1. Retrieve the keystore password from one of the CDP Base master hosts.
+
+    ```bash
+    # cat /etc/hadoop/conf/ssl-client.xml | grep ssl.client.truststore.password -A1
+    <name>ssl.client.truststore.password</name>
+    <value>nws59gzoRHLsQBqJ2nuB2cE8EoZ3vq2DFchyxGJrQdL</value>
+    ```
+2. Copy the SSL `server.crt` from the external database to CM host. 
+
+3. In CM host, import the SSL enabled external database certificate into the CM's truststore.
+
+    ```bash
+    # keytool -import -alias postgres -file /root/server.crt -storetype JKS -keystore /var/lib/cloudera-scm-agent/agent-cert/cm-auto-global_truststore.jks
+    Enter keystore password: 
+    ```
 ---  
 
