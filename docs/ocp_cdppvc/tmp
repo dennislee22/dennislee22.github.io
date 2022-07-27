@@ -1271,3 +1271,168 @@ spec:
   - Ingress
   
   
+Before provision CDP:
+
+[root@ocpbastion ~]# oc adm top nodes
+NAME                        CPU(cores)   CPU%   MEMORY(bytes)   MEMORY%   
+master01.ocp4.cdpkvm.cldr   1865m        12%    12892Mi         10%       
+master02.ocp4.cdpkvm.cldr   2021m        13%    15535Mi         12%       
+master03.ocp4.cdpkvm.cldr   1822m        11%    10980Mi         8% 
+
+
+After provision CDP:
+
+[root@ocpbastion ~]# oc adm top nodes
+NAME                        CPU(cores)   CPU%   MEMORY(bytes)   MEMORY%   
+master01.ocp4.cdpkvm.cldr   3053m        19%    13655Mi         10%       
+master02.ocp4.cdpkvm.cldr   4379m        28%    19697Mi         15%       
+master03.ocp4.cdpkvm.cldr   1962m        12%    12972Mi         10% 
+
+[root@ocpbastion ~]# oc adm top pods -n cdp
+NAME                                                              CPU(cores)   MEMORY(bytes)   
+cdp-embedded-db-0                                                 8m           247Mi           
+cdp-release-alert-admin-service-774cd8b775-dbh8g                  0m           78Mi            
+cdp-release-classic-clusters-77b766756d-kz4cx                     35m          930Mi           
+cdp-release-classic-clusters-84c7f747d7-5ftmc                     35m          909Mi           
+cdp-release-cluster-access-manager-647655cccf-lghjp               4m           15Mi            
+cdp-release-cluster-access-manager-f67bb8d94-s6hcv                1m           32Mi            
+cdp-release-cluster-proxy-1.0.0-5c4c696fc5-f4kjd                  49m          731Mi           
+cdp-release-cluster-proxy-1.0.0-7954c8c54-j9mpn                   37m          827Mi           
+cdp-release-cpx-liftie-7db79b76b-9fv77                            1m           61Mi            
+cdp-release-dex-cp-5cd969bf4c-8p8h6                               20m          88Mi            
+cdp-release-dmx-65858fbc8c-tfsqt                                  0m           45Mi            
+cdp-release-dps-gateway-1.0-5c7987bbf4-28p4p                      4m           69Mi            
+cdp-release-dps-gateway-1.0-5c7987bbf4-cw4gq                      5m           67Mi            
+cdp-release-dwx-server-575775bdd-4prqb                            0m           118Mi           
+cdp-release-dwx-ui-746645b8b7-f4sgt                               0m           22Mi            
+cdp-release-dwx-ui-746645b8b7-kqpnz                               0m           22Mi            
+cdp-release-grafana-6687fdf4d4-zmtnj                              1m           116Mi           
+cdp-release-logger-alert-receiver-79c57c846d-pffkc                0m           56Mi            
+cdp-release-metrics-server-exporter-fbf976546-d6n6r               2m           63Mi            
+cdp-release-monitoring-app-65b9b496dc-qb8r4                       0m           54Mi            
+cdp-release-monitoring-metricproxy-77fdb47854-j97xg               0m           51Mi            
+cdp-release-monitoring-metricproxy-77fdb47854-xz7lt               0m           50Mi            
+cdp-release-monitoring-pvcservice-f844b484c-64thh                 1m           54Mi            
+cdp-release-prometheus-alertmanager-0                             3m           46Mi            
+cdp-release-prometheus-alertmanager-1                             2m           45Mi            
+cdp-release-prometheus-kube-state-metrics-9d948fc4-24s9g          3m           31Mi            
+cdp-release-prometheus-server-c9fdd6947-sgttg                     28m          275Mi           
+cdp-release-reloader-8d4c78b5f-rjzhh                              0m           14Mi            
+cdp-release-resource-pool-manager-7b59c9fcd-z2g99                 7m           33Mi            
+cdp-release-thunderhead-cdp-private-authentication-consolecqvh6   0m           33Mi            
+cdp-release-thunderhead-cdp-private-commonconsole-7494dbdb55xtf   0m           33Mi            
+cdp-release-thunderhead-cdp-private-environments-console-9qd69r   0m           33Mi            
+cdp-release-thunderhead-compute-api-759fcfdfb5-lt8jr              2m           343Mi           
+cdp-release-thunderhead-consoleauthenticationcdp-9ff4fc4cfnghvv   2m           386Mi           
+cdp-release-thunderhead-consoleauthenticationcdp-dd57f7566mg878   203m         346Mi           
+cdp-release-thunderhead-de-api-5b45f56bf4-vgkc5                   1m           316Mi           
+cdp-release-thunderhead-dw-api-7849dd578d-49h6q                   2m           320Mi           
+cdp-release-thunderhead-environment-776446b6cf-phpvp              29m          579Mi           
+cdp-release-thunderhead-environments2-api-68fbb6986c-27j8n        1m           358Mi           
+cdp-release-thunderhead-iam-api-57df547c4d-nw4sm                  2m           315Mi           
+cdp-release-thunderhead-iam-console-5cd9b684d8-js7qb              0m           33Mi            
+cdp-release-thunderhead-kerberosmgmt-api-6cb4756657-dr9cd         2m           326Mi           
+cdp-release-thunderhead-ml-api-555b86c6d8-b2lpb                   4m           334Mi           
+cdp-release-thunderhead-resource-management-console-f7c5dfx96sf   0m           32Mi            
+cdp-release-thunderhead-sdx2-api-77f89bf857-snq8f                 3m           315Mi           
+cdp-release-thunderhead-servicediscoverysimple-78ff5f645d-tdpl5   5m           259Mi           
+cdp-release-thunderhead-usermanagement-private-69c9d549c6-9j8h4   16m          583Mi           
+dp-mlx-control-plane-app-599c66b8bb-6s62f                         0m           47Mi            
+dp-mlx-control-plane-app-5cd7b9f7fd-xvwdp                         0m           52Mi            
+dp-mlx-control-plane-app-health-poller-7f76fcf85b-lf8zh           4m           43Mi            
+fluentd-aggregator-0                                              3m           407Mi           
+snmp-notifier-94dcc6757-fcqb8                                     0m           28Mi 
+
+[root@ocpbastion ~]# oc adm top pods -n yunikorn
+NAME                                             CPU(cores)   MEMORY(bytes)   
+yunikorn-admission-controller-6f66497555-p66cb   6m           9Mi             
+yunikorn-scheduler-8695485f76-9p6fq              798m         165Mi   
+
+
+[root@ocpbastion ~]# oc -n cdp get pvc
+NAME                                                   STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS                  AGE
+cdp-embedded-db-backend                                Bound    pvc-02485af0-181a-44e9-b642-fd8137bb8cc8   200Gi      RWO            ocs-storagecluster-ceph-rbd   9m21s
+cdp-release-prometheus-server                          Bound    pvc-bda07d59-ac14-46e3-aeb2-cb29b0038077   10Gi       RWO            ocs-storagecluster-ceph-rbd   8m20s
+logs                                                   Bound    pvc-21e6f1ee-1afd-46dc-8c14-405fa41559a1   20Gi       RWO            ocs-storagecluster-ceph-rbd   8m19s
+storage-volume-cdp-release-prometheus-alertmanager-0   Bound    pvc-88319db3-a1a2-4e40-953a-eeffe9ed4a36   2Gi        RWO            ocs-storagecluster-ceph-rbd   8m20s
+storage-volume-cdp-release-prometheus-alertmanager-1   Bound    pvc-9a736d2c-b17d-48f8-b1d5-d3642a5a42d4   2Gi        RWO            ocs-storagecluster-ceph-rbd   5m30s
+
+
+[root@ocpbastion ~]# oc -n yunikorn get pvc
+No resources found in yunikorn namespace.
+
+
+[root@ocpbastion ~]# oc -n cdp-env-1-4e7b52f8-monitoring-platform adm top pods
+NAME                                                        CPU(cores)   MEMORY(bytes)   
+monitoring-cm-health-exporter-584bfb847c-dpc87              1m           329Mi           
+monitoring-logger-alert-receiver-5477f8855d-nkgh6           1m           134Mi           
+monitoring-metrics-server-exporter-64bddc795c-wl2sh         2m           136Mi           
+monitoring-platform-proxy-5999c48944-m4l8p                  1m           109Mi           
+monitoring-prometheus-alertmanager-0                        3m           121Mi           
+monitoring-prometheus-kube-state-metrics-59d4b9c68f-2ldrr   1m           112Mi           
+monitoring-prometheus-pushgateway-5b96d67bd-nq6b5           0m           111Mi           
+monitoring-prometheus-server-6c79698487-xdv8c               3m           152Mi           
+snmp-notifier-858947f855-hkslp                              0m           106Mi           
+[root@ocpbastion ~]# oc -n cdp-env-1-4e7b52f8-monitoring-platform get pvc
+NAME                                                  STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS                  AGE
+monitoring-prometheus-server                          Bound    pvc-fdfce367-ac26-41c3-a3d2-5246811fd0b7   60Gi       RWO            ocs-storagecluster-ceph-rbd   101s
+storage-volume-monitoring-prometheus-alertmanager-0   Bound    pvc-091d2e29-8b56-4c4a-9875-bf8491ae52c2   2Gi        RWO            ocs-storagecluster-ceph-rbd   101s
+storage-volume-monitoring-prometheus-alertmanager-1   Bound    pvc-59eb8e0d-deea-4c9d-992e-5982dccd6ac9   2Gi        RWO            ocs-storagecluster-ceph-rbd   55s
+
+
+
+
+
+ECS:
+[root@ecsmaster1 ~]# oc -n vault-system get pvc
+NAME           STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   AGE
+data-vault-0   Bound    pvc-46799d76-693f-4c16-a9e0-2ee596bb0d50   10Gi       RWO            longhorn       78m
+
+[root@ecsmaster1 ~]# oc get pvc -n default-57478ad3-monitoring-platform
+NAME                                                  STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   AGE
+monitoring-prometheus-server                          Bound    pvc-10bb1924-df91-40df-87b5-3bd6b87ff390   60Gi       RWO            longhorn       66m
+storage-volume-monitoring-prometheus-alertmanager-0   Bound    pvc-9410b27f-ca24-4947-95b3-a522b2c12e1e   2Gi        RWO            longhorn       66m
+storage-volume-monitoring-prometheus-alertmanager-1   Bound    pvc-3ea29318-3b48-42aa-bf89-bcb59a053e15   2Gi        RWO            longhorn       65m
+
+[root@ecsmaster1 ~]# oc get pvc -n default
+No resources found in default namespace.
+[root@ecsmaster1 ~]# oc get pvc -n cdp
+NAME                                                   STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   AGE
+cdp-embedded-db-backend                                Bound    pvc-b9d0fe18-df39-424e-b2c6-0958d06d48a7   200Gi      RWO            longhorn       75m
+cdp-release-prometheus-server                          Bound    pvc-c26e6bde-a524-4dd2-a28f-6b4d4bf96958   10Gi       RWO            longhorn       74m
+logs                                                   Bound    pvc-3709ac3d-e2b9-480f-add5-48b910f0c308   20Gi       RWO            longhorn       74m
+storage-volume-cdp-release-prometheus-alertmanager-0   Bound    pvc-e85913d3-d0b4-4779-8678-8244320bdb71   2Gi        RWO            longhorn       74m
+storage-volume-cdp-release-prometheus-alertmanager-1   Bound    pvc-e577f155-9618-40a0-9b7b-53127c2275bb   2Gi        RWO            longhorn       72m
+
+[root@ecsmaster1 ~]# oc get pvc -n infra-prometheus
+NAME                                                                                                   STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   AGE
+prometheus-infra-prometheus-operator-prometheus-db-prometheus-infra-prometheus-operator-prometheus-0   Bound    pvc-c0566ce6-59b6-4ddd-9447-4c9ccee3cce1   10Gi       RWO            longhorn       76m
+
+[root@ecsmaster1 ~]# oc get pvc -n cdp
+NAME                                                   STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   AGE
+cdp-embedded-db-backend                                Bound    pvc-b9d0fe18-df39-424e-b2c6-0958d06d48a7   200Gi      RWO            longhorn       76m
+cdp-release-prometheus-server                          Bound    pvc-c26e6bde-a524-4dd2-a28f-6b4d4bf96958   10Gi       RWO            longhorn       75m
+logs                                                   Bound    pvc-3709ac3d-e2b9-480f-add5-48b910f0c308   20Gi       RWO            longhorn       75m
+storage-volume-cdp-release-prometheus-alertmanager-0   Bound    pvc-e85913d3-d0b4-4779-8678-8244320bdb71   2Gi        RWO            longhorn       75m
+storage-volume-cdp-release-prometheus-alertmanager-1   Bound    pvc-e577f155-9618-40a0-9b7b-53127c2275bb   2Gi        RWO            longhorn       73m
+
+
+
+I0727 15:15:18.284292     1 status.cc:129] Invalid combination of --mem_limit_includes_jvm and JVM max heap size 26808680448, which must be smaller than process memory limit 9830400000
+    @           0xd99193
+    @          0x11dd364
+    @          0x13f92f4
+    @           0xbd6efa
+    @     0x7fea1a104554
+    @           0xc7ba86
+F0727 15:15:18.284696     1 impalad-main.cc:72] Invalid combination of --mem_limit_includes_jvm and JVM max heap size 26808680448, which must be smaller than process memory limit 9830400000
+. Impalad exiting.
+*** Check failure stack trace: ***
+    @          0x319747c
+    @          0x3198d2c
+    @          0x3196dda
+    @          0x319a998
+    @          0x13f999e
+    @           0xbd6efa
+    @     0x7fea1a104554
+    @           0xc7ba86
