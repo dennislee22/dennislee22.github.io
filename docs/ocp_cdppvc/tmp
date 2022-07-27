@@ -1416,8 +1416,109 @@ logs                                                   Bound    pvc-3709ac3d-e2b
 storage-volume-cdp-release-prometheus-alertmanager-0   Bound    pvc-e85913d3-d0b4-4779-8678-8244320bdb71   2Gi        RWO            longhorn       75m
 storage-volume-cdp-release-prometheus-alertmanager-1   Bound    pvc-e577f155-9618-40a0-9b7b-53127c2275bb   2Gi        RWO            longhorn       73m
 
+[root@ecsmaster1 ~]# oc -n impala-1658935473-x95q  get pvc
+NAME                                         STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   AGE
+scratch-cache-volume-coordinator-0           Bound    pvc-e4230d33-9501-4ac3-865a-1ba93bfc7d7b   100Gi      RWO            local-path     2m18s
+scratch-cache-volume-coordinator-1           Bound    pvc-56d7fe8a-bf3d-44ad-91d1-2e7472cb7156   100Gi      RWO            local-path     104s
+scratch-cache-volume-impala-executor-000-0   Bound    pvc-c588db46-ad14-4867-bca3-777b29da5bf4   100Gi      RWO            local-path     2m18s
+[root@ecsmaster1 ~]# oc -n impala-1658935473-x95q  get pods
+NAME                                READY   STATUS    RESTARTS   AGE
+catalogd-586d576644-8vjb8           1/1     Running   0          2m30s
+coordinator-0                       4/4     Running   0          2m30s
+coordinator-1                       3/4     Running   0          116s
+huebackend-0                        2/2     Running   0          2m30s
+huefrontend-677854c967-44h5q        1/1     Running   0          2m30s
+impala-autoscaler-b79d84f47-mknbg   2/2     Running   0          2m30s
+impala-executor-000-0               1/1     Running   0          2m30s
+statestored-b68797948-x4tbx         1/1     Running   0          2m30s
+usage-monitor-6945465658-6cr2d      1/1     Running   0          2m30s
+
+[root@ecsmaster1 ~]# oc -n compute-1658937812-qwff  get pods
+NAME                             READY   STATUS    RESTARTS   AGE
+das-webapp-0                     1/1     Running   0          116s
+hiveserver2-0                    1/1     Running   0          116s
+huebackend-0                     1/1     Running   0          116s
+huefrontend-64f56d476b-94mgg     1/1     Running   0          116s
+query-coordinator-0-0            1/1     Running   0          110s
+query-executor-0-0               1/1     Running   0          110s
+standalone-compute-operator-0    2/2     Running   0          116s
+usage-monitor-566677d48b-gbwrd   1/1     Running   0          116s
+[root@ecsmaster1 ~]# oc -n compute-1658937812-qwff  get pvc
+NAME                                                         STATUS    VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS                        AGE
+compute-1658937812-qwff--pvc                                 Pending                                                                        compute-1658937812-qwff-azurefile   2m6s
+query-executor-62e161f2-365a8581-volume-query-executor-0-0   Bound     pvc-b1517f92-60f8-448a-bb2f-c9faf454b2d6   100Gi      RWO            local-path                          2m
 
 
+
+[root@ecsmaster1 ~]# oc -n workspace1 get pvc
+NAME                                    STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS                 AGE
+livelog-data-livelog-0                  Bound    pvc-f5f9f9dc-64a4-40af-a834-3ba528cdf233   100Gi      RWO            longhorn                     89s
+longhorn-nfs-workspace1                 Bound    pvc-08725737-3a88-4b52-b7c4-d2eca1f09b20   476838Mi   RWO            longhorn                     89s
+model-metrics-data-model-metrics-db-0   Bound    pvc-c4122fa3-de7b-46b1-91c6-c3fb2df6017e   50Gi       RWO            longhorn                     89s
+persist-dir-secret-generator-0          Bound    pvc-db799c64-98c9-4044-8379-8fc8fde52bd9   10Mi       RWO            longhorn                     89s
+postgres-data-versioned-db-0            Bound    pvc-113f07ab-18ea-49be-94e9-b5bdb8076fce   50Gi       RWO            longhorn                     89s
+projects-pvc                            Bound    pvc-57bea15d-6778-47e3-8008-d3fe276044de   10Gi       RWX            longhorn-nfs-sc-workspace1   89s
+s2i-git-server-repos-s2i-git-server-0   Bound    pvc-6c3c1de2-5a8c-4f24-84d4-c41486bbeb37   100Gi      RWO            longhorn                     89s
+s2i-queue-pvc                           Bound    pvc-5005467b-ca31-4d44-995c-0982a3a8bf76   2Gi        RWO            longhorn                     89s
+[root@ecsmaster1 ~]# oc get sc
+NAME                         PROVISIONER              RECLAIMPOLICY   VOLUMEBINDINGMODE      ALLOWVOLUMEEXPANSION   AGE
+local-path                   rancher.io/local-path    Delete          WaitForFirstConsumer   false                  121m
+longhorn (default)           driver.longhorn.io       Delete          Immediate              true                   120m
+longhorn-nfs                 nfs.longhorn.io          Delete          Immediate              false                  120m
+longhorn-nfs-sc-workspace1   longhorn-pv-workspace1   Delete          Immediate              false                  100s
+
+[root@ecsmaster1 ~]# oc -n workspace1 get pods
+NAME                                             READY   STATUS      RESTARTS   AGE
+api-78866f689-hr8xj                              1/1     Running     3          5m34s
+cron-56d98f7f5b-mw4mw                            2/2     Running     0          5m34s
+db-0                                             2/2     Running     0          5m34s
+db-migrate-2.0.31-b62-r8v4j                      0/1     Completed   0          5m34s
+ds-cdh-client-764f888d95-p268m                   3/3     Running     0          5m33s
+ds-operator-97c84ff9b-92mgl                      2/2     Running     1          5m32s
+ds-reconciler-6d79d8cf57-7vblf                   2/2     Running     2          5m34s
+ds-vfs-6478cc94f6-6pzsq                          2/2     Running     0          5m33s
+feature-flags-5449b955cf-rwg9d                   2/2     Running     0          5m33s
+fluentd-forwarder-6bd676b76d-b8htl               1/1     Running     0          5m33s
+governance-6dd447b9ff-jhmns                      2/2     Running     0          5m32s
+hadoop-cli-7.2.10-hf1-ehby3-7gcds                1/1     Running     0          2m10s
+hadoop-cli-7.2.11-hf4-mdxxr-l2cv5                1/1     Running     0          2m10s
+hadoop-cli-7.2.14-6kdvv-b65td                    1/1     Running     0          2m10s
+hadoop-cli-7.2.8-hf1-1m6xc9-xxv2p                0/1     Completed   0          2m10s
+livelog-0                                        2/2     Running     0          5m34s
+livelog-publisher-hq575                          2/2     Running     2          5m34s
+livelog-publisher-lw5s4                          2/2     Running     0          5m34s
+livelog-publisher-thk6f                          2/2     Running     1          5m34s
+longhorn-nfs-workspace1-85bc5c99d-hmkcz          1/1     Running     0          5m34s
+mlx-workspace1-pod-evaluator-54dbdc7d68-8khf9    1/1     Running     0          5m34s
+model-metrics-6456cfcb45-x4bdt                   1/1     Running     4          5m34s
+model-metrics-db-0                               1/1     Running     0          5m34s
+model-proxy-55687bfc6d-bd2dx                     2/2     Running     0          5m34s
+prometheus-postgres-exporter-68b68d9b9b-466dj    1/1     Running     0          5m34s
+runtime-addon-trigger-2.0.31-b62-nwv2r           1/1     Running     2          5m34s
+runtime-initial-repo-inserter-2.0.31-b62-zgcgh   0/1     Completed   0          5m34s
+runtime-manager-6f9864b45b-l8tfq                 2/2     Running     0          5m34s
+s2i-builder-8458db65df-bfs6k                     2/2     Running     0          5m32s
+s2i-builder-8458db65df-j89fm                     2/2     Running     1          5m32s
+s2i-builder-8458db65df-l7hw5                     2/2     Running     0          5m32s
+s2i-client-dcf86964b-g2sql                       2/2     Running     1          5m34s
+s2i-git-server-0                                 2/2     Running     0          5m34s
+s2i-queue-0                                      2/2     Running     0          5m34s
+s2i-server-846b48fcfd-7fkp2                      2/2     Running     0          5m32s
+secret-generator-0                               2/2     Running     0          5m34s
+spark248-15-hf1-i807cc-4btkk                     1/1     Running     0          2m10s
+spark320-15-hf2-5mvybf-jmgk2                     1/1     Running     0          2m10s
+tcp-ingress-controller-675f457d4c-jtlq7          2/2     Running     2          5m34s
+usage-reporter-7bb5676f-f7fcs                    2/2     Running     0          5m34s
+web-947c48488-cs5gc                              2/2     Running     0          5m34s
+web-947c48488-hqw5h                              1/2     Running     0          5m34s
+web-947c48488-ml5xj                              1/2     Running     0          5m34s
+
+
+
+I0727 15:15:18.275321    67 RequestPoolService.java:163] Loading configuration: /opt/impala/conf/llama-site.xml
+I0727 15:15:18.276790     1 mem-info.cc:224] System memory available: 251.74 GB (from physical mem)
+I0727 15:15:18.276998     1 mem-info.cc:231] CGroup memory limit for this process reduces physical memory available to: 11.44 GB
+I0727 15:15:18.277015     1 mem-info.cc:248] Using process memory limit: 9.16 GB (--mem_limit=80% of 11.44 GB)
 I0727 15:15:18.284292     1 status.cc:129] Invalid combination of --mem_limit_includes_jvm and JVM max heap size 26808680448, which must be smaller than process memory limit 9830400000
     @           0xd99193
     @          0x11dd364
@@ -1436,3 +1537,31 @@ F0727 15:15:18.284696     1 impalad-main.cc:72] Invalid combination of --mem_lim
     @           0xbd6efa
     @     0x7fea1a104554
     @           0xc7ba86
+    
+    
+I0727 14:50:52.589313     1 status.cc:129] LDAP authentication specified, but without TLS. Passwords would go over the network in the clear. Enable TLS with --ldap_tls or use an ldaps:// URI. To override this is non-production environments, specify --ldap_passwords_in_clear_ok
+    @           0xd99193
+    @          0x1653a6a
+    @          0x1654c7b
+    @          0x1653b54
+    @          0x116cf60
+    @          0x116dae0
+    @           0xd8fc51
+    @           0xc85a73
+    @           0xbd6fd0
+    @     0x7fa85a465554
+    @           0xc7ba86
+F0727 14:50:52.589797     1 init.cc:360] LDAP authentication specified, but without TLS. Passwords would go over the network in the clear. Enable TLS with --ldap_tls or use an ldaps:// URI. To override this is non-production environments, specify --ldap_passwords_in_clear_ok
+. Impalad exiting.
+*** Check failure stack trace: ***
+    @          0x319747c
+    @          0x3198d2c
+    @          0x3196dda
+    @          0x319a998
+    @           0xd90c5e
+    @           0xc85a73
+    @           0xbd6fd0
+    @     0x7fa85a465554
+    @           0xc7ba86
+
+
