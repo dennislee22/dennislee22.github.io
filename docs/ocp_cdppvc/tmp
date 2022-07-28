@@ -1514,6 +1514,39 @@ web-947c48488-hqw5h                              1/2     Running     0          
 web-947c48488-ml5xj                              1/2     Running     0          5m34s
 
 
+[root@ecsmaster1 ~]# oc -n viz-1658961242-rnrm  get pods
+NAME                                READY   STATUS      RESTARTS   AGE
+usage-monitor-7c7b695d7c-dzp6r      1/1     Running     0          2m23s
+viz-webapp-0                        2/2     Running     0          2m23s
+viz-webapp-vizdb-create-job-9jxjr   0/1     Completed   0          2m26s
+[root@ecsmaster1 ~]# oc -n viz-1658961242-rnrm  get pvc
+No resources found in viz-1658961242-rnrm namespace.
+
+
+[root@ecsmaster1 ~]# oc -n compute-1658968106-57bw get pvc
+NAME                                                         STATUS    VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS                        AGE
+compute-1658968106-57bw--pvc                                 Pending                                                                        compute-1658968106-57bw-azurefile   5m44s
+query-executor-62e1d849-57e9d186-volume-query-executor-0-0   Bound     pvc-84a64724-5a39-4a7b-bc39-fe1f7eecde38   100Gi      RWO            local-path                          5m38s
+query-executor-62e1d849-57e9d186-volume-query-executor-0-1   Bound     pvc-1735b05c-0e78-40a2-918b-4cfffd4dca30   100Gi      RWO            local-path                          5m38s
+query-executor-62e1d849-57e9d186-volume-query-executor-0-2   Bound     pvc-21846660-6e48-4c37-98ec-962a5468a49a   100Gi      RWO            local-path                          5m38s
+[root@ecsmaster1 ~]# oc -n compute-1658968106-57bw get pods
+NAME                            READY   STATUS    RESTARTS   AGE
+das-webapp-0                    1/1     Running   0          5m50s
+hiveserver2-0                   1/1     Running   0          5m49s
+huebackend-0                    1/1     Running   0          5m49s
+huefrontend-6f4f99dd74-mj9m5    1/1     Running   0          5m50s
+query-coordinator-0-0           1/1     Running   0          5m43s
+query-coordinator-0-1           1/1     Running   0          5m43s
+query-coordinator-0-2           1/1     Running   0          5m43s
+query-executor-0-0              1/1     Running   0          5m43s
+query-executor-0-1              1/1     Running   0          5m43s
+query-executor-0-2              1/1     Running   0          5m43s
+standalone-compute-operator-0   2/2     Running   0          5m50s
+usage-monitor-b95fcf4f-xfl7c    1/1     Running   0          5m49s
+
+
+
+
 
 I0727 15:15:18.275321    67 RequestPoolService.java:163] Loading configuration: /opt/impala/conf/llama-site.xml
 I0727 15:15:18.276790     1 mem-info.cc:224] System memory available: 251.74 GB (from physical mem)
