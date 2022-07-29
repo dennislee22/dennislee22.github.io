@@ -1545,6 +1545,61 @@ standalone-compute-operator-0   2/2     Running   0          5m50s
 usage-monitor-b95fcf4f-xfl7c    1/1     Running   0          5m49s
 
 
+Impala noHA LITE 1 executor:
+[root@ecsmaster1 ~]# oc -n impala-1659072064-h2xz get pvc
+NAME                                         STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   AGE
+scratch-cache-volume-coordinator-0           Bound    pvc-5e7a03c3-77e4-456a-b7c7-5f3e4e7d8177   100Gi      RWO            local-path     61s
+scratch-cache-volume-impala-executor-000-0   Bound    pvc-ffbda4a1-8501-4884-8656-a19fbefb9b77   100Gi      RWO            local-path     61s
+
+[root@ecsmaster1 ~]# oc -n impala-1659072064-h2xz get pods
+NAME                             READY   STATUS        RESTARTS   AGE
+catalogd-768ffc8d78-9xdpc        1/1     Running       0          2m52s
+coordinator-0                    4/4     Running       0          2m52s
+huebackend-0                     2/2     Running       0          2m52s
+huefrontend-57dbfdb85c-4bkk7     1/1     Running       0          2m52s
+impala-executor-000-0            1/1     Running       0          2m52s
+statestored-56fbb6597d-4tfxz     1/1     Running       0          2m52s
+usage-monitor-675cf694f8-2jp4z   1/1     Running       3          2m52s
+
+
+Impala noHA LITE 2 executor:
+[root@ecsmaster1 ~]# oc -n impala-1659073033-rgq9 get pods
+NAME                                READY   STATUS             RESTARTS   AGE
+catalogd-864dcbdbcc-7cxpc           1/1     Running            0          2m36s
+coordinator-0                       4/4     Running            0          2m36s
+huebackend-0                        2/2     Running            0          2m36s
+huefrontend-868b48dbcd-p7x74        1/1     Running            0          2m36s
+impala-autoscaler-9f9fb4dbb-4dvvc   2/2     Running            0          2m36s
+impala-executor-000-0               1/1     Running            0          2m36s
+impala-executor-000-1               1/1     Running            0          2m36s
+statestored-848c7898b5-gxx4q        1/1     Running            0          2m36s
+usage-monitor-5fcf4bbc8-jcsv7       0/1     CrashLoopBackOff   2          2m36s
+[root@ecsmaster1 ~]# oc -n impala-1659073033-rgq9 get pvc
+NAME                                         STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   AGE
+scratch-cache-volume-coordinator-0           Bound    pvc-9248d1d1-678a-4851-a64e-482f2c3a700e   100Gi      RWO            local-path     2m38s
+scratch-cache-volume-impala-executor-000-0   Bound    pvc-f9458b6b-586f-46d6-bfd2-49a6ed8afcbf   100Gi      RWO            local-path     2m38s
+scratch-cache-volume-impala-executor-000-1   Bound    pvc-477dc389-6627-458f-957b-a62a976db9b8   100Gi      RWO            local-path     2m38s
+
+Impala noHA LITE 3 executor:
+[root@ecsmaster1 ~]# oc -n impala-1659073349-jw7w get pods
+NAME                                READY   STATUS    RESTARTS   AGE
+catalogd-6cc48cdcbd-ddjxq           1/1     Running   0          2m8s
+coordinator-0                       4/4     Running   0          2m8s
+huebackend-0                        2/2     Running   0          2m8s
+huefrontend-7f54c7c945-fn5n8        1/1     Running   0          2m8s
+impala-autoscaler-dcdcdbd79-5pkxn   2/2     Running   0          2m8s
+impala-executor-000-0               1/1     Running   0          2m8s
+impala-executor-000-1               1/1     Running   0          2m8s
+impala-executor-000-2               1/1     Running   0          2m8s
+statestored-cb4f598dd-v5gmc         1/1     Running   0          2m8s
+usage-monitor-776749795-2hvb6       1/1     Running   2          2m8s
+[root@ecsmaster1 ~]# oc -n impala-1659073349-jw7w get pvc
+NAME                                         STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   AGE
+scratch-cache-volume-coordinator-0           Bound    pvc-8cb0f6ff-2ee1-4aa9-8bdf-0d8ba0af50db   100Gi      RWO            local-path     2m10s
+scratch-cache-volume-impala-executor-000-0   Bound    pvc-3ec795a6-01cd-4fd9-93b9-f89ed37b285b   100Gi      RWO            local-path     2m10s
+scratch-cache-volume-impala-executor-000-1   Bound    pvc-66654e86-0490-4432-aadb-17f2149762e1   100Gi      RWO            local-path     2m10s
+scratch-cache-volume-impala-executor-000-2   Bound    pvc-3cf6cb43-d26d-4ac4-acb2-7d688fde167b   100Gi      RWO            local-path     2m10s
+
 
 
 
@@ -1597,4 +1652,71 @@ F0727 14:50:52.589797     1 init.cc:360] LDAP authentication specified, but with
     @     0x7fa85a465554
     @           0xc7ba86
 
+
+
+
+[root@ecsworker1 ~]# top #before DS installation
+
+top - 13:57:53 up 17:30,  2 users,  load average: 8.55, 8.44, 8.64
+Tasks: 605 total,   2 running, 603 sleeping,   0 stopped,   0 zombie
+%Cpu(s):  9.1 us,  4.7 sy,  0.0 ni, 85.9 id,  0.0 wa,  0.0 hi,  0.3 si,  0.0 st
+KiB Mem : 26397244+total, 20122844+free,  9492216 used, 53251784 buff/cache
+KiB Swap:        0 total,        0 free,        0 used. 25313662+avail Mem 
+
+  PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND                                                                                  
+29624 root      20   0  764592  83708   6908 S 103.7  0.0 834:16.12 ruby                                                                                     
+ 1797 root      20   0 1464436 121164   6884 S  83.4  0.0  66:16.50 ruby                                                                                     
+30353 root      20   0  926560 125076  38264 S  21.9  0.0 215:03.68 containerd                                                                               
+29660 root      20   0    4196    728    444 S  15.0  0.0 120:48.62 sh                                                                                       
+29795 centos    20   0    4196    736    452 R  13.6  0.0 119:28.64 sh                                                                                       
+28457 root      20   0  717116  16296   5548 S  11.6  0.0 104:11.25 containerd-shim                                                                          
+30570 root      20   0  977872 165028  40256 S  10.0  0.1 145:30.75 kubelet                                                                                  
+  788 root      20   0 3584320  67060  22032 S   3.3  0.0  21:24.62 calico-node                                                                              
+ 8996 root      20   0 9388324  93632   9892 S   1.7  0.0  15:33.56 python2                                                                                  
+10301 root      20   0 3273512  88216  21072 S   1.3  0.0  75:40.29 dockerd                                                                                  
+    1 root      20   0   46480   6908   2620 S   0.7  0.0  11:55.27 systemd                                                                                  
+    9 root      20   0       0      0      0 S   0.7  0.0   5:05.23 rcu_sched                                                                                
+ 1393 root      20   0  717116  17516   5900 S   0.7  0.0   3:40.85 containerd-shim                                                                          
+19526 root      20   0  173344   2884   1632 R   0.7  0.0   0:00.09 top                                                                                      
+29347 1001      20   0  482288  42084   5916 S   0.7  0.0   1:44.95 ruby                                                                                     
+30984 root      20   0  717116  17356   5860 S   0.7  0.0   2:58.43 containerd-shim                                                                          
+    6 root      20   0       0      0      0 S   0.3  0.0   3:45.12 ksoftirqd/0                                                                              
+   33 root      rt   0       0      0      0 S   0.3  0.0   0:27.22 migration/5                                                                              
+  108 root      rt   0       0      0      0 S   0.3  0.0   0:29.43 migration/20                                                                             
+  113 root      rt   0       0      0      0 S   0.3  0.0   0:28.82 migration/21                                                                             
+  153 root      rt   0       0      0      0 S   0.3  0.0   0:28.91 migration/29                                                                             
+ 1003 root      20   0  748536  31916  12864 S   0.3  0.0   1:02.16 flanneld                                                                                 
+ 1600 root      20   0  762632  47544  18292 S   0.3  0.0   6:25.28 coredns                                                                                  
+ 1819 root      20   0  820164 101716  18476 S   0.3  0.0  11:02.97 longhorn-manage                                                                          
+ 8955 root      20   0 2329124  81064  10260 S   0.3  0.0   8:54.21 cmagent                                                                                  
+ 9581 root      20   0  709824  64016  10688 S   0.3  0.0   6:13.93 python2                                                                                  
+10734 nfsnobo+  20   0  722172  23964   6476 S   0.3  0.0   7:23.79 node_exporter                                                                            
+10781 nfsnobo+  20   0  749048  58760  14872 S   0.3  0.0   3:41.63 operator                                                                                 
+16475 1001      20   0 2704844 108788  35048 S   0.3  0.0   2:14.42 alert-admin-ser                                                                          
+17012 1001      20   0  780772  56340  23352 S   0.3  0.0   4:44.47 traefik                                                                                  
+21790 1001      20   0 2851304 108068  34740 S   0.3  0.0   2:34.61 monitoring-pvcs                                                                          
+28453 1001      20   0 2408092  84980  29768 S   0.3  0.0   1:48.28 metrics-server-                                                                          
+28455 1001      20   0 2334320  73332  27760 S   0.3  0.0   0:30.13 logger-alert-re                                                                          
+29197 1001      20   0  414660  39272   5988 S   0.3  0.0   0:20.25 td-agent                                                                                 
+29330 1001      20   0  481656  41788   5956 S   0.3  0.0   1:39.52 ruby                                                                                     
+29346 1001      20   0  482280  42848   5956 S   0.3  0.0   1:43.22 ruby                                                                                     
+29352 1001      20   0  483592  43064   5976 S   0.3  0.0   1:42.77 ruby                                                                                     
+29878 1001      20   0 1069496 628348  24884 S   0.3  0.2  35:10.29 prometheus                                                                               
+    2 root      20   0       0      0      0 S   0.0  0.0   0:00.05 kthreadd                                                                                 
+    4 root       0 -20       0      0      0 S   0.0  0.0   0:00.00 kworker/0:0H                                                                             
+    7 root      rt   0       0      0      0 S   0.0  0.0   0:20.97 migration/0                                                                              
+[root@ecsworker1 ~]# ps aux | grep ruby
+root      1797 72.8  0.0 1464476 127400 ?      Sl   12:23  76:04 /usr/local/bin/ruby -Eascii-8bit:ascii-8bit /usr/local/bin/fluentd -c /fluentd/etc/fluent.conf -p /fluentd/plugins --under-supervisor
+1001     29197  0.0  0.0 414660 39272 ?        Ssl  Jul27   0:20 /opt/td-agent/bin/ruby /usr/sbin/td-agent -c /etc/td-agent/td-agent.conf
+1001     29198  0.0  0.0 414188 38568 ?        Ssl  Jul27   0:20 /opt/td-agent/bin/ruby /usr/sbin/td-agent -c /etc/td-agent/td-agent.conf
+1001     29199  0.0  0.0 414668 39280 ?        Ssl  Jul27   0:20 /opt/td-agent/bin/ruby /usr/sbin/td-agent -c /etc/td-agent/td-agent.conf
+1001     29200  0.0  0.0 414608 39260 ?        Ssl  Jul27   0:20 /opt/td-agent/bin/ruby /usr/sbin/td-agent -c /etc/td-agent/td-agent.conf
+1001     29330  0.1  0.0 481656 41788 ?        Sl   Jul27   1:40 /opt/td-agent/bin/ruby -Eascii-8bit:ascii-8bit /usr/sbin/td-agent -c /etc/td-agent/td-agent.conf --under-supervisor
+1001     29346  0.1  0.0 482280 42848 ?        Sl   Jul27   1:44 /opt/td-agent/bin/ruby -Eascii-8bit:ascii-8bit /usr/sbin/td-agent -c /etc/td-agent/td-agent.conf --under-supervisor
+1001     29347  0.1  0.0 482288 42084 ?        Sl   Jul27   1:46 /opt/td-agent/bin/ruby -Eascii-8bit:ascii-8bit /usr/sbin/td-agent -c /etc/td-agent/td-agent.conf --under-supervisor
+1001     29352  0.1  0.0 483592 43324 ?        Sl   Jul27   1:43 /opt/td-agent/bin/ruby -Eascii-8bit:ascii-8bit /usr/sbin/td-agent -c /etc/td-agent/td-agent.conf --under-supervisor
+root     29624 91.4  0.0 766552 85484 ?        Ssl  Jul27 844:47 ruby /usr/local/bin/fluentd -c /fluentd/etc/fluent.conf -p /fluentd/plugins
+1001     29918  0.0  0.0 414612 39280 ?        Ssl  Jul27   0:19 /opt/td-agent/bin/ruby /usr/sbin/td-agent -c /etc/td-agent/td-agent.conf
+1001     30019  0.1  0.0 482308 42340 ?        Sl   Jul27   1:43 /opt/td-agent/bin/ruby -Eascii-8bit:ascii-8bit /usr/sbin/td-agent -c /etc/td-agent/td-agent.conf --under-supervisor
+root     32555  0.0  0.0 112788  1008 pts/0    S+   14:08   0:00 grep --color=auto ruby
 
