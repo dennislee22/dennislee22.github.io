@@ -1601,6 +1601,26 @@ scratch-cache-volume-impala-executor-000-1   Bound    pvc-66654e86-0490-4432-aad
 scratch-cache-volume-impala-executor-000-2   Bound    pvc-3cf6cb43-d26d-4ac4-acb2-7d688fde167b   100Gi      RWO            local-path     2m10s
 
 
+Impala HA LITE 1 executor:
+[root@ecsmaster1 ~]# oc -n impala-1659073825-rkcl get pods
+NAME                                 READY   STATUS             RESTARTS   AGE
+catalogd-67bfbcdff4-l4mkc            1/1     Running            0          4m12s
+coordinator-0                        4/4     Running            0          4m12s
+coordinator-1                        3/4     Running            0          3m32s
+huebackend-0                         2/2     Running            0          4m12s
+huefrontend-858b48985f-dk8pj         1/1     Running            0          4m12s
+impala-autoscaler-8488987bd5-8grlh   2/2     Running            0          4m12s
+impala-executor-000-0                1/1     Running            0          4m12s
+statestored-675754c9d6-dg4s6         1/1     Running            0          4m12s
+usage-monitor-5b999bc786-w8sb4       0/1     CrashLoopBackOff   4          4m12s
+[root@ecsmaster1 ~]# oc -n impala-1659073825-rkcl get pvc
+NAME                                         STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   AGE
+scratch-cache-volume-coordinator-0           Bound    pvc-d8685e78-cad0-41f9-80d2-d20e0b6503ea   100Gi      RWO            local-path     4m20s
+scratch-cache-volume-coordinator-1           Bound    pvc-bab1573a-e5d6-4925-8e97-c917976a7067   100Gi      RWO            local-path     3m40s
+scratch-cache-volume-impala-executor-000-0   Bound    pvc-a710b30f-0cab-4c33-817d-f7eed9166d9f   100Gi      RWO            local-path     4m20s
+
+
+
 
 
 I0727 15:15:18.275321    67 RequestPoolService.java:163] Loading configuration: /opt/impala/conf/llama-site.xml
@@ -1720,3 +1740,137 @@ root     29624 91.4  0.0 766552 85484 ?        Ssl  Jul27 844:47 ruby /usr/local
 1001     30019  0.1  0.0 482308 42340 ?        Sl   Jul27   1:43 /opt/td-agent/bin/ruby -Eascii-8bit:ascii-8bit /usr/sbin/td-agent -c /etc/td-agent/td-agent.conf --under-supervisor
 root     32555  0.0  0.0 112788  1008 pts/0    S+   14:08   0:00 grep --color=auto ruby
 
+
+
+
+
+[root@ecsmaster1 ~]# oc -n compute-1659253395-lwbf describe pod das-webapp-0  | grep -i node
+Node:         ecsworker3.cdpkvm.cldr/10.15.4.175
+Node-Selectors:              <none>
+                             node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+[root@ecsmaster1 ~]# oc -n compute-1659253395-lwbf describe pod hiveserver2-0  | grep -i node
+Node:         ecsworker3.cdpkvm.cldr/10.15.4.175
+Node-Selectors:              <none>
+                             node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+[root@ecsmaster1 ~]# oc -n compute-1659253395-lwbf describe pod huebackend-0  | grep -i node
+Node:         ecsworker3.cdpkvm.cldr/10.15.4.175
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+[root@ecsmaster1 ~]# oc -n compute-1659253395-lwbf describe pod huefrontend-944df7889-mkt6d | grep -i node
+Node:         ecsworker3.cdpkvm.cldr/10.15.4.175
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+[root@ecsmaster1 ~]# oc -n compute-1659253395-lwbf describe pod query-coordinator-0-0  | grep -i node
+Node:         ecsworker1.cdpkvm.cldr/10.15.4.167
+Node-Selectors:              <none>
+                             node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+[root@ecsmaster1 ~]# oc -n compute-1659253395-lwbf describe pod query-coordinator-0-1 | grep -i node
+Node:         ecsworker2.cdpkvm.cldr/10.15.4.171
+Node-Selectors:              <none>
+                             node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+[root@ecsmaster1 ~]# oc -n compute-1659253395-lwbf describe pod query-executor-0-0 | grep -i node
+Node:         ecsworker1.cdpkvm.cldr/10.15.4.167
+Node-Selectors:              <none>
+                             node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+[root@ecsmaster1 ~]# oc -n compute-1659253395-lwbf describe pod query-executor-0-1 | grep -i node
+Node:         ecsworker2.cdpkvm.cldr/10.15.4.171
+Node-Selectors:              <none>
+                             node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+[root@ecsmaster1 ~]# oc -n compute-1659253395-lwbf describe pod standalone-compute-operator-0  | grep -i node
+Node:         ecsworker3.cdpkvm.cldr/10.15.4.175
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+[root@ecsmaster1 ~]# oc -n compute-1659253395-lwbf get pvc
+NAME                                                         STATUS    VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS                        AGE
+compute-1659253395-lwbf--pvc                                 Pending                                                                        compute-1659253395-lwbf-azurefile   6m45s
+query-executor-62e632b3-365a8581-volume-query-executor-0-0   Bound     pvc-53fe0748-1bc9-49a9-912b-157a5ae0653f   100Gi      RWO            local-path                          6m39s
+query-executor-62e632b3-365a8581-volume-query-executor-0-1   Bound     pvc-c91ae1f1-db9a-43bc-951c-809a04945cca   100Gi      RWO            local-path                          6m39s
+
+
+
+[root@ecsmaster1 ~]# oc -n compute-1659253900-vzbx describe pod das-webapp-0 | grep -i node
+Node:         ecsworker3.cdpkvm.cldr/10.15.4.175
+Node-Selectors:              <none>
+                             node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+[root@ecsmaster1 ~]# oc -n compute-1659253900-vzbx describe pod hiveserver2-0 | grep -i node
+Node:         ecsworker3.cdpkvm.cldr/10.15.4.175
+Node-Selectors:              <none>
+                             node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+[root@ecsmaster1 ~]# oc -n compute-1659253900-vzbx describe pod huebackend-0 | grep -i node
+Node:         ecsworker3.cdpkvm.cldr/10.15.4.175
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+[root@ecsmaster1 ~]# oc -n compute-1659253900-vzbx describe pod huefrontend-6f457c6fc5-mn9x7 | grep -i node
+Node:         ecsworker3.cdpkvm.cldr/10.15.4.175
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+[root@ecsmaster1 ~]# oc -n compute-1659253900-vzbx describe pod query-coordinator-0-0 | grep -i node
+Node:         ecsworker1.cdpkvm.cldr/10.15.4.167
+Node-Selectors:              <none>
+                             node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+[root@ecsmaster1 ~]# oc -n compute-1659253900-vzbx describe pod query-coordinator-0-1 | grep -i node
+Node:         ecsworker2.cdpkvm.cldr/10.15.4.171
+Node-Selectors:              <none>
+                             node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+[root@ecsmaster1 ~]# oc -n compute-1659253900-vzbx describe pod query-coordinator-0-2 | grep -i node
+Node:         ecsworker3.cdpkvm.cldr/10.15.4.175
+Node-Selectors:              <none>
+                             node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+[root@ecsmaster1 ~]# oc -n compute-1659253900-vzbx describe pod query-executor-0-0 | grep -i node
+Node:         ecsworker1.cdpkvm.cldr/10.15.4.167
+Node-Selectors:              <none>
+                             node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+[root@ecsmaster1 ~]# oc -n compute-1659253900-vzbx describe pod query-executor-0-1 | grep -i node
+Node:         ecsworker2.cdpkvm.cldr/10.15.4.171
+Node-Selectors:              <none>
+                             node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+[root@ecsmaster1 ~]# oc -n compute-1659253900-vzbx describe pod query-executor-0-2 | grep -i node
+Node:         ecsworker3.cdpkvm.cldr/10.15.4.175
+Node-Selectors:              <none>
+                             node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+[root@ecsmaster1 ~]# oc -n compute-1659253900-vzbx get pvc
+NAME                                                         STATUS    VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS                        AGE
+compute-1659253900-vzbx--pvc                                 Pending                                                                        compute-1659253900-vzbx-azurefile   4m38s
+query-executor-62e634a9-365a8581-volume-query-executor-0-0   Bound     pvc-0b3d93d4-7d41-41ed-b4b7-94bd6b0474ba   100Gi      RWO            local-path                          4m35s
+query-executor-62e634a9-365a8581-volume-query-executor-0-1   Bound     pvc-6393980e-1f40-434a-992a-5d6aa81d669a   100Gi      RWO            local-path                          4m34s
+query-executor-62e634a9-365a8581-volume-query-executor-0-2   Bound     pvc-66906241-41f9-493f-aaf0-d2bfc29849ed   100Gi      RWO            local-path                          4m34s
+
+    <disk type='file' device='disk'>
+      <driver name='qemu' type='qcow2'/>
+      <source file='/var/lib/libvirt/images/master03.ocp4.cdpkvm.cldr-2.qcow2'/>
+      <target dev='vdc' bus='virtio'/>
+      <address type='pci' domain='0x0000' bus='0x06' slot='0x00' function='0x0'/>
+    </disk>
+    <disk type='file' device='disk'>
+      <driver name='qemu' type='qcow2'/>
+      <source file='/var/lib/libvirt/images/master03.ocp4.cdpkvm.cldr-3.qcow2'/>
+      <target dev='vdd' bus='virtio'/>
+      <address type='pci' domain='0x0000' bus='0x07' slot='0x00' function='0x0'/>
+    </disk>
+    <disk type='file' device='disk'>
+      <driver name='qemu' type='qcow2'/>
+      <source file='/var/lib/libvirt/images/master03.ocp4.cdpkvm.cldr-4.qcow2'/>
+      <target dev='vde' bus='virtio'/>
+      <address type='pci' domain='0x0000' bus='0x08' slot='0x00' function='0x0'/>
+    </disk>
+    
+    
