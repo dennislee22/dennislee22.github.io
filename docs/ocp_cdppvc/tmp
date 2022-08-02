@@ -1449,8 +1449,19 @@ compute-1658937812-qwff--pvc                                 Pending            
 query-executor-62e161f2-365a8581-volume-query-executor-0-0   Bound     pvc-b1517f92-60f8-448a-bb2f-c9faf454b2d6   100Gi      RWO            local-path                          2m
 
 
+[root@ocpbastion ~]# oc -n ws2 get pvc #external nfs
+NAME                                    STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS                  AGE
+livelog-data-livelog-0                  Bound    pvc-e7be2f9a-370c-4606-a917-c6248630237b   100Gi      RWO            ocs-storagecluster-ceph-rbd   5m45s
+model-metrics-data-model-metrics-db-0   Bound    pvc-ccc07720-5ab4-4ca7-a5e6-ecc7c268b2d3   50Gi       RWO            ocs-storagecluster-ceph-rbd   5m45s
+persist-dir-secret-generator-0          Bound    pvc-ecc742c5-84de-4289-9a3f-39972adde54a   10Mi       RWO            ocs-storagecluster-ceph-rbd   5m46s
+postgres-data-versioned-db-0            Bound    pvc-31cc4c72-a007-462f-8a7e-ecb69fb4ced7   50Gi       RWO            ocs-storagecluster-ceph-rbd   5m45s
+projects-pvc                            Bound    projects-share-ws2                         1Ti        RWX                                          5m46s
+registry-pvc                            Bound    pvc-774e35b5-2656-41f0-a805-786ce1d2389c   250Gi      RWO            ocs-storagecluster-ceph-rbd   5m46s
+s2i-git-server-repos-s2i-git-server-0   Bound    pvc-cd187d88-3e4c-4835-a9cd-9112392cdbd9   100Gi      RWO            ocs-storagecluster-ceph-rbd   5m45s
+s2i-queue-pvc                           Bound    pvc-a644b10e-f219-469a-a653-fd0da66ecbd5   2Gi        RWO            ocs-storagecluster-ceph-rbd   5m46s
 
-[root@ecsmaster1 ~]# oc -n workspace1 get pvc
+
+[root@ecsmaster1 ~]# oc -n workspace1 get pvc #internal nfs
 NAME                                    STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS                 AGE
 livelog-data-livelog-0                  Bound    pvc-f5f9f9dc-64a4-40af-a834-3ba528cdf233   100Gi      RWO            longhorn                     89s
 longhorn-nfs-workspace1                 Bound    pvc-08725737-3a88-4b52-b7c4-d2eca1f09b20   476838Mi   RWO            longhorn                     89s
@@ -1460,13 +1471,14 @@ postgres-data-versioned-db-0            Bound    pvc-113f07ab-18ea-49be-94e9-b5b
 projects-pvc                            Bound    pvc-57bea15d-6778-47e3-8008-d3fe276044de   10Gi       RWX            longhorn-nfs-sc-workspace1   89s
 s2i-git-server-repos-s2i-git-server-0   Bound    pvc-6c3c1de2-5a8c-4f24-84d4-c41486bbeb37   100Gi      RWO            longhorn                     89s
 s2i-queue-pvc                           Bound    pvc-5005467b-ca31-4d44-995c-0982a3a8bf76   2Gi        RWO            longhorn                     89s
+
+
 [root@ecsmaster1 ~]# oc get sc
 NAME                         PROVISIONER              RECLAIMPOLICY   VOLUMEBINDINGMODE      ALLOWVOLUMEEXPANSION   AGE
 local-path                   rancher.io/local-path    Delete          WaitForFirstConsumer   false                  121m
 longhorn (default)           driver.longhorn.io       Delete          Immediate              true                   120m
 longhorn-nfs                 nfs.longhorn.io          Delete          Immediate              false                  120m
 longhorn-nfs-sc-workspace1   longhorn-pv-workspace1   Delete          Immediate              false                  100s
-
 [root@ecsmaster1 ~]# oc -n workspace1 get pods
 NAME                                             READY   STATUS      RESTARTS   AGE
 api-78866f689-hr8xj                              1/1     Running     3          5m34s
@@ -1512,7 +1524,6 @@ usage-reporter-7bb5676f-f7fcs                    2/2     Running     0          
 web-947c48488-cs5gc                              2/2     Running     0          5m34s
 web-947c48488-hqw5h                              1/2     Running     0          5m34s
 web-947c48488-ml5xj                              1/2     Running     0          5m34s
-
 
 [root@ecsmaster1 ~]# oc -n viz-1658961242-rnrm  get pods
 NAME                                READY   STATUS      RESTARTS   AGE
@@ -1872,5 +1883,168 @@ query-executor-62e634a9-365a8581-volume-query-executor-0-2   Bound     pvc-66906
       <target dev='vde' bus='virtio'/>
       <address type='pci' domain='0x0000' bus='0x08' slot='0x00' function='0x0'/>
     </disk>
+    
+
+
+[root@ecsmaster1 ~]# kubectl get pods --show-labels -o wide -n cdp | grep master
+cdp-embedded-db-0                                                 1/1     Running     0          37m   10.42.0.33   ecsmaster1.cdpkvm.cldr   <none>           <none>            app=cdp-embedded-db,controller-revision-hash=cdp-embedded-db-db86d8d6,release=cdp-release,statefulset.kubernetes.io/pod-name=cdp-embedded-db-0
+cdp-release-dwx-server-64db6db896-fbbdt                           2/2     Running     0          33m   10.42.0.48   ecsmaster1.cdpkvm.cldr   <none>           <none>            app=cdp-release-dwx-server,pod-template-hash=64db6db896,release=cdp-release
+cdp-release-grafana-7564467cf7-7rsmw                              3/3     Running     0          12m   10.42.0.51   ecsmaster1.cdpkvm.cldr   <none>           <none>            app.kubernetes.io/instance=cdp-release,app.kubernetes.io/name=grafana,pod-template-hash=7564467cf7
+cdp-release-prometheus-kube-state-metrics-5f7c96599c-zbpl7        2/2     Running     0          36m   10.42.0.41   ecsmaster1.cdpkvm.cldr   <none>           <none>            app=prometheus,chart=prometheus-1.0.0,component=kube-state-metrics,heritage=Helm,pod-template-hash=5f7c96599c,release=cdp-release
+cdp-release-thunderhead-cdp-private-authentication-consolehhqkb   2/2     Running     0          36m   10.42.0.35   ecsmaster1.cdpkvm.cldr   <none>           <none>            app=thunderhead-cdp-private-authentication-console,pod-template-hash=f7d7f6b74,release=cdp-release
+cdp-release-thunderhead-cdp-private-environments-console-7chxsq   2/2     Running     0          36m   10.42.0.36   ecsmaster1.cdpkvm.cldr   <none>           <none>            app=thunderhead-cdp-private-environments-console,pod-template-hash=7b7fdf977b,release=cdp-release
+cdp-release-thunderhead-de-api-666669d55c-bfsfd                   2/2     Running     0          36m   10.42.0.39   ecsmaster1.cdpkvm.cldr   <none>           <none>            app=thunderhead-de-api,pod-template-hash=666669d55c,release=cdp-release
+cdp-release-thunderhead-environment-57dddc8b55-rgtcz              2/2     Running     0          33m   10.42.0.47   ecsmaster1.cdpkvm.cldr   <none>           <none>            app=thunderhead-environment,pod-template-hash=57dddc8b55,release=cdp-release
+cdp-release-thunderhead-resource-management-console-7d657dg9m97   2/2     Running     0          36m   10.42.0.43   ecsmaster1.cdpkvm.cldr   <none>           <none>            app=thunderhead-resource-management-console,pod-template-hash=7d657df564,release=cdp-release
+cli-mbdjq                                                         0/1     Completed   0          30m   10.42.0.49   ecsmaster1.cdpkvm.cldr   <none>           <none>            controller-uid=0559642c-99ce-4c2f-843c-b14cb36cdde1,job-name=cli
+
+
+bash -c "flock -xn lockfile ls -l lockfile"
+python3 -c 'import fcntl; import os; fcntl.flock(open("lockfile", "a"), fcntl.LOCK_EX | fcntl.LOCK_NB)'
+python3 -c 'import fcntl; import os; fcntl.flock(os.open("lockfile", os.O_RDONLY | os.O_CREAT), fcntl.LOCK_EX | fcntl.LOCK_NB)'
+
+bash -c "flock -xn index.html ls -l index.html"
+python3 -c 'import fcntl; import os; fcntl.flock(open("index.html", "a"), fcntl.LOCK_EX | fcntl.LOCK_NB)'
+python3 -c 'import fcntl; import os; fcntl.flock(os.open("index.html", os.O_RDONLY | os.O_CREAT), fcntl.LOCK_EX | fcntl.LOCK_NB)'
+
+
+[root@ocpbastion ~]# oc project
+Using project "ws1" on server "https://api.ocp4.cdpkvm.cldr:6443".
+[root@ocpbastion ~]# for i in `oc get pods | awk '{print $1}' | grep -v NAME`; do oc get pod $i -o yaml  | grep -A2 limits: | grep memory ; done
+                f:memory: {}
+        memory: 512Mi
+                f:memory: {}
+        memory: 100Mi
+                f:memory: {}
+        memory: 200Mi
+                f:memory: {}
+        memory: 200Mi
+                f:memory: {}
+        memory: 1Gi
+                f:memory: {}
+        memory: 4Gi
+                f:memory: {}
+        memory: 2Gi
+        memory: 1Gi
+                f:memory: {}
+        memory: 200Mi
+                f:memory: {}
+        memory: 500Mi
+                f:memory: {}
+        memory: 500Mi
+                f:memory: {}
+        memory: 500Mi
+        memory: 100Mi
+        memory: 1Gi
+        memory: 128Mi
+                f:memory: {}
+        memory: 2Gi
+                f:memory: {}
+        memory: 2Gi
+                f:memory: {}
+        memory: 2Gi
+                f:memory: {}
+        memory: 2Gi
+                f:memory: {}
+        memory: 1Gi
+                f:memory: {}
+        memory: 2Gi
+                f:memory: {}
+        memory: 2Gi
+                f:memory: {}
+        memory: 100Mi
+        memory: 2Gi
+        memory: 2Gi
+        memory: 2Gi
+ [root@ocpbastion ~]# for i in `oc get pods | awk '{print $1}' | grep -v NAME`; do oc get pod $i -o yaml  | grep -A2 limits: | grep cpu ; done
+                f:cpu: {}
+        cpu: "1"
+                f:cpu: {}
+        cpu: 100m
+                f:cpu: {}
+        cpu: 200m
+                f:cpu: {}
+        cpu: 100m
+[root@ocpbastion ~]# for i in `oc get pods | awk '{print $1}' | grep -v NAME`; do oc get pod $i -o yaml  | grep -A2 requests: | grep cpu ; done
+                f:cpu: {}
+        cpu: 100m
+                f:cpu: {}
+        cpu: 50m
+                f:cpu: {}
+                f:cpu: {}
+        cpu: 200m
+        cpu: 200m
+                f:cpu: {}
+        cpu: 50m
+                f:cpu: {}
+                f:cpu: {}
+                f:cpu: {}
+                f:cpu: {}
+        cpu: 25m
+        cpu: 100m
+        cpu: 10m
+        cpu: 25m
+                f:cpu: {}
+        cpu: 100m
+                f:cpu: {}
+        cpu: 100m
+                f:cpu: {}
+        cpu: 100m
+                f:cpu: {}
+        cpu: 100m
+                f:cpu: {}
+        cpu: 500m
+                f:cpu: {}
+        cpu: 100m
+                f:cpu: {}
+        cpu: 100m
+                f:cpu: {}
+        cpu: 200m
+                f:cpu: {}
+        cpu: 200m
+                f:cpu: {}
+        cpu: 200m
+                f:cpu: {}
+        cpu: 100m
+                f:cpu: {}
+                f:cpu: {}
+        cpu: 200m
+        cpu: 200m
+                f:cpu: {}
+        cpu: 100m
+                f:cpu: {}
+        cpu: 100m
+                f:cpu: {}
+        cpu: 50m
+                f:cpu: {}
+        cpu: 50m
+                f:cpu: {}
+        cpu: 100m
+                f:cpu: {}
+        cpu: 100m
+                f:cpu: {}
+        cpu: 100m
+                f:cpu: {}
+        cpu: 100m
+                f:cpu: {}
+        cpu: 100m
+                f:cpu: {}
+        cpu: 100m
+                f:cpu: {}
+        cpu: 100m
+                f:cpu: {}
+        cpu: 100m
+                f:cpu: {}
+        cpu: 100m
+                f:cpu: {}
+        cpu: 100m
+                f:cpu: {}
+        cpu: 100m
+        cpu: 100m
+        cpu: 100m
+        cpu: 100m       
+        
+    5CPU 32G
+    
     
     
