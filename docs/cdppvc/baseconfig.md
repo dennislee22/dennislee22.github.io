@@ -45,7 +45,7 @@ Check and make necessary configurations to ensure that the CDP PvC Base cluster 
 
     | Parameter       | Value         |
     |:----------------|:------------------|
-    | Source for Syncing User and Groups | org.apache.ranger.unixusersync.process.UnixUserGroupBuilder  | 
+    | Source for Syncing User and Groups | org.apache.ranger.ldapusersync.process.LdapUserGroupBuilder  | 
     | Ranger Usersync Unix Backend  | nss  | 
     | Usersync LDAP/AD URL | ldap://idm.cdpkvm.cldr  | 
     | Usersync Bind User | uid=admin,cn=users,cn=accounts,dc=cdpkvm,dc=cldr  | 
