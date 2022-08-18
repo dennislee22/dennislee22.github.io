@@ -1461,7 +1461,7 @@ s2i-git-server-repos-s2i-git-server-0   Bound    pvc-cd187d88-3e4c-4835-a9cd-911
 s2i-queue-pvc                           Bound    pvc-a644b10e-f219-469a-a653-fd0da66ecbd5   2Gi        RWO            ocs-storagecluster-ceph-rbd   5m46s
 
 
-[root@ecsmaster1 ~]# oc -n workspace1 get pvc #internal nfs
+[root@ecsmaster1 ~]# kubectl -n workspace1 get pvc #internal nfs
 NAME                                    STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS                 AGE
 livelog-data-livelog-0                  Bound    pvc-f5f9f9dc-64a4-40af-a834-3ba528cdf233   100Gi      RWO            longhorn                     89s
 longhorn-nfs-workspace1                 Bound    pvc-08725737-3a88-4b52-b7c4-d2eca1f09b20   476838Mi   RWO            longhorn                     89s
@@ -2046,5 +2046,19 @@ Using project "ws1" on server "https://api.ocp4.cdpkvm.cldr:6443".
         
     5CPU 32G
     
-    
+
+
+[root@ecsmaster1 ~]# oc -n dex-app-snxg55zh get pods
+NAME                                                  READY   STATUS              RESTARTS   AGE
+dex-app-snxg55zh-airflow-scheduler-66d56b66c9-hwq75   1/1     Running             2          5d23h
+dex-app-snxg55zh-airflow-web-5889784fdd-kdrjf         1/1     Running             0          5d23h
+dex-app-snxg55zh-airflowapi-647984b4bc-6mm9x          2/2     Running             3          5d23h
+dex-app-snxg55zh-api-767b8549b8-x77z7                 1/1     Running             0          3d3h
+dex-app-snxg55zh-livy-584fff865c-t24cb                1/1     Running             0          3d3h
+sparkwordcount-5d59318286845f0b-exec-1                2/2     Running             0          3s
+sparkwordcount-5d59318286845f0b-exec-2                0/2     ContainerCreating   0          3s
+sparkwordcount-5d59318286845f0b-exec-3                0/2     ContainerCreating   0          3s
+testme-16-95961a82868432a1-driver                     4/4     Running             0          16s
+
+
     
