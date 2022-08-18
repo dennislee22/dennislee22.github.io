@@ -56,7 +56,7 @@ This article explains the necessary steps to install the ECS platform upon succe
     
 ## ECS Platform Installation
 
-1. Navigate to `Clusters` > `Add Cluster`. Select `Private Cloud Base Cluster` and click `Continue`.
+1. Navigate to `Clusters` > `Add Cluster`. Select `Data Services` and click `Continue`.
 
     ![](../../assets/images/ecs/addecs1.png)
     
