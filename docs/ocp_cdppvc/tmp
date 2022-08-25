@@ -2061,4 +2061,143 @@ sparkwordcount-5d59318286845f0b-exec-3                0/2     ContainerCreating 
 testme-16-95961a82868432a1-driver                     4/4     Running             0          16s
 
 
-    
+### troubleshooting
+# oc -n cdp  describe pod cdp-release-prometheus-alertmanager-0 | grep -i node 
+Node:           ecsmaster1.cdpkvm.cldr/10.15.4.166
+Node-Selectors:              <none>
+Tolerations:                 node-role.kubernetes.io/control-plane=true:NoSchedule
+                             node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+  Warning  FailedAttachVolume  8s    attachdetach-controller  Multi-Attach error for volume "pvc-17464fbb-be02-40c5-9990-3076cadc9754" Volume is already exclusively attached to one node and can't be attached to another
+  
+  
+  
+
+# GPU
+yum update -y
+reboot
+https://docs.nvidia.com/datacenter/tesla/tesla-installation-notes/index.html#centos7
+
+yum install -y tar bzip2 make automake gcc gcc-c++ pciutils elfutils-libelf-devel libglvnd-devel vim bind-utils wget
+
+yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+
+yum -y group install "Development Tools"
+
+yum install -y kernel-devel-$(uname -r) kernel-headers-$(uname -r)
+
+reboot
+
+BASE_URL=https://us.download.nvidia.com/tesla
+DRIVER_VERSION=515.65.01
+curl -fSsl -O $BASE_URL/$DRIVER_VERSION/NVIDIA-Linux-x86_64-$DRIVER_VERSION.run
+sh NVIDIA-Linux-x86_64-$DRIVER_VERSION.run
+
+curl -s -L https://nvidia.github.io/nvidia-container-runtime/$(. /etc/os-release;echo $ID$VERSION_ID)/nvidia-container-runtime.repo | sudo tee /etc/yum.repos.d/nvidia-container-runtime.repo
+sudo yum -y install nvidia-container-runtime
+
+modinfo nvidia
+
+# nvidia-smi
+Wed Aug 24 13:03:46 2022       
++-----------------------------------------------------------------------------+
+| NVIDIA-SMI 515.65.01    Driver Version: 515.65.01    CUDA Version: 11.7     |
+|-------------------------------+----------------------+----------------------+
+| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
+|                               |                      |               MIG M. |
+|===============================+======================+======================|
+|   0  NVIDIA A100-PCI...  Off  | 00000000:08:00.0 Off |                    0 |
+| N/A   32C    P0    37W / 250W |      0MiB / 40960MiB |      3%      Default |
+|                               |                      |             Disabled |
++-------------------------------+----------------------+----------------------+
+                                                                               
++-----------------------------------------------------------------------------+
+| Processes:                                                                  |
+|  GPU   GI   CI        PID   Type   Process name                  GPU Memory |
+|        ID   ID                                                   Usage      |
+|=============================================================================|
+|  No running processes found                                                 |
++-----------------------------------------------------------------------------+
+
+# modinfo nvidia
+filename:       /lib/modules/3.10.0-1160.45.1.el7.x86_64/extra/nvidia.ko.xz
+firmware:       nvidia/515.65.01/gsp.bin
+alias:          char-major-195-*
+version:        515.65.01
+supported:      external
+license:        NVIDIA
+retpoline:      Y
+rhelversion:    7.9
+srcversion:     8049D44E2C1B08F41E1B8A6
+alias:          pci:v000010DEd*sv*sd*bc06sc80i00*
+alias:          pci:v000010DEd*sv*sd*bc03sc02i00*
+alias:          pci:v000010DEd*sv*sd*bc03sc00i00*
+depends:        drm
+vermagic:       3.10.0-1160.45.1.el7.x86_64 SMP mod_unload modversions 
+signer:         DKMS module signing key
+sig_key:        F2:8C:A1:ED:ED:ED:9C:7F:45:1A:98:F1:40:3A:8E:23:39:E1:E6:C6
+sig_hashalgo:   sha512
+parm:           NvSwitchRegDwords:NvSwitch regkey (charp)
+parm:           NvSwitchBlacklist:NvSwitchBlacklist=uuid[,uuid...] (charp)
+parm:           NVreg_ResmanDebugLevel:int
+parm:           NVreg_RmLogonRC:int
+parm:           NVreg_ModifyDeviceFiles:int
+parm:           NVreg_DeviceFileUID:int
+parm:           NVreg_DeviceFileGID:int
+parm:           NVreg_DeviceFileMode:int
+parm:           NVreg_InitializeSystemMemoryAllocations:int
+parm:           NVreg_UsePageAttributeTable:int
+parm:           NVreg_EnablePCIeGen3:int
+parm:           NVreg_EnableMSI:int
+parm:           NVreg_TCEBypassMode:int
+parm:           NVreg_EnableStreamMemOPs:int
+parm:           NVreg_RestrictProfilingToAdminUsers:int
+parm:           NVreg_PreserveVideoMemoryAllocations:int
+parm:           NVreg_EnableS0ixPowerManagement:int
+parm:           NVreg_S0ixPowerManagementVideoMemoryThreshold:int
+parm:           NVreg_DynamicPowerManagement:int
+parm:           NVreg_DynamicPowerManagementVideoMemoryThreshold:int
+parm:           NVreg_EnableGpuFirmware:int
+parm:           NVreg_EnableGpuFirmwareLogs:int
+parm:           NVreg_OpenRmEnableUnsupportedGpus:int
+parm:           NVreg_EnableUserNUMAManagement:int
+parm:           NVreg_MemoryPoolSize:int
+parm:           NVreg_KMallocHeapMaxSize:int
+parm:           NVreg_VMallocHeapMaxSize:int
+parm:           NVreg_IgnoreMMIOCheck:int
+parm:           NVreg_NvLinkDisable:int
+parm:           NVreg_EnablePCIERelaxedOrderingMode:int
+parm:           NVreg_RegisterPCIDriver:int
+parm:           NVreg_EnableDbgBreakpoint:int
+parm:           NVreg_RegistryDwords:charp
+parm:           NVreg_RegistryDwordsPerDevice:charp
+parm:           NVreg_RmMsg:charp
+parm:           NVreg_GpuBlacklist:charp
+parm:           NVreg_TemporaryFilePath:charp
+parm:           NVreg_ExcludedGpus:charp
+parm:           NVreg_DmaRemapPeerMmio:int
+parm:           rm_firmware_active:charp
+
+
+[root@ecsgpu ~]# more /var/lib/rancher/rke2/agent/etc/containerd/config.toml.tmpl | grep runtime
+[plugins.cri.containerd.runtimes.runc]
+  runtime_type = "io.containerd.runtime.v1.linux"
+  runtime = "nvidia-container-runtime"
+  
+  [root@ecsworker1 ~]# more /var/lib/rancher/rke2/agent/etc/containerd/config.toml | grep runtime
+[plugins.cri.containerd.runtimes.runc]
+  runtime_type = "io.containerd.runc.v2"
+  
+  
+
+
+## when restarting ECS node after adding node
+# oc get nodes
+NAME                     STATUS     ROLES                       AGE    VERSION
+ecsgpu.cdpkvm.cldr       NotReady   <none>                      9m1s   v1.21.11+rke2r1
+ecsmaster1.cdpkvm.cldr   NotReady   control-plane,etcd,master   5d1h   v1.21.11+rke2r1
+ecsworker1.cdpkvm.cldr   NotReady   <none>                      5d1h   v1.21.11+rke2r1
+ecsworker2.cdpkvm.cldr   NotReady   <none>                      5d1h   v1.21.11+rke2r1
+ecsworker3.cdpkvm.cldr   NotReady   <none>                      5d1h   v1.21.11+rke2r1
+
