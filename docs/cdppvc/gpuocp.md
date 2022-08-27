@@ -17,7 +17,7 @@ This article describes the steps to install the Nvidia GPU software driver and i
 ---
 ## Assumption
 
-- The software version of the CDP Private Cloud Data Services components in this demo is described below.
+- The software version of each CDP Private Cloud Data Services components in this demo is described below.
 
 | Software       | Version         |
 |:-------------|:------------------|
@@ -129,9 +129,9 @@ This article describes the steps to install the Nvidia GPU software driver and i
 
     [root@ocpbastion ~]# oc describe pod cuda-vectoradd | grep -i Node:
     Node:         ocpgpu.ocp4.cdpkvm.cldr/10.15.4.185
-
-
-
+    ```
+    
+    ```bash    
     [root@ocpbastion ~]# oc exec -it nvidia-driver-daemonset-48.84.202208152344-0-cxsld -- nvidia-smi
     Defaulted container "nvidia-driver-ctr" out of: nvidia-driver-ctr, openshift-driver-toolkit-ctr, k8s-driver-manager (init)
     Fri Aug 26 06:07:36 2022       
@@ -196,7 +196,7 @@ This article describes the steps to install the Nvidia GPU software driver and i
     Node:         ocpgpu.ocp4.cdpkvm.cldr/10.15.4.185
     ```
 
-6. When running script that consuming the GPU card, the worker node will display a particular process (in this case, the CML session pod) is using the GPU card.
+6. When running script that consuming the GPU card, the worker node will show that a particular process (in this case, the CML session pod) is using the GPU card.
 
     ```bash
     [root@ocpbastion ~]# oc -n nvidia-gpu-operator exec -it nvidia-driver-daemonset-48.84.202208152344-0-r8rpv -- nvidia-smi
@@ -224,8 +224,9 @@ This article describes the steps to install the Nvidia GPU software driver and i
     ```
 
 ## Taint the Openshift Worker Node with Nvidia GPU Card
-1. Reserve the worker node with Nvidia GPU Card for any CML session that require GPU by running the following command. This will disallow all other non-GPU related workloads on this particular node.
+1. Reserve the worker node (with Nvidia GPU Card installed) for any CML session that requires GPU card by running the following command. This will disallow all other non-GPU related workloads to be provisioned on this particular node.
 
     ```bash    
     [root@ocpbastion ~]# oc adm taint node ocpgpu.ocp4.cdpkvm.cldr nvidia.com/gpu=true:NoSchedule
     node/ocpgpu.ocp4.cdpkvm.cldr tainted
+    ```
