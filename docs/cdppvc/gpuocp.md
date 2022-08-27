@@ -9,7 +9,7 @@ nav_order: 2
 # Nvidia GPU in Openshift
 {: .no_toc }
 
-This article describes the steps to install the Nvidia GPU software driver and its associated software in the CDP PvC Data Services platform with Openshift solution. The described implementation steps are carried out after the Openshift platform installation. This article also describes the steps to test the Nvidia GPU card in the CML workspace.
+This article describes the steps to install the Nvidia GPU software driver and its associated software in the CDP PvC Data Services platform with Openshift solution. These implementation steps are to be carried out after the Openshift platform installation. This article also describes the steps to test the Nvidia GPU card in the CML workspace.
 
 - TOC
 {:toc}
