@@ -172,7 +172,7 @@ This article describes the steps to install the Nvidia GPU software driver and i
         --
     ```
 
-7. When running script that consuming the GPU card, the worker node will display a particular process (in this case, the CML session pod) is using the GPU card.
+7. When running script that consuming the GPU card, the worker node will show that a particular process (in this case, the CML session pod) is using the GPU card.
 
     ```bash
     [root@ecsgpu ~]# nvidia-smi
