@@ -10,12 +10,12 @@ nav_order: 2
 # Installation Prerequisites
 {: .no_toc }
 
-- CDP Private Cloud solution requires direct integration with some 3rd party/external components. 
+- CDP Private Cloud (PvC) Data Services (DS) solution requires direct integration with some 3rd party/external components. 
 - For CDP Private Cloud solution with Openshift platform, the required external components are represented by the purple-coloured components as shown in the following diagram.
 
 ![](../../assets/images/3partyocp.png)
 
-- For CDP Private Cloud solution with ECS platform, the required external components are represented by the purple-coloured components as shown below.
+- For CDP PvC DS platform with ECS solution, the required external components are represented by the purple-coloured components as shown below.
 
 ![](../../assets/images/3partyecs.png)
 
@@ -28,14 +28,14 @@ nav_order: 2
 
 ### Software Version
  
-- The software version of the CDP Private Cloud solution components involved in this demo is stated below.
+- The software version of the CDP Private Cloud Data Services solution components involved in this demo is stated below.
 - Obtain a valid product subscription from Cloudera. Cloudera Manager requires a valid license to install accordingly.
 
 | Software       | Version         |
 |:-------------|:------------------|
 | CDP Base           | 7.1.7 `rel. May 2022`  | 
 | Cloudera Manager   | 7.5.5 `rel. May 2022`  | 
-| CDP Data Services  | 1.3.4 `rel. May 2022`  | 
+| CDP PvC Data Services  | 1.3.4 `rel. May 2022`  | 
 
 - The supported Openshift version is explained in this [link](https://docs.cloudera.com/cdp-private-cloud-data-services/1.3.4/installation/topics/cdppvc-installation-openshift.html). This demo uses Openshift 4.7.
 
