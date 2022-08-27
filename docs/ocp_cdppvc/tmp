@@ -2077,6 +2077,7 @@ Tolerations:                 node-role.kubernetes.io/control-plane=true:NoSchedu
 yum update -y
 reboot
 https://docs.nvidia.com/datacenter/tesla/tesla-installation-notes/index.html#centos7
+https://www.nvidia.com/Download/index.aspx?lang=en-us
 
 yum install -y tar bzip2 make automake gcc gcc-c++ pciutils elfutils-libelf-devel libglvnd-devel vim bind-utils wget
 
@@ -2093,8 +2094,9 @@ DRIVER_VERSION=515.65.01
 curl -fSsl -O $BASE_URL/$DRIVER_VERSION/NVIDIA-Linux-x86_64-$DRIVER_VERSION.run
 sh NVIDIA-Linux-x86_64-$DRIVER_VERSION.run
 
-curl -s -L https://nvidia.github.io/nvidia-container-runtime/$(. /etc/os-release;echo $ID$VERSION_ID)/nvidia-container-runtime.repo | sudo tee /etc/yum.repos.d/nvidia-container-runtime.repo
-sudo yum -y install nvidia-container-runtime
+# sh NVIDIA-Linux-x86_64-$DRIVER_VERSION.run
+Verifying archive integrity... OK
+Uncompressing NVIDIA Accelerated Graphics Driver for Linux-x86_64 515.65.01................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................
 
 modinfo nvidia
 
@@ -2190,6 +2192,138 @@ parm:           rm_firmware_active:charp
   runtime_type = "io.containerd.runc.v2"
   
   
+[root@ecsmaster1 ~]# oc describe node ecsgpu.cdpkvm.cldr | grep -A15 Capacity:
+Capacity:
+  cpu:                16
+  ephemeral-storage:  209703916Ki
+  hugepages-1Gi:      0
+  hugepages-2Mi:      0
+  memory:             263975200Ki
+  nvidia.com/gpu:     1
+  pods:               110
+Allocatable:
+  cpu:                16
+  ephemeral-storage:  203999969325
+  hugepages-1Gi:      0
+  hugepages-2Mi:      0
+  memory:             263975200Ki
+  nvidia.com/gpu:     1
+  pods:               110
+  
+[root@ecsmaster1 ~]# oc describe node ecsworker1.cdpkvm.cldr | grep -A13 Capacity:
+Capacity:
+  cpu:                16
+  ephemeral-storage:  103797740Ki
+  hugepages-1Gi:      0
+  hugepages-2Mi:      0
+  memory:             263974872Ki
+  pods:               110
+Allocatable:
+  cpu:                16
+  ephemeral-storage:  100974441393
+  hugepages-1Gi:      0
+  hugepages-2Mi:      0
+  memory:             263974872Ki
+  pods:               110
+  
+
+[root@ecsmaster1 ~]# oc -n ws1-user-2 get pods 
+NAME               READY   STATUS    RESTARTS   AGE
+pk7m5ylf2u9ovl0j   0/5     Pending   0          3m1s
+[root@ecsmaster1 ~]# oc -n ws1-user-2 describe pod pk7m5ylf2u9ovl0j | grep -B2 -i nvidia
+    Limits:
+      memory:          7714196Ki
+      nvidia.com/gpu:  1
+--
+      cpu:             1960m
+      memory:          7714196Ki
+      nvidia.com/gpu:  1
+--
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+                             nvidia.com/gpu=true:NoSchedule
+--
+  ----     ------            ----   ----      -------
+  Warning  FailedScheduling  3m3s   yunikorn  0/4 nodes are available: 4 pod has unbound immediate PersistentVolumeClaims.
+  Warning  FailedScheduling  3m2s   yunikorn  0/4 nodes are available: 1 node(s) had taint {node-role.kubernetes.io/control-plane: true}, that the pod didn't tolerate, 3 Insufficient nvidia.com/gpu.
+  Warning  FailedScheduling  2m57s  yunikorn  0/4 nodes are available: 1 node(s) had taint {node-role.kubernetes.io/control-plane: true}, that the pod didn't tolerate, 3 Insufficient nvidia.com/gpu.
+
+#########   
+
+import tensorflow as tf
+import numpy as np
+import matplotlib.pyplot as plt
+
+from tensorflow import keras
+
+tf.config.experimental.list_physical_devices()
+tf.test.is_built_with_cuda()
+
+(X_train, y_train), (X_test, y_test) = keras.datasets.cifar10.load_data()
+
+X_train.shape, X_test.shape
+
+X_train[0].shape
+y_train[:5]
+
+X_train_scaled = X_train/255
+X_test_scaled = X_test/255
+
+y_train_encoded = keras.utils.to_categorical(y_train, num_classes = 10, dtype = 'float32')
+y_test_encoded = keras.utils.to_categorical(y_test, num_classes = 10, dtype = 'float32')
+
+def get_model():
+    model = keras.Sequential([
+        keras.layers.Flatten(input_shape=(32,32,3)),
+        keras.layers.Dense(3000, activation='relu'),
+        keras.layers.Dense(1000, activation='relu'),
+        keras.layers.Dense(10, activation='sigmoid')    
+    ])
+    model.compile(optimizer='SGD',
+              loss='categorical_crossentropy',
+              metrics=['accuracy'])
+    return model
+  
+%%timeit -n1 -r1
+# CPU
+with tf.device('/CPU:0'):
+    model_cpu = get_model()
+    model_cpu.fit(X_train_scaled, y_train_encoded, epochs = 10)
+    
+
+%%timeit -n1 -r1
+# GPU
+with tf.device('/GPU:0'):
+    model_gpu = get_model()
+    model_gpu.fit(X_train_scaled, y_train_encoded, epochs = 10)
+    
+#########    
+
+[root@ecsgpu ~]# nvidia-smi
+Thu Aug 25 13:58:40 2022       
++-----------------------------------------------------------------------------+
+| NVIDIA-SMI 515.65.01    Driver Version: 515.65.01    CUDA Version: 11.7     |
+|-------------------------------+----------------------+----------------------+
+| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
+|                               |                      |               MIG M. |
+|===============================+======================+======================|
+|   0  NVIDIA A100-PCI...  Off  | 00000000:08:00.0 Off |                    0 |
+| N/A   29C    P0    35W / 250W |  39185MiB / 40960MiB |      0%      Default |
+|                               |                      |             Disabled |
++-------------------------------+----------------------+----------------------+
+                                                                               
++-----------------------------------------------------------------------------+
+| Processes:                                                                  |
+|  GPU   GI   CI        PID   Type   Process name                  GPU Memory |
+|        ID   ID                                                   Usage      |
+|=============================================================================|
+|    0   N/A  N/A     29990      C   /usr/local/bin/python3.9        39183MiB |
++-----------------------------------------------------------------------------+
+[root@ecsgpu ~]# ps -ef | grep 29990
+root      7651  5228  0 13:59 pts/0    00:00:00 grep --color=auto 29990
+8536     29990 29525 99 13:44 ?        00:39:15 /usr/local/bin/python3.9 /usr/local/bin/ipython3 kernel --automagic --no-secure --nosep --pprint --no-color-info --no-pdb --HistoryManager.enabled=False --shell=1027 --cache-size=0 --hb=1025 --colors=NoColor --iopub=1026 --user=cdsw --ident=fa566d51-2438-11ed-895a-b354d7876f97 --quiet --matplotlib=inline
+
 
 
 ## when restarting ECS node after adding node
@@ -2201,3 +2335,176 @@ ecsworker1.cdpkvm.cldr   NotReady   <none>                      5d1h   v1.21.11+
 ecsworker2.cdpkvm.cldr   NotReady   <none>                      5d1h   v1.21.11+rke2r1
 ecsworker3.cdpkvm.cldr   NotReady   <none>                      5d1h   v1.21.11+rke2r1
 
+
+
+## GPU Openshift
+https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/openshift/install-nfd.html#verify-that-the-node-feature-discovery-operator-is-functioning-correctly
+https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/platform-support.html
+
+
+
+[root@ocpbastion ~]# oc get nodes
+NAME                        STATUS   ROLES           AGE   VERSION
+master01.ocp4.cdpkvm.cldr   Ready    master,worker   44m   v1.21.11+31d53a1
+master02.ocp4.cdpkvm.cldr   Ready    master,worker   44m   v1.21.11+31d53a1
+master03.ocp4.cdpkvm.cldr   Ready    master,worker   44m   v1.21.11+31d53a1
+ocpgpu.ocp4.cdpkvm.cldr     Ready    worker          37m   v1.21.11+31d53a1
+[root@ocpbastion ~]# oc -n nfd get pods
+NAME                                      READY   STATUS    RESTARTS   AGE
+nfd-controller-manager-7d6799c688-kcrpk   2/2     Running   0          13m
+nfd-master-749cb                          1/1     Running   0          11m
+nfd-master-7x79h                          1/1     Running   0          11m
+nfd-master-q86fk                          1/1     Running   0          11m
+nfd-worker-gc84j                          1/1     Running   0          11m
+nfd-worker-j7gxv                          1/1     Running   0          11m
+nfd-worker-vt5qb                          1/1     Running   0          11m
+nfd-worker-z97x4                          1/1     Running   0          11m
+
+
+[root@ocpbastion ~]# oc describe node ocpgpu.ocp4.cdpkvm.cldr | grep pci-10de.present
+                    feature.node.kubernetes.io/pci-10de.present=true
+
+
+[root@ocpbastion ~]# oc -n nvidia-gpu-operator get pods
+NAME                                                 READY   STATUS      RESTARTS   AGE
+gpu-feature-discovery-l7pqc                          1/1     Running     0          6m44s
+gpu-operator-765ff6c665-mznvk                        1/1     Running     0          7m48s
+nvidia-container-toolkit-daemonset-6brmr             1/1     Running     0          6m45s
+nvidia-cuda-validator-8brpz                          0/1     Completed   0          2m48s
+nvidia-dcgm-5txs7                                    1/1     Running     0          6m45s
+nvidia-dcgm-exporter-wj4dg                           1/1     Running     0          6m44s
+nvidia-device-plugin-daemonset-b2k5x                 1/1     Running     0          6m45s
+nvidia-device-plugin-validator-29b9g                 0/1     Completed   0          2m30s
+nvidia-driver-daemonset-48.84.202208152344-0-cxsld   2/2     Running     0          6m45s
+nvidia-mig-manager-kqzk5                             1/1     Running     0          85s
+nvidia-node-status-exporter-2xsdc                    1/1     Running     0          6m45s
+nvidia-operator-validator-f2zdm                      1/1     Running     0          6m45s
+[root@ocpbastion ~]# oc get pods,daemonset -n nvidia-gpu-operator
+NAME                                                     READY   STATUS      RESTARTS   AGE
+pod/gpu-feature-discovery-l7pqc                          1/1     Running     0          6m46s
+pod/gpu-operator-765ff6c665-mznvk                        1/1     Running     0          7m50s
+pod/nvidia-container-toolkit-daemonset-6brmr             1/1     Running     0          6m47s
+pod/nvidia-cuda-validator-8brpz                          0/1     Completed   0          2m50s
+pod/nvidia-dcgm-5txs7                                    1/1     Running     0          6m47s
+pod/nvidia-dcgm-exporter-wj4dg                           1/1     Running     0          6m46s
+pod/nvidia-device-plugin-daemonset-b2k5x                 1/1     Running     0          6m47s
+pod/nvidia-device-plugin-validator-29b9g                 0/1     Completed   0          2m32s
+pod/nvidia-driver-daemonset-48.84.202208152344-0-cxsld   2/2     Running     0          6m47s
+pod/nvidia-mig-manager-kqzk5                             1/1     Running     0          87s
+pod/nvidia-node-status-exporter-2xsdc                    1/1     Running     0          6m47s
+pod/nvidia-operator-validator-f2zdm                      1/1     Running     0          6m47s
+
+NAME                                                          DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR                                                                                                        AGE
+daemonset.apps/gpu-feature-discovery                          1         1         1       1            1           nvidia.com/gpu.deploy.gpu-feature-discovery=true                                                                     6m46s
+daemonset.apps/nvidia-container-toolkit-daemonset             1         1         1       1            1           nvidia.com/gpu.deploy.container-toolkit=true                                                                         6m47s
+daemonset.apps/nvidia-dcgm                                    1         1         1       1            1           nvidia.com/gpu.deploy.dcgm=true                                                                                      6m47s
+daemonset.apps/nvidia-dcgm-exporter                           1         1         1       1            1           nvidia.com/gpu.deploy.dcgm-exporter=true                                                                             6m46s
+daemonset.apps/nvidia-device-plugin-daemonset                 1         1         1       1            1           nvidia.com/gpu.deploy.device-plugin=true                                                                             6m47s
+daemonset.apps/nvidia-driver-daemonset-48.84.202208152344-0   1         1         1       1            1           feature.node.kubernetes.io/system-os_release.OSTREE_VERSION=48.84.202208152344-0,nvidia.com/gpu.deploy.driver=true   6m47s
+daemonset.apps/nvidia-mig-manager                             1         1         1       1            1           nvidia.com/gpu.deploy.mig-manager=true                                                                               6m46s
+daemonset.apps/nvidia-node-status-exporter                    1         1         1       1            1           nvidia.com/gpu.deploy.node-status-exporter=true                                                                      6m47s
+daemonset.apps/nvidia-operator-validator                      1         1         1       1            1           nvidia.com/gpu.deploy.operator-validator=true                                                                        6m47s
+
+
+[root@ocpbastion ~]# oc new-project nvidia-test
+Now using project "nvidia-test" on server "https://api.ocp4.cdpkvm.cldr:6443".
+
+You can add applications to this project with the 'new-app' command. For example, try:
+
+    oc new-app rails-postgresql-example
+
+to build a new example application in Ruby. Or use kubectl to deploy a simple Kubernetes application:
+
+    kubectl create deployment hello-node --image=k8s.gcr.io/serve_hostname
+
+[root@ocpbastion ~]# cat << EOF | oc create -f -
+> 
+> apiVersion: v1
+> kind: Pod
+> metadata:
+>   name: cuda-vectoradd
+> spec:
+>  restartPolicy: OnFailure
+>  containers:
+>  - name: cuda-vectoradd
+>    image: "nvidia/samples:vectoradd-cuda11.2.1"
+>    resources:
+>      limits:
+>        nvidia.com/gpu: 1
+> EOF
+pod/cuda-vectoradd created
+
+[root@ocpbastion ~]# oc get pods
+NAME             READY   STATUS      RESTARTS   AGE
+cuda-vectoradd   0/1     Completed   0          13s
+
+[root@ocpbastion ~]# oc logs cuda-vectoradd
+[Vector addition of 50000 elements]
+Copy input data from the host memory to the CUDA device
+CUDA kernel launch with 196 blocks of 256 threads
+Copy output data from the CUDA device to the host memory
+Test PASSED
+Done
+
+[root@ocpbastion ~]# oc describe pod cuda-vectoradd | grep -i Node:
+Node:         ocpgpu.ocp4.cdpkvm.cldr/10.15.4.185
+
+
+
+[root@ocpbastion ~]# oc exec -it nvidia-driver-daemonset-48.84.202208152344-0-cxsld -- nvidia-smi
+Defaulted container "nvidia-driver-ctr" out of: nvidia-driver-ctr, openshift-driver-toolkit-ctr, k8s-driver-manager (init)
+Fri Aug 26 06:07:36 2022       
++-----------------------------------------------------------------------------+
+| NVIDIA-SMI 470.82.01    Driver Version: 470.82.01    CUDA Version: 11.4     |
+|-------------------------------+----------------------+----------------------+
+| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
+|                               |                      |               MIG M. |
+|===============================+======================+======================|
+|   0  NVIDIA A100-PCI...  On   | 00000000:07:00.0 Off |                    0 |
+| N/A   28C    P0    33W / 250W |      0MiB / 40536MiB |      0%      Default |
+|                               |                      |             Disabled |
++-------------------------------+----------------------+----------------------+
+                                                                               
++-----------------------------------------------------------------------------+
+| Processes:                                                                  |
+|  GPU   GI   CI        PID   Type   Process name                  GPU Memory |
+|        ID   ID                                                   Usage      |
+|=============================================================================|
+|  No running processes found                                                 |
++-----------------------------------------------------------------------------+
+
+[root@ocpbastion ~]# oc describe pod nvidia-driver-daemonset-48.84.202208152344-0-cxsld  | grep Node:
+Node:                 ocpgpu.ocp4.cdpkvm.cldr/10.15.4.185
+
+[root@ocpbastion ~]# oc -n workspace-user-1 describe pod buldb59dst035j13 | grep Node:
+Node:         ocpgpu.ocp4.cdpkvm.cldr/10.15.4.185
+
+
+
+[root@ocpbastion ~]# oc -n nvidia-gpu-operator exec -it nvidia-driver-daemonset-48.84.202208152344-0-r8rpv -- nvidia-smi
+Defaulted container "nvidia-driver-ctr" out of: nvidia-driver-ctr, openshift-driver-toolkit-ctr, k8s-driver-manager (init)
+Fri Aug 26 07:42:07 2022       
++-----------------------------------------------------------------------------+
+| NVIDIA-SMI 470.82.01    Driver Version: 470.82.01    CUDA Version: 11.4     |
+|-------------------------------+----------------------+----------------------+
+| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
+|                               |                      |               MIG M. |
+|===============================+======================+======================|
+|   0  NVIDIA A100-PCI...  On   | 00000000:07:00.0 Off |                    0 |
+| N/A   30C    P0    44W / 250W |  39326MiB / 40536MiB |     12%      Default |
+|                               |                      |             Disabled |
++-------------------------------+----------------------+----------------------+
+                                                                               
++-----------------------------------------------------------------------------+
+| Processes:                                                                  |
+|  GPU   GI   CI        PID   Type   Process name                  GPU Memory |
+|        ID   ID                                                   Usage      |
+|=============================================================================|
+|    0   N/A  N/A    189226      C   /usr/local/bin/python3.9        39323MiB |
++-----------------------------------------------------------------------------+
+
+
+[root@ocpbastion ~]# oc adm taint node ocpgpu.ocp4.cdpkvm.cldr nvidia.com/gpu=true:NoSchedule
+node/ocpgpu.ocp4.cdpkvm.cldr tainted
