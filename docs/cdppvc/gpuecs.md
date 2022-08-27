@@ -63,6 +63,7 @@ This article describes the steps to install the Nvidia GPU software driver and i
 4. After successful installation, run the `nvidia-smi` tool and ensure the driver is deployed successfully by verifying the similar output as shown in the following example.
 
     ```bash
+    [root@ecsgpu ~]# nvidia-smi    
     Wed Aug 24 13:03:46 2022       
     +-----------------------------------------------------------------------------+
     | NVIDIA-SMI 515.65.01    Driver Version: 515.65.01    CUDA Version: 11.7     |
@@ -87,7 +88,7 @@ This article describes the steps to install the Nvidia GPU software driver and i
     
 ## Nvidia GPU Card Testing and Verification in CML
 
-1. Assuming CDP PvC Data Services with ECS platform is already installed, SSH into the ECS master node and run the following command to ensure that `ecsgpu.cdpkvm.cldr` host has `nvidia.com/gpu:` field in the node specification. `ecsgpu.cdpkvm.cldr` host is the typical ECS worker node without GPU card.
+1. Assuming the CDP PvC Data Services with ECS platform is already installed, SSH into the ECS master node and run the following command to ensure that `ecsgpu.cdpkvm.cldr` host has `nvidia.com/gpu:` field in the node specification. `ecsgpu.cdpkvm.cldr` host is the typical ECS worker node without GPU card.
 
     ```bash
     [root@ecsmaster1 ~]# kubectl describe node ecsgpu.cdpkvm.cldr | grep -A15 Capacity:
@@ -171,7 +172,7 @@ This article describes the steps to install the Nvidia GPU software driver and i
         --
     ```
 
-7. When running script that consuming the GPU card, the worker node will display the following sample output in BOLD, indicating the GPU card is being used by a particular process (in this case, the CML session pod).
+7. When running script that consuming the GPU card, the worker node will display a particular process (in this case, the CML session pod) is using the GPU card.
 
     ```bash
     [root@ecsgpu ~]# nvidia-smi
@@ -193,7 +194,7 @@ This article describes the steps to install the Nvidia GPU software driver and i
     |  GPU   GI   CI        PID   Type   Process name                  GPU Memory |
     |        ID   ID                                                   Usage      |
     |=============================================================================|
-    | ** 0   N/A  N/A     29990      C   /usr/local/bin/python3.9      39183MiB** |
+    |   0   N/A  N/A     29990      C   /usr/local/bin/python3.9       39183MiB   |
     +-----------------------------------------------------------------------------+
     ```
     
