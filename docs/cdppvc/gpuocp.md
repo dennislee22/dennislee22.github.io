@@ -97,15 +97,6 @@ This article describes the steps to install the Nvidia GPU software driver and i
 
     ```bash
     [root@ocpbastion ~]# oc new-project nvidia-test
-    Now using project "nvidia-test" on server "https://api.ocp4.cdpkvm.cldr:6443".
-
-    You can add applications to this project with the 'new-app' command. For example, try:
-
-        oc new-app rails-postgresql-example
-
-    to build a new example application in Ruby. Or use kubectl to deploy a simple Kubernetes application:
-
-    kubectl create deployment hello-node --image=k8s.gcr.io/serve_hostname
 
     [root@ocpbastion ~]# cat << EOF | oc create -f -
     > 
