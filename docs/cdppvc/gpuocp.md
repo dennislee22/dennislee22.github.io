@@ -17,7 +17,7 @@ This article describes the steps to install the Nvidia GPU software driver and i
 ---
 ## Assumption
 
-- The software version of each CDP Private Cloud Data Services components in this demo is described below.
+- The software version of each CDP Private Cloud Data Services component in this demo is described below.
 
 | Software       | Version         |
 |:-------------|:------------------|
