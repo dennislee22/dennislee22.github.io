@@ -1,9 +1,9 @@
 ---
 layout: default
-title: Deploy CDW Disk in Openshift
+title: Deploy Nvidia GPU in Openshift
 parent: "CDP PvC Openshift: Day-2"
 grand_parent: CDP Private Cloud
-nav_order: 1
+nav_order: 5
 ---
 
 # CDW Disk in Openshift
