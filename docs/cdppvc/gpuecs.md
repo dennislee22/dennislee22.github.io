@@ -9,9 +9,7 @@ nav_order: 4
 # Nvidia GPU in ECS
 {: .no_toc }
 
-This article describes the steps to install the Nvidia GPU software driver and its associated software in the CDP PvC DS with ECS platform. The described implementation steps are to be carried out prior to the ECS installation. Alternatively, the GPU card deployment can also be implemented after the ECS platform is installed. 
-
-This article also describes the steps to test the GPU card in the CML workspace.
+This article describes the steps to install the Nvidia GPU software driver and its associated software in the CDP PvC Data Services platform with ECS solution. The described implementation steps can either be carried out before or after the ECS platform installation. This article also describes the steps to test the GPU card in the CML workspace.
 
 - TOC
 {:toc}
@@ -20,13 +18,13 @@ This article also describes the steps to test the GPU card in the CML workspace.
 
 ## Install Nvidia Driver and Nvidia-container-runtime
 
-1. Based on the Nvidia GPU card specification, browse the Nvidia [site](https://www.nvidia.com/Download/index.aspx?lang=en-us) in order to check which software driver version to use. This demo uses Nvidia A100 GPU card and a check at the Nvidia site shows that version `515.65.01` is recommended as shown below.
+1. Based on the Nvidia GPU card specification, browse the Nvidia [site](https://www.nvidia.com/Download/index.aspx?lang=en-us) in order to check which software driver version to use. This demo uses Nvidia A100 GPU card and a check at the Nvidia site shows that version `515.65.01` is recommended.
 
     ![](../../assets/images/gpu/nvidiaecs1.png)
 
     ![](../../assets/images/gpu/nvidiaecs2.png)
     
-2. In the ECS host/node installed with Nvidia GPU card, install the necessary OS software packages described below and reboot the node. In this demo, the OS of the node is Centos7.9 and the hostname with GPU card installed is `ecsgpu.cdpkvm.cldr`.
+2. In the ECS host/node installed with Nvidia GPU card, install the necessary OS software packages as described below and subsequently reboot the node. In this demo, the OS of the node is Centos7.9 and the hostname with GPU card is `ecsgpu.cdpkvm.cldr`.
 
     ```bash
     # yum update -y
@@ -62,7 +60,7 @@ This article also describes the steps to test the GPU card in the CML workspace.
     ![](../../assets/images/gpu/nvidiaecs5.png)    
     
 
-4. After successful installation, run the `nvidia-smi` tool and ensure that the driver is deployed successfully by verifying the similar output as shown in the following example.
+4. After successful installation, run the `nvidia-smi` tool and ensure the driver is deployed successfully by verifying the similar output as shown in the following example.
 
     ```bash
     Wed Aug 24 13:03:46 2022       
@@ -85,7 +83,7 @@ This article also describes the steps to test the GPU card in the CML workspace.
     |=============================================================================|
     |  No running processes found                                                 |
     +-----------------------------------------------------------------------------+
-
+    ```
     
 ## Nvidia GPU Card Testing and Verification in CML
 
@@ -128,7 +126,7 @@ This article also describes the steps to test the GPU card in the CML workspace.
     ```   
 
 
-2. Assuming a CML workspace is already provisioned in the CDP PvC Data Services platform, navigate to `Site Administration` > `Runtime/Engine`. Select the number for `Maximum GPUs per Session/GPU`.     
+2. Assuming a CML workspace is already provisioned in the CDP PvC Data Services platform, navigate to `Site Administration` > `Runtime/Engine`. Select the number for `Maximum GPUs per Session/GPU`. This procedure effectively allows the CML session to consume the GPU card.   
 
     ![](../../assets/images/gpu/cmlgpu1.png)
 
@@ -149,14 +147,14 @@ This article also describes the steps to test the GPU card in the CML workspace.
 
     ![](../../assets/images/gpu/gpuecssession2.png)   
 
-5. Navigate to the CML project main page and the user resources dashboard should display the GPU card availability.
+5. Navigate to the CML project main page and a check at the user resources dashboard displays the GPU card availability.
     
     ![](../../assets/images/gpu/gpuecssession3.png)
     
     ![](../../assets/images/gpu/gpuecssession4.png)
     
 
-6. SSH into the ECS master node and run the following command and verify the node that hosting the above CML project session pod is `ecsgpu.cdpkvm.cldr`.
+6. SSH into the ECS master node and run the following command to verify the node that hosting the above CML project session pod is `ecsgpu.cdpkvm.cldr`.
 
     ```bash
     [root@ecsmaster1 ~]# oc -n workspace1-user-1 describe pod wifz6t8mvxv5ghwy | grep Node:
@@ -173,7 +171,7 @@ This article also describes the steps to test the GPU card in the CML workspace.
         --
     ```
 
-7. When running script that consuming the GPU card, the worker node will display the following example output in BOLD, indicating the GPU card is being used by a particular process.
+7. When running script that consuming the GPU card, the worker node will display the following sample output in BOLD, indicating the GPU card is being used by a particular process (in this case, the CML session pod).
 
     ```bash
     [root@ecsgpu ~]# nvidia-smi
@@ -197,7 +195,8 @@ This article also describes the steps to test the GPU card in the CML workspace.
     |=============================================================================|
     | ** 0   N/A  N/A     29990      C   /usr/local/bin/python3.9      39183MiB** |
     +-----------------------------------------------------------------------------+
-
+    ```
+    
 8. In the event the ECS platform has no available worker node with GPU card, provisioning a session with GPU will result in `Pending` state as the system is looking for a worker node with Nvidia GPU card.
     
     ![](../../assets/images/gpu/gpuecssession5.png)    
