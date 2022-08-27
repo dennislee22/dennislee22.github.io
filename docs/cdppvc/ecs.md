@@ -53,7 +53,8 @@ This article explains the necessary steps to install the ECS platform upon succe
     Name:	console-cdp.apps.ecs1.cdpkvm.cldr
     Address: 10.15.4.166
     ```
-    
+5. If Nvidia GPU card is involved, please install the Nvidia driver and its associated software as described in this [topic]({{ site.baseurl }}{% link docs/cdppvc/gpuecs.md %}).
+
 ## ECS Platform Installation
 
 1. Navigate to `Clusters` > `Add Cluster`. Select `Data Services` and click `Continue`.
