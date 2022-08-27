@@ -3,13 +3,13 @@ layout: default
 title: Deploy Nvidia GPU in Openshift
 parent: "CDP PvC Openshift: Day-2"
 grand_parent: CDP Private Cloud
-nav_order: 5
+nav_order: 2
 ---
 
 # Nvidia GPU in Openshift
 {: .no_toc }
 
-This article describes the steps to install the Nvidia GPU software driver and its associated software in the CDP PvC Data Services platform with Openshift solution. The described implementation steps is carried out after the Openshift platform installation. This article also describes the steps to test the GPU card in the CML workspace.
+This article describes the steps to install the Nvidia GPU software driver and its associated software in the CDP PvC Data Services platform with Openshift solution. The described implementation steps are carried out after the Openshift platform installation. This article also describes the steps to test the Nvidia GPU card in the CML workspace.
 
 - TOC
 {:toc}
@@ -25,7 +25,7 @@ This article describes the steps to install the Nvidia GPU software driver and i
 | Cloudera Manager   | 7.6.5  | 
 | CDP PvC Data Services  | 1.4.0   | 
 |Red Hat Openshift Container Platform (OCP)|4.8| 
-|Red Hat Openshift Container Storage  (OCS)|4.8| 
+|Red Hat Openshift Container Storage (OCS)|4.8| 
 
 ## Install NFD Operator
 
@@ -40,7 +40,7 @@ This article describes the steps to install the Nvidia GPU software driver and i
     ![](../../assets/images/gpu/nfd4.png)
 
 
-2. SSH into the Openshift bastion node and run the following command to ensure that `ocpgpu.cdpkvm.cldr` host (with GPU card installed) has `pci-10de.present=true` field in the node specification.
+2. SSH into the Openshift bastion node and run the following command to ensure that `ocpgpu.cdpkvm.cldr` host (with GPU card installed) has `pci-10de.present=true` field in the node specification. This indicates the presence of the GPU card in this particular worker node.
 
     ```bash
     [root@ocpbastion ~]# oc describe node ocpgpu.ocp4.cdpkvm.cldr | grep pci-10de.present
