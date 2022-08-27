@@ -28,14 +28,15 @@ nav_order: 2
 
 ### Software Version
  
-- The software version of the CDP Private Cloud Data Services solution components involved in this demo is stated below.
-- Obtain a valid product subscription from Cloudera. Cloudera Manager requires a valid license to install accordingly.
+- The software version of the CDP PvC DS platform components in this demo is described below.
 
 | Software       | Version         |
 |:-------------|:------------------|
 | CDP Base           | 7.1.7 `rel. May 2022`  | 
 | Cloudera Manager   | 7.5.5 `rel. May 2022`  | 
 | CDP PvC Data Services  | 1.3.4 `rel. May 2022`  | 
+
+- Obtain a valid product subscription from Cloudera. Cloudera Manager requires a valid license to install accordingly.
 
 - The supported Openshift version is explained in this [link](https://docs.cloudera.com/cdp-private-cloud-data-services/1.3.4/installation/topics/cdppvc-installation-openshift.html). This demo uses Openshift 4.7.
 
