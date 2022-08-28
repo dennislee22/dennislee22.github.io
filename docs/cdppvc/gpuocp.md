@@ -40,7 +40,7 @@ This article describes the steps to install the Nvidia GPU software driver and i
     ![](../../assets/images/gpu/nfd4.png)
 
 
-2. SSH into the Openshift bastion node and run the following command to ensure that `ocpgpu.cdpkvm.cldr` host (with GPU card installed) has `pci-10de.present=true` field in the node specification. This indicates the presence of the GPU card in this particular worker node.
+2. SSH into the Openshift bastion node and run the following command to ensure that `ocpgpu.cdpkvm.cldr` host (with GPU card installed) has `pci-10de.present=true` field in the node specification. This indicates the presence of Nvidia GPU card in this particular worker node.
 
     ```bash
     [root@ocpbastion ~]# oc describe node ocpgpu.ocp4.cdpkvm.cldr | grep pci-10de.present
@@ -169,7 +169,7 @@ This article describes the steps to install the Nvidia GPU software driver and i
 
     ![](../../assets/images/gpu/gpuocpsession1.png)
     
-3. Create a new Python file and run the following script. Also, open the terminal session and run `nvidia-smi` tool. Note that the output shows the Nvidia GPU card details.
+3. Create a new Python file and run the following script. Also, open the terminal session and run `nvidia-smi` tool. The output shows the Nvidia GPU card details.
 
     ```yaml
     !pip3 install torch
@@ -196,7 +196,7 @@ This article describes the steps to install the Nvidia GPU software driver and i
     Node:         ocpgpu.ocp4.cdpkvm.cldr/10.15.4.185
     ```
 
-6. When running script that consuming the GPU card, the worker node will show that a particular process (in this case, the CML session pod) is using the GPU card.
+6. When a process is consuming the Nvidia GPU, the output of `nvidia-smi` tool will show the PID of that process (in this case, the CML session pod).
 
     ```bash
     [root@ocpbastion ~]# oc -n nvidia-gpu-operator exec -it nvidia-driver-daemonset-48.84.202208152344-0-r8rpv -- nvidia-smi
@@ -224,7 +224,7 @@ This article describes the steps to install the Nvidia GPU software driver and i
     ```
 
 ## Taint the Openshift Worker Node with Nvidia GPU Card
-1. Reserve the worker node (with Nvidia GPU Card installed) for any CML session that requires GPU card by running the following command. This will disallow all other non-GPU related workloads to be scheduled on this particular node.
+1. Reserve the worker node (with Nvidia GPU Card installed) for any CML session that requires GPU card by running the following command. This will disallow all other non-GPU related workloads to be scheduled in this particular node.
 
     ```bash    
     [root@ocpbastion ~]# oc adm taint node ocpgpu.ocp4.cdpkvm.cldr nvidia.com/gpu=true:NoSchedule
