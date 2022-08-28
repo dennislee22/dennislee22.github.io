@@ -93,7 +93,7 @@ This article describes the steps to install the Nvidia GPU software driver and i
     daemonset.apps/nvidia-operator-validator                      1         1         1       1            1           nvidia.com/gpu.deploy.operator-validator=true                                                                        6m47s
     ```
 
-3. Verify that the Nvidia GPU card can be consumed by the CUDA pod.
+3. Verify that the Nvidia GPU card can be consumed by a newly provisioned CUDA pod.
 
     ```bash
     [root@ocpbastion ~]# oc new-project nvidia-test
@@ -224,7 +224,7 @@ This article describes the steps to install the Nvidia GPU software driver and i
     ```
 
 ## Taint the Openshift Worker Node with Nvidia GPU Card
-1. Reserve the worker node (with Nvidia GPU Card installed) for any CML session that requires GPU card by running the following command. This will disallow all other non-GPU related workloads to be provisioned on this particular node.
+1. Reserve the worker node (with Nvidia GPU Card installed) for any CML session that requires GPU card by running the following command. This will disallow all other non-GPU related workloads to be scheduled on this particular node.
 
     ```bash    
     [root@ocpbastion ~]# oc adm taint node ocpgpu.ocp4.cdpkvm.cldr nvidia.com/gpu=true:NoSchedule
