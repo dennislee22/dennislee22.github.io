@@ -48,10 +48,6 @@ This article describes the steps to install the Nvidia GPU software driver and i
     # curl -fSsl -O $BASE_URL/$DRIVER_VERSION/NVIDIA-Linux-x86_64-$DRIVER_VERSION.run
     # sh NVIDIA-Linux-x86_64-$DRIVER_VERSION.run
     ```
-
-    ```bash
-    # sh NVIDIA-Linux-x86_64-$DRIVER_VERSION.run
-    ```
     
     ![](../../assets/images/gpu/nvidiaecs3.png)  
     
@@ -88,7 +84,7 @@ This article describes the steps to install the Nvidia GPU software driver and i
     
 ## Nvidia GPU Card Testing and Verification in CML
 
-1. Assuming the CDP PvC Data Services with ECS platform is already installed, SSH into the ECS master node and run the following command to ensure that `ecsgpu.cdpkvm.cldr` host has `nvidia.com/gpu:` field in the node specification. `ecsgpu.cdpkvm.cldr` host is the typical ECS worker node without GPU card.
+1. Assuming the CDP PvC Data Services with ECS platform is already installed, SSH into the ECS master node and run the following command to ensure that `ecsgpu.cdpkvm.cldr` host has `nvidia.com/gpu:` field in the node specification. Host `ecsgpu.cdpkvm.cldr` is a typical ECS worker node without Nvidia GPU card installed.
 
     ```bash
     [root@ecsmaster1 ~]# kubectl describe node ecsgpu.cdpkvm.cldr | grep -A15 Capacity:
@@ -172,7 +168,7 @@ This article describes the steps to install the Nvidia GPU software driver and i
         --
     ```
 
-7. When running script that consuming the GPU card, the worker node will show that a particular process (in this case, the CML session pod) is using the GPU card.
+7. When a process is consuming the Nvidia GPU, the output of `nvidia-smi` tool will show the PID of that process (in this case, the CML session pod).
 
     ```bash
     [root@ecsgpu ~]# nvidia-smi
@@ -198,6 +194,6 @@ This article describes the steps to install the Nvidia GPU software driver and i
     +-----------------------------------------------------------------------------+
     ```
     
-8. In the event the ECS platform has no available worker node with GPU card, provisioning a session with GPU will result in `Pending` state as the system is looking for a worker node with Nvidia GPU card.
+8. In the event the ECS platform has no available worker node with GPU card, provisioning a session with GPU will result in `Pending` state as the system is looking for a worker node installed with at least one Nvidia GPU card.
     
     ![](../../assets/images/gpu/gpuecssession5.png)    
