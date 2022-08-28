@@ -24,7 +24,7 @@ This article describes the steps to install the Nvidia GPU software driver and i
 
     ![](../../assets/images/gpu/nvidiaecs2.png)
     
-2. In the ECS host/node installed with Nvidia GPU card, install the necessary OS software packages as described below and subsequently reboot the node. In this demo, the OS of the node is Centos7.9 and the hostname with GPU card is `ecsgpu.cdpkvm.cldr`.
+2. In the ECS host/node installed with Nvidia GPU card, install the necessary OS software packages as described below and subsequently reboot the node. In this demo, the OS of the node is Centos7.9 and the hostname of the node with GPU card installed is `ecsgpu.cdpkvm.cldr`.
 
     ```bash
     # yum update -y
