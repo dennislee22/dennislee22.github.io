@@ -2508,3 +2508,5 @@ Fri Aug 26 07:42:07 2022
 
 [root@ocpbastion ~]# oc adm taint node ocpgpu.ocp4.cdpkvm.cldr nvidia.com/gpu=true:NoSchedule
 node/ocpgpu.ocp4.cdpkvm.cldr tainted
+
+
