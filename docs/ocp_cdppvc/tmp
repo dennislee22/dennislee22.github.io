@@ -2510,3 +2510,47 @@ Fri Aug 26 07:42:07 2022
    node/ocpgpu.ocp4.cdpkvm.cldr tainted
 
 
+
+NO DATA SERVICE:
+dlee22:~ dennislee$ kubectl get nodes
+NAME                     STATUS   ROLES                       AGE    VERSION
+ecsgpu.cdpkvm.cldr       Ready    <none>                      7d4h   v1.21.11+rke2r1
+ecsmaster1.cdpkvm.cldr   Ready    control-plane,etcd,master   7d4h   v1.21.11+rke2r1
+ecsworker1.cdpkvm.cldr   Ready    <none>                      7d4h   v1.21.11+rke2r1
+ecsworker2.cdpkvm.cldr   Ready    <none>                      7d4h   v1.21.11+rke2r1
+dlee22:~ dennislee$ kube-capacity --util
+NODE                     CPU REQUESTS   CPU LIMITS     CPU UTIL      MEMORY REQUESTS        MEMORY LIMITS          MEMORY UTIL
+*                        28952m (36%)   10020m (12%)   9171m (11%)   26726Mi (2%)           27216Mi (2%)           57298Mi (5%)
+ecsgpu.cdpkvm.cldr       4940m (30%)    1000m (6%)     1358m (8%)    532Mi (0%)             1024Mi (0%)            4554Mi (1%)
+ecsmaster1.cdpkvm.cldr   12681m (39%)   6920m (21%)    4838m (15%)   10056823296000m (3%)   23719520256000m (8%)   15934Mi (6%)
+ecsworker1.cdpkvm.cldr   6951m (43%)    1100m (6%)     2513m (15%)   16359Mi (6%)           1152Mi (0%)            31062Mi (12%)
+ecsworker2.cdpkvm.cldr   4380m (27%)    1000m (6%)     464m (2%)     256000000000m (0%)     2536000000000m (0%)    5748Mi (2%)
+dlee22:~ dennislee$ kube-capacity --available
+NODE                     CPU REQUESTS    CPU LIMITS      MEMORY REQUESTS                     MEMORY LIMITS
+*                        51048m/80000m   69980m/80000m   1004424Mi/1031150Mi                 1003934Mi/1031150Mi
+ecsgpu.cdpkvm.cldr       11060m/16000m   15000m/16000m   257257Mi/257789Mi                   256765Mi/257789Mi
+ecsmaster1.cdpkvm.cldr   19319m/32000m   25080m/32000m   260250967552000m/270307790848000m   246588270592000m/270307790848000m
+ecsworker1.cdpkvm.cldr   9049m/16000m    14900m/16000m   241429Mi/257788Mi                   256636Mi/257788Mi
+ecsworker2.cdpkvm.cldr   11620m/16000m   15000m/16000m   270054268928000m/270310268928000m   267774268928000m/270310268928000m
+
+1 CML workspace:
+dlee22:~ dennislee$ kube-capacity --util
+NODE                     CPU REQUESTS   CPU LIMITS     CPU UTIL       MEMORY REQUESTS        MEMORY LIMITS          MEMORY UTIL
+*                        32807m (41%)   12720m (15%)   14756m (18%)   40116Mi (3%)           56512Mi (5%)           65410Mi (6%)
+ecsgpu.cdpkvm.cldr       5140m (32%)    1000m (6%)     2213m (13%)    732Mi (0%)             1524Mi (0%)            4973Mi (1%)
+ecsmaster1.cdpkvm.cldr   12681m (39%)   6920m (21%)    4972m (15%)    10056823296000m (3%)   23719520256000m (8%)   16210Mi (6%)
+ecsworker1.cdpkvm.cldr   8151m (50%)    1500m (9%)     2941m (18%)    22779Mi (8%)           10244Mi (3%)           31977Mi (12%)
+ecsworker2.cdpkvm.cldr   6835m (42%)    3300m (20%)    4631m (28%)    7354859520000m (2%)    23197141504000m (8%)   12251Mi (4%)
+dlee22:~ dennislee$ kube-capacity --available
+NODE                     CPU REQUESTS    CPU LIMITS      MEMORY REQUESTS                     MEMORY LIMITS
+*                        47193m/80000m   67280m/80000m   991034Mi/1031150Mi                  974638Mi/1031150Mi
+ecsgpu.cdpkvm.cldr       10860m/16000m   15000m/16000m   257057Mi/257789Mi                   256265Mi/257789Mi
+ecsmaster1.cdpkvm.cldr   19319m/32000m   25080m/32000m   260250967552000m/270307790848000m   246588270592000m/270307790848000m
+ecsworker1.cdpkvm.cldr   7849m/16000m    14500m/16000m   235009Mi/257788Mi                   247544Mi/257788Mi
+ecsworker2.cdpkvm.cldr   9165m/16000m    12700m/16000m   262955409408000m/270310268928000m   247113127424000m/270310268928000m
+
+5140-4940=200
+8151-6951=1200
+6835-4380=2455
+
+
