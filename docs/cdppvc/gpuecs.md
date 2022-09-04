@@ -9,7 +9,7 @@ nav_order: 4
 # Nvidia GPU in ECS
 {: .no_toc }
 
-This article describes the steps to install the Nvidia GPU software driver and its associated software in the CDP PvC Data Services platform with ECS solution. These implementation steps can either be carried out before or after the ECS platform installation. This article also describes the steps to test the GPU card in the CML workspace.
+This article describes the steps to install the Nvidia GPU software driver and its associated software in the CDP PvC Data Services platform with ECS solution. These implementation steps must be carried out before the node (with Nvidia GPU card) is added into the ECS platform/cluster. This article also describes the steps to test the GPU card in the CML workspace.
 
 - TOC
 {:toc}
