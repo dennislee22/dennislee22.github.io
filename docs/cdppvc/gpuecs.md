@@ -81,7 +81,9 @@ This article describes the steps to install the Nvidia GPU software driver and i
     |  No running processes found                                                 |
     +-----------------------------------------------------------------------------+
     ```
-    
+
+5. Reboot the host `ecsgpu.cdpkvm.cldr`.
+
 ## Nvidia GPU Card Testing and Verification in CML
 
 1. Assuming the CDP PvC Data Services with ECS platform is already installed, SSH into the ECS master node and run the following command to ensure that `ecsgpu.cdpkvm.cldr` host has `nvidia.com/gpu:` field in the node specification. Host `ecsgpu.cdpkvm.cldr` is a typical ECS worker node without Nvidia GPU card installed.
