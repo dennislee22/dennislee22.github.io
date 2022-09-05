@@ -9,7 +9,7 @@ nav_order: 4
 # Nvidia GPU in ECS
 {: .no_toc }
 
-This article describes the steps to install the Nvidia GPU software driver and its associated software in the CDP PvC Data Services platform with ECS solution. These implementation steps must be carried out before the node (with Nvidia GPU card) is added into the ECS platform/cluster. This article also describes the steps to test the GPU card in the CML workspace.
+This article describes the steps to install the Nvidia GPU software driver and its associated software in the CDP PvC Data Services platform with ECS solution. These implementation steps must be carried out after the node (with Nvidia GPU card) is added into the ECS platform/cluster. This article also describes the steps to test the GPU card in the CML workspace.
 
 - TOC
 {:toc}
@@ -23,8 +23,15 @@ This article describes the steps to install the Nvidia GPU software driver and i
     ![](../../assets/images/gpu/nvidiaecs1.png)
 
     ![](../../assets/images/gpu/nvidiaecs2.png)
-    
-2. In the ECS host/node installed with Nvidia GPU card, install the necessary OS software packages as described below and subsequently reboot the node. In this demo, the OS of the node is Centos7.9 and the hostname of the node with GPU card installed is `ecsgpu.cdpkvm.cldr`.
+
+2. Cordon the GPU worker node.
+
+    ```bash
+    # kubectl cordon ecsgpu.cdpkvm.cldr 
+    node/ecsgpu.cdpkvm.cldr cordoned
+    ```
+
+3. In the ECS host/node installed with Nvidia GPU card, install the necessary OS software packages as described below and subsequently reboot the node. In this demo, the OS of the node is Centos7.9 and the hostname of the node with GPU card installed is `ecsgpu.cdpkvm.cldr`.
 
     ```bash
     # yum update -y
@@ -40,7 +47,7 @@ This article describes the steps to install the Nvidia GPU software driver and i
     # reboot
     ```
 
-3. Subsequently, install the Nvidia driver and `nvidia-container-runtime` software by executing the following commands.
+4. Subsequently, install the Nvidia driver and `nvidia-container-runtime` software by executing the following commands.
 
     ```bash
     # BASE_URL=https://us.download.nvidia.com/tesla
@@ -56,7 +63,7 @@ This article describes the steps to install the Nvidia GPU software driver and i
     ![](../../assets/images/gpu/nvidiaecs5.png)    
     
 
-4. After successful installation, run the `nvidia-smi` tool and ensure the driver is deployed successfully by verifying the similar output as shown in the following example.
+5. After successful installation, run the `nvidia-smi` tool and ensure the driver is deployed successfully by verifying the similar output as shown in the following example.
 
     ```bash
     [root@ecsgpu ~]# nvidia-smi    
@@ -82,8 +89,23 @@ This article describes the steps to install the Nvidia GPU software driver and i
     +-----------------------------------------------------------------------------+
     ```
 
-5. Reboot the host `ecsgpu.cdpkvm.cldr`.
+6. Install the `nvidia-container-runtime` software package. Reboot the server.
 
+    ```bash
+    # curl -s -L https://nvidia.github.io/nvidia-container-runtime/$(. /etc/os-release;echo $ID$VERSION_ID)/nvidia-container-runtime.repo |  sudo tee /etc/yum.repos.d/nvidia-container-runtime.repo
+    
+    # yum -y install nvidia-container-runtime
+    
+    # reboot 
+    ```
+
+7. Uncordon the GPU worker node. 
+
+    ```bash
+    # kubectl uncordon ecsgpu.cdpkvm.cldr 
+    node/ecsgpu.cdpkvm.cldr cordoned
+    ```
+    
 ## Nvidia GPU Card Testing and Verification in CML
 
 1. Assuming the CDP PvC Data Services with ECS platform is already installed, SSH into the ECS master node and run the following command to ensure that `ecsgpu.cdpkvm.cldr` host has `nvidia.com/gpu:` field in the node specification. Host `ecsgpu.cdpkvm.cldr` is a typical ECS worker node without Nvidia GPU card installed.
