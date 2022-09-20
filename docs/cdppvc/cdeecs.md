@@ -47,6 +47,25 @@ This article explains the steps to deploy the CDE service on the ECS platform af
     
     ![](../../assets/images/cde/cde5.png)
   
+8. Register the user credential in the form of K8s secret object into the CDE virtual cluster namespace.
+
+   ```bash
+   # ./cdp-cde-utils.sh init-user-in-virtual-cluster -h p2dmnmzb.cde-4c9twhtd.apps.ecs1.cdpkvm.cldr -u ldapuser2 -p ldapuser2.principal -k ldapuser2.keytab
+   ```
+   
+9. You may also run the CDE job using `cde` CLI. The `cde` tool can be downloaded via the CDE virtual cluster landing page. Filename `/root/credentials` stores the password of the user.
+
+   ```bash
+   # cat .cde/config.yaml
+   user: ldapuser2
+   auth-pass-file: /root/credentials
+   vcluster-endpoint: https://p2dmnmzb.cde-4c9twhtd.apps.ecs1.cdpkvm.cldr/dex/api/v1
+   tls-insecure: true
+
+    # ./cde job create --type spark --application-file spark_wordcount.py --mount-1-resource resource1 --driver-cores 1 --driver-memory 4g --num-executors 0 --name wordcountjob --log-level DEBUG
+    
+    # ./cde job run --name wordcountjob
+   ```
 
 ## CDE Artifacts inside ECS Platform
 
