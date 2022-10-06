@@ -1,5 +1,5 @@
 
 
-## Just a Technical Blog
+## Data Blog
 
 
