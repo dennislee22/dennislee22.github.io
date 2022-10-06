@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Multithreading in Python
+title: Threading in Python
 parent: Machine Learning
 nav_order: 1
 ---
@@ -11,7 +11,7 @@ nav_order: 1
 Python has become the de-facto language framework for writing machine learning code due to its rich modules ecosystem. I like Python because it's human readable and offers wide range of easy-to-use libraries especially in the data science realm. This blog is articulated to explore ways to enhance the Python code performance in order to deliver quicker result for data scientists. 
 By default, Python uses single CPU thread to execute the code. This is largely due to GIL (Global Interpreter Lock) as single thread is safe to prevent corrupted output as a result of race condition. While thread-safe is good, it does come with a price - the allocated/available CPU resource is underutilized and it takes longer time to run the code. Today, there are ways to improve the performance with the likes of using multithreading and multiprocessing modules but this must be done carefully because there's always a reason for GIL to exist. Let's run some experiments to find out more.
 
-The following experiments are carried out using Cloudera Machine Learning (CML) on Openshift with the hardware specification as shown below.
+The following experiments are carried out using Cloudera Machine Learning (CML) on Openshift 4.8 with the hardware specification as shown below.
 
 | CPU          | Intel(R) Xeon(R) Gold 5220R CPU @ 2.20GHz | 
 | Memory  | DIMM DDR4 Synchronous Registered (Buffered) 2933 MHz (0.3 ns) | 
