@@ -1,11 +1,11 @@
 ---
 layout: default
-title: Data Warehousing
-nav_order: 4
+title: Machine Learning
+nav_order: 5
 has_children: true
-permalink: docs/cdw
+permalink: docs/cml
 ---
 
-![](../../assets/images/cdw/cdwlogo.png)
+![](../../assets/images/cml/cml.png)
 
 {: .no_toc }
