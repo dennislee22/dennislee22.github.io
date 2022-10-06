@@ -1,87 +1,188 @@
 ---
 layout: default
-title: Multithreading
+title: Multithreading in Python
 parent: Machine Learning
 nav_order: 1
 ---
 
-# Multithreading in CML
+# Multithreading in Python
 {: .no_toc }
 
-There is a variety of file format choices in the Hadoop ecosystem. The popular file formats are ORC, Parquet, CSV and Avro. Parquet and ORC are both columnar-storage type whereas ORC uses the row-based format.
+By default, Python uses single CPU thread to execute the code. This is largely due to GIL (Global Interpreter Lock) as single thread is safe to prevent corrupted output as a result of race condition. While thread-safe is good, it does come with a price - the allocated/available CPU resource is underutilized and it takes longer time to run the code. There are ways to improve the performance with the likes of using multithreading and multiprocessing modules but this must be done carefully because there's always a reason for GIL to exist. Let's run some experiments to find out more.
 
-This article describes the steps to test the performance of these file formats in both `Hive LLAP` and `Impala` query engine using Cloudera Data Warehouse (CDW) with one executor engine pod in the CDP Private Cloud platform.
-
-- TOC
-{:toc}
-
----
-## Prerequisites
-
-- The performance benchmarking tests are carried out using CDW on the CDP Private Cloud (Openshift) platform with the following hardware specification.
+The following experiments are carried out using Cloudera Machine Learning (CML) on Openshift with the following hardware specification.
 
 | CPU          | Intel(R) Xeon(R) Gold 5220R CPU @ 2.20GHz | 
 | Memory  | DIMM DDR4 Synchronous Registered (Buffered) 2933 MHz (0.3 ns) | 
 | Disk | SSD P4610 1.6TB SFF    | 
 
+---
+## Single Thread
 
-- A random sample data of 300 million CSV rows is produced using a python script with the [faker](https://faker.readthedocs.io/en/master/) generator. The schema of each row is sequenced as `Lastname, Firstname, MSISDN, Date of Birth, Postcode, City` as illustrated below.
+Run the following experiment and explore the outcome when a typical Python code executes with a single process thread.
 
-    ```yaml
-    Maria,Harmon,32378521,1998-11-14,17,30766,Durhammouth
-    Anne,Adams,29481072,1982-10-28,36,70830,Deannabury
-    Deborah,Sanders,21125797,2002-04-07,56,63993,New Ronaldland
-    ```
-
-- Copy the file to the HDFS cluster.
+1. Create a CML session with 1 CPU/2 GiB memory profile. Open the `Terminal Access` and run the top command to check the total threads being used by the process ID of the session pod. In this example, the process ID is 94.
 
     ```bash
-    # hdfs dfs -put 300mil.csv /tmp/sampledata/
-    
-    # hdfs dfs -du -h /tmp/sampledata/
-    16.0 G  47.9 G  /tmp/sampledata/300mil.csv    
+    $ top -p 94 -H
     ```
 
-- In CDW, create a `hive` and an `impala` virtual warehouse with only 1 executor each.
-
-    ![](../../assets/images/cdw/cdwfs1.png)
-
-## Testing Procedure
-
-1. Access `Hue` tool of the `hive` virtual warehouse. Create database `db1`.
-
-    ![](../../assets/images/cdw/cdwfs2.png)    
+    ![](../../assets/images/cml/singlethread1.png)    
  
-2. Use the SQL Editor to create an external table in the database `db1`.
- 
-    ![](../../assets/images/cdw/cdwfs3.png)       
-
-3. Execute the following command and take note of the speed result. Repeat running the same command and jot down the result again.
-    
-    ![](../../assets/images/cdw/cdwfs4.png)
-    
-4. Create a Hive managed table using the ORC file format based on the schema as shown below. The data type of the specific file format can obtained [here](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/impala-reference/topics/impala-file-formats.html).
-    
-    ![](../../assets/images/cdw/cdwfs5.png)
-
-5. Insert the data from the external `tmp` table into this newly created ORC-based table. Take note of the speed to execute this task completely.
-
-    ![](../../assets/images/cdw/cdwfs6.png)
-    
-6. Check the result of the loaded data.    
-
-    ![](../../assets/images/cdw/cdwfs7.png)
-    
-
-7. Run the following SQL queries twice and take note of the speed result.
+2. Create a simple input file with the following content.
 
     ```yaml
-    SELECT COUNT (*) FROM db1.orc;   
+    line1
+    line2
+    line3
+    line4
+    line5
+    line6
+    line7
+    line8
+    line9
+    line10
+    line11
+    line12
+    line13
+    line14
+    line15
+    line16
+    line17
+    line18
+    line19
+    line20
+    ```
+
+2. Run this Python script.
+ 
+    ![](../../assets/images/cml/singlethread2.png)
+
+3. Run the following SQL queries twice and take note of the speed result.
+
+    ```bash
+    $ more output
+    current threads:<_MainThread(MainThread, started 140555361314624)>
+    current pid:94
+    total threads:30
+    CPU number:6
+    write line1
+
+    current threads:<_MainThread(MainThread, started 140555361314624)>
+    current pid:94
+    total threads:30
+    CPU number:6
+    write line2
+
+    current threads:<_MainThread(MainThread, started 140555361314624)>
+    current pid:94
+    total threads:30
+    CPU number:6
+    write line3
+
+    current threads:<_MainThread(MainThread, started 140555361314624)>
+    current pid:94
+    total threads:30
+    CPU number:6
+    write line4
+
+    current threads:<_MainThread(MainThread, started 140555361314624)>
+    current pid:94
+    total threads:30
+    CPU number:6
+    write line5
+
+    current threads:<_MainThread(MainThread, started 140555361314624)>
+    current pid:94
+    total threads:30
+    CPU number:6
+    write line6
+
+    current threads:<_MainThread(MainThread, started 140555361314624)>
+    current pid:94
+    total threads:30
+    CPU number:6
+    write line7
+
+    current threads:<_MainThread(MainThread, started 140555361314624)>
+    current pid:94
+    total threads:30
+    CPU number:6
+    write line8
+
+    current threads:<_MainThread(MainThread, started 140555361314624)>
+    current pid:94
+    total threads:30
+    CPU number:6
+    write line9
+
+    current threads:<_MainThread(MainThread, started 140555361314624)>
+    current pid:94
+    total threads:30
+    CPU number:6
+    write line10
+
+    current threads:<_MainThread(MainThread, started 140555361314624)>
+    current pid:94
+    total threads:30
+    CPU number:6
+    write line11
+
+    current threads:<_MainThread(MainThread, started 140555361314624)>
+    current pid:94
+    total threads:30
+    CPU number:6
+    write line12
+
+    current threads:<_MainThread(MainThread, started 140555361314624)>
+    current pid:94
+    total threads:30
+    CPU number:6
+    write line13
+
+    current threads:<_MainThread(MainThread, started 140555361314624)>
+    current pid:94
+    total threads:30
+    CPU number:6
+    write line14
+
+    current threads:<_MainThread(MainThread, started 140555361314624)>
+    current pid:94
+    total threads:30
+    CPU number:6
+    write line15
+
+    current threads:<_MainThread(MainThread, started 140555361314624)>
+    current pid:94
+    total threads:30
+    CPU number:6
+    write line16
+
+    current threads:<_MainThread(MainThread, started 140555361314624)>
+    current pid:94
+    total threads:30
+    CPU number:6
+    write line17
+
+    current threads:<_MainThread(MainThread, started 140555361314624)>
+    current pid:94
+    total threads:30
+    CPU number:6
+    write line18
+
+    current threads:<_MainThread(MainThread, started 140555361314624)>
+    current pid:94
+    total threads:30
+    CPU number:6
+    write line19
+
+    current threads:<_MainThread(MainThread, started 140555361314624)>
+    current pid:94
+    total threads:30
+    CPU number:6
+    write line20 
     ```    
     
-    ```yaml
-    SELECT AVG(age) FROM db1.orc where lastname = 'Davis' and age > 30 and age < 40;
-    ``` 
     
 8. Repeat step 4 for file format Parquet by creating a table with the following schema.
 
