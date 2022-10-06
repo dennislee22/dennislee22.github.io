@@ -16,5 +16,5 @@ permalink: /
 
 [Data Warehousing]({{ site.baseurl }}{% link docs/cdw/cdw.md %}){: .btn .btn-purple .fs-5 .mb-4 .mb-md-0 .mr-2 }
 
-
+[Machine Learning]({{ site.baseurl }}{% link docs/cml/cml.md %}){: .btn .btn-purple .fs-5 .mb-4 .mb-md-0 .mr-2 }
 
