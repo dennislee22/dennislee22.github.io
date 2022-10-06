@@ -289,7 +289,7 @@ Let's shift gear by executing the code using Threading Module in Python.
     Totals Execution Time:50.41 seconds.
     ```
 
-# Single vs Multi Threading in Python
+# concurrent.futures.ThreadPoolExecutor in Python
 
 
 Now let's use concurrent.futures.ThreadPoolExecutor module to run the code with the same objective which is writing each line number to the `output` file sequentially.
