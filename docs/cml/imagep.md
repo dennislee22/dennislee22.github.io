@@ -62,7 +62,7 @@ print("Values of original image:\n",numpyraw[0:1,0:3])
 
 
     
-![png](output_1_1.png)
+![](../../assets/images/cml/output_1_1.png)
     
 
 
@@ -90,7 +90,7 @@ plt.imshow(numpyraw)
 
 
     
-![png](output_2_2.png)
+![](../../assets/images/cml/output_2_2.png)
     
 
 
@@ -129,7 +129,7 @@ print("Time Taken:{}".format(end - start))
 
 
     
-![png](output_3_1.png)
+![](../../assets/images/cml/output_3_1.png)
     
 
 
@@ -165,7 +165,7 @@ print("Time Taken:{}".format(end - start))
 
 
     
-![png](output_4_1.png)
+![](../../assets/images/cml/output_4_1.png)
     
 
 
@@ -194,7 +194,7 @@ print("Time Taken:{}".format(end - start))
 
 
     
-![png](output_5_1.png)
+![](../../assets/images/cml/output_5_1.png)
     
 
 
@@ -222,7 +222,7 @@ print("Image mode:", img.mode)
 
 
     
-![png](output_6_1.png)
+![](../../assets/images/cml/output_6_1.png)
     
 
 
