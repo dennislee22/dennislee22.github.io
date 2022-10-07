@@ -46,6 +46,7 @@ img = Image.open('me.png')
 ori_img_array = asarray(img)
 ```
 
+2. Display image details.
 
 ```python
 #Show image details
@@ -67,14 +68,11 @@ print("Values of original image:\n",numpyraw[0:1,0:3])
      [[[0 0 0 0]
       [0 0 0 0]
       [0 0 0 0]]]
-
-
-
     
 ![](../../assets/images/cml/output_1_1.png)
     
 
-
+3. Show image details.
 
 ```python
 #Show image using numpy integers
@@ -83,26 +81,16 @@ numpyraw = np.load('bbb.npy')
 print("Some contents of numpy file:\n",numpyraw[0:1,0:3])
 plt.imshow(numpyraw)
 ```
-
     Some contents of numpy file:
      [[[0 0 0 0]
       [0 0 0 0]
       [0 0 0 0]]]
-
-
-
-
-
     <matplotlib.image.AxesImage at 0x7ff82611d4f0>
-
-
-
-
     
 ![](../../assets/images/cml/output_2_2.png)
     
 
-
+4. Explore the time taken to change the background colour using `putpixel()` function.
 
 ```python
 #Replace colour with specific pixel number using putpixel() fn
@@ -134,14 +122,11 @@ print("Time Taken:{}".format(end - start))
       [  5   3 192 255]
       [  5   3 192 255]]]
     Time Taken:1.7054669857025146
-
-
-
     
 ![](../../assets/images/cml/output_3_1.png)
     
 
-
+4. Explore the time taken to change the background colour using the typical loop command.
 
 ```python
 #Replace colour with specific numpy array
@@ -170,14 +155,11 @@ print("Time Taken:{}".format(end - start))
       [  5   3 192 255]
       [  5   3 192 255]]]
     Time Taken:8.568198680877686
-
-
-
     
 ![](../../assets/images/cml/output_4_1.png)
     
 
-
+4. Explore the time taken to change the background colour using openCV module.
 
 ```python
 # Use cv2 to convert background
@@ -197,48 +179,13 @@ plt.imshow(masked)
 end = time.time()
 print("Time Taken:{}".format(end - start))
 ```
-
     Time Taken:0.11178255081176758
 
-
-
-    
 ![](../../assets/images/cml/output_5_1.png)
     
 
-
-
-```python
-#Increase resolution of the image
-
-highres1 = cv2.pyrUp(ori_img_array)
-highres2 = cv2.pyrUp(highres1)
-highres3 = cv2.pyrUp(highres2)
-
-plt.imshow(highres3)
-Image.fromarray(highres3).save('me2.png')
-img = Image.open('me2.png')
-new_img_array = asarray(img)
-print("Source Image format:", img.format)
-print("Image size:", img.size)
-print("Image mode:", img.mode)
-```
-
-    Source Image format: PNG
-    Image size: (7984, 7984)
-    Image mode: RGBA
-
-
-
-    
-![](../../assets/images/cml/output_6_1.png)
-    
-
-
-
-```python
-
-```
+Conclusion: 
+Different techniques take varied processing time and utilize CPU resource differently to produce the same output. While a typical Python code is executed using single thread process, certain openCV module such as Canny triggers multiple threads automatically (without specifying in the code) to manipulate the image. As a result, this process becomes "noisy neighbour" on the multi-tenant Kubernetes platform unless CPU limit is applied restrict the CPU usage.
 
 ---
 
