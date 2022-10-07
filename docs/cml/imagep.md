@@ -10,7 +10,7 @@ nav_order: 3
 
 Image is made of pixels. Thanks to the extensive Python modules such as numpy and openCV, image can be converted into numbers, manipulated and subsequently reproduced into a different outcome. This blogpost explores the processing time taken to produce the same outcome upon using different techniques.
 
-The experiments are carried out using Cloudera Machine Learning (CML) on Kubernetes platform powered by Openshift 4.8 with the hardware specification as described below. CML is embedded with `workbench` and `Jupyterlab` notebook IDE for data scientist to do coding, EDA, etc. 
+The experiments are carried out using Cloudera Machine Learning (CML) on Kubernetes platform powered by Openshift 4.8 with the hardware specification as described below. CML is embedded with `workbench` and `Jupyterlab` notebook IDE for data scientist to do coding, EDA, etc. The following experiments are carried out using the Jupyterlab notebook. 
 
 | CPU          | Intel(R) Xeon(R) Gold 5220R CPU @ 2.20GHz | 
 | Memory  | DIMM DDR4 Synchronous Registered (Buffered) 2933 MHz (0.3 ns) | 
@@ -22,9 +22,9 @@ The experiments are carried out using Cloudera Machine Learning (CML) on Kuberne
 
 ---
 
-The following experiments are carried out using the Jupyterlab notebook. Here's the [link](https://github.com/dennislee22/machineLearning/blob/master/img_processing.ipynb) to download the complete notebook.
+Here's the [link](https://github.com/dennislee22/machineLearning/blob/master/img_processing.ipynb) to download the complete notebook.
 
-1. Declare the variables.
+- Declare the variables.
 
 ```python
 #Variables Declaration
@@ -46,7 +46,7 @@ img = Image.open('me.png')
 ori_img_array = asarray(img)
 ```
 
-2. Display image details.
+- Display image details.
 
 ```python
 #Show image details
@@ -72,7 +72,7 @@ print("Values of original image:\n",numpyraw[0:1,0:3])
 ![](../../assets/images/cml/output_1_1.png)
     
 
-3. Show image details.
+- Show image details.
 
 ```python
 #Show image using numpy integers
@@ -90,7 +90,7 @@ plt.imshow(numpyraw)
 ![](../../assets/images/cml/output_2_2.png)
     
 
-4. Explore the time taken to change the background colour using `putpixel()` function.
+- Explore the time taken to change the background colour using `putpixel()` function.
 
 ```python
 #Replace colour with specific pixel number using putpixel() fn
@@ -126,7 +126,7 @@ print("Time Taken:{}".format(end - start))
 ![](../../assets/images/cml/output_3_1.png)
     
 
-4. Explore the time taken to change the background colour using the typical loop command.
+- Explore the time taken to change the background colour using the typical loop command.
 
 ```python
 #Replace colour with specific numpy array
@@ -159,7 +159,7 @@ print("Time Taken:{}".format(end - start))
 ![](../../assets/images/cml/output_4_1.png)
     
 
-4. Explore the time taken to change the background colour using openCV module.
+- Explore the time taken to change the background colour using openCV module.
 
 ```python
 # Use cv2 to convert background
