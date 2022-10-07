@@ -10,7 +10,7 @@ nav_order: 3
 
 Image is made of pixels. Thanks to the extensive Python modules such as numpy and openCV, image can be converted into numbers, manipulated and subsequently reproduced into a different outcome. This blogpost explores the processing time taken to produce the same outcome upon using different techniques.
 
-The experiments are carried out using Cloudera Machine Learning (CML) on Kubernetes platform powered by Openshift 4.8 with the hardware specification as described below. CML is embedded with `workbench` and `Jupyterlab` notebook IDE for data scientist to do coding, EDA, etc. The following experiments are carried out using the Jupyterlab notebook. 
+The experiments are carried out using Cloudera Machine Learning (CML) on Kubernetes platform powered by Openshift 4.8 with the hardware specification as described below. CML is embedded with `workbench` and `Jupyterlab` notebook IDE for data scientist to do coding, EDA, etc. It's always a good practice using IDE to explore the performance output, e.g. whether the code is fully/under utilizing the allocated CPU resource or becomes "noisy neighbour" in the multi-tenant Kubernetes platform. 
 
 | CPU          | Intel(R) Xeon(R) Gold 5220R CPU @ 2.20GHz | 
 | Memory  | DIMM DDR4 Synchronous Registered (Buffered) 2933 MHz (0.3 ns) | 
@@ -22,7 +22,7 @@ The experiments are carried out using Cloudera Machine Learning (CML) on Kuberne
 
 ---
 
-Here's the [link](https://github.com/dennislee22/machineLearning/blob/master/img_processing.ipynb) to download the complete notebook.
+The following experiments are carried out using the Jupyterlab notebook. Here's the [link](https://github.com/dennislee22/machineLearning/blob/master/img_processing.ipynb) to download the complete notebook.
 
 - Declare the variables.
 
