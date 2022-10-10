@@ -274,7 +274,7 @@ Let's shift gear by executing the same code and add the Threading Module.
     $ cnt=0;for i in `cat output | grep line`; do cnt=`expr $cnt + 1` ; if [ $i != line$cnt ]; then echo $i;fi ; done
     ```
 
-6. However, the processing time taken by Python to run this code with multithreading is longer with approximately 50 seconds! Shouldn't it be quicker than running with a single thread?
+6. However, the processing time taken by Python to run this code with multithreading is longer with approximately 50 seconds!
 
     ```yaml
     Job Starts: 2071685.346476694
@@ -445,7 +445,7 @@ Now let's use concurrent.futures.ThreadPoolExecutor module with locking mechanis
     Totals Execution Time:39.74 seconds.
     ```
 
-4. Let's rerun the same test by adjusting max_workers=1. Ironically, the speed is almost similar to that of running the script using the default single thread process.
+4. Let's rerun the same test by adjusting `max_workers=1`. Ironically, the speed is almost similar to that of running the script using the default single thread process.
 
     ```yaml
     Job Starts: 2078032.097896568
@@ -456,7 +456,7 @@ Now let's use concurrent.futures.ThreadPoolExecutor module with locking mechanis
 5. While introducing lock in concurrent.futures.ThreadPoolExecutor module ensure integrity of the outcome, it comes with  a price of lower speed because only one thread can obtain the lock at a time. Other threads need to wait for the lock to be released.
 
 Conclusion: 
-At first glance, multithreading sounds promising to enhance the speed to run specific Python code. However, one might jump into the conclusion too soon by thinking so. The outcome depends heavily on how the code is written and its objective. While running a Python code with more threads could be faster but might not necessarily achieve the intended outcome. Single thread could work faster than multithreading for ensuring a high degree of integrity. In addition, creating multiple threads also creates resource overhead. In a nutshell, applying multithreading will not guarantee highest performance and could lead to a backfire as it might effectuate data corruption as witnessed in the experiment. Lastly, GIL still exists for a reason :)
+At first glance, multithreading sounds promising to enhance the speed to run specific Python code. In reality, the outcome depends heavily on how the code is written and its objective. While running a Python code with more threads could be faster but might not necessarily achieve the intended outcome. Single thread could work faster than multithreading for ensuring a high degree of integrity. In addition, creating multiple threads also creates resource overhead. In a nutshell, applying multithreading will not guarantee highest performance and could lead to a backfire as it might effectuate data corruption as witnessed in the experiment. Lastly, GIL still exists for a reason :)
     
 
 ---
