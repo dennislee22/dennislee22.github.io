@@ -81,7 +81,7 @@ The following experiments are carried out using Cloudera Machine Learning (CML) 
 
 6. Take note of the total execution time.
 
-7. Note that the above CPU intensive code spawn 10 child processes and utilizing all CPU cores available on the Kubernetes node/host which is housing the session pod. 
+7. Note that the above CPU intensive code spawns 10 child processes and utilizing all CPU cores available on the Kubernetes node/host which is housing the CML session pod. 
 
     ![](../../assets/images/cml/nn4.png) 
     
@@ -92,7 +92,7 @@ The following experiments are carried out using Cloudera Machine Learning (CML) 
 
 # Multiprocessing with CPU limit
 
-1. Let's apply the CPU limit in the CML global configuration and observe the outcome. Untick `CPU Bursting` feature.
+1. Now let's apply the CPU limit in the CML global configuration and observe the outcome. Untick `CPU Bursting` feature.
 
     ![](../../assets/images/cml/nn6.png)  
 
@@ -104,7 +104,7 @@ The following experiments are carried out using Cloudera Machine Learning (CML) 
     
 4. Open a `Terminal Access` box of the CML session and run the `top` command.
 
-5. Run the above compute intensive Python code and observe CPU utilization as well as the total execution time.
+5. Run the above compute intensive Python code. Observe CPU utilization as well as the total execution time.
 
 6. The CPU utilization is now limited to the set limit of 1960 milicore and tt takes longer to execute the same code.
  
