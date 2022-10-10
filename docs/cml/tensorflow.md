@@ -2,7 +2,7 @@
 layout: default
 title: Tensorflow
 parent: Machine Learning
-nav_order: 6
+nav_order: 9
 ---
 
 # Tensorflow
