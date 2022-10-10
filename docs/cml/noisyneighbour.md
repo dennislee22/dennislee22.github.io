@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Ray
+title: Noisy Neighbour
 parent: Machine Learning
 nav_order: 4
 ---
