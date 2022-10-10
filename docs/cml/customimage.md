@@ -45,13 +45,13 @@ This article describes the method to build a custom docker image by installing t
     docker build --network host -t nexus.cdpkvm.cldr:9999/cdppvcds140/cudatoolkit_tf:11.3 . -f cudatoolkit_for_tf.Dockerfile
     ```
     
-3. Upon successful build, push it into the Nexus registry. In this example, a Nexus docker registry is positioned to host the container image.   
+3. Upon successful build, push it into the Nexus registry. In this example, the Nexus docker registry hosts the container image.   
 
     ```bash
     docker image push nexus.cdpkvm.cldr:9999/cdppvcds140/cudatoolkit_tf:11.3
     ```
     
-4. In CML, navigate to Site Administration > Runtime/Engine and add the new docker image under the Engine Image section.
+4. In CML, navigate to Site Administration > Runtime/Engine and add the new docker image under the `Engine Images` section.
 
 
     ![](../../assets/images/cml/customimage1.png)
@@ -69,7 +69,7 @@ This article describes the method to build a custom docker image by installing t
 
     ![](../../assets/images/cml/customimage4.png)
 
-8. Run the following Tensorflow code to detect the presence of GPU card.
+8. Run the following Tensorflow code to detect the presence of the GPU card.
 
     ![](../../assets/images/cml/customimage5.png)
 
