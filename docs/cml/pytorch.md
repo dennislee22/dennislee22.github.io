@@ -2,7 +2,7 @@
 layout: default
 title: Pytorch
 parent: Machine Learning
-nav_order: 5
+nav_order: 8
 ---
 
 # Pytorch
