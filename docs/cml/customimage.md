@@ -54,24 +54,24 @@ This article describes the method to build a custom docker image by installing t
 4. In CML, navigate to Site Administration > Runtime/Engine and add the new docker image under the Engine Image section.
 
 
-![](../../assets/images/cml/customimage1.png)
+    ![](../../assets/images/cml/customimage1.png)
 
 
 5. Assuming a CML project has already been created, navigate to Project Settings > Runtime/Engine of the project. Select the custom image.
 
-![](../../assets/images/cml/customimage2.png)
+    ![](../../assets/images/cml/customimage2.png)
 
 6. Add the environment variable to inform the OS about the location of the CUDA library for this project.
 
-![](../../assets/images/cml/customimage3.png)
+    ![](../../assets/images/cml/customimage3.png)
 
 7. Create a CML session with GPU in the resource profile.
 
-![](../../assets/images/cml/customimage4.png)
+    ![](../../assets/images/cml/customimage4.png)
 
 8. Run the following Tensorflow code to detect the presence of GPU card.
 
-![](../../assets/images/cml/customimage5.png)
+    ![](../../assets/images/cml/customimage5.png)
 
 
 ---
