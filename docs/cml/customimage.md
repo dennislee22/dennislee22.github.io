@@ -2,7 +2,7 @@
 layout: default
 title: Custom Docker Image
 parent: Machine Learning
-nav_order: 8
+nav_order: 5
 ---
 
 # Custom Docker Image
