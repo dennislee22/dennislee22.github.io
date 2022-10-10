@@ -46,7 +46,7 @@ img = Image.open('me.png')
 ori_img_array = asarray(img)
 ```
 
-- Display image details.
+- Display image details based on the image file.
 
 ```python
 #Show image details
@@ -72,7 +72,7 @@ print("Values of original image:\n",numpyraw[0:1,0:3])
 ![](../../assets/images/cml/output_1_1.png)
     
 
-- Show image details.
+- Display image details using numpy raw integers!
 
 ```python
 #Show image using numpy integers
@@ -90,7 +90,7 @@ plt.imshow(numpyraw)
 ![](../../assets/images/cml/output_2_2.png)
     
 
-- Explore the time taken to change the background colour using `putpixel()` function.
+- Check out the time taken to change the background colour using `putpixel()` function.
 
 ```python
 #Replace colour with specific pixel number using putpixel() fn
@@ -126,7 +126,7 @@ print("Time Taken:{}".format(end - start))
 ![](../../assets/images/cml/output_3_1.png)
     
 
-- Explore the time taken to change the background colour using the typical loop command.
+- Check out the time taken to change the background colour using the typical Python loop.
 
 ```python
 #Replace colour with specific numpy array
@@ -159,7 +159,7 @@ print("Time Taken:{}".format(end - start))
 ![](../../assets/images/cml/output_4_1.png)
     
 
-- Explore the time taken to change the background colour using openCV module.
+- Check out the time taken to change the background colour using openCV module.
 
 ```python
 # Use cv2 to convert background
