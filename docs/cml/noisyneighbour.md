@@ -10,8 +10,6 @@ nav_order: 4
 
 In the previous articles, we have witnessed how Python [multithreading]({{ site.baseurl }}{% link docs/cml/mthread.md %}) and [multiprocessing]({{ site.baseurl }}{% link docs/cml/mprocess.md %}) modules can be used to expedite the execution of a particular code, provided that the use case is suitable. As running multiple processes utilizes the available CPU resource, it also creates "noisy neighbour" scenario even on the multi-tenant Kubernetes platform. Let's find out more in the following experiments.
 
-Let's run some experiments to find out more.
-
 The following experiments are carried out using Cloudera Machine Learning (CML) on Kubernetes platform powered by Openshift 4.8 with the hardware specification as described below. CML is embedded with `workbench` and `Jupyterlab` notebook IDE for data scientist to do coding, EDA, etc. In this experiment, the CML workbench is used as it is lightweight, quicker to spin up and easy to use.
 
 | CPU          | Intel(R) Xeon(R) Gold 5220R CPU @ 2.20GHz | 
@@ -85,7 +83,7 @@ The following experiments are carried out using Cloudera Machine Learning (CML) 
 
     ![](../../assets/images/cml/nn4.png) 
     
-8. You may also install `bpytop` module to monitor the CPU utilization dashboard. 
+8. You may also install `bpytop` Python module to monitor the CPU utilization dashboard. 
 
     ![](../../assets/images/cml/nn5.png) 
     
@@ -98,7 +96,7 @@ The following experiments are carried out using Cloudera Machine Learning (CML) 
 
 2. Create a CML workbench session with 2 CPU/8 GiB memory profile. 
 
-3. In the Openshift dashboard, verify that there CPU limit is now configured for the session pod of the user namespace.
+3. In the Openshift dashboard, verify that CPU limit is now configured for the session pod of the user namespace.
 
     ![](../../assets/images/cml/nn7.png)    
     
@@ -106,11 +104,10 @@ The following experiments are carried out using Cloudera Machine Learning (CML) 
 
 5. Run the above compute intensive Python code. Observe CPU utilization as well as the total execution time.
 
-6. The CPU utilization is now limited to the set limit of 1960 milicore and tt takes longer to execute the same code.
+6. The CPU utilization is now limited to the set limit of 1960 milicore and it takes longer to execute the same code.
  
     ![](../../assets/images/cml/nn8.png)  
 
-
-Conclusion: Kubernetes is a multi-tenant platform with the capability of hosting many namespaces without conflict of resources. However, the running pod could make use of all the CPU cores in the hosting node without CPU limit in place. This effectively creates "noisy neighbour" scenario and impacts the performance of other running pods in the same node/host of different namespace.
+Conclusion: Kubernetes is a multi-tenant platform with the capability of hosting many namespaces without conflict of resources. However, the running pod could make use of all CPU cores in the hosting node if CPU limit is not in place. This effectively creates "noisy neighbour" scenario and impacts the performance of other running pods in the same node/host of different namespace.
 
 ---
