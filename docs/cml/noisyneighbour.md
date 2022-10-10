@@ -34,9 +34,7 @@ The following experiments are carried out using Cloudera Machine Learning (CML) 
 
     ![](../../assets/images/cml/nn3.png) 
     
-    
 4. Open a `Terminal Access` box of the CML session and run the `top` command.
-
 
 5. Run the following compute intensive Python code. It uses openCV Canny module that triggers multiple processes automatically to manipulate the image.
 
