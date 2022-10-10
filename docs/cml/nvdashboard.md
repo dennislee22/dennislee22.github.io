@@ -2,7 +2,7 @@
 layout: default
 title: Nvidia Dashboard
 parent: Machine Learning
-nav_order: 7
+nav_order: 8
 ---
 
 # Nvidia Dashboard
