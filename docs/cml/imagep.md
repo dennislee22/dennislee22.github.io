@@ -185,7 +185,7 @@ print("Time Taken:{}".format(end - start))
     
 
 Conclusion: 
-Different techniques take varied processing time and utilize CPU resource differently to produce the same output. While a typical Python code is executed using single thread process, certain openCV module such as Canny triggers multiple threads automatically (without specifying in the code) to manipulate the image. As a result, this process becomes "noisy neighbour" on the multi-tenant Kubernetes platform unless CPU limit is applied restrict the CPU usage.
+Different techniques take varied processing time and utilize CPU resource differently to produce the same output.
 
 ---
 
