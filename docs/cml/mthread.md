@@ -402,7 +402,6 @@ Now let's add concurrent.futures.ThreadPoolExecutor module to run the same code 
     
     Excerpt from the `output` file:
 
-    
     ```yaml
     current thread:<Thread(ThreadPoolExecutor-1_9, started 139664249829120)>
     current pid:98
