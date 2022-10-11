@@ -14,6 +14,11 @@ Tensorflow is a popular AI/ML framework focusing on training and inference of DN
 {:toc}
 
 ---
+
+## Tensorboard
+
+1. Create a CML workbench session with 2 CPU/16 GiB memory and 1 GPU profile. 
+    
 ## How to train model using GPU/CPU?
 
 1. Create a CML workbench session with 2 CPU/16 GiB memory and 1 GPU profile. 
