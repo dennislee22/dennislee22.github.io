@@ -32,7 +32,7 @@ In this case, [Jupyterlab-nvdashboard](https://github.com/rapidsai/jupyterlab-nv
 
     ![](../../assets/images/cml/nvdash2.png)
     
-4. To validate the dashboard, you may also install and run the Python module `gpustat` to check to actual utilization percentage in real-time.
+4. To validate the dashboard, you may also install and run the Python module `gpustat` to check the actual utilization percentage at any point of time.
 
     ![](../../assets/images/cml/nvdash3.png) 
     
