@@ -64,11 +64,12 @@ Running Python code on the Kubernetes pod could only utilize the available/alloc
         wait_for_completion=False)
     ```
     
-5. In the Openshift dashboard, find out the URL of the created route for this CML session pod. Open the browser and navigate to that URL. You will be able to see Ray dashboard. Note that there are 3 worker pods and one of them is equipped with GPU card as selected when provisioning the CML session pod. 
+5. In the Openshift dashboard, find out the URL of the created route for this CML session pod. Open the browser and navigate to that URL. You will be able to see Ray dashboard. Note that there are 3 worker pods and one of them is equipped with GPU card as selected when provisioning the CML session pod.
 
     ![](../../assets/images/cml/ray2.png) 
     
     ![](../../assets/images/cml/ray3.png) 
 
+6. By right, each worker pod should be hosted on different node based on anti-affinity rule to avoid resource contention between the Ray workers (Kubernetes pods) in the event they are hosted on the same node.
 
 ---
