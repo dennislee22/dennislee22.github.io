@@ -8,9 +8,9 @@ nav_order: 1
 # Threading in Python
 {: .no_toc }
 
-Python has become the de-facto language framework for writing machine learning code due to its rich modules ecosystem. I personally like Python because it's human readable and offers a wide range of easy-to-use libraries especially in the data science realm. 
+Python has become the de-facto language framework for writing machine learning code due to its rich modules ecosystem especially in the data science realm. 
 
-By default, Python uses a single CPU thread to execute the code. This is largely due to GIL (Global Interpreter Lock) as single thread is safe to prevent corrupted output as a result of race condition. While thread-safe is good, it does come with a price - the allocated/available CPU resource is underutilized and it takes longer time to run the code. Today, there are ways to improve the performance with the likes of using multithreading and multiprocessing modules but this must be done carefully because there's always a reason for GIL to exist. At first glance, the term `multithreading` sounds promising to speed up a particular Python program. Let's run some experiments to find out if this is really the case.
+By default, Python uses a single CPU thread to execute the code. This is largely due to GIL (Global Interpreter Lock) as single thread is safe to prevent corrupted output as a result of race condition. While thread-safe is good, it does come with a price - the allocated/available CPU resource is often underutilized and it takes longer time to run the code as a consequence. Today, there are ways to improve performance by using modules with the likes of multithreading and multiprocessing modules but this must be done carefully because there's always a reason for GIL to exist. At first glance, the term `multithreading` sounds promising to speed up a particular Python program. Let's run some experiments to find out if this is really the case.
 
 The following experiments are carried out using Cloudera Machine Learning (CML) on Kubernetes platform powered by Openshift 4.8 with the hardware specification as described below. CML is embedded with `workbench` and `Jupyterlab` notebook IDE for data scientist to do coding, EDA, etc. In this experiment, the CML workbench is used as it is lightweight, quicker to spin up and easy to use.
 
@@ -24,7 +24,7 @@ The following experiments are carried out using Cloudera Machine Learning (CML) 
 ---
 ## Single Thread in Python
 
-1. Create a CML workbench session with 1 CPU/2 GiB memory profile. Open a `Terminal Access` box and run the `top` command to check the total threads are spawned by the process ID of the session pod. In this example, the process ID is 94. Note that there are 30 threads being opened by the process of this running session pod.
+1. Create a CML workbench session with 1 CPU/2 GiB memory profile. Open a `Terminal Access` box and run the `top` command to check the total threads spawned by the process ID of this session pod. In this example, the process ID is 94. Note that there are 30 threads being opened by the process for this running session pod.
 
     ```bash
     $ top -p 94 -H
@@ -62,7 +62,7 @@ The following experiments are carried out using Cloudera Machine Learning (CML) 
  
     ![](../../assets/images/cml/singlethread2.png)
 
-4. After the process is completed, check the outcome of the `output` file. It shows details such as current CPU thread core of the hosting node, current pid, total of threads, which CPU core is scheduled to run the program at one point of time and finally the read/written line. As expected, the code writes each line number to the `output` file sequentially without data corruption as Python runs the code linearly with a single Mainthread process.
+4. After the process is completed, check the outcome of the `output` file. It shows details such as current CPU thread core of the hosting node, current pid, total of threads, which CPU core is scheduled to run the program at specific point of time and finally the read/written line. As expected, the code writes each line number to the `output` file sequentially without data corruption as Python runs the code linearly with a single Mainthread process.
 
     ```bash
     $ more output
@@ -187,13 +187,13 @@ The following experiments are carried out using Cloudera Machine Learning (CML) 
     line20 
     ```    
 
-5. Let's recreate the file with more entries and rerun the Python code.
+5. Let's recreate the file with more entries and rerun the abovementioned Python code.
 
     ```bash
     $ > input;for i in {1..10000};do echo line$i >> input;done; head -20 input
     ```
     
-6. Observe the processing time taken by Python to run the code. Run a few times to ensure the result is consistent. In this case, it takes approximately 32 seconds to run the program with the intended outcome.
+6. Observe the processing time taken by Python to run the code. Run a few times to ensure consistent result. In this case, it takes approximately 32 seconds to run the program with the intended outcome.
 
     ```yaml
     Job Starts: 2071176.127430943
@@ -201,9 +201,9 @@ The following experiments are carried out using Cloudera Machine Learning (CML) 
     Totals Execution Time:32.62 seconds.
     ```
 
-# Multithreading with Threading Module in Python
+# Multithreading in Python
 
-Let's shift gear by executing the same code and add the Threading Module.
+Let's shift gear a bit by executing the similar code with `Threading` module.
 
 1. Create a CML workbench session with 1 CPU/2 GiB memory profile.
 
@@ -268,7 +268,7 @@ Let's shift gear by executing the same code and add the Threading Module.
     line9
     ```
     
-5. Next, check the integrity of the output file. To reiterate, the purpose of this code is read line by line from the `input` file and write each line into the `output` file in a sequential manner. Run the following script. In the event of no output is produced, it shows the code achieves the intended outcome without data corruption. The result shows the same outcome as the previous test (using single thread). It seems Threading module is safe-thread when using the correct method.
+5. Next, check the integrity of the output file. To reiterate, the purpose of this code is to read line by line from the `input` file and write each line into the `output` file in a sequential manner. Run the following script. In the event of no output, it concludes that the code achieves the intended outcome without data corruption. In this case, the result shows the same outcome as of the previous test (using single thread). It signals that the outcome is safe-thread when using the correct method.
 
     ```bash
     $ cnt=0;for i in `cat output | grep line`; do cnt=`expr $cnt + 1` ; if [ $i != line$cnt ]; then echo $i;fi ; done
@@ -296,7 +296,7 @@ Now let's add concurrent.futures.ThreadPoolExecutor module to run the same code 
     Totals Execution Time:24.83 seconds.
     ```
 
-3. Explore outcome of the newly generated `output` file. It shows the process spawns 10 threads (defined by the number of workers) to run the code. The total threads before the running code was 30 and has increased to 40 when executing the code.
+3. Explore outcome of the newly generated `output` file. It shows that the process spawns 10 threads (defined by the number of workers) to run the code. The total threads before the running code was 30 and has increased to 40 when executing the code.
 
     ![](../../assets/images/cml/threadpool1.png)
     
@@ -422,7 +422,7 @@ Now let's add concurrent.futures.ThreadPoolExecutor module to run the same code 
     line27
     ```
 
-5. The outcome is not in line with the intention of the code. The line number is not written sequentially beginning from line26. Unlike the previous outcome, the line numbers are no longer in sequence, e.g. line25 is written after line26 by ThreadPoolExecutor-1_8 and ThreadPoolExecutor-1_9 respectively. This is the behaviour of race condition as a result of multiple threads writing into the same file in parallel. In other words, concurrent.futures.ThreadPoolExecutor is not thread-safe despite able to complete the program at a faster speed.
+5. The outcome is not in line with the intention of the code. The line number is not written sequentially beginning from line26. Unlike the previous outcome, the line numbers are no longer in sequence, e.g. line25 is written after line26 by ThreadPoolExecutor-1_8 and ThreadPoolExecutor-1_9 respectively. This is the behaviour of race condition as a result of multiple threads writing into the same file in parallel. In other words, concurrent.futures.ThreadPoolExecutor is not thread-safe (without locking mechanism) despite able to complete the program at a faster speed.
 
 # concurrent.futures.ThreadPoolExecutor with Lock in Python
 
@@ -430,7 +430,7 @@ Now let's use concurrent.futures.ThreadPoolExecutor module with locking mechanis
 
 1. Run this [script](https://github.com/dennislee22/machineLearning/blob/master/concurrent_threadpool_lock.py) in the CML workbench session.
 
-2. Next, check the integrity of the output. Run the following script to check if the code writes each line number to the `output` file sequentially. The outcome is good with sequential entries in place.
+2. Next, check the integrity of the output. Run the following script to check if the code writes each line number to the `output` file sequentially. The outcome matches the objective with sequential entries in place.
 
     ```bash
     $ cnt=0;for i in `cat output | grep line`; do cnt=`expr $cnt + 1` ; if [ $i != line$cnt ]; then echo $i;fi ; done
@@ -452,10 +452,10 @@ Now let's use concurrent.futures.ThreadPoolExecutor module with locking mechanis
     Totals Execution Time:32.31 seconds.
     ```
 
-5. While introducing lock in concurrent.futures.ThreadPoolExecutor module ensure integrity of the outcome, it comes with  a price of lower speed because only one thread can obtain the lock at a time. Other threads need to wait for the lock to be released.
+5. While introducing lock in concurrent.futures.ThreadPoolExecutor module ensures integrity of the outcome, it comes with  a price of lower speed because only one thread can obtain the lock at a time. Other threads need to wait for the lock to be released.
 
 Conclusion: 
-At first glance, multithreading sounds promising to enhance the speed to run specific Python code. In reality, the outcome depends heavily on how the code is written and its objective. While running a Python code with more threads could be faster but might not necessarily achieve the intended outcome. Single thread could work faster than multithreading for ensuring a high degree of integrity. In addition, creating multiple threads also creates resource overhead. In a nutshell, applying multithreading will not guarantee highest performance and could lead to a backfire as it might effectuate data corruption as witnessed in the experiment. Lastly, GIL still exists for a reason :)
+At first glance, multithreading sounds promising to enhance the speed to run specific Python code. In reality, the outcome depends heavily on how the code is written and most importantly achieves the objective. While running a Python code with more threads could be faster but it might not necessarily achieve the intended outcome. Single thread could work faster than multithreading for ensuring a high degree of integrity. In addition, creating multiple threads also creates resource overhead. In a nutshell, applying multithreading will not guarantee highest performance and could lead to a backfire as it might effectuate data corruption as witnessed in the experiment. Lastly, GIL still exists for a reason :)
     
 
 ---
