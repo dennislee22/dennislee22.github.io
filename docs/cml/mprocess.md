@@ -8,7 +8,7 @@ nav_order: 2
 # Multiprocessing in Python
 {: .no_toc }
 
-As described in the previous article, Python uses a single CPU thread to execute the code by default in order to prevent race condition and ensure thread-safe. That is particularly important for I/O-bound task. To enhance the speed to complete a particular CPU-bound task, multiprocessing module allows spawning multiple child processes to carry out the task. This article describes the behaviour in the Kubernetes infrastructure layer and its pros and cons when multiprocessing Python module is used in the machine learning code. Let's run some experiments to find out more.
+As described in the previous article, Python uses a single CPU thread to execute the code by default in order to prevent race condition and ensure thread-safe. That is particularly important for I/O-bound task. To enhance the speed to complete a particular CPU-bound task, multiprocessing module allows spawning multiple child processes to carry out the task. This article describes the behaviour in the Kubernetes infrastructure layer as a result of some experiments and its pros and cons when multiprocessing Python module is used in the machine learning code.
 
 The following experiments are carried out using Cloudera Machine Learning (CML) on Kubernetes platform powered by Openshift 4.8 with the hardware specification as described below. CML is embedded with `workbench` and `Jupyterlab` notebook IDE for data scientist to do coding, EDA, etc. In this experiment, the CML workbench is used as it is lightweight, quicker to spin up and easy to use.
 
