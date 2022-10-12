@@ -21,15 +21,17 @@ Tensorflow is a popular AI/ML framework focusing on training and inference of DN
 
     ![](../../assets/images/cml/tsrboard1.png) 
 
-2. Create a CML workbench session in that project with 2 CPU/8 GiB memory and 1 GPU (Nvidia) profile. Open a `Terminal Access` box of the CML session and install the necessary Python modules. After successful installation, close the terminal and session.
+2. Create a CML workbench session in that project with 2 CPU/8 GiB memory and 1 GPU (Nvidia) profile.
 
     ![](../../assets/images/cml/tsrboard3.png)
+    
+    Open a `Terminal Access` box of the CML session and install the necessary Python modules. After successful installation, close the terminal and session.
     
     ```bash
     pip3 install tensorflow matplotlib protobuf
     ``` 
 
-3. Navigate to CML Application and create a new application as depicted below.
+3. Navigate to CML Applications and create a new application as depicted below.
     
     ![](../../assets/images/cml/tsrboard2.png)
     
