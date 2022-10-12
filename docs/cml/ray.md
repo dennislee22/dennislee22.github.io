@@ -70,6 +70,6 @@ Running Python code on the Kubernetes pod could only utilize the available/alloc
     
     ![](../../assets/images/cml/ray3.png) 
 
-6. By right, each worker pod should be hosted on different node based on anti-affinity rule to avoid resource contention between the Ray workers (Kubernetes pods) in the event they are hosted on the same node.
+6. By right, each worker pod should be hosted on different node based on anti-affinity rule to avoid resource contention between the Ray workers (Kubernetes pods) in the event they are hosted on the same node. This feature, however, is not available yet.
 
 ---
