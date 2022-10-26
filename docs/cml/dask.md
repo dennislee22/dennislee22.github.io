@@ -27,7 +27,8 @@ The following experiments are carried out using Jupyterlab notebook in Cloudera 
 
 ![](../../assets/images/cml/dask1.png)
 
-{% jupyter_notebook "dask_cml.ipynb" %}
+{% jupyter_notebook "link docs/cdppvc/dask_cml.ipynb" %}
+
 
 ## Dask with Multiple Workers
 
