@@ -478,7 +478,7 @@ x
     </tr>
 </table>
 
-- Perform the same computation and this time, the kernel crashes because of insufficient memory.
+- Perform the same computation but the the kernel crashes due to insufficient memory (more than 16G is needed for such chunk size).
 
 ![](../../assets/images/cml/dask2.png)
 
@@ -597,8 +597,6 @@ x
 
 - Automatic assignment of chunks by the system allows computation to complete without encountering insufficient memory problem.
 
-![](../../assets/images/cml/dask2.png)
-
 ```python
 from dask.diagnostics import ProgressBar
 big_calc = (x * x[::-1, ::-1]).sum()
@@ -611,7 +609,7 @@ print(f"Total size: {result}")
     Total size: 40000000000.0
 
 
-- Restart the kernel. Create a distributed task scheduler pod.
+- Restart the kernel. Create a distributed Dask with task scheduler pod.
 
 ```python
 import os
@@ -638,9 +636,6 @@ print("//".join(dask_scheduler[0]["app_url"].split("//")))
 
     http://zusu97y7pconcrlc.ml-76cf996d-8f4.apps.apps.ocp4.cdpkvm.cldr/
 
-
-![](../../assets/images/cml/dask3.png)
-
 - Take note of the Dask scheduler URL.
 
 ```python
@@ -654,7 +649,8 @@ scheduler_url = f"tcp://{scheduler_ip}:8786"
 scheduler_url
 ```
    
-   'tcp://10.254.0.98:8786'
+```  'tcp://10.254.0.98:8786' ```
+
 
 - Open the terminal of the CML pod and start the dask-worker command connecting the above Dask scheduler.
 
@@ -841,11 +837,11 @@ client
     </div>
 </div>
 
-- Dask UI verifies that 1 worker node is currently attached to the Dask cluster.
+- Dask UI shows that 1 worker node is currently connected to the Dask cluster.
 
 ![](../../assets/images/cml/dask5a.png)
 
-- Openshift dashboard shows that 1 Dask scheduler pod and 1 Dask worker pod (CML session pod) are currently up and running.
+- Openshift dashboard depicts 1 Dask scheduler pod and 1 Dask worker pod (CML session pod) are currently up and running.
 
 ![](../../assets/images/cml/dask5b.png)
 
@@ -972,7 +968,7 @@ print(f"Total size: {result}")
 
 ![](../../assets/images/cml/dask6a.png)
 
-- Take note of the CPU utilization when the above computation takes place.
+- Take note of the CPU utilization (using bpytop) when the above computation takes place.
 
 ![](../../assets/images/cml/dask6b.png)
 
@@ -1184,7 +1180,7 @@ scheduler_url
     'tcp://10.254.0.116:8786'
 
 
-- This time, create 3 new CML worker pods attach them to the Dask cluster.
+- Create 3 new CML worker pods attach them to the Dask cluster.
 
 ```python
 # Assign 3 worker nodes to the Dask cluster.
@@ -1543,7 +1539,7 @@ client
     </div>
 </div>
 
-- Openshift shows 3 Dask worker pods with 1 Dask scheduler pod.
+- Openshift dashboard shows 3 Dask worker pods with 1 Dask scheduler pod.
 
 ![](../../assets/images/cml/dask11.png)
 
@@ -1797,7 +1793,12 @@ print(f"Total size: {array_sumcupy}")
 ![](../../assets/images/cml/dask12.png)
 
 Conclusion: 
+- The performance output of Dask depends heavily on the chunk size assignment. Higher chunk size results in smaller number of tasks and allows execution to complete quicker. This also means higher CPU utilization when running the tasks. In addition, higher chunk size requires more memory as well. The kernel crashes due to insufficient memory when running the tasks with higher chunk size.
+- Using more Dask worker nodes might not necessarily result in shorter completion time as overhead applies. Dask makes sense for huge and complext dataset processing but definitely not applicable for small and simple machine learning task. 
+- Using GPU in Dask completes the tasks much faster than using CPU for typical mathematical computation.
+
 
 ---
+
 
 
