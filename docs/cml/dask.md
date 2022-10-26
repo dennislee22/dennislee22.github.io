@@ -1664,7 +1664,7 @@ print(f"Total size: {result}")
 
 ![](../../assets/images/cml/dask12.png)
 
-## Dask with Nvidia GPU
+## Dask with NVIDIA GPU
 
 - Restart the kernel. Use GPU to compute the same array shape by using cuda library on the pod attached with NVIDIA GPU card. Take note of the completion time.
 
