@@ -8,9 +8,9 @@ nav_order: 10
 # Dask
 {: .no_toc }
 
-Similar to Ray, Dask facilitates Python code execution using parallel computing. To do so, Dask offers a list of libraries that mimics the popular data science tools such as numpy and pandas. For instance, Dask arrays organize Numpy arrays, break them into chunks to complee the computation process in a parallel fashion. This article describes the behavioural outcome in terms of speed and CPU utilization when using Dask arrays with different chunk sizes.
+Dask enhances Python performance using parallel computing concept. To do so, Dask offers a list of libraries that mimics the popular data science tools such as numpy and pandas. For instance, Dask arrays organize Numpy arrays, break them into chunks to complete the computation process in a parallel fashion. As a result, large dataset can be processed using multiple nodes as opposed to the typical single node resource. This article describes the behavioural outcome in terms of speed and CPU utilization when using Dask arrays with different chunk sizes.
 
-The following experiments are carried out using Jupyterlab notebook in Cloudera Machine Learning (CML) on Kubernetes platform powered by Openshift 4.8 with the hardware specification as described below. Here's the [link](https://github.com/dennislee22/machineLearning/blob/master/dask_cml.ipynb) to download the complete notebook.
+The following experiments are carried out using Jupyterlab notebook in Cloudera Machine Learning (CML) on the Kubernetes platform powered by Openshift 4.8 with the hardware specification as described below. Here's the [link](https://github.com/dennislee22/machineLearning/blob/master/dask_cml.ipynb) to download the complete notebook.
 
 | CPU          | Intel(R) Xeon(R) Gold 5220R CPU @ 2.20GHz | 
 | Memory  | DIMM DDR4 Synchronous Registered (Buffered) 2933 MHz (0.3 ns) | 
@@ -27,89 +27,7 @@ The following experiments are carried out using Jupyterlab notebook in Cloudera 
 
 ![](../../assets/images/cml/dask1.png)
 
-- Run the following code and take note the results.
-
-```python
-#Variables Declaration
-
-import time
-import cv2
-import numpy as np
-from numpy import asarray
-import psutil
-import os
-import matplotlib.pylab as plt
-import sys
-from PIL import Image
-
-new_color = 5,3,192,255
-old_color = 0, 0, 0, 0
-width, height = 988,988
-img = Image.open('me.png')
-ori_img_array = asarray(img)
-```
-
-- Display image details based on the image file.
-
-```python
-#Show image details
-
-plt.imshow(img)
-print("Source Image format:", img.format)
-print("Image size:", img.size)
-print("Image mode:", img.mode)
-numpyraw = asarray(img)  
-#np.set_printoptions(threshold=sys.maxsize)
-np.save('bbb.npy',numpyraw)
-print("Values of original image:\n",numpyraw[0:1,0:3])  
-```
-
-    Source Image format: PNG
-    Image size: (998, 998)
-    Image mode: RGBA
-    Values of original image:
-     [[[0 0 0 0]
-      [0 0 0 0]
-      [0 0 0 0]]]
-    
-![](../../assets/images/cml/output_1_1.png)
-    
-
-
-The following experiment uses Python code to read line by line from the `input` file and write each line into the `output` file in a sequential manner.
-
-1. Create a CML workbench session with 2 CPU/8 GiB memory profile. Open a `Terminal Access` box and run the `top` command to check the total threads are spawned by the process ID of the session pod. In this example, the process ID is 94. Note that there are 30 threads being opened by the process of this running session pod.
-
-    ```bash
-    $ top -p 94 -H
-    ```
-
-    ![](../../assets/images/cml/mprocess1.png)    
- 
-2. Create the same `input` file as described in this [threading article]({{ site.baseurl }}{% link docs/cml/mthread.md %}) with 10000 entries using the simple Bash script in the terminal console.
-
-    ```bash
-    $ > input;for i in {1..10000};do echo line$i >> input;done; head -20 input
-    ```
-    
-3. Create a new file and copy this [Python script](https://github.com/dennislee22/machineLearning/blob/master/ProcessPoolExecutor_noqueue.py) into the workbench and run it.
- 
-    ![](../../assets/images/cml/mprocess2.png)
-        
-
-4. Observe the processing time taken by Python to run the code. Run a few times to ensure the result is consistent. In this case, it takes approximately 34 seconds with 1 worker to run the program.
-
-    ```yaml
-    Job Starts: 2408101.439849569
-    Job Ends: 2408136.310603447
-    Totals Execution Time:34.87 seconds.
-    ```
-    
-5. Next, check the integrity of the output file. To reiterate, the purpose of this code is read line by line from the `input` file and write each line into the `output` file in a sequential manner. Run the following script. In the event of no output is produced, it shows the code achieves the intended outcome without data corruption. The result shows the same outcome as the previous test (using single worker).
-
-    ```bash
-    $ cnt=0;for i in `cat output | grep line`; do cnt=`expr $cnt + 1` ; if [ $i != line$cnt ]; then echo $i;fi ; done
-    ```
+{% jupyter_notebook "dask_cml.ipynb" %}
 
 ## Dask with Multiple Workers
 
