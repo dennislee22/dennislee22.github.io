@@ -8,7 +8,7 @@ nav_order: 10
 # Dask
 {: .no_toc }
 
-Dask enhances Python performance using parallel computing concept. To do so, Dask offers a list of libraries that mimics the popular data science tools such as numpy and pandas. For instance, Dask arrays organize Numpy arrays, break them into chunks to complete the computation process in a parallel fashion. As a result, large dataset can be processed using multiple nodes as opposed to the typical single node resource. This article describes the behavioural outcome in terms of speed and CPU utilization when using Dask arrays with different chunk sizes.
+Dask enhances Python performance using parallel computing. To do so, Dask offers a list of libraries that mimics the popular data science tools such as numpy and pandas. For instance, Dask arrays organize Numpy arrays, break them into chunks to complete the computation process in a parallel fashion. As a result, large dataset can be processed using multiple nodes as opposed to the typical single node resource. This article describes the behavioural outcome in terms of speed and CPU utilization when using Dask arrays with different chunk sizes.
 
 The following experiments are carried out using Jupyterlab notebook in Cloudera Machine Learning (CML) on the Kubernetes platform powered by Openshift 4.8 with the hardware specification as described below. Here's the [link](https://github.com/dennislee22/machineLearning/blob/master/dask_cml.ipynb) to download the complete notebook.
 
@@ -20,25 +20,22 @@ The following experiments are carried out using Jupyterlab notebook in Cloudera 
 {:toc}
 
 ---
-## Dask with Single Worker
+## Dask with Single Worker Pod
 
 
 - Create a Jupyterlab session with 2 CPU/16 GiB memory profile.
 
 ![](../../assets/images/cml/dask1.png)
 
+- Create a simple dask array with 100000 chunks.
+
 ```python
-# 100000 chunks are created in this example.
 import dask.array as da
 arrayshape = (200000, 200000)
 chunksize = (2000, 2000)
 x = da.ones(arrayshape, chunks=chunksize)
 x
-#x.compute()
 ```
-
-
-
 
 <table>
     <tr>
@@ -135,7 +132,7 @@ x
     </tr>
 </table>
 
-
+- Add the values of the array and take note of the completion time.
 
 
 ```python
@@ -145,11 +142,11 @@ with ProgressBar():
     result = big_calc.compute()
 print(f"Total size: {result}")
 ```
-
     [########################################] | 100% Completed | 42.8s
     Total size: 40000000000.0
 
 
+- Restart the kernel. Create the same array shape with smaller number of chunks.
 
 ```python
 # Restart kernel
@@ -161,9 +158,6 @@ chunksize = (10000, 10000)
 x = da.ones(arrayshape, chunks=chunksize)
 x
 ```
-
-
-
 
 <table>
     <tr>
@@ -261,6 +255,7 @@ x
 </table>
 
 
+- Add the values of the array and take note of the completion time.
 
 
 ```python
@@ -275,6 +270,7 @@ print(f"Total size: {result}")
     Total size: 40000000000.0
 
 
+- By default, Dask does automatic chunking. Find out the chunk size created by the system.
 
 ```python
 # Restart kernel
@@ -285,9 +281,6 @@ arrayshape = (200000, 200000)
 x = da.ones(arrayshape)
 x
 ```
-
-
-
 
 <table>
     <tr>
@@ -384,8 +377,7 @@ x
     </tr>
 </table>
 
-
-
+- Add the values of the array based on the chunk size created by Dask. Take note of the completion time.
 
 ```python
 from dask.diagnostics import ProgressBar
@@ -398,19 +390,15 @@ print(f"Total size: {result}")
     [########################################] | 100% Completed | 35.2s
     Total size: 40000000000.0
 
-
+- Restart the kernel. This time, create the same array shape with higher chunk size.
 
 ```python
-# Restart kernel
-# Insufficient memory results in kernel crash when assigning higher size of chunk
 import dask.array as da
 arrayshape = (200000, 200000)
 chunksize = (20000, 20000)
 x = da.ones(arrayshape, chunks=chunksize)
 x
 ```
-
-
 
 
 <table>
@@ -490,8 +478,9 @@ x
     </tr>
 </table>
 
+- Perform the same computation and this time, the kernel crashes because of insufficient memory.
 
-
+![](../../assets/images/cml/dask2.png)
 
 ```python
 from dask.diagnostics import ProgressBar
@@ -500,21 +489,16 @@ with ProgressBar():
     result = big_calc.compute()
 print(f"Total size: {result}")
 ```
-
     [###                                     ] | 9% Completed |  1.0s
 
+- Restart the kernel. Create the same array shape and allow Dask to assign the chunk size automatically.
 
 ```python
-# Restart kernel
-# Allow automatic assignment of chunks. The system assigns 2500 tasks in this example.
 import dask.array as da
 arrayshape = (200000, 200000)
 x = da.ones(arrayshape)
 x
 ```
-
-
-
 
 <table>
     <tr>
@@ -611,11 +595,11 @@ x
     </tr>
 </table>
 
+- Automatic assignment of chunks by the system allows computation to complete without encountering insufficient memory problem.
 
-
+![](../../assets/images/cml/dask2.png)
 
 ```python
-# Automatic assignment of chunks by the system allows computation to complete without encountering insufficient memory problem.
 from dask.diagnostics import ProgressBar
 big_calc = (x * x[::-1, ::-1]).sum()
 with ProgressBar():
@@ -627,9 +611,9 @@ print(f"Total size: {result}")
     Total size: 40000000000.0
 
 
+- Restart the kernel. Create a distributed task scheduler pod.
 
 ```python
-# Restart kernel. Create a Dask scheduler pod.
 import os
 import time
 import cdsw
@@ -646,18 +630,20 @@ dask_scheduler = cdsw.launch_workers(
 time.sleep(10)
 ```
 
+- Obtain the Dask URL and access the DASK UI portal.
 
 ```python
-# Obtain the Dask UI address.
 print("//".join(dask_scheduler[0]["app_url"].split("//")))
 ```
 
     http://zusu97y7pconcrlc.ml-76cf996d-8f4.apps.apps.ocp4.cdpkvm.cldr/
 
 
+![](../../assets/images/cml/dask3.png)
+
+- Take note of the Dask scheduler URL.
 
 ```python
-# Take note of the Dask scheduler URL.
 scheduler_workers = cdsw.list_workers()
 scheduler_id = dask_scheduler[0]["id"]
 scheduler_ip = [
@@ -667,23 +653,20 @@ scheduler_ip = [
 scheduler_url = f"tcp://{scheduler_ip}:8786"
 scheduler_url
 ```
+   
+   'tcp://10.254.0.98:8786'
 
+- Open the terminal of the CML pod and start the dask-worker command connecting the above Dask scheduler.
 
+![](../../assets/images/cml/dask4.png)
 
-
-    'tcp://10.254.0.98:8786'
-
-
-
+- Verify that 1 worker node is currently attached to the Dask cluster.
 
 ```python
 from dask.distributed import Client
 client = Client(scheduler_url)
 client
 ```
-
-
-
 
 <div>
     <div style="width: 24px; height: 24px; background-color: #e1e1e1; border: 3px solid #9D9D9D; border-radius: 5px; position: absolute;"> </div>
@@ -858,8 +841,16 @@ client
     </div>
 </div>
 
+- Dask UI verifies that 1 worker node is currently attached to the Dask cluster.
+
+![](../../assets/images/cml/dask5a.png)
+
+- Openshift dashboard shows that 1 Dask scheduler pod and 1 Dask worker pod (CML session pod) are currently up and running.
+
+![](../../assets/images/cml/dask5b.png)
 
 
+- Create the Dask array without specifying the chunk size.
 
 ```python
 import dask.array as da
@@ -867,9 +858,6 @@ arrayshape = (200000, 200000)
 x = da.ones(arrayshape)
 x
 ```
-
-
-
 
 <table>
     <tr>
@@ -967,7 +955,7 @@ x
 </table>
 
 
-
+- Run the same array sum() computation and check the completion time.
 
 ```python
 %%time
@@ -975,12 +963,25 @@ big_calc = (x * x[::-1, ::-1]).sum()
 result = big_calc.compute()
 print(f"Total size: {result}")
 ```
-
     Total size: 40000000000.0
     CPU times: user 2.17 s, sys: 641 ms, total: 2.81 s
     Wall time: 9min 3s
 
 
+- Dask UI displays the execution of the tasks.
+
+![](../../assets/images/cml/dask6a.png)
+
+- Take note of the CPU utilization when the above computation takes place.
+
+![](../../assets/images/cml/dask6b.png)
+
+- Dask UI is unable to depict the graph due to too many Dask tasks/chunks in place.
+
+![](../../assets/images/cml/dask6c.png)
+
+
+- Next, create the same array shape with higher chunk size.
 
 ```python
 import dask.array as da
@@ -989,8 +990,6 @@ chunksize = (10000, 10000)
 x = da.ones(arrayshape, chunks=chunksize)
 x
 ```
-
-
 
 
 <table>
@@ -1088,8 +1087,7 @@ x
     </tr>
 </table>
 
-
-
+- Run the same sum() computation and check the completion time.
 
 ```python
 %%time
@@ -1102,7 +1100,14 @@ print(f"Total size: {result}")
     CPU times: user 685 ms, sys: 253 ms, total: 937 ms
     Wall time: 3min 55s
 
+- Time time, Dask UI is able to depict the graph with higher chunk size (smaller number of chunks).
 
+![](../../assets/images/cml/dask7a.png)
+
+![](../../assets/images/cml/dask7b.png)
+
+
+- Dask allows scheduler to be defined specfically. Let's assign 'single-threaded' scheduler and run the same computation.
 
 ```python
 # Assigning scheduler "single-threaded" doesn't trigger Dask-worker?
@@ -1114,7 +1119,12 @@ print(f"Total size: {big_calc}")
     Wall time: 3min 17s
     Total size: 40000000000.0
 
+- The CPU utilization graph shows that 'single-threaded' scheduler uses a single CPU core but not using Dask-worker.
 
+![](../../assets/images/cml/dask8.png)
+
+
+- Now let's assign 'threads' scheduler and run the same computation.
 
 ```python
 %%time
@@ -1126,11 +1136,16 @@ print(f"Total size: {big_calc}")
     CPU times: user 3min 2s, sys: 2min 47s, total: 5min 50s
     Wall time: 26.9 s
 
+- The CPU utilization graph shows that 'threads' scheduler uses all the available CPU cores in the hosting node to complete the tasks. It doesn't use Dask-worker.
 
+![](../../assets/images/cml/dask9.png)
+
+
+## Dask with Multiple Worker Pods
+
+- Restart the kernel and create a new Dask cluster.
 
 ```python
-# Restart the kernel. Creata a new Dask cluster.
-
 import os
 import time
 import cdsw
@@ -1147,14 +1162,12 @@ dask_scheduler = cdsw.launch_workers(
 time.sleep(10)
 ```
 
-
 ```python
 # Obtain the Dask UI address.
 print("//".join(dask_scheduler[0]["app_url"].split("//")))
 ```
 
     http://agfeuy4lgg17kf6f.ml-76cf996d-8f4.apps.apps.ocp4.cdpkvm.cldr/
-
 
 
 ```python
@@ -1168,13 +1181,10 @@ scheduler_url = f"tcp://{scheduler_ip}:8786"
 scheduler_url
 ```
 
-
-
-
     'tcp://10.254.0.116:8786'
 
 
-
+- This time, create 3 new CML worker pods attach them to the Dask cluster.
 
 ```python
 # Assign 3 worker nodes to the Dask cluster.
@@ -1190,14 +1200,11 @@ dask_workers = cdsw.launch_workers(
 time.sleep(10)
 ```
 
-
 ```python
 from dask.distributed import Client
 client = Client(scheduler_url)
 client
 ```
-
-
 
 
 <div>
@@ -1536,8 +1543,12 @@ client
     </div>
 </div>
 
+- Openshift shows 3 Dask worker pods with 1 Dask scheduler pod.
+
+![](../../assets/images/cml/dask11.png)
 
 
+- Run the same computation and check the completion time.
 
 ```python
 import dask.array as da
@@ -1546,9 +1557,6 @@ chunksize = (10000, 10000)
 x = da.ones(arrayshape, chunks=chunksize)
 x
 ```
-
-
-
 
 <table>
     <tr>
@@ -1646,8 +1654,6 @@ x
 </table>
 
 
-
-
 ```python
 %%time
 big_calc = (x * x[::-1, ::-1]).sum()
@@ -1660,9 +1666,13 @@ print(f"Total size: {result}")
     Wall time: 22.9 s
 
 
+![](../../assets/images/cml/dask12.png)
+
+## Dask with Nvidia GPU
+
+- Restart the kernel. Use GPU to compute the same array shape by using cuda library on the pod attached with NVIDIA GPU card. Take note of the completion time.
 
 ```python
-# Restart kernel. Use GPU to compute.
 import cupy as cpcupy
 import dask.array as dacupy
 
@@ -1671,8 +1681,6 @@ chunksize = (10000, 10000)
 y = dacupy.ones_like(cpcupy.array(()), shape=arrayshape, chunks=chunksize)
 y
 ```
-
-
 
 
 <table>
@@ -1771,8 +1779,6 @@ y
 </table>
 
 
-
-
 ```python
 %time array_sumcupy = dacupy.sum(y).compute()
 print(f"Total size: {array_sumcupy}")
@@ -1782,90 +1788,15 @@ print(f"Total size: {array_sumcupy}")
     Wall time: 2.5 s
     Total size: 40000000000.0
 
-
-
 ```python
 
 ```
 
+- The following graph displays the GPU utilization during the execution of the above tasks.
 
-## Dask with Multiple Workers
+![](../../assets/images/cml/dask12.png)
 
-Now let's use multiple workers to run the same code with the same intended outcome.
-
-1. In the CML session, open a `Terminal Access` box and run the `top` command (type g4 to view the PPID).
-
-2. Run the same Python code with `max_workers=3` and observe the processing time taken by Python to run the code. 
-
-3. When the code is being executed, note that 3 child processes are spawned to execute the code concurrently.
-
-    ![](../../assets/images/cml/mprocess3.png)    
- 
-4. It takes approximately 13 seconds with 3 workers to run the program.
-
-    ```yaml
-    Job Starts: 2408966.582076456
-    Job Ends: 2408980.419085899
-    Totals Execution Time:13.84 seconds.
-    ```
-    
-5. Next, check the integrity of the output file. To reiterate, the purpose of this code is read line by line from the `input` file and write each line into the `output` file in a sequential manner. Run the following script. In the event of no output is produced, it shows the code achieves the intended outcome without data corruption. The result shows the same outcome as the previous test (using single worker).
-
-    ```bash
-    $ cnt=0;for i in `cat output | grep line`; do cnt=`expr $cnt + 1` ; if [ $i != line$cnt ]; then echo $i;fi ; done
-    line1
-    line1
-    line4
-    line2
-    line5
-    line2
-    line3
-    line6
-    line3
-    line4
-    ```
-
-    Excerpt from the `output` file:
-
-    ```yaml
-    current pid:154
-    total threads:1
-    CPU number:10
-    line1
-
-    current pid:154
-    total threads:1
-    CPU number:10
-    line2
-
-    current pid:154
-    total threads:1
-    CPU number:10
-    line3
-
-    current pid:158
-    total threads:1
-    CPU number:5
-    line1
-
-    current pid:157
-    total threads:1
-    CPU number:22
-    line1
-    ```
-
-## Dask using GPU
-
-Now let's use multiple workers to run the same code with the same intended outcome.
-
-1. In the CML session, open a `Terminal Access` box and run the `top` command (type g4 to view the PPID).
-
-2. Run the same Python code with `max_workers=3` and observe the processing time taken by Python to run the code. 
-
-3. When the code is being executed, note that 3 child processes are spawned to execute the code concurrently.
-
-
-Conclusion: Although concurrent.futures.ProcessPoolExecutor is able to complete the program at a faster speed with more workers in place, the outcome of the output file fails to deliver the intention of the code. The line number is not written sequentially. This is the behaviour of race condition as a result of multiple processes writing into the same file in parallel. In other words, concurrent.futures.ProcessPoolExecutor is not thread-safe as tt creates a pool of processes to execute calls asynchronously. In a nutshell, while multiprocessing is able to use the available/allocated CPU cores to run multiple processes in order to reduce the completion time, it is not suitable for every use case especially CPU-bound and long running task.
+Conclusion: 
 
 ---
 
