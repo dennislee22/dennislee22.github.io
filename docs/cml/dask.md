@@ -1795,7 +1795,7 @@ print(f"Total size: {array_sumcupy}")
 Conclusion: 
 - The performance output of Dask depends heavily on the chunk size assignment. Higher chunk size results in smaller number of tasks and allows execution to complete quicker. This also means higher CPU utilization when running the tasks. In addition, higher chunk size requires more memory as well. The kernel crashes due to insufficient memory when running the tasks with higher chunk size.
 - Using more Dask worker nodes might not necessarily result in shorter completion time as overhead applies. Dask makes sense for huge and complext dataset processing but definitely not applicable for small and simple machine learning task. 
-- Using GPU in Dask completes the tasks much faster than using CPU for typical mathematical computation.
+- Using GPU in Dask completes the tasks much faster than using CPU for typical CPU-bound computation.
 
 
 ---
