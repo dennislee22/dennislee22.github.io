@@ -221,3 +221,20 @@ This article describes the steps to install the Nvidia GPU software driver and i
 8. In the event the ECS platform has no available worker node with GPU card, provisioning a session with GPU will result in `Pending` state as the system is looking for a worker node installed with at least one Nvidia GPU card.
     
     ![](../../assets/images/gpu/gpuecssession5.png)    
+    
+    
+9. backup.
+
+    ```bash
+    /var/lib/rancher/rke2/agent/etc/containerd/config.toml.tmpl
+    Also looks like the toml.tmpl would replace any existing toml file so these should be inserted to the bottom of our existing toml or be part of any templateing depending on how this works in the ECS install (see https://github.com/rancher/rke2/blob/master/docs/advanced.md#configuring-containerd) 
+
+    [plugins.cri.containerd.runtimes.runc]
+    # ---- changed from 'io.containerd.runc.v2' for GPU support
+    runtime_type = "io.containerd.runtime.v1.linux"
+
+    # ---- added for GPU support
+    [plugins.linux]
+    runtime = "nvidia-container-runtime"
+
+    ```
