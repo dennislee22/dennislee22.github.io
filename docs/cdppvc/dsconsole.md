@@ -134,7 +134,7 @@ This article explains the steps to configure the CDP PvC Data Services environme
    Next Step
    {: .label .label-blue } 
    
-- Create the CML service in this [subtopic]({{ site.baseurl }}{% link docs/cdppvc/cml.md %}).
+- Create the CML service in this [subtopic]({{ site.baseurl }}{% link docs/cdppvc/cmlds.md %}).
 - Create the CDW service (ECS) in this [subtopic]({{ site.baseurl }}{% link docs/cdppvc/cdwecs.md %}).
 - Create the CDW service (Openshift) in this [subtopic]({{ site.baseurl }}{% link docs/cdppvc/cdwocp.md %}).
 - Create the CDE service (ECS) in this [subtopic]({{ site.baseurl }}{% link docs/cdppvc/cdeecs.md %}).
