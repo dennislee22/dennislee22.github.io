@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Machine Learning
+title: Cloudera Machine Learning
 nav_order: 5
 has_children: true
 permalink: docs/cml
