@@ -222,6 +222,3 @@ This article describes the steps to install the Nvidia GPU software driver and i
     
     ![](../../assets/images/gpu/gpuecssession5.png)    
     
-    
-
-```
