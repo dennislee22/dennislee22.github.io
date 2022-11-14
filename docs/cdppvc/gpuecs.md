@@ -87,6 +87,37 @@ This article describes the steps to install the Nvidia GPU software driver and i
     |=============================================================================|
     |  No running processes found                                                 |
     +-----------------------------------------------------------------------------+
+    
+    [root@ecsgpu ~]# lsmod | grep nvidia
+    nvidia_drm             53212  0 
+    nvidia_modeset       1142094  1 nvidia_drm
+    nvidia              40761292  1 nvidia_modeset
+    drm_kms_helper        186531  3 qxl,nouveau,nvidia_drm
+    drm                   468454  7 qxl,ttm,drm_kms_helper,nvidia,nouveau,nvidia_drm
+    
+    [root@ecsgpu ~]# dmesg | grep nvidia
+    [  123.588172] nvidia: loading out-of-tree module taints kernel.
+    [  123.588182] nvidia: module license 'NVIDIA' taints kernel.
+    [  123.704411] nvidia: module verification failed: signature and/or required key missing - tainting kernel
+    [  123.802826] nvidia-nvlink: Nvlink Core is being initialized, major device number 239
+    [  123.925577] nvidia-uvm: Loaded the UVM driver, major device number 237.
+    [  123.934813] nvidia-modeset: Loading NVIDIA Kernel Mode Setting Driver for UNIX platforms  515.65.01  Wed Jul 20 13:43:59 UTC 2022
+    [  123.940999] [drm] [nvidia-drm] [GPU ID 0x00000800] Loading driver
+    [  123.941018] [drm] Initialized nvidia-drm 0.0.0 20160202 for 0000:08:00.0 on minor 1
+    [  123.958317] [drm] [nvidia-drm] [GPU ID 0x00000800] Unloading driver
+    [  123.968642] nvidia-modeset: Unloading
+    [  123.978362] nvidia-uvm: Unloaded the UVM driver.
+    [  123.993831] nvidia-nvlink: Unregistered Nvlink Core, major device number 239
+    [  137.450679] nvidia-nvlink: Nvlink Core is being initialized, major device number 240
+    [  137.503657] nvidia-modeset: Loading NVIDIA Kernel Mode Setting Driver for UNIX platforms  515.65.01  Wed Jul 20 13:43:59 UTC 2022
+    [  137.508187] [drm] [nvidia-drm] [GPU ID 0x00000800] Loading driver
+    [  137.508190] [drm] Initialized nvidia-drm 0.0.0 20160202 for 0000:08:00.0 on minor 1
+    [  149.717193] nvidia 0000:08:00.0: irq 48 for MSI/MSI-X
+    [  149.717222] nvidia 0000:08:00.0: irq 49 for MSI/MSI-X
+    [  149.717248] nvidia 0000:08:00.0: irq 50 for MSI/MSI-X
+    [  149.717275] nvidia 0000:08:00.0: irq 51 for MSI/MSI-X
+    [  149.717301] nvidia 0000:08:00.0: irq 52 for MSI/MSI-X
+    [  149.717330] nvidia 0000:08:00.0: irq 53 for MSI/MSI-X
     ```
 
 6. Install the `nvidia-container-runtime` software package. Reboot the server.
@@ -95,6 +126,13 @@ This article describes the steps to install the Nvidia GPU software driver and i
     # curl -s -L https://nvidia.github.io/nvidia-container-runtime/$(. /etc/os-release;echo $ID$VERSION_ID)/nvidia-container-runtime.repo |  sudo tee /etc/yum.repos.d/nvidia-container-runtime.repo
     
     # yum -y install nvidia-container-runtime
+    
+    # rpm -qa | grep nvidia
+    libnvidia-container-tools-1.11.0-1.x86_64
+    libnvidia-container1-1.11.0-1.x86_64
+    nvidia-container-toolkit-base-1.11.0-1.x86_64
+    nvidia-container-runtime-3.11.0-1.noarch
+    nvidia-container-toolkit-1.11.0-1.x86_64
     
     # reboot 
     ```
