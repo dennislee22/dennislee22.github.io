@@ -134,6 +134,10 @@ This article describes the steps to install the Nvidia GPU software driver and i
     nvidia-container-runtime-3.11.0-1.noarch
     nvidia-container-toolkit-1.11.0-1.x86_64
     
+    # nvidia-container-toolkit -version
+    NVIDIA Container Runtime Hook version 1.11.0
+    commit: d9de4a0
+
     # reboot 
     ```
 
