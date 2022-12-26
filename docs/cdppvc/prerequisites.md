@@ -83,6 +83,7 @@ nav_order: 2
 - An [external Kerberos server](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/security-kerberos-authentication/topics/cm-security-kerberos-enabling-intro.html) and the Kerberos key distribution center (KDC) (with a realm established) must be available to provide authentication to CDP services, users and hosts.
 - An external `secured` LDAP-compliant identity/directory server (ldaps) is required to enable the CDP Private Cloud solution to look up for the user accounts and groups in the directory. This is expected to be ready prior to installing the CDP Private Cloud solution and its installation procedure is not covered in this article.
 - [Auto-TLS](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/security-encrypting-data-in-transit/topics/cm-security-auto-tls.html) should be enabled using certificates created and managed by a Cloudera Manager certificate authority (CA), or certificates signed by a trusted public CA or your own internal CA. Prepare the certificate of your choice.
+- The total number of CA certificates must not exceed 10. Otherwise, pods will be evicted during initialization due to limited memory (1Gi) to process the configmap file.
 
 ### External NFS
 
@@ -185,7 +186,7 @@ nav_order: 2
 
 ### Openshift Settings
 
-- Prepare the `kubeconfig` file for a single user with `cluster-admin` privilege that has the Openshift cluster access.
+- Prepare the `kubeconfig` file for a single user with `cluster-admin` privilege that has the Openshift cluster access. The service account token in this kubeconfig file must be long-lived and never expire.
 - Openshift platform is expected to be ready prior to installing the CDP PvC Data Services. Openshift installation is not covered in this article. Please refer to the official guidelines from Red Hat. 
 - The Openshift dashboard should reflect all components in green mode as depicted below.
     ![](../../assets/images/ocp4/ocp1.png)    
@@ -226,6 +227,7 @@ nav_order: 2
 - The supported OS and the filesystems are listed [here](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/installation/topics/cdpdc-os-requirements.html).
 - [JDK](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/installation/topics/cdpdc-java-requirements.html) must be installed in each host.
 - Configure the hosts with [IPv4](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/installation/topics/cdpdc-configure-network-names.html) only. Set the hostname with unique FQDN (Fully Qualified Domain Name). Ensure /etc/hosts with the IP address and of each host in the cluster.
+- The MTU size of the physical network interface must be configured with at least 1500 bytes.
 - Disable [firewall](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/installation/topics/cdpdc-disabling-firewall.html) within each host.
 - Set the [SELinux](https://docs.cloudera.com/cdp-private-cloud-base/7.1.7/installation/topics/cdpdc-setting-selinux-mode.html) mode accordingly.
 - Every host must be installed with NTP client and able to synchronize the time with the external NTP server.
